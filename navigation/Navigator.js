@@ -1,0 +1,15 @@
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Feed from '../screens/Feed';
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Livefeed" component={Feed} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
