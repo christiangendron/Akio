@@ -13,3 +13,7 @@ I wanted to create this Reddit client because I saw it as a great challenge. Bui
 In addition to the technical challenges, I was also motivated by my love for Reddit. As an avid user of the platform, I wanted to create a tool that would make it easier for others to access and engage with Reddit on their mobile devices. I believe that this app has the potential to be a valuable resource for Redditors everywhere.
 
 Overall, I saw the development of this Reddit client as an exciting opportunity to learn new skills, practice problem-solving, and create something that I was passionate about.
+
+# Contribution ?
+
+Although I mostly wanted this Reddit client to be a solo project, I am open to the possibility of contributions from others. If you see something wrong with the application or have suggestions on a specific feature, please don't hesitate to reach out. I am always looking for ways to improve the app.
