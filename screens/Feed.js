@@ -1,5 +1,6 @@
-import { StyleSheet, View, FlatList } from 'react-native';
+import {StyleSheet, View, FlatList} from 'react-native';
 import PostItem from '../components/PostItem';
+import AppTheme from '../styles/AppTheme';
 
 const DATA = [
   {
@@ -20,8 +21,7 @@ const DATA = [
 ];
 
 export default function Feed() {
-
-  const renderItem = ({ item }) => (
+  const renderItem = ({item}) => (
     <PostItem data={item} />
   );
 
@@ -38,9 +38,9 @@ export default function Feed() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
+    backgroundColor: AppTheme.white,
+    flex: 1,
     justifyContent: 'center',
   },
 });

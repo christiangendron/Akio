@@ -1,4 +1,5 @@
 export default {
-    darkColor: '#000',
-    primaryColor: '#77e08c',
+  darkColor: '#000',
+  lightBlue: 'lightblue',
+  white: '#fff',
 };

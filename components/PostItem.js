@@ -1,20 +1,23 @@
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 import PropTypes from 'prop-types';
 
 function PostItem(props) {
+  const currPost = props.data;
+
   return (
     <View>
       <Text>
-        {props.data.title}
+        {currPost.title}
       </Text>
       <Text>
-        {props.data.body}
+        {currPost.body}
       </Text>
     </View>
   );
 }
 
 PostItem.propTypes = {
+  data: PropTypes.object,
   id: PropTypes.string,
   title: PropTypes.string,
   body: PropTypes.string,
