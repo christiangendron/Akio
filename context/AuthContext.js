@@ -5,10 +5,13 @@ export const AuthContext = createContext('default');
 
 function AuthContextProvider(props) {
   const [isAuth, setIsAuth] = useState(false);
+  const [token, setToken] = useState(null);
 
   const allowedContent = {
     isAuth,
     setIsAuth,
+    token,
+    setToken,
   };
 
   return (

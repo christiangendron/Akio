@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Feed from '../screens/Feed';
+import Home from '../screens/Home';
 import AuthContextProvider from '../context/AuthContext';
 
 const Stack = createNativeStackNavigator();
@@ -10,7 +10,7 @@ export default function App() {
     <AuthContextProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Livefeed" component={Feed} />
+          <Stack.Screen name="Home" component={Home} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthContextProvider>
