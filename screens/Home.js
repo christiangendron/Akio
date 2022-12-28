@@ -6,15 +6,20 @@ import {useQuery} from 'react-query';
 import {AuthContext} from '../context/AuthContext';
 import RedditPosts from '../services/RedditPost';
 import ErrorMessage from '../components/ErrorMessage';
+import PostWithoutImage from '../components/PostWithoutImage';
 
 export default function Home() {
   const {token} = useContext(AuthContext);
 
   const posts = useQuery('posts-all', () => RedditPosts.getPosts('all', token.data.data.access_token));
 
-  const renderItem = ({item}) => (
-    <PostWithImage key={item.id} data={item} />
-  );
+  const renderItem = ({item, index}) => {
+    if (item.data.thumbnail == 'default') {
+      return <PostWithoutImage key={item.id} data={item}/>;
+    } else {
+      return <PostWithImage key={item.id} data={item} />;
+    }
+  };
 
   if (posts.isLoading) {
     return (
