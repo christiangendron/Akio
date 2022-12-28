@@ -47,7 +47,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: AppTheme.white,
+    backgroundColor: AppTheme.lightgray,
     flex: 1,
     justifyContent: 'center',
   },
