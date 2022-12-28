@@ -2,15 +2,16 @@ import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import AppTheme from '../styles/AppTheme';
 import {decode} from 'html-entities';
+import {useNavigation} from '@react-navigation/native';
 import PostIntereaction from './PostIntereaction';
 
 function PostWithImage(props) {
+  const navigation = useNavigation();
   const currPost = props.data.data;
-
-  console.log('Image Array: ' + currPost?.preview.images[0]);
 
   const imageThumb = decode(currPost.preview.images[0].resolutions[2].url);
   const thumbHeight = currPost.preview.images[0].resolutions[2].height;
+  const source = decode(currPost.preview.images[0].source.url);
 
   const intereactionData = {
     ups: currPost.ups,
@@ -26,7 +27,7 @@ function PostWithImage(props) {
       </Text>
       <TouchableOpacity
         style={{height: thumbHeight, width: '100%'}}
-        onPress={() => console.log('pressed image')}>
+        onPress={() => navigation.navigate('FullSizeImage', {data: source})}>
         <Image style={{resizeMode: 'contain', width: '100%', height: thumbHeight}} source={{uri: imageThumb}} />
       </TouchableOpacity>
       <PostIntereaction data={intereactionData}/>

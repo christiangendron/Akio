@@ -5,6 +5,7 @@ import Home from '../screens/Home';
 import {ActivityIndicator, View} from 'react-native';
 import ErrorMessage from '../components/ErrorMessage';
 import {AuthContext} from '../context/AuthContext';
+import FullSizeImage from '../screens/FullSizeImage';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="FullSizeImage" component={FullSizeImage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
