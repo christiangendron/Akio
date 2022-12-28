@@ -11,7 +11,7 @@ function ErrorMessage(props) {
       <TouchableOpacity
         onPress={props.action}
         style={styles.button}>
-        <Text>Action</Text>
+        <Text>{props.actionMessage}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -22,6 +22,7 @@ export default ErrorMessage;
 ErrorMessage.propTypes = {
   message: PropTypes.string,
   action: PropTypes.func,
+  actionMessage: PropTypes.string,
 };
 
 const styles = StyleSheet.create({
