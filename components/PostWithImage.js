@@ -7,6 +7,7 @@ import PostIntereaction from './PostIntereaction';
 
 function PostWithImage(props) {
   const navigation = useNavigation();
+
   const currPost = props.data.data;
 
   const imageThumb = decode(currPost.preview.images[0].resolutions[2].url);
@@ -14,6 +15,7 @@ function PostWithImage(props) {
   const source = decode(currPost.preview.images[0].source.url);
 
   const intereactionData = {
+    id: currPost.id,
     ups: currPost.ups,
     num_comment: currPost.num_comments,
     created_utc: currPost.created_utc,

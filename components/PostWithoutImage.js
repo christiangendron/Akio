@@ -7,6 +7,7 @@ function PostWithoutImage(props) {
   const currPost = props.data.data;
 
   const intereactionData = {
+    id: currPost.id,
     ups: currPost.ups,
     num_comment: currPost.num_comments,
     created_utc: currPost.created_utc,

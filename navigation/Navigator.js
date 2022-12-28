@@ -22,7 +22,7 @@ export default function App() {
 
   if (token.isError) {
     <View style={styles.container}>
-      <ErrorMessage message="Error while getting the a token."/>
+      <ErrorMessage message="Error while getting the a token." actionMessage="Try again" action={token.refetch}/>
     </View>;
   }
 

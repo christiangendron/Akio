@@ -13,7 +13,7 @@ export default function Home() {
 
   const posts = useQuery('posts-all', () => RedditPosts.getPosts('all', token.data.data.access_token));
 
-  const renderItem = ({item, index}) => {
+  const renderItem = ({item}) => {
     if (item.data.thumbnail == 'default') {
       return <PostWithoutImage key={item.id} data={item}/>;
     } else {
@@ -32,7 +32,7 @@ export default function Home() {
   if (posts.isError) {
     return (
       <View style={styles.container}>
-        <ErrorMessage message="Error while getting posts." action={posts.refetch}/>
+        <ErrorMessage message="Error while getting posts." action={posts.refetch} actionMessage="Try again!"/>
       </View>
     );
   }

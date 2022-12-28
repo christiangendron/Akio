@@ -26,10 +26,12 @@ export default PostIntereaction;
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
     backgroundColor: AppTheme.white,
     flex: 1,
     flexDirection: 'row',
     height: 'auto',
+    justifyContent: 'center',
     marginVertical: 10,
     padding: 5,
   },
