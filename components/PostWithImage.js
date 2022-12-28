@@ -24,7 +24,7 @@ function PostWithImage(props) {
       <TouchableOpacity
         style={{height: thumbHeight, width: '100%'}}
         onPress={() => console.log('pressed image')}>
-        <Image style={{resizeMode: 'cover', width: '100%', height: thumbHeight}} source={{uri: imageThumb}} />
+        <Image style={{resizeMode: 'contain', width: '100%', height: thumbHeight}} source={{uri: imageThumb}} />
       </TouchableOpacity>
       <PostIntereaction data={intereactionData}/>
     </View>
