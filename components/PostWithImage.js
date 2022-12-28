@@ -13,6 +13,7 @@ function PostWithImage(props) {
   const imageThumb = decode(currPost.preview.images[0].resolutions[2].url);
   const thumbHeight = currPost.preview.images[0].resolutions[2].height;
   const source = decode(currPost.preview.images[0].source.url);
+  const image = <Image style={{resizeMode: 'contain', width: '100%', height: thumbHeight}} source={{uri: imageThumb}} />;
 
   const intereactionData = {
     id: currPost.id,
@@ -30,7 +31,7 @@ function PostWithImage(props) {
       <TouchableOpacity
         style={{height: thumbHeight, width: '100%'}}
         onPress={() => navigation.navigate('FullSizeImage', {data: source})}>
-        <Image style={{resizeMode: 'contain', width: '100%', height: thumbHeight}} source={{uri: imageThumb}} />
+        {image}
       </TouchableOpacity>
       <PostIntereaction data={intereactionData}/>
     </View>

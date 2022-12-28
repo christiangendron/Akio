@@ -7,6 +7,8 @@ import {AuthContext} from '../context/AuthContext';
 import RedditPosts from '../services/RedditPost';
 import ErrorMessage from '../components/ErrorMessage';
 import PostWithoutImage from '../components/PostWithoutImage';
+import PostWithVideo from '../components/PostWithVideo';
+import PostWithGallery from '../components/PostWithGallery';
 
 export default function Home() {
   const {token} = useContext(AuthContext);
@@ -16,6 +18,10 @@ export default function Home() {
   const renderItem = ({item}) => {
     if (item.data.thumbnail == 'default') {
       return <PostWithoutImage key={item.id} data={item}/>;
+    } else if (item.data.is_video) {
+      return <PostWithVideo key={item.id} data={item} />;
+    } else if (item.data.is_gallery) {
+      return <PostWithGallery key={item.id} data={item} />;
     } else {
       return <PostWithImage key={item.id} data={item} />;
     }
