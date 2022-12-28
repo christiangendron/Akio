@@ -1,45 +1,45 @@
-import {useState, useContext, useEffect} from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
-import PostItem from '../components/PostItem';
+import {useContext} from 'react';
+import {StyleSheet, View, FlatList, ActivityIndicator} from 'react-native';
+import PostWithImage from '../components/PostWithImage';
 import AppTheme from '../styles/AppTheme';
+import {useQuery} from 'react-query';
 import {AuthContext} from '../context/AuthContext';
 import RedditPosts from '../services/RedditPost';
-import RedditToken from '../services/RedditToken';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function Home() {
-  const {token, setToken} = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [posts, setPosts] = useState([]);
+  const {token} = useContext(AuthContext);
 
-  useEffect(() => {
-    RedditToken.requestBasicToken().then((res) => {
-      console.log('Setting token: ' + res.data.access_token);
-      setToken(res.data.access_token);
-    });
-  }, []);
-
-  function getPosts() {
-    setIsLoading(true);
-
-    RedditPosts.getPosts('all', token).then((res) => {
-      setPosts(res.data.data.children);
-    }).finally(() => {
-      setIsLoading(false);
-    });
-  }
+  const posts = useQuery('posts-all', () => RedditPosts.getPosts('all', token.data.data.access_token));
 
   const renderItem = ({item}) => (
-    <PostItem key={item.id} data={item} />
+    <PostWithImage key={item.id} data={item} />
   );
+
+  if (posts.isLoading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator/>
+      </View>
+    );
+  }
+
+  if (posts.isError) {
+    return (
+      <View style={styles.container}>
+        <ErrorMessage message="Error while getting posts." action={posts.refetch}/>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.flatlist}
-        data={posts}
+        data={posts.data.data.data.children}
         renderItem={renderItem}
-        refreshing={isLoading}
-        onRefresh={getPosts} />
+        refreshing={posts.isLoading}
+        onRefresh={posts.refetch} />
     </View>
   );
 }

@@ -2,7 +2,7 @@ import {Text, View, StyleSheet, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import AppTheme from '../styles/AppTheme';
 
-function PostItem(props) {
+function PostWithImage(props) {
   const currPost = props.data.data;
 
   return (
@@ -18,11 +18,11 @@ function PostItem(props) {
   );
 }
 
-PostItem.propTypes = {
+PostWithImage.propTypes = {
   data: PropTypes.object,
 };
 
-export default PostItem;
+export default PostWithImage;
 
 const styles = StyleSheet.create({
   container: {
