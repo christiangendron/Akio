@@ -18,6 +18,7 @@
     "react-native" ],
     "rules": 
     {
+        "react-native/no-inline-styles": "off",
         "max-len": ["error", { "code": 500 }],
         "require-jsdoc": ["error", {
         "require": {
