@@ -2,7 +2,13 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import AppTheme from '../styles/AppTheme';
 
-function ErrorMessage(props) {
+interface ErrorMEssageProps {
+  message: string;
+  action: () => void;
+  actionMessage: string;
+}
+
+function ErrorMessage(props:ErrorMEssageProps) {
   return (
     <View style={styles.container}>
       <Text>
@@ -18,12 +24,6 @@ function ErrorMessage(props) {
 }
 
 export default ErrorMessage;
-
-ErrorMessage.propTypes = {
-  message: PropTypes.string,
-  action: PropTypes.func,
-  actionMessage: PropTypes.string,
-};
 
 const styles = StyleSheet.create({
   button: {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-async function getPosts(sub, accessToken) {
+async function getPosts(sub:string, accessToken:string) {
   const res = await axios.get(`https://oauth.reddit.com/r/${sub}/top?limit=25`, {
     headers: {
       Authorization: 'Bearer ' + accessToken,

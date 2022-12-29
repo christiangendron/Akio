@@ -3,7 +3,20 @@ import PropTypes from 'prop-types';
 import AppTheme from '../styles/AppTheme';
 import PostIntereaction from './PostIntereaction';
 
-function PostWithoutImage(props) {
+interface PostWithGalleryProps {
+  data: {
+    data: {
+      id: string;
+      ups: number;
+      num_comments: number;
+      created_utc: number;
+      subreddit: string;
+      title: string;
+    }
+  }
+}
+
+function PostWithGallery(props:PostWithGalleryProps) {
   const currPost = props.data.data;
 
   const intereactionData = {
@@ -19,16 +32,15 @@ function PostWithoutImage(props) {
       <Text style={styles.text}>
         {currPost.title}
       </Text>
+      <Text style={styles.text}>
+       IS GALLERY, not implemented yet
+      </Text>
       <PostIntereaction data={intereactionData}/>
     </View>
   );
 }
 
-PostWithoutImage.propTypes = {
-  data: PropTypes.object,
-};
-
-export default PostWithoutImage;
+export default PostWithGallery;
 
 const styles = StyleSheet.create({
   container: {

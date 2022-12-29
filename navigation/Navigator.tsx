@@ -2,12 +2,23 @@ import {useContext} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../screens/Home';
-import {ActivityIndicator, View} from 'react-native';
+import {ActivityIndicator, View, StyleSheet} from 'react-native';
 import ErrorMessage from '../components/ErrorMessage';
 import {AuthContext} from '../context/AuthContext';
 import FullSizeImage from '../screens/FullSizeImage';
 
-const Stack = createNativeStackNavigator();
+export type StackParams = {
+  FullSizeImage: {
+    data: {
+      url: string;
+      id: string;
+      author_fullname: string;
+    };
+  }
+  Home: any;
+}
+
+const Stack = createNativeStackNavigator<StackParams>();
 
 export default function App() {
   const {token} = useContext(AuthContext);
@@ -28,10 +39,18 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName='Home'>
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="FullSizeImage" component={FullSizeImage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
+});

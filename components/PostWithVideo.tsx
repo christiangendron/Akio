@@ -1,9 +1,21 @@
 import {Text, View, StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
 import AppTheme from '../styles/AppTheme';
 import PostIntereaction from './PostIntereaction';
 
-function PostWithVideo(props) {
+interface PostWithVideoProps {
+  data: {
+    data: {
+      id: string;
+      ups: number;
+      num_comments: number;
+      created_utc: number;
+      subreddit: string;
+      title: string;
+    }
+  }
+}
+
+function PostWithVideo(props:PostWithVideoProps) {
   const currPost = props.data.data;
 
   const intereactionData = {
@@ -26,10 +38,6 @@ function PostWithVideo(props) {
     </View>
   );
 }
-
-PostWithVideo.propTypes = {
-  data: PropTypes.object,
-};
 
 export default PostWithVideo;
 
