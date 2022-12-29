@@ -2,7 +2,7 @@ import {useContext} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/Home';
-import {ActivityIndicator, View, StyleSheet} from 'react-native';
+import {ActivityIndicator, View, StyleSheet, Image} from 'react-native';
 import ErrorMessage from '../components/ErrorMessage';
 import {AuthContext} from '../context/AuthContext';
 import FullSizeImage from '../screens/FullSizeImage';
@@ -11,10 +11,13 @@ import Settings from '../screens/Settings';
 import Details from '../screens/Details';
 import Subreddit from '../screens/Subreddit';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import Account from '../screens/Account';
+import AppTheme from '../styles/AppTheme';
 
 export type TabParams = {
   Home: any;
   HomeStack: StackParams;
+  Account: any;
   Settings: any;
 }
 
@@ -47,9 +50,47 @@ function HomeDrawer() {
 const HomeStack = createStackNavigator<StackParams>();
 
 const TabNavigator = () => (
-  <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Home" component={HomeStackScreen} />
-        <Tab.Screen name="Settings" component={Settings} />
+  <Tab.Navigator
+    screenOptions={{ 
+      headerShown: false,
+      tabBarStyle: styles.tab,
+      }}>
+        <Tab.Screen 
+        name="Home" 
+        component={HomeStackScreen}
+        options={{
+          tabBarIcon: ({focused}) => (
+            focused ? <Image
+              style={styles.icon}
+              source={require('../assets/icons/home-selected.png')}
+            /> : <Image
+              style={styles.icon}
+              source={require('../assets/icons/home.png')}
+            />
+          ),
+        }} />
+        <Tab.Screen name="Account" component={Account} options={{
+          tabBarIcon: ({focused}) => (
+            focused ? <Image
+              style={styles.icon}
+              source={require('../assets/icons/account-selected.png')}
+            /> : <Image
+              style={styles.icon}
+              source={require('../assets/icons/account.png')}
+            />
+          ),
+        }}/>
+        <Tab.Screen name="Settings" component={Settings} options={{
+          tabBarIcon: ({focused}) => (
+            focused ? <Image
+              style={styles.icon}
+              source={require('../assets/icons/settings-selected.png')}
+            /> : <Image
+              style={styles.icon}
+              source={require('../assets/icons/settings.png')}
+            />
+          ),
+        }}/>
   </Tab.Navigator>
 )
 
@@ -97,5 +138,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
+  },
+  tab: {
+    backgroundColor: AppTheme.gray
+  },
+  icon: {
+    width: 20,
+    height: 20,
   },
 });
