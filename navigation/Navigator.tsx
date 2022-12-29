@@ -9,6 +9,7 @@ import FullSizeImage from '../screens/FullSizeImage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from '../screens/Settings';
 import Details from '../screens/Details';
+import Subreddit from '../screens/Subreddit';
 
 export type TabParams = {
   HomeStack: StackParams;
@@ -24,7 +25,11 @@ export type StackParams = {
       id: string;
       author_fullname: string;
     };
+    
   }
+  Subreddit: {
+    data: string
+  };
 }
 
 const HomeStack = createStackNavigator<StackParams>();
@@ -35,6 +40,7 @@ function HomeStackScreen() {
      <HomeStack.Screen name="Home" component={Home} />
      <HomeStack.Screen name="Details" component={Details} />                          
      <HomeStack.Screen name="FullSizeImage" component={FullSizeImage} />
+     <HomeStack.Screen name="Subreddit" component={Subreddit} />
     </HomeStack.Navigator>
    );
  }

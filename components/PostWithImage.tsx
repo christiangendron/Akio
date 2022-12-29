@@ -43,10 +43,7 @@ function PostWithImage(props:PostWithImageProps) {
         onPress={() => navigation.navigate('FullSizeImage', {data: fullsizeData})}>
         {image}
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Details')}>
       <PostIntereaction data={intereactionData}/>
-      </TouchableOpacity>
     </View>
   );
 }

@@ -1,6 +1,9 @@
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import AppTheme from '../styles/AppTheme';
 import {roundedCount, timeSince} from '../tools/Formating';
+import {useNavigation} from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackParams } from '../navigation/Navigator';
 
 interface PostIntereactionProps {
   data: {
@@ -13,6 +16,8 @@ interface PostIntereactionProps {
 }
 
 function PostIntereaction(props:PostIntereactionProps) {
+  const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
+
   return (
     <View style={styles.container}>
       <Image source={require('../assets/icons/up-arrow.png')} style={styles.icons}/>
@@ -21,8 +26,11 @@ function PostIntereaction(props:PostIntereactionProps) {
       <Text style={styles.text}>{roundedCount(props.data.num_comment)}</Text>
       <Image source={require('../assets/icons/clock.png')} style={styles.icons}/>
       <Text style={styles.text}>{timeSince(props.data.created_utc)}</Text>
-      <Image source={require('../assets/icons/placeholder.png')} style={styles.icons}/>
-      <Text style={styles.text}>{props.data.subreddit}</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Subreddit", {data: props.data.subreddit})}>
+        <Image source={require('../assets/icons/placeholder.png')} style={styles.icons}/>
+        <Text style={styles.text}>{props.data.subreddit}</Text>
+      </TouchableOpacity>
     </View>
   );
 }
