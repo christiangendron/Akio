@@ -32,15 +32,21 @@ function PostWithImage(props:PostWithImageProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Details')}>
+        <Text style={styles.text}>
         {currPost.title}
       </Text>
+      </TouchableOpacity>
       <TouchableOpacity
         style={{height: thumbHeight, width: '100%'}}
         onPress={() => navigation.navigate('FullSizeImage', {data: fullsizeData})}>
         {image}
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Details')}>
       <PostIntereaction data={intereactionData}/>
+      </TouchableOpacity>
     </View>
   );
 }

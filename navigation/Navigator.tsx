@@ -1,13 +1,23 @@
 import {useContext} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/Home';
 import {ActivityIndicator, View, StyleSheet} from 'react-native';
 import ErrorMessage from '../components/ErrorMessage';
 import {AuthContext} from '../context/AuthContext';
 import FullSizeImage from '../screens/FullSizeImage';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Settings from '../screens/Settings';
+import Details from '../screens/Details';
+
+export type TabParams = {
+  HomeStack: StackParams;
+  Settings: any;
+}
 
 export type StackParams = {
+  Home: any;
+  Details: any;
   FullSizeImage: {
     data: {
       url: string;
@@ -15,10 +25,21 @@ export type StackParams = {
       author_fullname: string;
     };
   }
-  Home: any;
 }
 
-const Stack = createNativeStackNavigator<StackParams>();
+const HomeStack = createStackNavigator<StackParams>();
+
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator>
+     <HomeStack.Screen name="Home" component={Home} />
+     <HomeStack.Screen name="Details" component={Details} />                          
+     <HomeStack.Screen name="FullSizeImage" component={FullSizeImage} />
+    </HomeStack.Navigator>
+   );
+ }
+
+const Tab = createBottomTabNavigator<TabParams>();
 
 export default function App() {
   const {token} = useContext(AuthContext);
@@ -39,10 +60,10 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home'>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="FullSizeImage" component={FullSizeImage} />
-      </Stack.Navigator>
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name="HomeStack" component={HomeStackScreen} />
+        <Tab.Screen name="Settings" component={Settings} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
