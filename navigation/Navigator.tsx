@@ -54,6 +54,7 @@ const TabNavigator = () => (
     screenOptions={{ 
       headerShown: false,
       tabBarStyle: styles.tab,
+      tabBarActiveTintColor: AppTheme.black,
       }}>
         <Tab.Screen 
         name="Home" 
@@ -140,9 +141,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tab: {
-    backgroundColor: AppTheme.gray
+    backgroundColor: AppTheme.lightgray,
   },
   icon: {
+    marginTop: 10,
     width: 20,
     height: 20,
   },
