@@ -5,19 +5,17 @@ import PostIntereaction from './PostIntereaction';
 
 interface PostWithGalleryProps {
   data: {
-    data: {
-      id: string;
-      ups: number;
-      num_comments: number;
-      created_utc: number;
-      subreddit: string;
-      title: string;
-    }
+    id: string;
+    ups: number;
+    num_comments: number;
+    created_utc: number;
+    subreddit: string;
+    title: string;
   }
 }
 
 function PostWithGallery(props:PostWithGalleryProps) {
-  const currPost = props.data.data;
+  const currPost = props.data;
 
   const intereactionData = {
     id: currPost.id,

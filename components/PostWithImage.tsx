@@ -9,7 +9,7 @@ import { StackParams } from '../navigation/Navigator';
 function PostWithImage(props:PostWithImageProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
-  const currPost = props.data.data;
+  const currPost = props.data;
 
   const imageThumb = decode(currPost.preview.images[0].resolutions[2].url);
   const thumbHeight = currPost.preview.images[0].resolutions[2].height;
@@ -49,8 +49,7 @@ export default PostWithImage;
 
 interface PostWithImageProps {
   data: {
-    data: {
-      id: string;
+    id: string;
       ups: number;
       num_comments: number;
       created_utc: number;
@@ -69,7 +68,6 @@ interface PostWithImageProps {
         }[]
       }
     }
-  }
 }
 
 const styles = StyleSheet.create({

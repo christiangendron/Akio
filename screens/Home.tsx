@@ -43,13 +43,13 @@ export default function Home() {
 
   const renderItem = ({item}: {item: Item}): JSX.Element => {
     if (item.data.thumbnail === 'default') {
-      return <PostWithoutImage key={item.data.id} data={item}/>;
+      return <PostWithoutImage key={item.data.id} data={item.data}/>;
     } else if (item.data.is_video) {
-      return <PostWithVideo key={item.data.id} data={item} />;
+      return <PostWithVideo key={item.data.id} data={item.data} />;
     } else if (item.data.is_gallery) {
-      return <PostWithGallery key={item.data.id} data={item} />;
+      return <PostWithGallery key={item.data.id} data={item.data} />;
     } else {
-      return <PostWithImage key={item.data.id} data={item} />;
+      return <PostWithImage key={item.data.id} data={item.data} />;
     }
   };
 

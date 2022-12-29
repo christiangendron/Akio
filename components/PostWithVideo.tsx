@@ -4,19 +4,17 @@ import PostIntereaction from './PostIntereaction';
 
 interface PostWithVideoProps {
   data: {
-    data: {
-      id: string;
-      ups: number;
-      num_comments: number;
-      created_utc: number;
-      subreddit: string;
-      title: string;
-    }
+    id: string;
+    ups: number;
+    num_comments: number;
+    created_utc: number;
+    subreddit: string;
+    title: string;
   }
 }
 
 function PostWithVideo(props:PostWithVideoProps) {
-  const currPost = props.data.data;
+  const currPost = props.data;
 
   const intereactionData = {
     id: currPost.id,
