@@ -10,8 +10,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from '../screens/Settings';
 import Details from '../screens/Details';
 import Subreddit from '../screens/Subreddit';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 export type TabParams = {
+  Home: any;
   HomeStack: StackParams;
   Settings: any;
 }
@@ -26,13 +28,30 @@ export type StackParams = {
       author_fullname: string;
     };
     
-  }
+  };
   Subreddit: {
-    data: string
+    data: string;
   };
 }
 
+const Drawer = createDrawerNavigator();
+
+function HomeDrawer() {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="Home" component={Home} />
+    </Drawer.Navigator>
+  );
+}
+
 const HomeStack = createStackNavigator<StackParams>();
+
+const TabNavigator = () => (
+  <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name="Home" component={HomeStackScreen} />
+        <Tab.Screen name="Settings" component={Settings} />
+  </Tab.Navigator>
+)
 
 function HomeStackScreen() {
   return (
@@ -66,10 +85,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="HomeStack" component={HomeStackScreen} />
-        <Tab.Screen name="Settings" component={Settings} />
-      </Tab.Navigator>
+      <Drawer.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name="HomeStack" component={TabNavigator} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 };
