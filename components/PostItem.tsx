@@ -44,6 +44,7 @@ function PostItem(props: PostProp) {
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity
+                activeOpacity={1}
                 onPress={() => console.log('fullscreen')}>
                 {image}
             </TouchableOpacity>
