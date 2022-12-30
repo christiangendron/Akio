@@ -10,7 +10,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from '../screens/Settings';
 import Details from '../screens/Details';
 import Subreddit from '../screens/Subreddit';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import Account from '../screens/Account';
 import AppTheme from '../styles/AppTheme';
 
@@ -37,63 +36,7 @@ export type StackParams = {
   };
 }
 
-const Drawer = createDrawerNavigator();
-
-function HomeDrawer() {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Home" component={Home} />
-    </Drawer.Navigator>
-  );
-}
-
 const HomeStack = createStackNavigator<StackParams>();
-
-const TabNavigator = () => (
-  <Tab.Navigator
-    screenOptions={{ 
-      headerShown: false,
-      tabBarStyle: styles.tab,
-      tabBarActiveTintColor: AppTheme.black,
-      }}>
-        <Tab.Screen 
-        name="Home" 
-        component={HomeStackScreen}
-        options={{
-          tabBarIcon: ({focused}) => (
-            focused ? <Image
-              style={styles.icon}
-              source={require('../assets/icons/home-selected.png')}
-            /> : <Image
-              style={styles.icon}
-              source={require('../assets/icons/home.png')}
-            />
-          ),
-        }} />
-        <Tab.Screen name="Account" component={Account} options={{
-          tabBarIcon: ({focused}) => (
-            focused ? <Image
-              style={styles.icon}
-              source={require('../assets/icons/account-selected.png')}
-            /> : <Image
-              style={styles.icon}
-              source={require('../assets/icons/account.png')}
-            />
-          ),
-        }}/>
-        <Tab.Screen name="Settings" component={Settings} options={{
-          tabBarIcon: ({focused}) => (
-            focused ? <Image
-              style={styles.icon}
-              source={require('../assets/icons/settings-selected.png')}
-            /> : <Image
-              style={styles.icon}
-              source={require('../assets/icons/settings.png')}
-            />
-          ),
-        }}/>
-  </Tab.Navigator>
-)
 
 function HomeStackScreen() {
   return (
@@ -127,9 +70,50 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="HomeStack" component={TabNavigator} />
-      </Drawer.Navigator>
+      <Tab.Navigator
+    screenOptions={{ 
+      headerShown: false,
+      tabBarStyle: styles.tab,
+      tabBarActiveTintColor: AppTheme.black,
+      }}>
+        <Tab.Screen 
+        name="HomeStack" 
+        component={HomeStackScreen}
+        options={{
+          tabBarIcon: ({focused}) => (
+            focused ? <Image
+              style={styles.icon}
+              source={require('../assets/icons/home-selected.png')}
+            /> : <Image
+              style={styles.icon}
+              source={require('../assets/icons/home.png')}
+            />
+          ),
+          title: 'Home',
+        }} />
+        <Tab.Screen name="Account" component={Account} options={{
+          tabBarIcon: ({focused}) => (
+            focused ? <Image
+              style={styles.icon}
+              source={require('../assets/icons/account-selected.png')}
+            /> : <Image
+              style={styles.icon}
+              source={require('../assets/icons/account.png')}
+            />
+          ),
+        }}/>
+        <Tab.Screen name="Settings" component={Settings} options={{
+          tabBarIcon: ({focused}) => (
+            focused ? <Image
+              style={styles.icon}
+              source={require('../assets/icons/settings-selected.png')}
+            /> : <Image
+              style={styles.icon}
+              source={require('../assets/icons/settings.png')}
+            />
+          ),
+        }}/>
+  </Tab.Navigator>
     </NavigationContainer>
   );
 };
