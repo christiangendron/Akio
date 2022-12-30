@@ -1,5 +1,4 @@
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
-import PropTypes from 'prop-types';
 import AppTheme from '../styles/AppTheme';
 
 interface ErrorMEssageProps {

@@ -9,7 +9,7 @@ interface PostIntereactionProps {
   data: {
     id: string;
     ups: number;
-    num_comment: number;
+    num_comments: number;
     created_utc: number;
     subreddit: string;
   }
@@ -23,7 +23,7 @@ function PostIntereaction(props:PostIntereactionProps) {
       <Image source={require('../assets/icons/up-arrow.png')} style={styles.icons}/>
       <Text style={styles.text}>{roundedCount(props.data.ups)}</Text>
       <Image source={require('../assets/icons/chat.png')} style={styles.icons}/>
-      <Text style={styles.text}>{roundedCount(props.data.num_comment)}</Text>
+      <Text style={styles.text}>{roundedCount(props.data.num_comments)}</Text>
       <Image source={require('../assets/icons/clock.png')} style={styles.icons}/>
       <Text style={styles.text}>{timeSince(props.data.created_utc)}</Text>
       <TouchableOpacity

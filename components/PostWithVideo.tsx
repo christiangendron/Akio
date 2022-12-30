@@ -1,33 +1,22 @@
 import {Text, View, StyleSheet} from 'react-native';
 import AppTheme from '../styles/AppTheme';
+import { PostProp } from '../types/PostProp';
 import PostIntereaction from './PostIntereaction';
 
-interface PostWithVideoProps {
-  data: {
-    id: string;
-    ups: number;
-    num_comments: number;
-    created_utc: number;
-    subreddit: string;
-    title: string;
-  }
-}
-
-function PostWithVideo(props:PostWithVideoProps) {
-  const currPost = props.data;
+function PostWithVideo(props:PostProp) {
 
   const intereactionData = {
-    id: currPost.id,
-    ups: currPost.ups,
-    num_comment: currPost.num_comments,
-    created_utc: currPost.created_utc,
-    subreddit: currPost.subreddit,
+    id: props.data.id,
+    ups: props.data.ups,
+    num_comments: props.data.num_comments,
+    created_utc: props.data.created_utc,
+    subreddit: props.data.subreddit,
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-        {currPost.title}
+        {props.data.title}
       </Text>
       <Text style={styles.text}>
         THIS IS A VIDEO, not implemented yet

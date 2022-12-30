@@ -1,57 +1,16 @@
 import {useContext} from 'react';
-import {StyleSheet, View, FlatList, ActivityIndicator} from 'react-native';
-import PostWithImage from '../components/PostWithImage';
+import {StyleSheet, View, ActivityIndicator} from 'react-native';
 import AppTheme from '../styles/AppTheme';
 import {useQuery} from 'react-query';
 import {AuthContext} from '../context/AuthContext';
 import RedditPosts from '../services/RedditPost';
 import ErrorMessage from '../components/ErrorMessage';
-import PostWithoutImage from '../components/PostWithText';
-import PostWithVideo from '../components/PostWithVideo';
-import PostWithGallery from '../components/PostWithGallery';
-
-interface Item {
-  data: {
-    id: string;
-    ups: number;
-    num_comments: number;
-    created_utc: number;
-    subreddit: string;
-    author_fullname: string;
-    thumbnail: string;
-    is_video: boolean;
-    is_gallery: boolean;
-    title: string;
-    preview: {
-      images: {
-        resolutions: {
-          url: string;
-          height: number;
-        }[]
-        source: {
-          url: string;
-        }
-      }[]
-    }
-  }
-}
+import Feed from '../components/Feed';
 
 export default function Home() {
   const {token} = useContext(AuthContext);
 
-  const posts = useQuery('posts-all', () => RedditPosts.getPosts('canada', token.data.data.access_token));
-
-  const renderItem = ({item}: {item: Item}): JSX.Element => {
-    if (item.data.thumbnail === 'default') {
-      return <PostWithoutImage key={item.data.id} data={item.data}/>;
-    } else if (item.data.is_video) {
-      return <PostWithVideo key={item.data.id} data={item.data} />;
-    } else if (item.data.is_gallery) {
-      return <PostWithGallery key={item.data.id} data={item.data} />;
-    } else {
-      return <PostWithImage key={item.data.id} data={item.data} />;
-    }
-  };
+  const posts = useQuery('posts-all', () => RedditPosts.getPosts('images', token.data.data.access_token));
 
   if (posts.isLoading) {
     return (
@@ -69,14 +28,11 @@ export default function Home() {
     );
   }
 
+  const postsData = posts?.data?.data.data.children;
+
   return (
     <View style={styles.container}>
-      <FlatList
-        style={styles.flatlist}
-        data={posts?.data?.data.data.children}
-        renderItem={renderItem}
-        refreshing={posts.isLoading}
-        onRefresh={posts.refetch} />
+      <Feed data={postsData} action={posts.refetch} isLoading={posts.isLoading}/>
     </View>
   );
 }
@@ -87,9 +43,5 @@ const styles = StyleSheet.create({
     backgroundColor: AppTheme.lightgray,
     flex: 1,
     justifyContent: 'center',
-  },
-  flatlist: {
-    flex: 1,
-    width: '100%',
   },
 });

@@ -5,29 +5,28 @@ import {useNavigation} from '@react-navigation/native';
 import PostIntereaction from './PostIntereaction';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../navigation/Navigator';
+import { PostProp } from '../types/PostProp';
 
-function PostWithImage(props:PostWithImageProps) {
+function PostWithImage(props:PostProp) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
-
-  const currPost = props.data;
-
-  const imageThumb = decode(currPost.preview.images[0].resolutions[2].url);
-  const thumbHeight = currPost.preview.images[0].resolutions[2].height;
-  const source = decode(currPost.preview.images[0].source.url);
+  
+  const imageThumb = decode(props.data.preview.images[0].resolutions[2].url);
+  const thumbHeight = props.data.preview.images[0].resolutions[2].height;
+  const source = decode(props.data.preview.images[0].source.url);
   const image = <Image style={{resizeMode: 'contain', width: '100%', height: thumbHeight}} source={{uri: imageThumb}} />;
 
   const fullsizeData = {
-    id: currPost.id,
-    author_fullname: currPost.author_fullname,
+    id: props.data.id,
+    author_fullname: props.data.author_fullname,
     url: source,
   }
 
   const intereactionData = {
-    id: currPost.id,
-    ups: currPost.ups,
-    num_comment: currPost.num_comments,
-    created_utc: currPost.created_utc,
-    subreddit: currPost.subreddit,
+    id: props.data.id,
+    ups: props.data.ups,
+    num_comments: props.data.num_comments,
+    created_utc: props.data.created_utc,
+    subreddit: props.data.subreddit,
   };
 
   return (
@@ -35,7 +34,7 @@ function PostWithImage(props:PostWithImageProps) {
       <TouchableOpacity
         onPress={() => navigation.navigate('Details')}>
         <Text style={styles.text}>
-        {currPost.title}
+        {props.data.title}
       </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -49,29 +48,6 @@ function PostWithImage(props:PostWithImageProps) {
 }
 
 export default PostWithImage;
-
-interface PostWithImageProps {
-  data: {
-    id: string;
-      ups: number;
-      num_comments: number;
-      created_utc: number;
-      subreddit: string;
-      author_fullname: string;
-      title: string;
-      preview: {
-        images: {
-          resolutions: {
-            url: string;
-            height: number;
-          }[]
-          source: {
-            url: string;
-          }
-        }[]
-      }
-    }
-}
 
 const styles = StyleSheet.create({
   container: {

@@ -1,34 +1,22 @@
 import {Text, View, StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
 import AppTheme from '../styles/AppTheme';
 import PostIntereaction from './PostIntereaction';
+import { PostProp } from '../types/PostProp';
 
-interface PostWithGalleryProps {
-  data: {
-    id: string;
-    ups: number;
-    num_comments: number;
-    created_utc: number;
-    subreddit: string;
-    title: string;
-  }
-}
-
-function PostWithGallery(props:PostWithGalleryProps) {
-  const currPost = props.data;
+function PostWithGallery(props:PostProp) {
 
   const intereactionData = {
-    id: currPost.id,
-    ups: currPost.ups,
-    num_comment: currPost.num_comments,
-    created_utc: currPost.created_utc,
-    subreddit: currPost.subreddit,
+    id: props.data.id,
+    ups: props.data.ups,
+    num_comments: props.data.num_comments,
+    created_utc: props.data.created_utc,
+    subreddit: props.data.subreddit,
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-        {currPost.title}
+        {props.data.title}
       </Text>
       <Text style={styles.text}>
        IS GALLERY, not implemented yet
