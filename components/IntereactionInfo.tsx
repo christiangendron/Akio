@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../navigation/Navigator';
 
-interface PostIntereactionProps {
+interface InterfactionInfoProps {
   data: {
     id: string;
     ups: number;
@@ -15,7 +15,7 @@ interface PostIntereactionProps {
   }
 }
 
-function PostIntereaction(props: PostIntereactionProps) {
+function InterfactionInfo(props: InterfactionInfoProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
   return (
@@ -58,7 +58,7 @@ function PostIntereaction(props: PostIntereactionProps) {
   );
 }
 
-export default PostIntereaction;
+export default InterfactionInfo;
 
 const styles = StyleSheet.create({
   container: {

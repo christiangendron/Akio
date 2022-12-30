@@ -20,6 +20,16 @@ async function getPost(id:string, accessToken:string) {
   return res;
 }
 
-const RedditServices = {getPosts, getPost};
+async function getComments(id:string, accessToken:string) {
+  const res = await axios.get(`https://oauth.reddit.com/r/all/comments?article=t3_${id}`, {
+    headers: {
+      Authorization: 'Bearer ' + accessToken,
+    },
+  });
+
+  return res;
+}
+
+const RedditServices = {getPosts, getPost, getComments};
 
 export default RedditServices;

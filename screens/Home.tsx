@@ -4,8 +4,8 @@ import AppTheme from '../styles/AppTheme';
 import { useQuery } from 'react-query';
 import { AuthContext } from '../context/AuthContext';
 import ErrorMessage from '../components/ErrorMessage';
-import Feed from '../components/Feed';
 import RedditServices from '../services/RedditServices';
+import PostFeed from '../components/PostFeed';
 
 export default function Home() {
   const { token } = useContext(AuthContext);
@@ -32,7 +32,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Feed data={postsData} action={posts.refetch} isLoading={posts.isLoading} />
+      <PostFeed data={postsData} action={posts.refetch} isLoading={posts.isLoading} />
     </View>
   );
 }

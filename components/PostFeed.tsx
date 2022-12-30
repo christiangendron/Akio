@@ -9,9 +9,9 @@ interface FeedProps {
   action: () => void;
 }
 
-function Feed(props:FeedProps) {
-const renderItem = ({item}: {item: PostProp}): JSX.Element => {
-    return <PostItem key={item.data.id} data={item.data}/>
+function PostFeed(props: FeedProps) {
+  const renderItem = ({ item }: { item: PostProp }): JSX.Element => {
+    return <PostItem key={item.data.id} data={item.data} />
   };
 
   return (
@@ -21,23 +21,23 @@ const renderItem = ({item}: {item: PostProp}): JSX.Element => {
         data={props.data}
         renderItem={renderItem}
         refreshing={props.isLoading}
-        onRefresh={props.action} 
-        />
+        onRefresh={props.action}
+      />
     </View>
   );
 };
 
-export default Feed;
+export default PostFeed;
 
 const styles = StyleSheet.create({
-    container: {
-      alignItems: 'center',
-      flex: 1,
-      justifyContent: 'center',
-      width: '100%',
-    },
-    flatlist: {
-        flex: 1,
-        width: '100%',
-      },
-  });
+  container: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    width: '100%',
+  },
+  flatlist: {
+    flex: 1,
+    width: '100%',
+  },
+});

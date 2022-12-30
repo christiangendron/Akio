@@ -1,10 +1,13 @@
 import { useContext } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
+import CommentFeed from '../components/CommentFeed';
 import ErrorMessage from '../components/ErrorMessage';
+import PostItem from '../components/PostItem';
 import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
+import { PostProp } from '../types/PostProp';
 
 export type DetailsScreenProps = {
   route: {
@@ -39,7 +42,11 @@ export default function Details(props: DetailsScreenProps) {
 
   return (
     <View style={styles.container}>
-      <Text>Details for : {curr.title}</Text>
+      <View style={styles.container}>
+        <Text>{curr.title}</Text>
+        <Text>by {curr.author}</Text>
+        <CommentFeed data={props.route.params.data} />
+      </View>
     </View>
   );
 }

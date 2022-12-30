@@ -2,10 +2,10 @@ import { Text, View, StyleSheet, Image, TouchableOpacity, Dimensions } from 'rea
 import AppTheme from '../styles/AppTheme';
 import { decode } from 'html-entities';
 import { useNavigation } from '@react-navigation/native';
-import PostIntereaction from './PostIntereaction';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../navigation/Navigator';
 import { PostProp } from '../types/PostProp';
+import InterfactionInfo from './IntereactionInfo';
 
 function PostItem(props: PostProp) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
@@ -48,7 +48,7 @@ function PostItem(props: PostProp) {
                 onPress={() => console.log('fullscreen')}>
                 {image}
             </TouchableOpacity>
-            <PostIntereaction data={intereactionData} />
+            <InterfactionInfo data={intereactionData} />
         </View >
     );
 }

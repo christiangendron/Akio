@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { useQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
-import Feed from '../components/Feed';
+import PostFeed from '../components/PostFeed';
 import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
@@ -40,7 +40,7 @@ export default function Subreddit(props: SubredditProps) {
 
   return (
     <View style={styles.container}>
-      <Feed data={postsData} action={posts.refetch} isLoading={posts.isLoading} />
+      <PostFeed data={postsData} action={posts.refetch} isLoading={posts.isLoading} />
     </View>
   );
 }
