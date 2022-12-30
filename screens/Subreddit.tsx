@@ -18,7 +18,7 @@ interface SubredditProps {
 export default function Subreddit(props:SubredditProps) {
   const {token} = useContext(AuthContext);
 
-  const posts = useQuery('posts-all', () => RedditPosts.getPosts(props.route.params.data, token.data.data.access_token));
+  const posts = useQuery(`posts-${props.route.params.data}`, () => RedditPosts.getPosts(props.route.params.data, token.data.data.access_token));
 
   if (posts.isLoading) {
     return (
