@@ -1,13 +1,12 @@
 import { useContext } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
-import CommentFeed from '../components/CommentFeed';
+import CommentItem, { CommentItemProps } from '../components/CommentItem';
+import DetailsHeader from '../components/DetailsHeader';
 import ErrorMessage from '../components/ErrorMessage';
-import PostItem from '../components/PostItem';
 import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
-import { PostProp } from '../types/PostProp';
 
 export type DetailsScreenProps = {
   route: {
@@ -20,9 +19,9 @@ export type DetailsScreenProps = {
 export default function Details(props: DetailsScreenProps) {
   const { token } = useContext(AuthContext);
 
-  const posts = useQuery(`post-${props.route.params.data}`, () => RedditServices.getPost(props.route.params.data, token.data.data.access_token));
+  const comments = useQuery(`comments-for-${props.route.params.data}`, () => RedditServices.getComments(props.route.params.data, token.data.data.access_token));
 
-  if (posts.isLoading) {
+  if (comments.isLoading) {
     return (
       <View style={styles.container}>
         <ActivityIndicator />
@@ -30,23 +29,32 @@ export default function Details(props: DetailsScreenProps) {
     );
   }
 
-  if (posts.isError) {
+  if (comments.isError) {
     return (
       <View style={styles.container}>
-        <ErrorMessage message="Error while getting posts." action={posts.refetch} actionMessage="Try again!" />
+        <ErrorMessage message="Error while getting comments." action={comments.refetch} actionMessage="Try again!" />
       </View>
     );
   }
 
-  const curr = posts.data?.data.data.children[0].data
+  const commentsData = comments?.data?.data.data.children;
+
+  const renderItem = ({ item }: { item: CommentItemProps }): JSX.Element => {
+    return <CommentItem key={item.data.id} data={item.data} />
+  };
+
+  const header = <Text>Test Header</Text>;
 
   return (
     <View style={styles.container}>
-      <View style={styles.container}>
-        <Text>{curr.title}</Text>
-        <Text>by {curr.author}</Text>
-        <CommentFeed data={props.route.params.data} />
-      </View>
+      <FlatList
+        style={styles.flatlist}
+        data={commentsData}
+        renderItem={renderItem}
+        refreshing={comments.isLoading}
+        onRefresh={comments.refetch}
+        ListHeaderComponent={<DetailsHeader data={props.route.params.data} />}
+      />
     </View>
   );
 }
