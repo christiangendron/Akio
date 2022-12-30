@@ -1,4 +1,4 @@
-import {StyleSheet, View, Text, Image} from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import AppTheme from '../styles/AppTheme';
 
 export type FullSizeImageScreenProps = {
@@ -13,7 +13,7 @@ export type FullSizeImageScreenProps = {
   }
 }
 
- function FullSizeImageScreen(props:FullSizeImageScreenProps) {
+function FullSizeImageScreen(props: FullSizeImageScreenProps) {
 
   const curr = props.route.params.data;
 
@@ -21,7 +21,7 @@ export type FullSizeImageScreenProps = {
     <View style={styles.container}>
       <Text style={styles.text}>{curr.id}</Text>
       <Text style={styles.text}>By {curr.author_fullname}</Text>
-      <Image source={{uri: props.route.params.data.url}} style={styles.image} />
+      <Image source={{ uri: props.route.params.data.url }} style={styles.image} />
     </View>
   );
 }

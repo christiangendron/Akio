@@ -1,6 +1,6 @@
 export type PostProp = {
     data: {
-        id: string;
+    id: string;
     ups: number;
     num_comments: number;
     created_utc: number;

@@ -1,10 +1,10 @@
-import {useContext} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import { useContext } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/Home';
-import {ActivityIndicator, View, StyleSheet, Image} from 'react-native';
+import { ActivityIndicator, View, StyleSheet, Image } from 'react-native';
 import ErrorMessage from '../components/ErrorMessage';
-import {AuthContext} from '../context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import FullSizeImage from '../screens/FullSizeImage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from '../screens/Settings';
@@ -22,14 +22,15 @@ export type TabParams = {
 
 export type StackParams = {
   Home: any;
-  Details: any;
+  Details: {
+    data: string;
+  };
   FullSizeImage: {
     data: {
       url: string;
       id: string;
       author_fullname: string;
     };
-    
   };
   Subreddit: {
     data: string;
@@ -41,58 +42,58 @@ const HomeStack = createStackNavigator<StackParams>();
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-     <HomeStack.Screen name="Home" component={Home} />
-     <HomeStack.Screen name="Details" component={Details} />                          
-     <HomeStack.Screen name="FullSizeImage" component={FullSizeImage} />
-     <HomeStack.Screen name="Subreddit" component={Subreddit} />
+      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="Details" component={Details} />
+      <HomeStack.Screen name="FullSizeImage" component={FullSizeImage} />
+      <HomeStack.Screen name="Subreddit" component={Subreddit} />
     </HomeStack.Navigator>
-   );
- }
+  );
+}
 
 const Tab = createBottomTabNavigator<TabParams>();
 
 export default function App() {
-  const {token} = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
 
   if (token.isLoading) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator/>
+        <ActivityIndicator />
       </View>
     );
   }
 
   if (token.isError) {
     <View style={styles.container}>
-      <ErrorMessage message="Error while getting the a token." actionMessage="Try again" action={token.refetch}/>
+      <ErrorMessage message="Error while getting the a token." actionMessage="Try again" action={token.refetch} />
     </View>;
   }
 
   return (
     <NavigationContainer>
       <Tab.Navigator
-    screenOptions={{ 
-      headerShown: false,
-      tabBarStyle: styles.tab,
-      tabBarActiveTintColor: AppTheme.black,
-      }}>
-        <Tab.Screen 
-        name="HomeStack" 
-        component={HomeStackScreen}
-        options={{
-          tabBarIcon: ({focused}) => (
-            focused ? <Image
-              style={styles.icon}
-              source={require('../assets/icons/home-selected.png')}
-            /> : <Image
-              style={styles.icon}
-              source={require('../assets/icons/home.png')}
-            />
-          ),
-          title: 'Home',
-        }} />
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: styles.tab,
+          tabBarActiveTintColor: AppTheme.black,
+        }}>
+        <Tab.Screen
+          name="HomeStack"
+          component={HomeStackScreen}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              focused ? <Image
+                style={styles.icon}
+                source={require('../assets/icons/home-selected.png')}
+              /> : <Image
+                style={styles.icon}
+                source={require('../assets/icons/home.png')}
+              />
+            ),
+            title: 'Home',
+          }} />
         <Tab.Screen name="Account" component={Account} options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             focused ? <Image
               style={styles.icon}
               source={require('../assets/icons/account-selected.png')}
@@ -101,9 +102,9 @@ export default function App() {
               source={require('../assets/icons/account.png')}
             />
           ),
-        }}/>
+        }} />
         <Tab.Screen name="Settings" component={Settings} options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             focused ? <Image
               style={styles.icon}
               source={require('../assets/icons/settings-selected.png')}
@@ -112,8 +113,8 @@ export default function App() {
               source={require('../assets/icons/settings.png')}
             />
           ),
-        }}/>
-  </Tab.Navigator>
+        }} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
