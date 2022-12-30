@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, Image, TouchableOpacity, Dimensions} from 'react-native';
 import AppTheme from '../styles/AppTheme';
 import {decode} from 'html-entities';
 import {useNavigation} from '@react-navigation/native';
@@ -10,10 +10,13 @@ import { PostProp } from '../types/PostProp';
 function PostWithImage(props:PostProp) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
   
+  const screenDimensions = Dimensions.get("screen");
+
   const imageThumb = decode(props.data.preview.images[0].resolutions[2].url);
   const thumbHeight = props.data.preview.images[0].resolutions[2].height;
+  const thumbwidth = props.data.preview.images[0].resolutions[2].width;
   const source = decode(props.data.preview.images[0].source.url);
-  const image = <Image style={{resizeMode: 'contain', width: '100%', height: thumbHeight}} source={{uri: imageThumb}} />;
+  const image = <Image style={{resizeMode: 'cover',width: screenDimensions.width, height: thumbHeight}} source={{uri: imageThumb}} />;
 
   const fullsizeData = {
     id: props.data.id,
@@ -38,7 +41,6 @@ function PostWithImage(props:PostProp) {
       </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={{height: thumbHeight, width: '100%'}}
         onPress={() => navigation.navigate('FullSizeImage', {data: fullsizeData})}>
         {image}
       </TouchableOpacity>

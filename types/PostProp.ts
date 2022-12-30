@@ -16,6 +16,7 @@ export type PostProp = {
             resolutions: {
                 url: string;
                 height: number;
+                width: number;
             }[]
             source: {
                 url: string;
