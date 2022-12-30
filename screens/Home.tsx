@@ -10,7 +10,7 @@ import Feed from '../components/Feed';
 export default function Home() {
   const {token} = useContext(AuthContext);
 
-  const posts = useQuery('posts-all', () => RedditPosts.getPosts('images', token.data.data.access_token));
+  const posts = useQuery('posts-all', () => RedditPosts.getPosts('all', token.data.data.access_token));
 
   if (posts.isLoading) {
     return (
