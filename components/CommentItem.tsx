@@ -18,13 +18,13 @@ function CommentItem(props: CommentItemProps) {
     return (
         <View style={styles.container}>
             <Text style={styles.author}>
-                {props.data.author} <Text style={styles.votes}>{props.data.ups}</Text>
+                {props.data.author}
             </Text>
             <Text>
                 {props.data.body}
             </Text>
             <Text style={styles.subText}>
-                {timeSince(props.data.created_utc)}
+                {timeSince(props.data.created_utc)} · <Text style={styles.votes}>{props.data.ups}</Text>
             </Text>
         </View >
     );
