@@ -56,14 +56,19 @@ function DetailsHeader(props: DetailsScreenProps) {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>{currentPost.data.title}</Text>
-            <Text style={styles.subtext}>in {currentPost.data.subreddit} by&nbsp;
-                <Text onPress={() => navigation.navigate('Overview', { data: currentPost.data.author })}>{currentPost.data.author}</Text>
-            </Text>
-            {thumbnail}
-            <InterfactionInfo data={intereactionData} />
-        </View >
+        <View>
+            <View style={styles.container}>
+                <Text style={styles.title}>{currentPost.data.title}</Text>
+                <Text style={styles.subtext}>in {currentPost.data.subreddit} by&nbsp;
+                    <Text onPress={() => navigation.navigate('Overview', { data: currentPost.data.author })}>{currentPost.data.author}</Text>
+                </Text>
+                {thumbnail}
+                <InterfactionInfo data={intereactionData} />
+            </View >
+            <View style={styles.filter}>
+                <Text>Filter</Text>
+            </View >
+        </View>
     );
 }
 
@@ -82,6 +87,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingTop: 15,
         textAlign: 'left',
+    },
+    filter: {
+        backgroundColor: AppTheme.white,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     subtext: {
         fontSize: 13,
