@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { useQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
+import FilterBox from '../components/FilterBox';
 import FilterPost from '../components/FilterPost';
 import PostFeed from '../components/PostFeed';
 import { AuthContext } from '../context/AuthContext';
@@ -19,6 +20,7 @@ interface SubredditProps {
 
 export default function Subreddit(props: SubredditProps) {
   const { token } = useContext(AuthContext);
+  const [filter, setFilter] = useState('hot');
 
   const navigation = useNavigation();
 
@@ -26,12 +28,12 @@ export default function Subreddit(props: SubredditProps) {
     navigation.setOptions({
       title: props.route.params.data,
       headerRight: () => (
-        <FilterPost />
+        <FilterBox data={{ filter, setFilter }} />
       ),
     });
   }, [navigation]);
 
-  const posts = useQuery(`posts-${props.route.params.data}`, () => RedditServices.getPosts(props.route.params.data, token.data.data.access_token));
+  const posts = useQuery(`posts-${props.route.params.data}`, () => RedditServices.getPosts(props.route.params.data, filter, token.data.data.access_token));
 
   if (posts.isLoading) {
     return (

@@ -20,20 +20,25 @@ function PostItem(props: PostProp) {
 
     let image = null;
 
-    if (props.data.thumbnail != 'default' || props.data.secure_media == null) {
-        const screenDimensions = Dimensions.get("screen");
-        const imageThumb = decode(props.data.preview.images[0].resolutions[2].url);
-        const thumbHeight = props.data.preview.images[0].resolutions[2].height;
-        const thumbwidth = props.data.preview.images[0].resolutions[2].width;
-        const source = decode(props.data.preview.images[0].source.url);
-        image = <Image style={{ resizeMode: 'cover', width: screenDimensions.width, height: thumbHeight }} source={{ uri: imageThumb }} />;
+    try {
+        if (props.data.secure_media == null) {
+            const screenDimensions = Dimensions.get("screen");
+            const imageThumb = decode(props.data.preview.images[0].resolutions[2].url);
+            const thumbHeight = props.data.preview.images[0].resolutions[2].height;
+            const thumbwidth = props.data.preview.images[0].resolutions[2].width;
+            const source = decode(props.data.preview.images[0].source.url);
+            image = <Image style={{ resizeMode: 'cover', width: screenDimensions.width, height: thumbHeight }} source={{ uri: imageThumb }} />;
 
-        const fullsizeData = {
-            id: props.data.id,
-            author_fullname: props.data.author_fullname,
-            url: source,
+            const fullsizeData = {
+                id: props.data.id,
+                author_fullname: props.data.author_fullname,
+                url: source,
+            }
         }
+    } catch (error) {
+        console.log('Post with id: ' + props.data.id + ' caused an error');
     }
+
 
     return (
         <View style={styles.container}>

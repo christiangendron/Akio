@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import AppTheme from '../styles/AppTheme';
 import { useQuery } from 'react-query';
@@ -8,21 +8,24 @@ import RedditServices from '../services/RedditServices';
 import PostFeed from '../components/PostFeed';
 import { useNavigation } from '@react-navigation/native';
 import FilterPost from '../components/FilterPost';
+import FilterBox from '../components/FilterBox';
 
 export default function Home({ }) {
   const { token } = useContext(AuthContext);
+  const [filter, setFilter] = useState('hot');
+
   const navigation = useNavigation();
 
   useEffect(() => {
     navigation.setOptions({
       title: 'r/all',
       headerRight: () => (
-        <FilterPost />
+        <FilterBox data={{ filter, setFilter }} />
       ),
     });
   }, [navigation]);
 
-  const posts = useQuery('posts-all', () => RedditServices.getPosts('all', token.data.data.access_token));
+  const posts = useQuery('posts-all', () => RedditServices.getPosts('all', filter, token.data.data.access_token));
 
   if (posts.isLoading) {
     return (

@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Modal, StyleSheet, Text, Pressable, View, Image, TouchableOpacity } from "react-native";
 
-interface FilterPostProps {
+interface FilterBoxProps {
     data: {
         filter: string;
         setFilter: (filter: string) => void;
     }
 }
 
-export default function FilterPost(props: FilterPostProps) {
+export default function FilterBox(props: FilterBoxProps) {
     const [modalVisible, setModalVisible] = useState(false);
 
     return (
@@ -29,7 +29,7 @@ export default function FilterPost(props: FilterPostProps) {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={styles.modalText}>Filtering posts</Text>
+                            <Text style={styles.modalText}>Filter</Text>
                             <Text style={styles.modalText} onPress={() => props.data.setFilter('hot')}>Hot</Text>
                             <Text style={styles.modalText} onPress={() => props.data.setFilter('new')}>New</Text>
                             <Text style={styles.modalText} onPress={() => props.data.setFilter('top')}>Top</Text>

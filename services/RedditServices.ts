@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-async function getPosts(sub:string, accessToken:string) {
-  const res = await axios.get(`https://oauth.reddit.com/r/${sub}/top?limit=10`, {
+async function getPosts(sub:string,filter:string, accessToken:string) {
+  const res = await axios.get(`https://oauth.reddit.com/r/${sub}/${filter}?limit=10`, {
     headers: {
       Authorization: 'Bearer ' + accessToken,
     },
@@ -20,8 +20,8 @@ async function getPost(id:string, accessToken:string) {
   return res;
 }
 
-async function getComments(id:string, accessToken:string) {
-  const res = await axios.get(`https://oauth.reddit.com/r/all/comments?article=t3_${id}`, {
+async function getComments(id:string,filter:string, accessToken:string) {
+  const res = await axios.get(`https://oauth.reddit.com/r/all/comments?article=t3_${id}?sort=${filter}`, {
     headers: {
       Authorization: 'Bearer ' + accessToken,
     },

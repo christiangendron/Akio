@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { useContext, useEffect } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native';
+import { useContext, useEffect, useState } from 'react';
+import { StyleSheet, View, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 import CommentItem, { CommentItemProps } from '../components/CommentItem';
 import DetailsHeader from '../components/DetailsHeader';
 import ErrorMessage from '../components/ErrorMessage';
-import FilterComment from '../components/FilterComments';
+import FilterBox from '../components/FilterBox';
 import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
@@ -20,6 +20,7 @@ export type DetailsScreenProps = {
 
 export default function Details(props: DetailsScreenProps) {
   const { token } = useContext(AuthContext);
+  const [filter, setFilter] = useState('hot');
 
   const navigation = useNavigation();
 
@@ -27,12 +28,12 @@ export default function Details(props: DetailsScreenProps) {
     navigation.setOptions({
       title: '',
       headerRight: () => (
-        <FilterComment />
+        <FilterBox data={{ filter, setFilter }} />
       ),
     });
   }, [navigation]);
 
-  const comments = useQuery(`comments-for-${props.route.params.data}`, () => RedditServices.getComments(props.route.params.data, token.data.data.access_token));
+  const comments = useQuery(`comments-for-${props.route.params.data}`, () => RedditServices.getComments(props.route.params.data, filter, token.data.data.access_token));
 
   const renderItem = ({ item }: { item: CommentItemProps }): JSX.Element => {
     return <CommentItem key={item.data.id} data={item.data} />

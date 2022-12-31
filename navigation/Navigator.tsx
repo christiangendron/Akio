@@ -14,7 +14,6 @@ import Account from '../screens/Account';
 import AppTheme from '../styles/AppTheme';
 import Overview from '../screens/Overview';
 import Search from '../screens/Search';
-import FilterBox from '../components/FilterBox';
 
 export type TabParams = {
   Home: any;
@@ -115,7 +114,6 @@ export default function App() {
                 source={require('../assets/icons/home.png')}
               />
             ),
-            title: 'Home',
           }} />
         <Tab.Screen name="Account" component={Account} options={{
           tabBarIcon: ({ focused }) => (
