@@ -20,7 +20,7 @@ export type DetailsScreenProps = {
 
 export default function Details(props: DetailsScreenProps) {
   const { token } = useContext(AuthContext);
-  const [filter, setFilter] = useState('hot');
+  const [filter, setFilter] = useState('best');
 
   const navigation = useNavigation();
 

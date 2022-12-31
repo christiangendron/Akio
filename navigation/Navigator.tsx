@@ -114,6 +114,7 @@ export default function App() {
                 source={require('../assets/icons/home.png')}
               />
             ),
+            title: 'Home',
           }} />
         <Tab.Screen name="Account" component={Account} options={{
           tabBarIcon: ({ focused }) => (
