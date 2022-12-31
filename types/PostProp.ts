@@ -7,6 +7,7 @@ export type PostProp = {
     subreddit: string;
     author_fullname: string;
     title: string;
+    author: string;
     thumbnail: string;
     is_video: boolean;
     is_gallery: boolean;

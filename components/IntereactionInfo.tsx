@@ -27,7 +27,6 @@ function InterfactionInfo(props: InterfactionInfoProps) {
           <Image source={require('../assets/icons/up-arrow.png')} style={styles.icons} />
           <Text style={styles.text}>{roundedCount(props.data.ups)}</Text>
         </TouchableOpacity>
-
       </View>
       <View>
         <TouchableOpacity
@@ -36,7 +35,6 @@ function InterfactionInfo(props: InterfactionInfoProps) {
           <Image source={require('../assets/icons/chat.png')} style={styles.icons} />
           <Text style={styles.text}>{roundedCount(props.data.num_comments)}</Text>
         </TouchableOpacity>
-
       </View>
       <View>
         <TouchableOpacity
@@ -46,13 +44,9 @@ function InterfactionInfo(props: InterfactionInfoProps) {
           <Text style={styles.text}>{timeSince(props.data.created_utc)}</Text>
         </TouchableOpacity>
       </View>
-      <View>
-        <TouchableOpacity
-          style={styles.info}
-          onPress={() => navigation.navigate("Subreddit", { data: props.data.subreddit })}>
-          <Image source={require('../assets/icons/placeholder.png')} style={styles.icons} />
-          <Text style={styles.text}>{props.data.subreddit}</Text>
-        </TouchableOpacity>
+      <View style={styles.votes}>
+        <Image source={require('../assets/icons/upvote.png')} style={styles.icons} />
+        <Image source={require('../assets/icons/downvote.png')} style={styles.icons} />
       </View>
     </View>
   );
@@ -67,19 +61,25 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     height: 'auto',
-    justifyContent: 'space-evenly',
-    marginVertical: 10,
-    padding: 5,
+    justifyContent: 'flex-start',
+    marginVertical: 15,
+    paddingHorizontal: 15,
+    width: '100%',
   },
   icons: {
     height: 20,
     marginHorizontal: 5,
     width: 20,
   },
+  votes: {
+    flexDirection: 'row',
+    marginLeft: 'auto',
+  },
   text: {
-    fontSize: 15,
+    fontSize: 12,
+    marginTop: 3,
   },
   info: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   }
 });

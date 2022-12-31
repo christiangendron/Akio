@@ -43,6 +43,12 @@ function PostItem(props: PostProp) {
                     {props.data.title}
                 </Text>
             </TouchableOpacity>
+            <Text style={styles.subText}>
+                in&nbsp;
+                <Text onPress={() => navigation.navigate('Subreddit', { data: props.data.subreddit })}>{props.data.subreddit}</Text>
+                &nbsp;by&nbsp;
+                <Text onPress={() => navigation.navigate('Overview', { data: props.data.author })}>{props.data.author}</Text>
+            </Text>
             <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => console.log('fullscreen')}>
@@ -65,7 +71,15 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 15,
         fontWeight: 'bold',
-        padding: 15,
+        paddingLeft: 15,
+        paddingTop: 15,
         textAlign: 'left',
     },
+    subText: {
+        fontSize: 15,
+        paddingBottom: 15,
+        paddingLeft: 15,
+        textAlign: 'left',
+        paddingVertical: 5,
+    }
 });

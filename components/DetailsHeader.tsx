@@ -8,12 +8,17 @@ import ErrorMessage from './ErrorMessage';
 import { PostProp } from '../types/PostProp';
 import { decode } from 'html-entities';
 import InterfactionInfo from './IntereactionInfo';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackParams } from '../navigation/Navigator';
 
 export type DetailsScreenProps = {
     data: string;
 }
 
 function DetailsHeader(props: DetailsScreenProps) {
+    const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
+
     const { token } = useContext(AuthContext);
 
     const posts = useQuery(`post-details-for-${props.data}`, () => RedditServices.getPost(props.data, token.data.data.access_token));
@@ -53,7 +58,9 @@ function DetailsHeader(props: DetailsScreenProps) {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{currentPost.data.title}</Text>
-            <Text style={styles.subtext}>in {currentPost.data.subreddit} by {currentPost.data.author_fullname}</Text>
+            <Text style={styles.subtext}>in {currentPost.data.subreddit} by&nbsp;
+                <Text onPress={() => navigation.navigate('Overview', { data: currentPost.data.author })}>{currentPost.data.author}</Text>
+            </Text>
             {thumbnail}
             <InterfactionInfo data={intereactionData} />
         </View >
@@ -81,5 +88,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         textAlign: 'left',
         marginBottom: 15,
+        paddingVertical: 5,
     }
 });

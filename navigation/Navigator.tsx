@@ -12,17 +12,22 @@ import Details from '../screens/Details';
 import Subreddit from '../screens/Subreddit';
 import Account from '../screens/Account';
 import AppTheme from '../styles/AppTheme';
+import Overview from '../screens/Overview';
 
 export type TabParams = {
   Home: any;
   HomeStack: StackParams;
   Account: any;
   Settings: any;
+  Overview: any;
 }
 
 export type StackParams = {
   Home: any;
   Details: {
+    data: string;
+  };
+  Overview: {
     data: string;
   };
   FullSizeImage: {
@@ -44,6 +49,7 @@ function HomeStackScreen() {
     <HomeStack.Navigator>
       <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen name="Details" component={Details} />
+      <HomeStack.Screen name="Overview" component={Overview} />
       <HomeStack.Screen name="FullSizeImage" component={FullSizeImage} />
       <HomeStack.Screen name="Subreddit" component={Subreddit} />
     </HomeStack.Navigator>

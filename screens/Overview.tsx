@@ -8,7 +8,7 @@ import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
 
-export type DetailsScreenProps = {
+export type OverviewProps = {
   route: {
     params: {
       data: string;
@@ -16,50 +16,36 @@ export type DetailsScreenProps = {
   }
 }
 
-export default function Details(props: DetailsScreenProps) {
+export default function Overview(props: OverviewProps) {
   const { token } = useContext(AuthContext);
 
-  const comments = useQuery(`comments-for-${props.route.params.data}`, () => RedditServices.getComments(props.route.params.data, token.data.data.access_token));
+  const user = useQuery(`overview-for-${props.route.params.data}`, () => RedditServices.getOverview(props.route.params.data, token.data.data.access_token));
 
   const renderItem = ({ item }: { item: CommentItemProps }): JSX.Element => {
     return <CommentItem key={item.data.id} data={item.data} />
   };
 
-  if (comments.isLoading) {
+  if (user.isLoading) {
     return (
       <View style={styles.container}>
-        <FlatList
-          style={styles.flatlist}
-          data={null}
-          renderItem={renderItem}
-          refreshing={comments.isLoading}
-          onRefresh={comments.refetch}
-          ListHeaderComponent={<DetailsHeader data={props.route.params.data} />}
-        />
+        <ActivityIndicator />
       </View>
     );
   }
 
-  if (comments.isError) {
+  if (user.isError) {
     return (
       <View style={styles.container}>
-        <ErrorMessage message="Error while getting comments." action={comments.refetch} actionMessage="Try again!" />
+        <ErrorMessage message="Error while getting user info." action={user.refetch} actionMessage="Try again!" />
       </View>
     );
   }
 
-  const commentsData = comments?.data?.data.data.children;
+  const currentUserInfo = user?.data?.data.data.children[0].data;
 
   return (
     <View style={styles.container}>
-      <FlatList
-        style={styles.flatlist}
-        data={commentsData}
-        renderItem={renderItem}
-        refreshing={comments.isLoading}
-        onRefresh={comments.refetch}
-        ListHeaderComponent={<DetailsHeader data={props.route.params.data} />}
-      />
+      <Text>Overview for {currentUserInfo.author}</Text>
     </View>
   );
 }
