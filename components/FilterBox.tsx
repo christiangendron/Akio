@@ -30,10 +30,22 @@ export default function FilterBox(props: FilterBoxProps) {
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
                             <Text style={styles.modalText}>Filter</Text>
-                            <Text style={styles.modalText} onPress={() => props.data.setFilter('hot')}>Hot</Text>
-                            <Text style={styles.modalText} onPress={() => props.data.setFilter('new')}>New</Text>
-                            <Text style={styles.modalText} onPress={() => props.data.setFilter('top')}>Top</Text>
-                            <Text style={styles.modalText} onPress={() => props.data.setFilter('controversial')}>Controversial</Text>
+                            <Text style={styles.modalText} onPress={() => {
+                                props.data.setFilter('hot');
+                                setModalVisible(!modalVisible);
+                            }}>Hot</Text>
+                            <Text style={styles.modalText} onPress={() => {
+                                props.data.setFilter('new');
+                                setModalVisible(!modalVisible);
+                            }}>New</Text>
+                            <Text style={styles.modalText} onPress={() => {
+                                props.data.setFilter('top')
+                                setModalVisible(!modalVisible);
+                            }}>Top</Text>
+                            <Text style={styles.modalText} onPress={() => {
+                                props.data.setFilter('controversial');
+                                setModalVisible(!modalVisible);
+                            }}>Controversial</Text>
                             <Pressable
                                 style={[styles.button, styles.buttonClose]}
                                 onPress={() => setModalVisible(!modalVisible)}
