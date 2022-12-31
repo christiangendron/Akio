@@ -39,11 +39,10 @@ function PostItem(props: PostProp) {
         console.log('Post with id: ' + props.data.id + ' caused an error');
     }
 
-
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                onPress={() => navigation.navigate('Details', { data: props.data.id })}>
+                onPress={() => navigation.navigate('Details', { data: { id: props.data.id, subreddit: props.data.subreddit } })}>
                 <Text style={styles.text}>
                     {props.data.title}
                 </Text>

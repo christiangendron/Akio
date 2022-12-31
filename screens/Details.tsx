@@ -13,7 +13,10 @@ import AppTheme from '../styles/AppTheme';
 export type DetailsScreenProps = {
   route: {
     params: {
-      data: string;
+      data: {
+        id: string;
+        subreddit: string;
+      }
     }
   }
 }
@@ -33,7 +36,7 @@ export default function Details(props: DetailsScreenProps) {
     });
   }, [navigation]);
 
-  const comments = useQuery(`comments-for-${props.route.params.data}-${filter}`, () => RedditServices.getComments(props.route.params.data, filter, token.data.data.access_token));
+  const comments = useQuery(`comments-for-${props.route.params.data.id}-${filter}-${props.route.params.data.subreddit}`, () => RedditServices.getComments(props.route.params.data.id, props.route.params.data.subreddit, filter, token.data.data.access_token));
 
   useEffect(() => {
     comments.refetch();
@@ -52,7 +55,7 @@ export default function Details(props: DetailsScreenProps) {
           renderItem={renderItem}
           refreshing={comments.isLoading}
           onRefresh={comments.refetch}
-          ListHeaderComponent={<DetailsHeader data={props.route.params.data} />}
+          ListHeaderComponent={<DetailsHeader data={props.route.params.data.id} />}
         />
       </View>
     );
@@ -66,7 +69,7 @@ export default function Details(props: DetailsScreenProps) {
     );
   }
 
-  const commentsData = comments?.data?.data.data.children;
+  const commentsData = comments?.data?.data[1].data.children;
 
   return (
     <View style={styles.container}>
@@ -76,7 +79,7 @@ export default function Details(props: DetailsScreenProps) {
         renderItem={renderItem}
         refreshing={comments.isLoading}
         onRefresh={comments.refetch}
-        ListHeaderComponent={<DetailsHeader data={props.route.params.data} />}
+        ListHeaderComponent={<DetailsHeader data={props.route.params.data.id} />}
       />
     </View>
   );

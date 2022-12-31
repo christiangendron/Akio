@@ -20,8 +20,8 @@ async function getPost(id:string, accessToken:string) {
   return res;
 }
 
-async function getComments(id:string,filter:string, accessToken:string) {
-  const res = await axios.get(`https://oauth.reddit.com/r/all/comments?article=t3_${id}?sort=${filter}`, {
+async function getComments(id:string, subreddit:string, filter:string, accessToken:string) {  
+  const res = await axios.get(`https://oauth.reddit.com/r/${subreddit}/comments/${id}?sort=${filter}&limit=25&depth=0`, {
     headers: {
       Authorization: 'Bearer ' + accessToken,
     },

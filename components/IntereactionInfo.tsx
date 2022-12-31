@@ -23,7 +23,7 @@ function InterfactionInfo(props: InterfactionInfoProps) {
       <View>
         <TouchableOpacity
           style={styles.info}
-          onPress={() => navigation.navigate('Details', { data: props.data.id })}>
+          onPress={() => navigation.navigate('Details', { data: { id: props.data.id, subreddit: props.data.subreddit } })}>
           <Image source={require('../assets/icons/up-arrow.png')} style={styles.icons} />
           <Text style={styles.text}>{roundedCount(props.data.ups)}</Text>
         </TouchableOpacity>
@@ -31,7 +31,7 @@ function InterfactionInfo(props: InterfactionInfoProps) {
       <View>
         <TouchableOpacity
           style={styles.info}
-          onPress={() => navigation.navigate('Details', { data: props.data.id })}>
+          onPress={() => navigation.navigate('Details', { data: { id: props.data.id, subreddit: props.data.subreddit } })}>
           <Image source={require('../assets/icons/chat.png')} style={styles.icons} />
           <Text style={styles.text}>{roundedCount(props.data.num_comments)}</Text>
         </TouchableOpacity>
@@ -39,7 +39,7 @@ function InterfactionInfo(props: InterfactionInfoProps) {
       <View>
         <TouchableOpacity
           style={styles.info}
-          onPress={() => navigation.navigate('Details', { data: props.data.id })}>
+          onPress={() => navigation.navigate('Details', { data: { id: props.data.id, subreddit: props.data.subreddit } })}>
           <Image source={require('../assets/icons/clock.png')} style={styles.icons} />
           <Text style={styles.text}>{timeSince(props.data.created_utc)}</Text>
         </TouchableOpacity>
