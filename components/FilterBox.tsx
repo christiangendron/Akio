@@ -29,7 +29,7 @@ export default function FilterBox(props: FilterBoxProps) {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={styles.modalText}>Filter</Text>
+                            <Text style={styles.title}>Sort by...</Text>
                             <Text style={styles.modalText} onPress={() => {
                                 props.data.setFilter('hot');
                                 setModalVisible(!modalVisible);
@@ -46,11 +46,12 @@ export default function FilterBox(props: FilterBoxProps) {
                                 props.data.setFilter('controversial');
                                 setModalVisible(!modalVisible);
                             }}>Controversial</Text>
+                        </View>
+                        <View>
                             <Pressable
                                 style={[styles.button, styles.buttonClose]}
-                                onPress={() => setModalVisible(!modalVisible)}
-                            >
-                                <Text style={styles.textStyle}>Hide Modal</Text>
+                                onPress={() => setModalVisible(!modalVisible)}>
+                                <Text style={styles.textStyle}>Close</Text>
                             </Pressable>
                         </View>
                     </View>
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         margin: 20,
+        width: '75%',
         backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
@@ -85,7 +87,14 @@ const styles = StyleSheet.create({
     button: {
         borderRadius: 20,
         padding: 10,
+        width: '50%',
         elevation: 2
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        decorationLine: 'underline',
+        marginBottom: 15,
     },
     buttonOpen: {
         backgroundColor: "#F194FF",
@@ -100,6 +109,6 @@ const styles = StyleSheet.create({
     },
     modalText: {
         marginBottom: 15,
-        textAlign: "center"
+        textAlign: "center",
     }
 });
