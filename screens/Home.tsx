@@ -27,6 +27,10 @@ export default function Home({ }) {
 
   const posts = useQuery('posts-all', () => RedditServices.getPosts('all', filter, token.data.data.access_token));
 
+  useEffect(() => {
+    posts.refetch();
+  }, [filter]);
+
   if (posts.isLoading) {
     return (
       <View style={styles.container}>

@@ -35,6 +35,10 @@ export default function Details(props: DetailsScreenProps) {
 
   const comments = useQuery(`comments-for-${props.route.params.data}`, () => RedditServices.getComments(props.route.params.data, filter, token.data.data.access_token));
 
+  useEffect(() => {
+    comments.refetch();
+  }, [filter]);
+
   const renderItem = ({ item }: { item: CommentItemProps }): JSX.Element => {
     return <CommentItem key={item.data.id} data={item.data} />
   };

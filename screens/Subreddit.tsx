@@ -35,6 +35,10 @@ export default function Subreddit(props: SubredditProps) {
 
   const posts = useQuery(`posts-${props.route.params.data}`, () => RedditServices.getPosts(props.route.params.data, filter, token.data.data.access_token));
 
+  useEffect(() => {
+    posts.refetch();
+  }, [filter]);
+
   if (posts.isLoading) {
     return (
       <View style={styles.container}>
