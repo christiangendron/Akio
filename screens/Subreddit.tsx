@@ -33,7 +33,7 @@ export default function Subreddit(props: SubredditProps) {
     });
   }, [navigation]);
 
-  const posts = useQuery(`posts-${props.route.params.data}`, () => RedditServices.getPosts(props.route.params.data, filter, token.data.data.access_token));
+  const posts = useQuery(`posts-${props.route.params.data}-${filter}`, () => RedditServices.getPosts(props.route.params.data, filter, token.data.data.access_token));
 
   useEffect(() => {
     posts.refetch();

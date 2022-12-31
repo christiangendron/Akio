@@ -33,7 +33,7 @@ export default function Details(props: DetailsScreenProps) {
     });
   }, [navigation]);
 
-  const comments = useQuery(`comments-for-${props.route.params.data}`, () => RedditServices.getComments(props.route.params.data, filter, token.data.data.access_token));
+  const comments = useQuery(`comments-for-${props.route.params.data}-${filter}`, () => RedditServices.getComments(props.route.params.data, filter, token.data.data.access_token));
 
   useEffect(() => {
     comments.refetch();
