@@ -8,6 +8,7 @@ export type PostProp = {
     author_fullname: string;
     title: string;
     author: string;
+    secure_media: object;
     thumbnail: string;
     is_video: boolean;
     is_gallery: boolean;

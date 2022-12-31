@@ -42,7 +42,7 @@ function DetailsHeader(props: DetailsScreenProps) {
     const currentPost: PostProp = posts?.data?.data.data.children[0];
     let thumbnail = null;
 
-    if (currentPost.data.thumbnail != undefined) {
+    if (currentPost.data.secure_media == null) {
         const source = decode(currentPost.data.preview.images[0].source.url);
         thumbnail = <Image style={{ width: Dimensions.get('window').width, height: 200 }} source={{ uri: source }} />
     }
