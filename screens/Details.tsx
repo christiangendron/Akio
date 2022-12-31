@@ -1,9 +1,11 @@
-import { useContext } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useContext, useEffect } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 import CommentItem, { CommentItemProps } from '../components/CommentItem';
 import DetailsHeader from '../components/DetailsHeader';
 import ErrorMessage from '../components/ErrorMessage';
+import FilterComment from '../components/FilterComments';
 import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
@@ -18,6 +20,17 @@ export type DetailsScreenProps = {
 
 export default function Details(props: DetailsScreenProps) {
   const { token } = useContext(AuthContext);
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: '',
+      headerRight: () => (
+        <FilterComment />
+      ),
+    });
+  }, [navigation]);
 
   const comments = useQuery(`comments-for-${props.route.params.data}`, () => RedditServices.getComments(props.route.params.data, token.data.data.access_token));
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Modal, StyleSheet, Text, Pressable, View, Image, TouchableOpacity } from "react-native";
 
-export default function FilterBox() {
+export default function FilterPost() {
     const [modalVisible, setModalVisible] = useState(false);
 
     return (
@@ -22,7 +22,7 @@ export default function FilterBox() {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={styles.modalText}>Hello World!</Text>
+                            <Text style={styles.modalText}>Filtering posts</Text>
                             <Pressable
                                 style={[styles.button, styles.buttonClose]}
                                 onPress={() => setModalVisible(!modalVisible)}

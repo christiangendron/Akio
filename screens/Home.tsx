@@ -7,7 +7,7 @@ import ErrorMessage from '../components/ErrorMessage';
 import RedditServices from '../services/RedditServices';
 import PostFeed from '../components/PostFeed';
 import { useNavigation } from '@react-navigation/native';
-import FilterBox from '../components/FilterBox';
+import FilterPost from '../components/FilterPost';
 
 export default function Home({ }) {
   const { token } = useContext(AuthContext);
@@ -17,7 +17,7 @@ export default function Home({ }) {
     navigation.setOptions({
       title: 'r/all',
       headerRight: () => (
-        <FilterBox />
+        <FilterPost />
       ),
     });
   }, [navigation]);
