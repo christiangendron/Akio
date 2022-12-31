@@ -20,7 +20,7 @@ function PostItem(props: PostProp) {
 
     let image = null;
 
-    if (props.data.secure_media == null) {
+    if (props.data.thumbnail != 'default' || props.data.secure_media == null) {
         const screenDimensions = Dimensions.get("screen");
         const imageThumb = decode(props.data.preview.images[0].resolutions[2].url);
         const thumbHeight = props.data.preview.images[0].resolutions[2].height;

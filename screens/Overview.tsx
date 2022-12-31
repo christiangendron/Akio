@@ -1,4 +1,5 @@
-import { useContext } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useContext, useEffect } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 import CommentItem, { CommentItemProps } from '../components/CommentItem';
@@ -18,6 +19,14 @@ export type OverviewProps = {
 
 export default function Overview(props: OverviewProps) {
   const { token } = useContext(AuthContext);
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: props.route.params.data,
+    });
+  }, [navigation]);
 
   const user = useQuery(`overview-for-${props.route.params.data}`, () => RedditServices.getOverview(props.route.params.data, token.data.data.access_token));
 

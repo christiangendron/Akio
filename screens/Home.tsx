@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import AppTheme from '../styles/AppTheme';
 import { useQuery } from 'react-query';
@@ -6,9 +6,21 @@ import { AuthContext } from '../context/AuthContext';
 import ErrorMessage from '../components/ErrorMessage';
 import RedditServices from '../services/RedditServices';
 import PostFeed from '../components/PostFeed';
+import { useNavigation } from '@react-navigation/native';
+import FilterBox from '../components/FilterBox';
 
-export default function Home() {
+export default function Home({ }) {
   const { token } = useContext(AuthContext);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: 'r/all',
+      headerRight: () => (
+        <FilterBox />
+      ),
+    });
+  }, [navigation]);
 
   const posts = useQuery('posts-all', () => RedditServices.getPosts('all', token.data.data.access_token));
 

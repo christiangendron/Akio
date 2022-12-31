@@ -1,4 +1,5 @@
-import { useContext } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useContext, useEffect } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { useQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
@@ -17,6 +18,14 @@ interface SubredditProps {
 
 export default function Subreddit(props: SubredditProps) {
   const { token } = useContext(AuthContext);
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: props.route.params.data,
+    });
+  }, [navigation]);
 
   const posts = useQuery(`posts-${props.route.params.data}`, () => RedditServices.getPosts(props.route.params.data, token.data.data.access_token));
 
