@@ -7,7 +7,6 @@ import ErrorMessage from '../components/ErrorMessage';
 import RedditServices from '../services/RedditServices';
 import PostFeed from '../components/PostFeed';
 import { useNavigation } from '@react-navigation/native';
-import FilterPost from '../components/FilterPost';
 import FilterBox from '../components/FilterBox';
 
 export default function Home({ }) {
@@ -19,6 +18,10 @@ export default function Home({ }) {
   useEffect(() => {
     navigation.setOptions({
       title: 'r/all',
+      headerStyle: {
+        backgroundColor: AppTheme.lightgray
+      },
+      headerTintColor: AppTheme.black,
       headerRight: () => (
         <FilterBox data={{ filter, setFilter }} />
       ),

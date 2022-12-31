@@ -4,7 +4,6 @@ import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { useQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
 import FilterBox from '../components/FilterBox';
-import FilterPost from '../components/FilterPost';
 import PostFeed from '../components/PostFeed';
 import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
