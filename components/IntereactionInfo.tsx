@@ -44,10 +44,9 @@ function InterfactionInfo(props: InterfactionInfoProps) {
           <Text style={styles.text}>{timeSince(props.data.created_utc)}</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.votes}>
-        <Image source={require('../assets/icons/upvote.png')} style={styles.icons} />
-        <Image source={require('../assets/icons/downvote.png')} style={styles.icons} />
-      </View>
+      <Image source={require('../assets/icons/upvote.png')} style={styles.icons} />
+      <Image source={require('../assets/icons/downvote.png')} style={styles.icons} />
+      <Image source={require('../assets/icons/options.png')} style={styles.icons} />
     </View>
   );
 }
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     height: 'auto',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-evenly',
     marginVertical: 15,
     paddingHorizontal: 15,
     width: '100%',

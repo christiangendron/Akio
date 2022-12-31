@@ -18,7 +18,7 @@ function CommentItem(props: CommentItemProps) {
     return (
         <View style={styles.container}>
             <Text style={styles.author}>
-                {props.data.author} • <Text style={styles.votes}>{props.data.ups}</Text>
+                {props.data.author} <Text style={styles.votes}>{props.data.ups}</Text>
             </Text>
             <Text>
                 {props.data.body}
