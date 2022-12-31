@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/Home';
-import { ActivityIndicator, View, StyleSheet, Image } from 'react-native';
+import { ActivityIndicator, View, StyleSheet, Image, Button } from 'react-native';
 import ErrorMessage from '../components/ErrorMessage';
 import { AuthContext } from '../context/AuthContext';
 import FullSizeImage from '../screens/FullSizeImage';
@@ -14,6 +14,7 @@ import Account from '../screens/Account';
 import AppTheme from '../styles/AppTheme';
 import Overview from '../screens/Overview';
 import Search from '../screens/Search';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export type TabParams = {
   Home: any;
@@ -51,7 +52,14 @@ const HomeStack = createStackNavigator<StackParams>();
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="Home" component={Home} options={{
+        headerRight: () => (
+          <TouchableOpacity
+            onPress={() => console.log('Opening filter')}>
+            <Image style={{ width: 25, height: 25, marginRight: 15 }} source={require('../assets/icons/filter.png')} />
+          </TouchableOpacity>
+        ),
+      }} />
       <HomeStack.Screen name="Details" component={Details} />
       <HomeStack.Screen name="Overview" component={Overview} />
       <HomeStack.Screen name="FullSizeImage" component={FullSizeImage} />
