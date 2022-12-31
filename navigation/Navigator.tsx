@@ -13,10 +13,13 @@ import Subreddit from '../screens/Subreddit';
 import Account from '../screens/Account';
 import AppTheme from '../styles/AppTheme';
 import Overview from '../screens/Overview';
+import Search from '../screens/Search';
 
 export type TabParams = {
   Home: any;
   HomeStack: StackParams;
+  Search: any;
+  SearchStack: StackParams;
   Account: any;
   Settings: any;
   Overview: any;
@@ -40,6 +43,7 @@ export type StackParams = {
   Subreddit: {
     data: string;
   };
+  Search: any;
 }
 
 const HomeStack = createStackNavigator<StackParams>();
@@ -53,6 +57,20 @@ function HomeStackScreen() {
       <HomeStack.Screen name="FullSizeImage" component={FullSizeImage} />
       <HomeStack.Screen name="Subreddit" component={Subreddit} />
     </HomeStack.Navigator>
+  );
+}
+
+const SearchStack = createStackNavigator<StackParams>();
+
+function SearchStackScreen() {
+  return (
+    <SearchStack.Navigator>
+      <SearchStack.Screen name="Search" component={Search} />
+      <SearchStack.Screen name="Details" component={Details} />
+      <SearchStack.Screen name="Overview" component={Overview} />
+      <SearchStack.Screen name="FullSizeImage" component={FullSizeImage} />
+      <SearchStack.Screen name="Subreddit" component={Subreddit} />
+    </SearchStack.Navigator>
   );
 }
 
@@ -109,6 +127,21 @@ export default function App() {
             />
           ),
         }} />
+        <Tab.Screen
+          name="SearchStack"
+          component={SearchStackScreen}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              focused ? <Image
+                style={styles.icon}
+                source={require('../assets/icons/search-selected.png')}
+              /> : <Image
+                style={styles.icon}
+                source={require('../assets/icons/search.png')}
+              />
+            ),
+            title: 'Search',
+          }} />
         <Tab.Screen name="Settings" component={Settings} options={{
           tabBarIcon: ({ focused }) => (
             focused ? <Image
