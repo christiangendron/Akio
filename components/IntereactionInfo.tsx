@@ -4,6 +4,7 @@ import { roundedCount, timeSince } from '../tools/Formating';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../navigation/Navigator';
+import PostOption from './PostOptions';
 
 interface InterfactionInfoProps {
   data: {
@@ -46,7 +47,9 @@ function InterfactionInfo(props: InterfactionInfoProps) {
       </View>
       <Image source={require('../assets/icons/upvote.png')} style={styles.icons} />
       <Image source={require('../assets/icons/downvote.png')} style={styles.icons} />
-      <Image source={require('../assets/icons/options.png')} style={styles.icons} />
+      <View>
+        <PostOption />
+      </View>
     </View>
   );
 }

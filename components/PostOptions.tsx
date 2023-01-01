@@ -1,22 +1,14 @@
 import { useState } from "react";
 import { Modal, StyleSheet, Text, Pressable, View, Image, TouchableOpacity } from "react-native";
 
-interface FilterBoxProps {
-    data: {
-        filter: string;
-        setFilter: (filter: string) => void;
-    }
-}
-
-export default function FilterBox(props: FilterBoxProps) {
+export default function PostOption() {
     const [modalVisible, setModalVisible] = useState(false);
 
     return (
         <>
             <TouchableOpacity
-                style={{ marginRight: 15, marginTop: 15 }}
                 onPress={() => setModalVisible(true)}>
-                <Image style={{ width: 25, height: 25 }} source={require('../assets/icons/filter.png')} />
+                <Image style={{ width: 25, height: 25 }} source={require('../assets/icons/options.png')} />
             </TouchableOpacity>
             <View style={styles.centeredView}>
                 <Modal
@@ -29,23 +21,7 @@ export default function FilterBox(props: FilterBoxProps) {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={styles.title}>Sort by...</Text>
-                            <Text style={styles.modalText} onPress={() => {
-                                props.data.setFilter('hot');
-                                setModalVisible(!modalVisible);
-                            }}>Hot</Text>
-                            <Text style={styles.modalText} onPress={() => {
-                                props.data.setFilter('new');
-                                setModalVisible(!modalVisible);
-                            }}>New</Text>
-                            <Text style={styles.modalText} onPress={() => {
-                                props.data.setFilter('top')
-                                setModalVisible(!modalVisible);
-                            }}>Top</Text>
-                            <Text style={styles.modalText} onPress={() => {
-                                props.data.setFilter('controversial');
-                                setModalVisible(!modalVisible);
-                            }}>Controversial</Text>
+                            <Text style={styles.title}>Post options</Text>
                         </View>
                         <View>
                             <Pressable
