@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Image, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, Image, Dimensions, ActivityIndicator } from 'react-native';
 import AppTheme from '../styles/AppTheme';
 import { useQuery } from 'react-query';
 import RedditServices from '../services/RedditServices';

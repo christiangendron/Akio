@@ -1,7 +1,16 @@
 import axios from 'axios';
 
-async function getPosts(sub:string,filter:string, accessToken:string) {
-  const res = await axios.get(`https://oauth.reddit.com/r/${sub}/${filter}?limit=10`, {
+async function getPosts(sub:string, keyword:string, filter:string, accessToken:string) {
+
+  let requestURL = ''
+
+  if (keyword != '') {
+    requestURL = `https://oauth.reddit.com/r/${sub}/search?limit=10&q=${keyword}&sort=${filter}`
+  } else {
+    requestURL = `https://oauth.reddit.com/r/${sub}?limit=10&sort=${filter}`
+  }
+
+  const res = await axios.get(requestURL, {
     headers: {
       Authorization: 'Bearer ' + accessToken,
     },

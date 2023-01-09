@@ -14,7 +14,7 @@ export default function FilterBox(props: FilterBoxProps) {
     return (
         <>
             <TouchableOpacity
-                style={{ marginRight: 15, marginTop: 15 }}
+                style={{ marginRight: 15, marginTop: 15, marginBottom: 15 }}
                 onPress={() => setModalVisible(true)}>
                 <Image style={{ width: 25, height: 25 }} source={require('../assets/icons/filter.png')} />
             </TouchableOpacity>

@@ -1,13 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
 import { useContext, useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
 import FilterBox from '../components/FilterBox';
-import PostFeed from '../components/PostFeed';
+import PostItem from '../components/PostItem';
+import SearchBarComp from '../components/SearchBarComp';
 import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
+import { PostProp } from '../types/PostProp';
 
 interface SubredditProps {
   route: {
@@ -20,7 +22,8 @@ interface SubredditProps {
 export default function Subreddit(props: SubredditProps) {
   const { token } = useContext(AuthContext);
   const [filter, setFilter] = useState('hot');
-
+  const [keyword, setKeyword] = useState('');
+  const [subreddit, setSubreddit] = useState(props.route.params.data);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -32,7 +35,7 @@ export default function Subreddit(props: SubredditProps) {
     });
   }, [navigation]);
 
-  const posts = useQuery(`posts-${props.route.params.data}-${filter}`, () => RedditServices.getPosts(props.route.params.data, filter, token.data.data.access_token));
+  const posts = useQuery(`posts-${subreddit}-${filter}`, () => RedditServices.getPosts(subreddit, keyword, filter, token.data.data.access_token));
 
   useEffect(() => {
     posts.refetch();
@@ -56,9 +59,26 @@ export default function Subreddit(props: SubredditProps) {
 
   const postsData = posts?.data?.data.data.children;
 
+  const renderItem = ({ item }: { item: PostProp }): JSX.Element => {
+    return <PostItem key={item.data.id} data={item.data} />
+  };
+
+  const searchBarData = {
+    keyword: keyword,
+    handleChange: setKeyword,
+    handleSubmit: posts.refetch,
+  }
+
   return (
     <View style={styles.container}>
-      <PostFeed data={postsData} action={posts.refetch} isLoading={posts.isLoading} />
+      <FlatList
+        style={styles.flatlist}
+        data={postsData}
+        renderItem={renderItem}
+        refreshing={posts.isLoading}
+        onRefresh={posts.refetch}
+        ListHeaderComponent={<SearchBarComp data={searchBarData} />}
+      />
     </View>
   );
 }
