@@ -75,7 +75,7 @@ export default function Details(props: DetailsScreenProps) {
     <View style={styles.container}>
       <FlatList
         style={styles.flatlist}
-        data={commentsData}
+        data={commentsData.slice(0, -1)}
         renderItem={renderItem}
         refreshing={comments.isLoading}
         onRefresh={comments.refetch}
