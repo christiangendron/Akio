@@ -7,7 +7,7 @@ async function getPosts(sub:string, keyword:string, filter:string, accessToken:s
   if (keyword != '') {
     requestURL = `https://oauth.reddit.com/r/${sub}/search?limit=10&q=${keyword}&sort=${filter}`
   } else {
-    requestURL = `https://oauth.reddit.com/r/${sub}?limit=10&sort=${filter}`
+    requestURL = `https://oauth.reddit.com/r/${sub}/${filter}?limit=10`
   }
 
   const res = await axios.get(requestURL, {
