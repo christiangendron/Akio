@@ -10,6 +10,7 @@ import FilterBox from '../components/FilterBox';
 import PostItem from '../components/PostItem';
 import { PostProp } from '../types/PostProp';
 import SearchBarComp from '../components/SearchBarComp';
+import NoPostsFound from '../components/NoPostsFound';
 
 export default function Home({ }) {
   const { token } = useContext(AuthContext);
@@ -72,6 +73,7 @@ export default function Home({ }) {
         renderItem={renderItem}
         refreshing={posts.isLoading}
         onRefresh={posts.refetch}
+        ListEmptyComponent={<NoPostsFound />}
         ListHeaderComponent={<SearchBarComp data={searchBarData} />}
       />
     </View>

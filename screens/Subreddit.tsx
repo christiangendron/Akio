@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-nativ
 import { useQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
 import FilterBox from '../components/FilterBox';
+import NoPostsFound from '../components/NoPostsFound';
 import PostItem from '../components/PostItem';
 import SearchBarComp from '../components/SearchBarComp';
 import { AuthContext } from '../context/AuthContext';
@@ -77,6 +78,7 @@ export default function Subreddit(props: SubredditProps) {
         renderItem={renderItem}
         refreshing={posts.isLoading}
         onRefresh={posts.refetch}
+        ListEmptyComponent={<NoPostsFound />}
         ListHeaderComponent={<SearchBarComp data={searchBarData} />}
       />
     </View>
