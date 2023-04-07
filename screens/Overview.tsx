@@ -9,14 +9,7 @@ import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
 import { CommentItemProps } from '../types/CommentItem';
-
-export type OverviewProps = {
-  route: {
-    params: {
-      data: string;
-    }
-  }
-}
+import { OverviewProps } from '../types/Overview';
 
 export default function Overview(props: OverviewProps) {
   const { token } = useContext(AuthContext);

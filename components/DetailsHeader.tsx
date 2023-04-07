@@ -10,8 +10,8 @@ import { decode } from 'html-entities';
 import InterfactionInfo from './IntereactionInfo';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParams } from '../navigation/Navigator';
 import { DetailsScreenProps } from '../types/DetailsHeader';
+import { StackParams } from '../types/Navigator';
 
 export default function DetailsHeader(props: DetailsScreenProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();

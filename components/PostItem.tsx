@@ -3,9 +3,9 @@ import AppTheme from '../styles/AppTheme';
 import { decode } from 'html-entities';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParams } from '../navigation/Navigator';
 import { PostProp } from '../types/PostProp';
 import InterfactionInfo from './IntereactionInfo';
+import { StackParams } from '../types/Navigator';
 
 export default function PostItem(props: PostProp) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();

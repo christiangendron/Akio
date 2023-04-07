@@ -3,9 +3,9 @@ import AppTheme from '../styles/AppTheme';
 import { roundedCount, timeSince } from '../tools/Formating';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParams } from '../navigation/Navigator';
 import PostOption from './PostOptions';
 import { InterfactionInfoProps } from '../types/InteractionInfo';
+import { StackParams } from '../types/Navigator';
 
 export default function InterfactionInfo(props: InterfactionInfoProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
