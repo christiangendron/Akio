@@ -21,7 +21,7 @@ function DetailsHeader(props: DetailsScreenProps) {
 
     const { token } = useContext(AuthContext);
 
-    const posts = useQuery(`post-details-for-${props.data}`, () => RedditServices.getPost(props.data, token.data.data.access_token));
+    const posts = useQuery(`post-details-for-${props.data}`, () => RedditServices.getPost(props.data, token));
 
     if (posts.isLoading) {
         return (

@@ -31,7 +31,7 @@ export default function Home({ }) {
     });
   }, [navigation]);
 
-  const posts = useQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', keyword, filter, token.data.data.access_token));
+  const posts = useQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', keyword, filter, token));
 
   useEffect(() => {
     posts.refetch();

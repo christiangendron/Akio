@@ -28,7 +28,7 @@ export default function Overview(props: OverviewProps) {
     });
   }, [navigation]);
 
-  const user = useQuery(`overview-for-${props.route.params.data}`, () => RedditServices.getOverview(props.route.params.data, token.data.data.access_token));
+  const user = useQuery(`overview-for-${props.route.params.data}`, () => RedditServices.getOverview(props.route.params.data, token));
 
   const renderItem = ({ item }: { item: CommentItemProps }): JSX.Element => {
     return <CommentItem key={item.data.id} data={item.data} />

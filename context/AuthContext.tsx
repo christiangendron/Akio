@@ -1,27 +1,17 @@
 import { createContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import TokenServices from '../services/TokenServices';
-
-export interface AuthContextValue {
-  isAuth: boolean;
-  setIsAuth: (isAuth: boolean) => void;
-  token: any;
-}
-
-export const AuthContext = createContext<AuthContextValue>({
-  isAuth: false,
-  setIsAuth: () => {},
-  token: {},
-});
-
-interface AuthContextProviderProps {
-  children: React.ReactNode;
-}
+import { AuthContextValue } from '../types/AuthContext';
 
 function AuthContextProvider(props: AuthContextProviderProps) {
   const [isAuth, setIsAuth] = useState(false);
 
-  const token = useQuery('token', () => TokenServices.getToken());
+  let token = useQuery('token', () => TokenServices.getToken());
+  
+  if (!token.isError && token.data) {
+    token = token;
+
+  }
 
   const allowedContent: AuthContextValue = {
     isAuth,
@@ -34,6 +24,16 @@ function AuthContextProvider(props: AuthContextProviderProps) {
       {props.children}
     </AuthContext.Provider>
   );
+}
+
+export const AuthContext = createContext<AuthContextValue>({
+  isAuth: false,
+  setIsAuth: () => {},
+  token: {},
+});
+
+export interface AuthContextProviderProps {
+  children: React.ReactNode;
 }
 
 export default AuthContextProvider;

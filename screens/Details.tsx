@@ -36,7 +36,7 @@ export default function Details(props: DetailsScreenProps) {
     });
   }, [navigation]);
 
-  const comments = useQuery(`comments-for-${props.route.params.data.id}-${filter}-${props.route.params.data.subreddit}`, () => RedditServices.getComments(props.route.params.data.id, props.route.params.data.subreddit, filter, token.data.data.access_token));
+  const comments = useQuery(`comments-for-${props.route.params.data.id}-${filter}-${props.route.params.data.subreddit}`, () => RedditServices.getComments(props.route.params.data.id, props.route.params.data.subreddit, filter, token));
 
   useEffect(() => {
     comments.refetch();
