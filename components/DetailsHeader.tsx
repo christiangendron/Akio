@@ -11,12 +11,9 @@ import InterfactionInfo from './IntereactionInfo';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../navigation/Navigator';
+import { DetailsScreenProps } from '../types/DetailsHeader';
 
-export type DetailsScreenProps = {
-    data: string;
-}
-
-function DetailsHeader(props: DetailsScreenProps) {
+export default function DetailsHeader(props: DetailsScreenProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
     const { token } = useContext(AuthContext);
@@ -66,8 +63,6 @@ function DetailsHeader(props: DetailsScreenProps) {
         </View >
     );
 }
-
-export default DetailsHeader;
 
 const styles = StyleSheet.create({
     container: {

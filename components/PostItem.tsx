@@ -7,7 +7,7 @@ import { StackParams } from '../navigation/Navigator';
 import { PostProp } from '../types/PostProp';
 import InterfactionInfo from './IntereactionInfo';
 
-function PostItem(props: PostProp) {
+export default function PostItem(props: PostProp) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
     const intereactionData = {
@@ -62,8 +62,6 @@ function PostItem(props: PostProp) {
         </View >
     );
 }
-
-export default PostItem;
 
 const styles = StyleSheet.create({
     container: {

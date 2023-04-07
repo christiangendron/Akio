@@ -1,19 +1,8 @@
 import { StyleSheet, View, Text, Image } from 'react-native';
 import AppTheme from '../styles/AppTheme';
+import { FullSizeImageScreenProps } from '../types/FullSizeImage';
 
-export type FullSizeImageScreenProps = {
-  route: {
-    params: {
-      data: {
-        id: string;
-        author_fullname: string;
-        url: string;
-      }
-    }
-  }
-}
-
-function FullSizeImageScreen(props: FullSizeImageScreenProps) {
+export default function FullSizeImageScreen(props: FullSizeImageScreenProps) {
 
   const curr = props.route.params.data;
 
@@ -25,8 +14,6 @@ function FullSizeImageScreen(props: FullSizeImageScreenProps) {
     </View>
   );
 }
-
-export default FullSizeImageScreen;
 
 const styles = StyleSheet.create({
   container: {

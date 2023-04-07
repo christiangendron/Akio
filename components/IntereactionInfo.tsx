@@ -5,18 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../navigation/Navigator';
 import PostOption from './PostOptions';
+import { InterfactionInfoProps } from '../types/InteractionInfo';
 
-interface InterfactionInfoProps {
-  data: {
-    id: string;
-    ups: number;
-    num_comments: number;
-    created_utc: number;
-    subreddit: string;
-  }
-}
-
-function InterfactionInfo(props: InterfactionInfoProps) {
+export default function InterfactionInfo(props: InterfactionInfoProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
   return (
@@ -53,8 +44,6 @@ function InterfactionInfo(props: InterfactionInfoProps) {
     </View>
   );
 }
-
-export default InterfactionInfo;
 
 const styles = StyleSheet.create({
   container: {

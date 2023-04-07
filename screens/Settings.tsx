@@ -2,7 +2,6 @@ import {StyleSheet, View, Text} from 'react-native';
 import AppTheme from '../styles/AppTheme';
 
 export default function Settings() {
-
   return (
     <View style={styles.container}>
       <Text>Settings</Text>

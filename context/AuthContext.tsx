@@ -1,16 +1,15 @@
 import { createContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import TokenServices from '../services/TokenServices';
-import { AuthContextValue } from '../types/AuthContext';
+import { AuthContextProviderProps, AuthContextValue } from '../types/AuthContext';
 
-function AuthContextProvider(props: AuthContextProviderProps) {
+export default function AuthContextProvider(props: AuthContextProviderProps) {
   const [isAuth, setIsAuth] = useState(false);
 
   let token = useQuery('token', () => TokenServices.getToken());
   
   if (!token.isError && token.data) {
     token = token;
-
   }
 
   const allowedContent: AuthContextValue = {
@@ -31,9 +30,3 @@ export const AuthContext = createContext<AuthContextValue>({
   setIsAuth: () => {},
   token: {},
 });
-
-export interface AuthContextProviderProps {
-  children: React.ReactNode;
-}
-
-export default AuthContextProvider;

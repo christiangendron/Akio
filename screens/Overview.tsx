@@ -2,12 +2,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useContext, useEffect } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
-import CommentItem, { CommentItemProps } from '../components/CommentItem';
+import CommentItem from '../components/CommentItem';
 import DetailsHeader from '../components/DetailsHeader';
 import ErrorMessage from '../components/ErrorMessage';
 import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
+import { CommentItemProps } from '../types/CommentItem';
 
 export type OverviewProps = {
   route: {

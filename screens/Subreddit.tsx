@@ -11,14 +11,7 @@ import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
 import { PostProp } from '../types/PostProp';
-
-interface SubredditProps {
-  route: {
-    params: {
-      data: string;
-    }
-  }
-}
+import { SubredditProps } from '../types/Subreddit';
 
 export default function Subreddit(props: SubredditProps) {
   const { token } = useContext(AuthContext);

@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { Modal, StyleSheet, Text, Pressable, View, Image, TouchableOpacity } from "react-native";
-
-interface FilterBoxProps {
-    data: {
-        filter: string;
-        setFilter: (filter: string) => void;
-    }
-}
+import { FilterBoxProps } from "../types/FilterBox";
 
 export default function FilterBox(props: FilterBoxProps) {
     const [modalVisible, setModalVisible] = useState(false);

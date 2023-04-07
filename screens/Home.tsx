@@ -12,7 +12,7 @@ import { PostProp } from '../types/PostProp';
 import SearchBarComp from '../components/SearchBarComp';
 import NoPostsFound from '../components/NoPostsFound';
 
-export default function Home({ }) {
+export default function Home() {
   const { token } = useContext(AuthContext);
   const [filter, setFilter] = useState('hot');
   const [keyword, setKeyword] = useState('');

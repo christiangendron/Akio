@@ -2,7 +2,7 @@ import { Text, View } from 'react-native';
 import { timeSince } from '../tools/Formating';
 import { CommentItemProps } from '../types/CommentItem';
 
-function CommentItem(props: CommentItemProps) {
+export default function CommentItem(props: CommentItemProps) {
     return (
         <View className="bg-white p-5 m-1">
             <Text className=''>
@@ -14,5 +14,3 @@ function CommentItem(props: CommentItemProps) {
         </View >
     );
 }
-
-export default CommentItem;

@@ -2,16 +2,9 @@ import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, Text, Keyboard } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AppTheme from '../styles/AppTheme';
+import { SearchBarProps } from '../types/SearchBarComp';
 
-type SearchBarProps = {
-    data: {
-        keyword: string;
-        handleChange: (text: string) => void;
-        handleSubmit: () => void;
-    }
-}
-
-function SearchBarComp(props: SearchBarProps) {
+export default function SearchBarComp(props: SearchBarProps) {
     const [isFocused, setIsFocused] = useState<boolean>(false);
 
     const cancel = isFocused ? <TouchableOpacity onPress={() => Keyboard.dismiss()}><Text>Cancel</Text></TouchableOpacity> : null;
@@ -30,8 +23,6 @@ function SearchBarComp(props: SearchBarProps) {
         </View>
     );
 };
-
-export default SearchBarComp;
 
 const styles = StyleSheet.create({
     container: {

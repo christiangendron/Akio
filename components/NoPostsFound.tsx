@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet } from 'react-native';
 import AppTheme from '../styles/AppTheme';
 
-function NoPostsFound() {
+export default function NoPostsFound() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
@@ -10,8 +10,6 @@ function NoPostsFound() {
     </View>
   );
 }
-
-export default NoPostsFound;
 
 const styles = StyleSheet.create({
   button: {
