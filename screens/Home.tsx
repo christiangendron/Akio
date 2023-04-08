@@ -8,15 +8,20 @@ import RedditServices from '../services/RedditServices';
 import { useNavigation } from '@react-navigation/native';
 import FilterBox from '../components/FilterBox';
 import PostItem from '../components/PostItem';
-import { PostProp } from '../types/PostProp';
 import SearchBarComp from '../components/SearchBarComp';
 import NoPostsFound from '../components/NoPostsFound';
+import { RedditResponseT3 } from '../types/RedditResponseT3';
+import { RedditAccessTokenResponse } from '../types/AuthContext';
+import { RedditResponseRoot } from '../types/RedditResponseRoot';
 
 export default function Home() {
-  const { token } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
   const [filter, setFilter] = useState('hot');
   const [keyword, setKeyword] = useState('');
   const navigation = useNavigation();
+  const redditAccessToken = authContext?.token.data as RedditAccessTokenResponse;
+
+  const posts = useQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', keyword, filter, redditAccessToken.data.access_token));
 
   useEffect(() => {
     navigation.setOptions({
@@ -30,9 +35,7 @@ export default function Home() {
       ),
     });
   }, [navigation]);
-
-  const posts = useQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', keyword, filter, token));
-
+  
   useEffect(() => {
     posts.refetch();
   }, [filter]);
@@ -53,9 +56,10 @@ export default function Home() {
     );
   }
 
-  const postsData = posts?.data?.data.data.children;
+  const redditResponse = posts?.data as RedditResponseRoot;
+  const postsData = redditResponse.data.data.children as RedditResponseT3[];
 
-  const renderItem = ({ item }: { item: PostProp }): JSX.Element => {
+  const renderItem = ({ item }: { item: RedditResponseT3 }): JSX.Element => {
     return <PostItem key={item.data.id} data={item.data} />
   };
 

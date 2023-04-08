@@ -11,11 +11,12 @@ import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
 import { DetailsScreenProps } from '../types/Details';
 import { CommentItemProps } from '../types/CommentItem';
+import { RedditAccessTokenResponse } from '../types/AuthContext';
 
 export default function Details(props: DetailsScreenProps) {
-  const { token } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
   const [filter, setFilter] = useState('best');
-
+  const redditAccessToken = authContext?.token.data as RedditAccessTokenResponse;
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function Details(props: DetailsScreenProps) {
     });
   }, [navigation]);
 
-  const comments = useQuery(`comments-for-${props.route.params.data.id}-${filter}-${props.route.params.data.subreddit}`, () => RedditServices.getComments(props.route.params.data.id, props.route.params.data.subreddit, filter, token));
+  const comments = useQuery(`comments-for-${props.route.params.data.id}-${filter}-${props.route.params.data.subreddit}`, () => RedditServices.getComments(props.route.params.data.id, props.route.params.data.subreddit, filter, redditAccessToken.data.access_token));
 
   useEffect(() => {
     comments.refetch();

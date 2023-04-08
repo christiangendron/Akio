@@ -1,36 +1,19 @@
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
-import AppTheme from '../styles/AppTheme';
-import { ErrorMEssageProps } from '../types/ErrorMessage';
+import {Text, View, TouchableOpacity} from 'react-native';
+import { ErrorMessageProps } from '../types/ErrorMessage';
 
-export default function ErrorMessage(props:ErrorMEssageProps) {
+export default function ErrorMessage(props:ErrorMessageProps) {
   return (
-    <View style={styles.container}>
-      <Text>
+    <View className='flex flex-col items-center justify-center h-full'>
+      <Text className='text-lg mb-6'>
         {props.message}
       </Text>
       <TouchableOpacity
         onPress={props.action}
-        style={styles.button}>
-        <Text>{props.actionMessage}</Text>
+        className='bg-lightBlue rounded-full text-center p-5'>
+        <Text className='text-white text-lg'>
+          {props.actionMessage}
+        </Text>
       </TouchableOpacity>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    backgroundColor: AppTheme.lightBlue,
-    borderRadius: 20,
-    height: 50,
-    justifyContent: 'center',
-    margin: 25,
-    width: 200,
-  },
-  container: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-});
-

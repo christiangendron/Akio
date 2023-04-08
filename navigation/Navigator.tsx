@@ -47,9 +47,9 @@ function SearchStackScreen() {
 const Tab = createBottomTabNavigator<TabParams>();
 
 export default function App() {
-  const { token } = useContext(AuthContext);
+  const authcontext = useContext(AuthContext);
 
-  if (token.isLoading) {
+  if (authcontext?.token.isLoading) {
     return (
       <View style={styles.container}>
         <ActivityIndicator />
@@ -57,9 +57,9 @@ export default function App() {
     );
   }
 
-  if (token.isError) {
+  if (authcontext?.token.isError) {
     <View style={styles.container}>
-      <ErrorMessage message="Error while getting the a token." actionMessage="Try again" action={token.refetch} />
+      <ErrorMessage message="Error while getting the a token." actionMessage="Try again" action={authcontext?.token.refetch} />
     </View>;
   }
 

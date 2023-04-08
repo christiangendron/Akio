@@ -10,9 +10,11 @@ import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
 import { CommentItemProps } from '../types/CommentItem';
 import { OverviewProps } from '../types/Overview';
+import { RedditAccessTokenResponse } from '../types/AuthContext';
 
 export default function Overview(props: OverviewProps) {
-  const { token } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  const redditAccessToken = authContext?.token.data as RedditAccessTokenResponse;
 
   const navigation = useNavigation();
 
@@ -22,7 +24,7 @@ export default function Overview(props: OverviewProps) {
     });
   }, [navigation]);
 
-  const user = useQuery(`overview-for-${props.route.params.data}`, () => RedditServices.getOverview(props.route.params.data, token));
+  const user = useQuery(`overview-for-${props.route.params.data}`, () => RedditServices.getOverview(props.route.params.data, redditAccessToken.data.access_token));
 
   const renderItem = ({ item }: { item: CommentItemProps }): JSX.Element => {
     return <CommentItem key={item.data.id} data={item.data} />

@@ -12,13 +12,13 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { DetailsScreenProps } from '../types/DetailsHeader';
 import { StackParams } from '../types/Navigator';
+import { RedditAccessTokenResponse } from '../types/AuthContext';
 
 export default function DetailsHeader(props: DetailsScreenProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
-
-    const { token } = useContext(AuthContext);
-
-    const posts = useQuery(`post-details-for-${props.data}`, () => RedditServices.getPost(props.data, token));
+    const authContext = useContext(AuthContext);
+    const redditAccessToken = authContext?.token.data as RedditAccessTokenResponse;
+    const posts = useQuery(`post-details-for-${props.data}`, () => RedditServices.getPost(props.data, redditAccessToken.data.access_token));
 
     if (posts.isLoading) {
         return (

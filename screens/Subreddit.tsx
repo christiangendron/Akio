@@ -12,28 +12,32 @@ import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
 import { PostProp } from '../types/PostProp';
 import { SubredditProps } from '../types/Subreddit';
+import { RedditAccessTokenResponse } from '../types/AuthContext';
+import { RedditResponseRoot } from '../types/RedditResponseRoot';
+import { RedditResponseT3 } from '../types/RedditResponseT3';
 
 export default function Subreddit(props: SubredditProps) {
-  const { token } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
   const [filter, setFilter] = useState('hot');
   const [keyword, setKeyword] = useState('');
-  const [subreddit, setSubreddit] = useState(props.route.params.data);
+  const subreddit = props.route.params.data;
+  const redditAccessToken = authContext?.token.data as RedditAccessTokenResponse;
   const navigation = useNavigation();
 
   useEffect(() => {
     navigation.setOptions({
-      title: props.route.params.data,
+      title: subreddit,
       headerRight: () => (
         <FilterBox data={{ filter, setFilter }} />
       ),
     });
   }, [navigation]);
 
-  const posts = useQuery(`posts-${subreddit}-${filter}`, () => RedditServices.getPosts(subreddit, keyword, filter, token));
-
   useEffect(() => {
     posts.refetch();
   }, [filter]);
+
+  const posts = useQuery(`posts-${subreddit}-${filter}`, () => RedditServices.getPosts(subreddit, keyword, filter, redditAccessToken.data.access_token));
 
   if (posts.isLoading) {
     return (
@@ -51,9 +55,10 @@ export default function Subreddit(props: SubredditProps) {
     );
   }
 
-  const postsData = posts?.data?.data.data.children;
+  const redditResponse = posts?.data as RedditResponseRoot;
+  const postsData = redditResponse.data.data.children as RedditResponseT3[];
 
-  const renderItem = ({ item }: { item: PostProp }): JSX.Element => {
+  const renderItem = ({ item }: { item: RedditResponseT3 }): JSX.Element => {
     return <PostItem key={item.data.id} data={item.data} />
   };
 
