@@ -1,4 +1,4 @@
-export interface InterfactionInfoProps {
+export interface PostInteractionProps {
     data: {
       id: string;
       ups: number;

@@ -4,10 +4,10 @@ import { roundedCount, timeSince } from '../tools/Formating';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import PostOption from './PostOptions';
-import { InterfactionInfoProps } from '../types/InteractionInfo';
+import { PostInteractionProps } from '../types/PostInteraction';
 import { StackParams } from '../types/Navigator';
 
-export default function InterfactionInfo(props: InterfactionInfoProps) {
+export default function PostInteraction(props: PostInteractionProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
   return (

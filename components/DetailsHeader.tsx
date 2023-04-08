@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import ErrorMessage from './ErrorMessage';
 import { PostProp } from '../types/PostProp';
 import { decode } from 'html-entities';
-import InterfactionInfo from './IntereactionInfo';
+import InterfactionInfo from './PostInteraction';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { DetailsScreenProps } from '../types/DetailsHeader';
