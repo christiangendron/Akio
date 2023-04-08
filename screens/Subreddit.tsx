@@ -53,7 +53,7 @@ export default function Subreddit(props: SubredditProps) {
   const postsData = redditResponse.data.data.children as RedditResponseT3[];
 
   const renderItem = ({ item }: { item: RedditResponseT3 }): JSX.Element => {
-    return <Post key={item.data.id} data={item.data} />
+    return <Post key={item.data.id} data={item} />
   };
 
   const searchBarData = {
@@ -68,6 +68,7 @@ export default function Subreddit(props: SubredditProps) {
         data={postsData}
         renderItem={renderItem}
         refreshing={posts.isLoading}
+        ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={posts.refetch}
         ListEmptyComponent={<NoPostsFound />}
         ListHeaderComponent={<SearchBarComp data={searchBarData} />}

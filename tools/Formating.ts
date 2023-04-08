@@ -37,3 +37,13 @@ export function timeSince(createdUtc:number):string {
 
   return Math.floor(seconds) + 's';
 }
+
+export function shortenString(str: string) {
+  let words = str.split(' ');
+  if (words.length > 25) {
+    words = words.slice(0, 25);
+    return words.join(' ') + '...';
+  } else {
+    return str;
+  }
+}

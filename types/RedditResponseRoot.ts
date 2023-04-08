@@ -30,6 +30,14 @@ export type RedditResponseRoot = {
         thumbnail_height: number
         top_awarded_type: any
         hide_score: boolean
+        is_gallery: boolean
+        media_metadata: any
+        gallery_data: {
+          items: Array<{
+            media_id: string
+            id: string
+          }>
+        }
         name: string
         quarantine: boolean
         link_flair_text_color: string

@@ -11,7 +11,7 @@ export default function PostInteraction(props: PostInteractionProps) {
   const currentPost = props.data;
 
   return (
-    <View className='flex flex-row flex-1 justify-evenly items-center px-3 my-3'>
+    <View className='flex flex-row justify-evenly items-center px-3 my-3'>
       <View>
         <TouchableOpacity
           className='flex-row space-x-1'

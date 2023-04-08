@@ -9,12 +9,20 @@ export type RedditResponseT3 = {
       gilded: number
       clicked: boolean
       title: string
+      is_gallery: boolean
       link_flair_richtext: Array<any>
       subreddit_name_prefixed: string
       hidden: boolean
       pwls: number
       link_flair_css_class: any
       downs: number
+      gallery_data: {
+        items: Array<{
+          media_id: string
+          id: string
+        }>
+      }
+      media_metadata: any
       thumbnail_height: number
       top_awarded_type: any
       hide_score: boolean

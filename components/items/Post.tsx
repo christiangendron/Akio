@@ -1,58 +1,44 @@
-import { Text, View, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
-import AppTheme from '../../styles/AppTheme';
-import { decode } from 'html-entities';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import PostInteraction from '../PostInteraction';
 import { StackParams } from '../../types/Navigator';
-import { RedditResponseT3 } from '../../types/RedditResponseT3';
 import FullScreenComp from '../FullScreenComp';
+import { PostProps } from '../../types/Post';
+import { shortenString } from '../../tools/Formating';
 
-export default function Post(props: RedditResponseT3) {
-    const currentPost = props.data;
+export default function Post(props: PostProps) {
+    const currentPost = props.data.data;
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
   
-    const image = <FullScreenComp data={props} />
+    const image = <FullScreenComp data={props.data} />
+
+    const title = <View className='p-3'><TouchableOpacity
+    onPress={() => navigation.navigate('Details', { data: props.data })}>
+    <Text className='font-bold'>{currentPost.title}</Text>
+</TouchableOpacity>
+    <Text>
+        <Text className='text-sm' onPress={() => navigation.navigate('Subreddit', { data: currentPost.subreddit })}>{currentPost.subreddit}</Text>
+        &nbsp;by&nbsp;
+        <Text className='text-sm' onPress={() => navigation.navigate('Overview', { data: currentPost.author })}>{currentPost.author}</Text>
+    </Text></View>
+
+    const selfText = <Text className='p-3'>{props.isDetails ? currentPost.selftext : shortenString(currentPost.selftext)}</Text>
+    
+    // TODO deal with gallery posts
+    if (currentPost.is_gallery != undefined) {
+        console.log('This post is a gallery with ' + currentPost.gallery_data.items.length + ' items')
+        return (<></>)
+    }
 
     return (
-        <View style={styles.container}>
-            <TouchableOpacity
-                onPress={() => navigation.navigate('Details', { data: props })}>
-                <Text style={styles.text}>
-                    {currentPost.title}
-                </Text>
-            </TouchableOpacity>
-            <Text style={styles.subText}>
-                in&nbsp;
-                <Text onPress={() => navigation.navigate('Subreddit', { data: currentPost.subreddit })}>{currentPost.subreddit}</Text>
-                &nbsp;by&nbsp;
-                <Text onPress={() => navigation.navigate('Overview', { data: currentPost.author })}>{currentPost.author}</Text>
-            </Text>
+        <View className='bg-white h-auto'>
+            {!props.isDetails ? title : <></>}
+            {!props.isDetails && currentPost.selftext ? selfText : <></>}
             {image}
-            <PostInteraction data={props} />
+            {props.isDetails ? title : <></>}
+            {props.isDetails && currentPost.selftext ? selfText : <></>}
+            <PostInteraction data={props.data} />
         </View >
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: AppTheme.white,
-        flex: 1,
-        height: 'auto',
-        marginVertical: 5,
-    },
-    text: {
-        fontSize: 15,
-        fontWeight: 'bold',
-        paddingLeft: 15,
-        paddingTop: 15,
-        textAlign: 'left',
-    },
-    subText: {
-        fontSize: 15,
-        paddingBottom: 15,
-        paddingLeft: 15,
-        textAlign: 'left',
-        paddingVertical: 5,
-    }
-});

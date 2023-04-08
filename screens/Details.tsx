@@ -42,7 +42,7 @@ export default function Details(props: DetailsScreenProps) {
           renderItem={renderItem}
           refreshing={comments.isLoading}
           onRefresh={comments.refetch}
-          ListHeaderComponent={<Post data={currentPost.data} />}
+          ListHeaderComponent={<Post data={currentPost} isDetails={true} />}
         />
       </View>
     );
@@ -64,8 +64,9 @@ export default function Details(props: DetailsScreenProps) {
         data={commentsData.slice(0, -1)}
         renderItem={renderItem}
         refreshing={comments.isLoading}
+        ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={comments.refetch}
-        ListHeaderComponent={<Post data={currentPost.data} />}
+        ListHeaderComponent={<Post data={currentPost} isDetails={true} />}
       />
     </View>
   );

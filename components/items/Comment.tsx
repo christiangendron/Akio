@@ -4,7 +4,7 @@ import { CommentItemProps } from '../../types/CommentItem';
 
 export default function Comment(props: CommentItemProps) {
     return (
-        <View className="bg-white p-5 m-1">
+        <View className="bg-white p-5">
             <Text className=''>
                 {props.data.body}
             </Text>
