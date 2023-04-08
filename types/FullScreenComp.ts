@@ -1,4 +1,5 @@
+import { RedditResponseT3 } from "./RedditResponseT3";
+
 export interface FullScreenCompProps {
-    source: any;
-    type: string;
+    data: RedditResponseT3;
   }

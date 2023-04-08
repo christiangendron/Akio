@@ -6,44 +6,27 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import PostInteraction from '../PostInteraction';
 import { StackParams } from '../../types/Navigator';
 import { RedditResponseT3 } from '../../types/RedditResponseT3';
+import FullScreenComp from '../FullScreenComp';
 
 export default function Post(props: RedditResponseT3) {
+    const currentPost = props.data;
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
-
-    let image = null;
-
-    try {
-        if (props.data.secure_media == null) {
-            const screenDimensions = Dimensions.get("screen");
-            const imageThumb = decode(props.data.preview.images[0].resolutions[2].url);
-            const thumbHeight = props.data.preview.images[0].resolutions[2].height;
-            const thumbwidth = props.data.preview.images[0].resolutions[2].width;
-            const source = decode(props.data.preview.images[0].source.url);
-            image = <Image style={{ resizeMode: 'cover', width: screenDimensions.width, height: thumbHeight }} source={{ uri: imageThumb }} />;
-
-            const fullsizeData = {
-                id: props.data.id,
-                author_fullname: props.data.author_fullname,
-                url: source,
-            }
-        }
-    } catch (error) {
-        console.log('Post with id: ' + props.data.id + ' caused an error');
-    }
+  
+    const image = <FullScreenComp data={props} />
 
     return (
         <View style={styles.container}>
             <TouchableOpacity
                 onPress={() => navigation.navigate('Details', { data: props })}>
                 <Text style={styles.text}>
-                    {props.data.title}
+                    {currentPost.title}
                 </Text>
             </TouchableOpacity>
             <Text style={styles.subText}>
                 in&nbsp;
-                <Text onPress={() => navigation.navigate('Subreddit', { data: props.data.subreddit })}>{props.data.subreddit}</Text>
+                <Text onPress={() => navigation.navigate('Subreddit', { data: currentPost.subreddit })}>{currentPost.subreddit}</Text>
                 &nbsp;by&nbsp;
-                <Text onPress={() => navigation.navigate('Overview', { data: props.data.author })}>{props.data.author}</Text>
+                <Text onPress={() => navigation.navigate('Overview', { data: currentPost.author })}>{currentPost.author}</Text>
             </Text>
             {image}
             <PostInteraction data={props} />
