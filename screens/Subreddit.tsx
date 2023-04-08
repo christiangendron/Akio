@@ -5,12 +5,11 @@ import { useQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
 import FilterBox from '../components/FilterBox';
 import NoPostsFound from '../components/NoPostsFound';
-import PostItem from '../components/PostItem';
+import Post from '../components/items/Post';
 import SearchBarComp from '../components/SearchBarComp';
 import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
 import AppTheme from '../styles/AppTheme';
-import { PostProp } from '../types/PostProp';
 import { SubredditProps } from '../types/Subreddit';
 import { RedditAccessTokenResponse } from '../types/AuthContext';
 import { RedditResponseRoot } from '../types/RedditResponseRoot';
@@ -59,7 +58,7 @@ export default function Subreddit(props: SubredditProps) {
   const postsData = redditResponse.data.data.children as RedditResponseT3[];
 
   const renderItem = ({ item }: { item: RedditResponseT3 }): JSX.Element => {
-    return <PostItem key={item.data.id} data={item.data} />
+    return <Post key={item.data.id} data={item.data} />
   };
 
   const searchBarData = {

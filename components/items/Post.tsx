@@ -1,13 +1,13 @@
 import { Text, View, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
-import AppTheme from '../styles/AppTheme';
+import AppTheme from '../../styles/AppTheme';
 import { decode } from 'html-entities';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import InterfactionInfo from './IntereactionInfo';
-import { StackParams } from '../types/Navigator';
-import { RedditResponseT3 } from '../types/RedditResponseT3';
+import InterfactionInfo from '../IntereactionInfo';
+import { StackParams } from '../../types/Navigator';
+import { RedditResponseT3 } from '../../types/RedditResponseT3';
 
-export default function PostItem(props: RedditResponseT3) {
+export default function Post(props: RedditResponseT3) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
     const intereactionData = {

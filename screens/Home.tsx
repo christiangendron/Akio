@@ -7,7 +7,7 @@ import ErrorMessage from '../components/ErrorMessage';
 import RedditServices from '../services/RedditServices';
 import { useNavigation } from '@react-navigation/native';
 import FilterBox from '../components/FilterBox';
-import PostItem from '../components/PostItem';
+import Post from '../components/items/Post';
 import SearchBarComp from '../components/SearchBarComp';
 import NoPostsFound from '../components/NoPostsFound';
 import { RedditResponseT3 } from '../types/RedditResponseT3';
@@ -60,7 +60,7 @@ export default function Home() {
   const postsData = redditResponse.data.data.children as RedditResponseT3[];
 
   const renderItem = ({ item }: { item: RedditResponseT3 }): JSX.Element => {
-    return <PostItem key={item.data.id} data={item.data} />
+    return <Post key={item.data.id} data={item.data} />
   };
 
   const searchBarData = {

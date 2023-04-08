@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
-import CommentItem from '../components/CommentItem';
+import Comment from '../components/items/Comment';
 import DetailsHeader from '../components/DetailsHeader';
 import ErrorMessage from '../components/ErrorMessage';
 import FilterBox from '../components/FilterBox';
@@ -35,7 +35,7 @@ export default function Details(props: DetailsScreenProps) {
   }, [filter]);
 
   const renderItem = ({ item }: { item: CommentItemProps }): JSX.Element => {
-    return <CommentItem key={item.data.id} data={item.data} />
+    return <Comment key={item.data.id} data={item.data} />
   };
 
   if (comments.isLoading) {

@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useContext, useEffect } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
-import CommentItem from '../components/CommentItem';
+import CommentItem from '../components/items/Comment';
 import DetailsHeader from '../components/DetailsHeader';
 import ErrorMessage from '../components/ErrorMessage';
 import { AuthContext } from '../context/AuthContext';
