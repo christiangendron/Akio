@@ -11,17 +11,14 @@ import Post from '../components/items/Post';
 import SearchBarComp from '../components/SearchBarComp';
 import NoPostsFound from '../components/NoPostsFound';
 import { RedditResponseT3 } from '../types/RedditResponseT3';
-import { RedditAccessTokenResponse } from '../types/AuthContext';
 import { RedditResponseRoot } from '../types/RedditResponseRoot';
 
 export default function Home() {
-  const authContext = useContext(AuthContext);
   const [filter, setFilter] = useState('hot');
   const [keyword, setKeyword] = useState('');
   const navigation = useNavigation();
-  const redditAccessToken = authContext?.token.data as RedditAccessTokenResponse;
 
-  const posts = useQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', keyword, filter, redditAccessToken.data.access_token));
+  const posts = useQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', keyword, filter));
 
   useEffect(() => {
     navigation.setOptions({

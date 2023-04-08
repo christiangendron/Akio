@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
@@ -7,19 +7,15 @@ import FilterBox from '../components/FilterBox';
 import NoPostsFound from '../components/NoPostsFound';
 import Post from '../components/items/Post';
 import SearchBarComp from '../components/SearchBarComp';
-import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
 import { SubredditProps } from '../types/Subreddit';
-import { RedditAccessTokenResponse } from '../types/AuthContext';
 import { RedditResponseRoot } from '../types/RedditResponseRoot';
 import { RedditResponseT3 } from '../types/RedditResponseT3';
 
 export default function Subreddit(props: SubredditProps) {
-  const authContext = useContext(AuthContext);
   const [filter, setFilter] = useState('hot');
   const [keyword, setKeyword] = useState('');
   const subreddit = props.route.params.data;
-  const redditAccessToken = authContext?.token.data as RedditAccessTokenResponse;
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -35,7 +31,7 @@ export default function Subreddit(props: SubredditProps) {
     posts.refetch();
   }, [filter]);
 
-  const posts = useQuery(`posts-${subreddit}-${filter}`, () => RedditServices.getPosts(subreddit, keyword, filter, redditAccessToken.data.access_token));
+  const posts = useQuery(`posts-${subreddit}-${filter}`, () => RedditServices.getPosts(subreddit, keyword, filter));
 
   if (posts.isLoading) {
     return (

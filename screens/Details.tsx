@@ -1,21 +1,17 @@
 import { useNavigation } from '@react-navigation/native';
-import { useContext, useEffect, useState } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { useEffect, useState } from 'react';
+import { View, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 import Comment from '../components/items/Comment';
 import ErrorMessage from '../components/ErrorMessage';
 import FilterBox from '../components/FilterBox';
-import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
 import { CommentItemProps } from '../types/CommentItem';
-import { RedditAccessTokenResponse } from '../types/AuthContext';
 import Post from '../components/items/Post';
 import { DetailsScreenProps } from '../types/Details';
 
 export default function Details(props: DetailsScreenProps) {
-  const authContext = useContext(AuthContext);
   const [filter, setFilter] = useState('best');
-  const redditAccessToken = authContext?.token.data as RedditAccessTokenResponse;
   const navigation = useNavigation();
   const currentPost = props.route.params.data;
 
@@ -28,7 +24,7 @@ export default function Details(props: DetailsScreenProps) {
     });
   }, [navigation]);
 
-  const comments = useQuery(`comments-for-${currentPost.data.id}-${filter}-${currentPost.data.subreddit}`, () => RedditServices.getComments(currentPost.data.id, currentPost.data.subreddit, filter, redditAccessToken.data.access_token));
+  const comments = useQuery(`comments-for-${currentPost.data.id}-${filter}-${currentPost.data.subreddit}`, () => RedditServices.getComments(currentPost.data.id, currentPost.data.subreddit, filter));
 
   useEffect(() => {
     comments.refetch();

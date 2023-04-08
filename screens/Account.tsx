@@ -2,7 +2,6 @@ import { View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function Account() {
-
   return (
     <View className='flex flex-1 justify-center items-center'>
       <Text className='text-sm'>Sign in in order to access your Reddit account.</Text>

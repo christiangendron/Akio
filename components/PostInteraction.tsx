@@ -7,8 +7,8 @@ import { PostInteractionProps } from '../types/PostInteraction';
 import { StackParams } from '../types/Navigator';
 
 export default function PostInteraction(props: PostInteractionProps) {
-  const currentPost = props.data;
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
+  const currentPost = props.data;
 
   return (
     <View className='flex flex-row flex-1 justify-evenly items-center px-3 my-3'>

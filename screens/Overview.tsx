@@ -1,19 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { useQuery } from 'react-query';
-import CommentItem from '../components/items/Comment';
 import ErrorMessage from '../components/ErrorMessage';
-import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
-import { CommentItemProps } from '../types/CommentItem';
 import { OverviewProps } from '../types/Overview';
-import { RedditAccessTokenResponse } from '../types/AuthContext';
 
 export default function Overview(props: OverviewProps) {
-  const authContext = useContext(AuthContext);
-  const redditAccessToken = authContext?.token.data as RedditAccessTokenResponse;
-
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -22,7 +15,7 @@ export default function Overview(props: OverviewProps) {
     });
   }, [navigation]);
 
-  const user = useQuery(`overview-for-${props.route.params.data}`, () => RedditServices.getOverview(props.route.params.data, redditAccessToken.data.access_token));
+  const user = useQuery(`overview-for-${props.route.params.data}`, () => RedditServices.getOverview(props.route.params.data));
 
   if (user.isLoading) {
     return (

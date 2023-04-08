@@ -10,14 +10,6 @@ import { RedditResponseT3 } from '../../types/RedditResponseT3';
 export default function Post(props: RedditResponseT3) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
-    const intereactionData = {
-        id: props.data.id,
-        ups: props.data.ups,
-        num_comments: props.data.num_comments,
-        created_utc: props.data.created_utc,
-        subreddit: props.data.subreddit,
-    };
-
     let image = null;
 
     try {
