@@ -1,18 +1,10 @@
 # Akio
 
-Our Reddit client is built using React Native, which allows for a consistent experience across iOS and Android devices. Privacy is important to us, so our app does not track your activity or collect any personal information. We also offer options to block tracking cookies and enable incognito mode to give you more control over your data.
-
-Our app has a simple, easy-to-use interface that makes it easy to browse, search, and engage with the Reddit community. You can access all of your favorite subreddits, view media in full screen, and participate in discussions. Other features include the ability to save posts, create custom feeds, and receive notifications for new content.
-
-We hope that our Reddit client is a useful and private tool for anyone looking to use Reddit on the go.
+Our Reddit client application is designed with a focus on privacy and simplicity. Unlike the official version, which can feel cluttered with unnecessary features, our app prioritizes content by streamlining the user interface and minimizing distractions. With our app, you can browse Reddit with peace of mind, knowing that your privacy is protected. Whether you're a casual user or a dedicated Redditor, our app is the perfect way to stay up-to-date with the latest discussions, without sacrificing simplicity or privacy.
 
 # Why
 
-I wanted to create this Reddit client because I saw it as a great challenge. Building an app from start to finish requires a lot of planning, coding, and debugging, but I was up for the task. I also wanted to work on a project solo so that I could have full ownership and control over the end result.
-
-In addition to the technical challenges, I was also motivated by my love for Reddit. As an avid user of the platform, I wanted to create a tool that would make it easier for others to access and engage with Reddit on their mobile devices. I believe that this app has the potential to be a valuable resource for Redditors everywhere.
-
-Overall, I saw the development of this Reddit client as an exciting opportunity to learn new skills, practice problem-solving, and create something that I was passionate about.
+As a Reddit user, I noticed that the official app had too many features, which made it cluttered and overwhelming. So, I decided to develop my own Reddit client app with a focus on simplicity and privacy. I wanted to make something that would not only solve a real-world problem, but also help me enhance my skills in React. By creating this app, I'm gaining valuable experience and knowledge in mobile application development.
 
 # Contribution ?
 
