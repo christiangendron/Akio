@@ -1,5 +1,4 @@
-import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import AppTheme from '../styles/AppTheme';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { roundedCount, timeSince } from '../tools/Formating';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -8,69 +7,40 @@ import { PostInteractionProps } from '../types/PostInteraction';
 import { StackParams } from '../types/Navigator';
 
 export default function PostInteraction(props: PostInteractionProps) {
+  const currentPost = props.data;
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
   return (
-    <View style={styles.container}>
+    <View className='flex flex-row flex-1 justify-evenly items-center px-3 my-3'>
       <View>
         <TouchableOpacity
-          style={styles.info}
-          onPress={() => navigation.navigate('Details', { data: { id: props.data.id, subreddit: props.data.subreddit } })}>
-          <Image source={require('../assets/icons/up-arrow.png')} style={styles.icons} />
-          <Text style={styles.text}>{roundedCount(props.data.ups)}</Text>
+          className='flex-row space-x-1'
+          onPress={() => navigation.navigate('Details', { data: props.data })}>
+          <Image source={require('../assets/icons/up-arrow.png')} className='w-5 h-5' />
+          <Text className='text-sm'>{roundedCount(currentPost.data.ups)}</Text>
         </TouchableOpacity>
       </View>
       <View>
         <TouchableOpacity
-          style={styles.info}
-          onPress={() => navigation.navigate('Details', { data: { id: props.data.id, subreddit: props.data.subreddit } })}>
-          <Image source={require('../assets/icons/chat.png')} style={styles.icons} />
-          <Text style={styles.text}>{roundedCount(props.data.num_comments)}</Text>
+          className='flex-row space-x-1'
+          onPress={() => navigation.navigate('Details', { data: props.data })}>
+          <Image source={require('../assets/icons/chat.png')} className='w-5 h-5' />
+          <Text className='text-sm'>{roundedCount(currentPost.data.num_comments)}</Text>
         </TouchableOpacity>
       </View>
       <View>
         <TouchableOpacity
-          style={styles.info}
-          onPress={() => navigation.navigate('Details', { data: { id: props.data.id, subreddit: props.data.subreddit } })}>
-          <Image source={require('../assets/icons/clock.png')} style={styles.icons} />
-          <Text style={styles.text}>{timeSince(props.data.created_utc)}</Text>
+          className='flex-row space-x-1'
+          onPress={() => navigation.navigate('Details', { data: props.data })}>
+          <Image source={require('../assets/icons/clock.png')} className='w-5 h-5' />
+          <Text className='text-sm'>{timeSince(currentPost.data.created_utc)}</Text>
         </TouchableOpacity>
       </View>
-      <Image source={require('../assets/icons/upvote.png')} style={styles.icons} />
-      <Image source={require('../assets/icons/downvote.png')} style={styles.icons} />
+      <Image source={require('../assets/icons/upvote.png')} className='w-5 h-5' />
+      <Image source={require('../assets/icons/downvote.png')} className='w-5 h-5' />
       <View>
         <PostOption />
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: AppTheme.white,
-    flex: 1,
-    flexDirection: 'row',
-    height: 'auto',
-    justifyContent: 'space-evenly',
-    marginVertical: 15,
-    paddingHorizontal: 15,
-    width: '100%',
-  },
-  icons: {
-    height: 20,
-    marginHorizontal: 5,
-    width: 20,
-  },
-  votes: {
-    flexDirection: 'row',
-    marginLeft: 'auto',
-  },
-  text: {
-    fontSize: 12,
-    marginTop: 3,
-  },
-  info: {
-    flexDirection: 'row',
-  }
-});

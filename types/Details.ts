@@ -1,10 +1,9 @@
+import { RedditResponseT3 } from "./RedditResponseT3";
+
 export type DetailsScreenProps = {
-    route: {
-      params: {
-        data: {
-          id: string;
-          subreddit: string;
-        }
-      }
+  route: {
+    params: {
+      data: RedditResponseT3;
     }
   }
+};

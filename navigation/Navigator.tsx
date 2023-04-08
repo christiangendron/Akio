@@ -51,14 +51,14 @@ export default function App() {
 
   if (authcontext?.token.isLoading) {
     return (
-      <View style={styles.container}>
+      <View className='flex flex-1 justify-center items-center'>
         <ActivityIndicator />
       </View>
     );
   }
 
   if (authcontext?.token.isError) {
-    <View style={styles.container}>
+    <View className='flex flex-1 justify-center items-center'>
       <ErrorMessage message="Error while getting the a token." actionMessage="Try again" action={authcontext?.token.refetch} />
     </View>;
   }
@@ -77,10 +77,10 @@ export default function App() {
           options={{
             tabBarIcon: ({ focused }) => (
               focused ? <Image
-                style={styles.icon}
+              className='w-5 h-5 mt-5'
                 source={require('../assets/icons/home-selected.png')}
               /> : <Image
-                style={styles.icon}
+              className='w-5 h-5 mt-5'
                 source={require('../assets/icons/home.png')}
               />
             ),
@@ -89,10 +89,10 @@ export default function App() {
         <Tab.Screen name="Account" component={Account} options={{
           tabBarIcon: ({ focused }) => (
             focused ? <Image
-              style={styles.icon}
+            className='w-5 h-5 mt-5'
               source={require('../assets/icons/account-selected.png')}
             /> : <Image
-              style={styles.icon}
+            className='w-5 h-5 mt-5'
               source={require('../assets/icons/account.png')}
             />
           ),
@@ -103,10 +103,10 @@ export default function App() {
           options={{
             tabBarIcon: ({ focused }) => (
               focused ? <Image
-                style={styles.icon}
+              className='w-5 h-5 mt-5'
                 source={require('../assets/icons/search-selected.png')}
               /> : <Image
-                style={styles.icon}
+                className='w-5 h-5 mt-5'
                 source={require('../assets/icons/search.png')}
               />
             ),
@@ -115,10 +115,10 @@ export default function App() {
         <Tab.Screen name="Settings" component={Settings} options={{
           tabBarIcon: ({ focused }) => (
             focused ? <Image
-              style={styles.icon}
+            className='w-5 h-5 mt-5'
               source={require('../assets/icons/settings-selected.png')}
             /> : <Image
-              style={styles.icon}
+            className='w-5 h-5 mt-5'
               source={require('../assets/icons/settings.png')}
             />
           ),
@@ -129,17 +129,7 @@ export default function App() {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
   tab: {
     backgroundColor: AppTheme.lightgray,
-  },
-  icon: {
-    marginTop: 10,
-    width: 20,
-    height: 20,
   },
 });

@@ -42,7 +42,7 @@ export default function Post(props: RedditResponseT3) {
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                onPress={() => navigation.navigate('Details', { data: { id: props.data.id, subreddit: props.data.subreddit } })}>
+                onPress={() => navigation.navigate('Details', { data: props })}>
                 <Text style={styles.text}>
                     {props.data.title}
                 </Text>
@@ -58,7 +58,7 @@ export default function Post(props: RedditResponseT3) {
                 onPress={() => console.log('fullscreen')}>
                 {image}
             </TouchableOpacity>
-            <PostInteraction data={intereactionData} />
+            <PostInteraction data={props} />
         </View >
     );
 }

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, Text, Keyboard } from 'react-native';
+import { View, TextInput, Text, Keyboard } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import AppTheme from '../styles/AppTheme';
 import { SearchBarProps } from '../types/SearchBarComp';
 
 export default function SearchBarComp(props: SearchBarProps) {
@@ -10,10 +9,10 @@ export default function SearchBarComp(props: SearchBarProps) {
     const cancel = isFocused ? <TouchableOpacity onPress={() => Keyboard.dismiss()}><Text>Cancel</Text></TouchableOpacity> : null;
 
     return (
-        <View style={styles.container}>
+        <View className='flex flex-row w-full justify-center items-center mt-1'>
             <TextInput
-                style={styles.input}
-                placeholder="I want dogs..."
+                className='bg-white p-3 m-3 w-3/4 rounded-full pl-5'
+                placeholder="Search for this subreddit..."
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
                 returnKeyType="go"
@@ -23,24 +22,3 @@ export default function SearchBarComp(props: SearchBarProps) {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        flexDirection: 'row',
-        height: 50,
-        marginTop: 8,
-        padding: 8,
-    },
-    input: {
-        height: 40,
-        margin: 12,
-        padding: 10,
-        paddingLeft: 20,
-        flex: 1,
-        backgroundColor: AppTheme.white,
-        borderRadius: 20,
-    },
-});

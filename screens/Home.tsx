@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { StyleSheet, View, ActivityIndicator, FlatList } from 'react-native';
+import { View, ActivityIndicator, FlatList } from 'react-native';
 import AppTheme from '../styles/AppTheme';
 import { useQuery } from 'react-query';
 import { AuthContext } from '../context/AuthContext';
@@ -42,7 +42,7 @@ export default function Home() {
 
   if (posts.isLoading) {
     return (
-      <View style={styles.container}>
+      <View className='flex flex-1 justify-center items-center'>
         <ActivityIndicator />
       </View>
     );
@@ -50,7 +50,7 @@ export default function Home() {
 
   if (posts.isError) {
     return (
-      <View style={styles.container}>
+      <View className='flex flex-1 justify-center items-center'>
         <ErrorMessage message="Error while getting posts." action={posts.refetch} actionMessage="Try again!" />
       </View>
     );
@@ -70,9 +70,8 @@ export default function Home() {
   }
 
   return (
-    <View style={styles.container}>
+    <View className='flex flex-1 justify-center items-center'>
       <FlatList
-        style={styles.flatlist}
         data={postsData}
         renderItem={renderItem}
         refreshing={posts.isLoading}
@@ -83,16 +82,3 @@ export default function Home() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: AppTheme.lightgray,
-    flex: 1,
-    justifyContent: 'center',
-  },
-  flatlist: {
-    flex: 1,
-    width: '100%',
-  },
-});

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal, StyleSheet, Text, Pressable, View, Image, TouchableOpacity } from "react-native";
+import { Modal, Text, Pressable, View, Image, TouchableOpacity } from "react-native";
 
 export default function PostOption() {
     const [modalVisible, setModalVisible] = useState(false);
@@ -10,7 +10,7 @@ export default function PostOption() {
                 onPress={() => setModalVisible(true)}>
                 <Image style={{ width: 25, height: 25 }} source={require('../assets/icons/options.png')} />
             </TouchableOpacity>
-            <View style={styles.centeredView}>
+            <View className="flex flex-1 justify-center items-center">
                 <Modal
                     animationType="fade"
                     transparent={true}
@@ -19,15 +19,13 @@ export default function PostOption() {
                         setModalVisible(!modalVisible);
                     }}
                 >
-                    <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text style={styles.title}>Post options</Text>
-                        </View>
-                        <View>
+                    <View className="flex flex-1 justify-center items-center">
+                        <View className="flex flex-col bg-white p-10 rounded-lg justify-center items-center shadow-lg shadow-black">
+                            <Text>Post options test</Text>
                             <Pressable
-                                style={[styles.button, styles.buttonClose]}
+                                className="bg-primary rounded-lg p-2 mt-5"
                                 onPress={() => setModalVisible(!modalVisible)}>
-                                <Text style={styles.textStyle}>Close</Text>
+                                <Text>Close</Text>
                             </Pressable>
                         </View>
                     </View>
@@ -36,55 +34,3 @@ export default function PostOption() {
         </>
     )
 }
-
-const styles = StyleSheet.create({
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: 'rgba(0,0,0,0.5)'
-    },
-    modalView: {
-        margin: 20,
-        width: '75%',
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5
-    },
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        width: '50%',
-        elevation: 2
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        decorationLine: 'underline',
-        marginBottom: 15,
-    },
-    buttonOpen: {
-        backgroundColor: "#F194FF",
-    },
-    buttonClose: {
-        backgroundColor: "#2196F3",
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center",
-    }
-});

@@ -1,9 +1,5 @@
+import { RedditResponseT3 } from "./RedditResponseT3";
+
 export interface PostInteractionProps {
-    data: {
-      id: string;
-      ups: number;
-      num_comments: number;
-      created_utc: number;
-      subreddit: string;
-    }
+    data: RedditResponseT3
   }

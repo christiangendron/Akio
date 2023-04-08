@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useContext, useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native';
+import { View, ActivityIndicator, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
 import FilterBox from '../components/FilterBox';
@@ -9,7 +9,6 @@ import Post from '../components/items/Post';
 import SearchBarComp from '../components/SearchBarComp';
 import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
-import AppTheme from '../styles/AppTheme';
 import { SubredditProps } from '../types/Subreddit';
 import { RedditAccessTokenResponse } from '../types/AuthContext';
 import { RedditResponseRoot } from '../types/RedditResponseRoot';
@@ -40,7 +39,7 @@ export default function Subreddit(props: SubredditProps) {
 
   if (posts.isLoading) {
     return (
-      <View style={styles.container}>
+      <View className='flex flex-1 items-center justify-center'>
         <ActivityIndicator />
       </View>
     );
@@ -48,7 +47,7 @@ export default function Subreddit(props: SubredditProps) {
 
   if (posts.isError) {
     return (
-      <View style={styles.container}>
+      <View className='flex flex-1'>
         <ErrorMessage message="Error while getting posts." action={posts.refetch} actionMessage="Try again!" />
       </View>
     );
@@ -68,9 +67,8 @@ export default function Subreddit(props: SubredditProps) {
   }
 
   return (
-    <View style={styles.container}>
+    <View className='flex flex-1'>
       <FlatList
-        style={styles.flatlist}
         data={postsData}
         renderItem={renderItem}
         refreshing={posts.isLoading}
@@ -81,16 +79,3 @@ export default function Subreddit(props: SubredditProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: AppTheme.lightgray,
-    flex: 1,
-    justifyContent: 'center',
-  },
-  flatlist: {
-    flex: 1,
-    width: '100%',
-  },
-});

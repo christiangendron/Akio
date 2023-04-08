@@ -3,21 +3,21 @@ import { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 import Comment from '../components/items/Comment';
-import DetailsHeader from '../components/DetailsHeader';
 import ErrorMessage from '../components/ErrorMessage';
 import FilterBox from '../components/FilterBox';
 import { AuthContext } from '../context/AuthContext';
 import RedditServices from '../services/RedditServices';
-import AppTheme from '../styles/AppTheme';
-import { DetailsScreenProps } from '../types/Details';
 import { CommentItemProps } from '../types/CommentItem';
 import { RedditAccessTokenResponse } from '../types/AuthContext';
+import Post from '../components/items/Post';
+import { DetailsScreenProps } from '../types/Details';
 
 export default function Details(props: DetailsScreenProps) {
   const authContext = useContext(AuthContext);
   const [filter, setFilter] = useState('best');
   const redditAccessToken = authContext?.token.data as RedditAccessTokenResponse;
   const navigation = useNavigation();
+  const currentPost = props.route.params.data;
 
   useEffect(() => {
     navigation.setOptions({
@@ -28,7 +28,7 @@ export default function Details(props: DetailsScreenProps) {
     });
   }, [navigation]);
 
-  const comments = useQuery(`comments-for-${props.route.params.data.id}-${filter}-${props.route.params.data.subreddit}`, () => RedditServices.getComments(props.route.params.data.id, props.route.params.data.subreddit, filter, redditAccessToken.data.access_token));
+  const comments = useQuery(`comments-for-${currentPost.data.id}-${filter}-${currentPost.data.subreddit}`, () => RedditServices.getComments(currentPost.data.id, currentPost.data.subreddit, filter, redditAccessToken.data.access_token));
 
   useEffect(() => {
     comments.refetch();
@@ -40,14 +40,13 @@ export default function Details(props: DetailsScreenProps) {
 
   if (comments.isLoading) {
     return (
-      <View style={styles.container}>
+      <View className='flex flex-1 justify-center items-center'>
         <FlatList
-          style={styles.flatlist}
           data={null}
           renderItem={renderItem}
           refreshing={comments.isLoading}
           onRefresh={comments.refetch}
-          ListHeaderComponent={<DetailsHeader data={props.route.params.data.id} />}
+          ListHeaderComponent={<Post data={currentPost.data} />}
         />
       </View>
     );
@@ -55,7 +54,7 @@ export default function Details(props: DetailsScreenProps) {
 
   if (comments.isError) {
     return (
-      <View style={styles.container}>
+      <View className='flex flex-1 justify-center items-center'>
         <ErrorMessage message="Error while getting comments." action={comments.refetch} actionMessage="Try again!" />
       </View>
     );
@@ -64,28 +63,14 @@ export default function Details(props: DetailsScreenProps) {
   const commentsData = comments?.data?.data[1].data.children;
 
   return (
-    <View style={styles.container}>
+    <View className='flex flex-1 justify-center items-center'>
       <FlatList
-        style={styles.flatlist}
         data={commentsData.slice(0, -1)}
         renderItem={renderItem}
         refreshing={comments.isLoading}
         onRefresh={comments.refetch}
-        ListHeaderComponent={<DetailsHeader data={props.route.params.data.id} />}
+        ListHeaderComponent={<Post data={currentPost.data} />}
       />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: AppTheme.lightgray,
-    flex: 1,
-    justifyContent: 'center',
-  },
-  flatlist: {
-    flex: 1,
-    width: '100%',
-  },
-});

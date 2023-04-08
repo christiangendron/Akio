@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function Account() {
 
   return (
-    <View className='flex flex-col flex-1 justify-center items-center bg-background'>
+    <View className='flex flex-1 justify-center items-center'>
       <Text className='text-sm'>Sign in in order to access your Reddit account.</Text>
       <TouchableOpacity
         onPress={() => console.log('Open reddit authentification menu')}

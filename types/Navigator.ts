@@ -1,3 +1,5 @@
+import { RedditResponseT3 } from "./RedditResponseT3";
+
 export type TabParams = {
     Home: any;
     HomeStack: StackParams;
@@ -11,10 +13,7 @@ export type TabParams = {
   export type StackParams = {
     Home: any;
     Details: {
-      data: {
-        id: string;
-        subreddit: string;
-      };
+      data: RedditResponseT3
     };
     Overview: {
       data: string;
