@@ -18,13 +18,6 @@ export type TabParams = {
     Overview: {
       data: string;
     };
-    FullSizeImage: {
-      data: {
-        url: string;
-        id: string;
-        author_fullname: string;
-      };
-    };
     Subreddit: {
       data: string;
     };

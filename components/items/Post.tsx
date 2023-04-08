@@ -45,11 +45,7 @@ export default function Post(props: RedditResponseT3) {
                 &nbsp;by&nbsp;
                 <Text onPress={() => navigation.navigate('Overview', { data: props.data.author })}>{props.data.author}</Text>
             </Text>
-            <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => console.log('fullscreen')}>
-                {image}
-            </TouchableOpacity>
+            {image}
             <PostInteraction data={props} />
         </View >
     );

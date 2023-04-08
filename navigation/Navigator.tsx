@@ -2,10 +2,9 @@ import { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/Home';
-import { ActivityIndicator, View, StyleSheet, Image, Button } from 'react-native';
+import { ActivityIndicator, View, StyleSheet, Image } from 'react-native';
 import ErrorMessage from '../components/ErrorMessage';
 import { AuthContext } from '../context/AuthContext';
-import FullSizeImage from '../screens/FullSizeImage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from '../screens/Settings';
 import Details from '../screens/Details';
@@ -24,7 +23,6 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen name="Details" component={Details} />
       <HomeStack.Screen name="Overview" component={Overview} />
-      <HomeStack.Screen name="FullSizeImage" component={FullSizeImage} />
       <HomeStack.Screen name="Subreddit" component={Subreddit} />
     </HomeStack.Navigator>
   );
@@ -38,7 +36,6 @@ function SearchStackScreen() {
       <SearchStack.Screen name="Search" component={Search} />
       <SearchStack.Screen name="Details" component={Details} />
       <SearchStack.Screen name="Overview" component={Overview} />
-      <SearchStack.Screen name="FullSizeImage" component={FullSizeImage} />
       <SearchStack.Screen name="Subreddit" component={Subreddit} />
     </SearchStack.Navigator>
   );
