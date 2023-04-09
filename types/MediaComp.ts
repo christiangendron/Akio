@@ -1,5 +1,5 @@
 import { RedditResponseT3 } from "./RedditResponseT3";
 
-export interface FullScreenCompProps {
+export interface MediaCompProps {
     data: RedditResponseT3;
   }

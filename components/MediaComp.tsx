@@ -1,10 +1,10 @@
 import React from 'react';
 import { Dimensions, Image } from 'react-native';
-import { FullScreenCompProps } from '../types/FullScreenComp';
 import { decode } from 'html-entities';
 import { Video, ResizeMode } from 'expo-av';
+import { MediaCompProps } from '../types/MediaComp';
 
-export default function FullScreenComp(props: FullScreenCompProps) {
+export default function MediaComp(props: MediaCompProps) {
   const currentPost = props.data.data;
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});

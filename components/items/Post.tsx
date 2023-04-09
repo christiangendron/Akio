@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import PostInteraction from '../PostInteraction';
 import { StackParams } from '../../types/Navigator';
-import FullScreenComp from '../FullScreenComp';
+import MediaComp from '../MediaComp';
 import { PostProps } from '../../types/Post';
 import { shortenString } from '../../tools/Formating';
 
@@ -11,7 +11,7 @@ export default function Post(props: PostProps) {
     const currentPost = props.data.data;
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
   
-    const image = <FullScreenComp data={props.data} />
+    const image = <MediaComp data={props.data} />
 
     const title = <View className='p-3'><TouchableOpacity
     onPress={() => navigation.navigate('Details', { data: props.data })}>
