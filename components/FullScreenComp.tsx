@@ -9,10 +9,20 @@ export default function FullScreenComp(props: FullScreenCompProps) {
   let image = undefined;
 
   if (currentPost.preview && currentPost.preview.images) {
-    const screenDimensions = Dimensions.get("screen");
-    const imageThumb = decode(currentPost.preview.images[0].resolutions[2].url);
-    const thumbHeight = currentPost.preview.images[0].resolutions[2].height;
-    image = <Image style={{ resizeMode: 'cover', width: screenDimensions.width, height: thumbHeight }} source={{ uri: imageThumb }} />;
+    const imageURI = decode(currentPost.preview.images[0].source.url);
+    const { width, height } = currentPost.preview.images[0].source;
+  
+    // Calculate the aspect ratio of the image
+    const aspectRatio = width / height;
+  
+    // Calculate the height of the image based on the aspect ratio and the width of the device screen
+    const imageHeight = Dimensions.get('window').width / aspectRatio;
+  
+    // Renders the image with the specified properties
+    image = <Image 
+      source={{ uri: imageURI }} 
+      style={{ width: Dimensions.get('window').width, height: imageHeight, resizeMode: 'contain' }} 
+    />;
   }
 
   return (
