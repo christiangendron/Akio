@@ -42,6 +42,7 @@ export default function Subreddit(props: SubredditProps) {
   }
 
   if (posts.isError) {
+    console.log(posts)
     return (
       <View className='flex flex-1'>
         <ErrorMessage message="Error while getting posts." action={posts.refetch} actionMessage="Try again!" />

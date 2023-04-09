@@ -1,28 +1,46 @@
 import axios from 'axios';
 import {CLIENT_ID_64} from '@env';
 import * as SecureStore from 'expo-secure-store';
+import { RedditAccessTokenResponse } from '../types/AuthContext';
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.headers.post['User-Agent'] = 'iOS:Akio:v0.0.1 (by /u/AkioApp)';
 axios.defaults.headers.post['Accept'] = 'application/json';
 
-async function getToken() {
-  // TODO Get token from local storage if exists
-  const res = await requestBasicToken();
-  return res;
+async function getToken(): Promise<string> {
+  // Try to get it from the secure store
+  let token = await SecureStore.getItemAsync('accessToken');
+
+  // If it's not there, request a new one
+  if (!token) {
+    const res = await requestBasicToken();
+    token = res.data.access_token;
+  }
+
+  // if we still don't have a token, throw an error
+  if (!token) {
+    throw new Error('No token found');
+  }
+
+  return token;
 }
 
-async function requestBasicToken() {
+async function requestBasicToken(): Promise<RedditAccessTokenResponse> {
+  // Build the request  
   const dataform = new FormData();
   dataform.append('grant_type', 'https://oauth.reddit.com/grants/installed_client');
   dataform.append('device_id', 'DO_NOT_TRACK_THIS_DEVICE');
   axios.defaults.headers.post['Authorization'] = 'Basic ' + CLIENT_ID_64;
+
+  // Make the request
   const res = await axios.post('https://www.reddit.com/api/v1/access_token', dataform);
-  const accessToken = res.data.access_token as string;
-  await SecureStore.setItemAsync('accessToken', accessToken);
+
+  // Save the token to the secure store
+  await SecureStore.setItemAsync('accessToken', res.data.access_token);
+
   return res;
 }
 
-const TokenServices = {getToken};
+const TokenServices = {getToken, requestBasicToken};
 
 export default TokenServices;

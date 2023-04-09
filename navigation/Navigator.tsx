@@ -44,21 +44,6 @@ function SearchStackScreen() {
 const Tab = createBottomTabNavigator<TabParams>();
 
 export default function App() {
-  const authcontext = useContext(AuthContext);
-
-  if (authcontext?.token.isLoading) {
-    return (
-      <View className='flex flex-1 justify-center items-center'>
-        <ActivityIndicator />
-      </View>
-    );
-  }
-
-  if (authcontext?.token.isError) {
-    <View className='flex flex-1 justify-center items-center'>
-      <ErrorMessage message="Error while getting the a token." actionMessage="Try again" action={authcontext?.token.refetch} />
-    </View>;
-  }
 
   return (
     <NavigationContainer>
