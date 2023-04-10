@@ -1,25 +1,22 @@
 import { RedditResponseT3 } from '../types/RedditResponseT3';
 import AxiosClient from './AxiosClient';
 
-async function getPosts(sub:string, keyword:string, filter:String, last: string): Promise<RedditResponseT3[]> {
-
-  let requestURL = ''
-
-  if (keyword != '') {
-    requestURL = `https://oauth.reddit.com/r/${sub}/search?limit=10&q=${keyword}&sort=${filter}&after=${last}`
-  } else {
-    requestURL = `https://oauth.reddit.com/r/${sub}/${filter}?limit=10&after=${last}`
-  }
-
-  const res = await AxiosClient.get(requestURL);
+async function getPosts(sub:string, filter:String, last: string): Promise<RedditResponseT3[]> {
+  const res = await AxiosClient.get(`https://oauth.reddit.com/r/${sub}/${filter}?limit=10&after=${last}`);
 
   return res.data.data.children;
 }
 
-async function getPost(id:string) {
+async function searchSubreddit(sub: string, filter:string, last:string, keyword: string): Promise<RedditResponseT3[]> {
+  const res = await AxiosClient.get(`https://oauth.reddit.com/r/${sub}/search?limit=10&q=${keyword}&sort=${filter}&after=${last}`);
+
+  return res.data.data.children;
+}
+
+async function getPost(id:string): Promise<RedditResponseT3>  {
   const res = await AxiosClient.get(`https://oauth.reddit.com/r/all/api/info?id=t3_${id}`);
 
-  return res;
+  return res.data.data.children[0];
 }
 
 async function getComments(id:string, subreddit:string, filter:string) {  
@@ -34,6 +31,6 @@ async function getOverview(user:string) {
   return res;
 }
 
-const RedditServices = {getPosts, getPost, getComments, getOverview};
+const RedditServices = {getPosts, getPost, getComments, getOverview, searchSubreddit};
 
 export default RedditServices;

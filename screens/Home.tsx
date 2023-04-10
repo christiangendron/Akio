@@ -17,7 +17,7 @@ export default function Home() {
   const last = useRef('');
   const navigation = useNavigation();
 
-  const query = useInfiniteQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', keyword, filter, last.current), {
+  const query = useInfiniteQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', filter, last.current), {
     getNextPageParam: (lastPage) => lastPage[lastPage.length - 1].data.name,
   });
 
@@ -75,6 +75,7 @@ export default function Home() {
         onEndReached={() => query.fetchNextPage()}
         ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
+        onEndReachedThreshold={0.5}
         ListEmptyComponent={<NoPostsFound />}
         ListHeaderComponent={<SearchBarComp data={searchBarData} />}
       />
