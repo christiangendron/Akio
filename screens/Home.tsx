@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 import AppTheme from '../styles/AppTheme';
-import { useQuery } from 'react-query';
-import { AuthContext } from '../context/AuthContext';
+import { useInfiniteQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
 import RedditServices from '../services/RedditServices';
 import { useNavigation } from '@react-navigation/native';
@@ -11,14 +10,16 @@ import Post from '../components/items/Post';
 import SearchBarComp from '../components/SearchBarComp';
 import NoPostsFound from '../components/NoPostsFound';
 import { RedditResponseT3 } from '../types/RedditResponseT3';
-import { RedditResponseRoot } from '../types/RedditResponseRoot';
 
 export default function Home() {
   const [filter, setFilter] = useState('hot');
   const [keyword, setKeyword] = useState('');
+  const last = useRef('');
   const navigation = useNavigation();
 
-  const posts = useQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', keyword, filter));
+  const query = useInfiniteQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', keyword, filter, last.current), {
+    getNextPageParam: (lastPage) => lastPage[lastPage.length - 1].data.name,
+  });
 
   useEffect(() => {
     navigation.setOptions({
@@ -34,10 +35,10 @@ export default function Home() {
   }, [navigation]);
   
   useEffect(() => {
-    posts.refetch();
+    query.refetch();
   }, [filter]);
 
-  if (posts.isLoading) {
+  if (query.isLoading) {
     return (
       <View className='flex flex-1 justify-center items-center'>
         <ActivityIndicator />
@@ -45,16 +46,13 @@ export default function Home() {
     );
   }
 
-  if (posts.isError) {
+  if (query.isError) {
     return (
       <View className='flex flex-1 justify-center items-center'>
-        <ErrorMessage message="Error while getting posts." action={posts.refetch} actionMessage="Try again!" />
+        <ErrorMessage message="Error while getting posts." action={query.refetch} actionMessage="Try again!" />
       </View>
     );
   }
-
-  const redditResponse = posts?.data as RedditResponseRoot;
-  const postsData = redditResponse.data.data.children as RedditResponseT3[];
 
   const renderItem = ({ item }: { item: RedditResponseT3 }): JSX.Element => {
     return <Post key={item.data.id} data={item} />;
@@ -63,17 +61,20 @@ export default function Home() {
   const searchBarData = {
     keyword: keyword,
     handleChange: setKeyword,
-    handleSubmit: posts.refetch,
+    handleSubmit: query.refetch,
   }
+
+  last.current = query.data?.pages[query.data?.pages.length - 1][query.data?.pages[query.data?.pages.length - 1].length - 1].data.name ?? '';
 
   return (
     <View className='flex flex-1 justify-center items-center'>
       <FlatList
-        data={postsData}
+        data={query.data?.pages.flatMap(page => page)}
         renderItem={renderItem}
-        refreshing={posts.isLoading}
+        refreshing={query.isLoading}
+        onEndReached={() => query.fetchNextPage()}
         ItemSeparatorComponent={() => <View className='h-2' />}
-        onRefresh={posts.refetch}
+        onRefresh={query.refetch}
         ListEmptyComponent={<NoPostsFound />}
         ListHeaderComponent={<SearchBarComp data={searchBarData} />}
       />

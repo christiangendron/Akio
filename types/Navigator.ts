@@ -11,7 +11,9 @@ export type TabParams = {
   }
   
   export type StackParams = {
-    Home: any;
+    Home: {
+      data: string;
+    };
     Details: {
       data: RedditResponseT3
     };

@@ -29,7 +29,7 @@ AxiosClient.interceptors.response.use(
       const res = await TokenServices.requestBasicToken();
 
       // update the Authorization header with the new access token
-      originalRequest.headers.Authorization = `Bearer ${res.data.access_token}`;
+      originalRequest.headers.Authorization = `Bearer ${res.access_token}`;
 
       // retry the original request with the updated headers
       return AxiosClient(originalRequest);

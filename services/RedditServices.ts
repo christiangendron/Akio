@@ -1,18 +1,19 @@
+import { RedditResponseT3 } from '../types/RedditResponseT3';
 import AxiosClient from './AxiosClient';
 
-async function getPosts(sub:string, keyword:string, filter:String) {
+async function getPosts(sub:string, keyword:string, filter:String, last: string): Promise<RedditResponseT3[]> {
 
   let requestURL = ''
 
   if (keyword != '') {
-    requestURL = `https://oauth.reddit.com/r/${sub}/search?limit=10&q=${keyword}&sort=${filter}`
+    requestURL = `https://oauth.reddit.com/r/${sub}/search?limit=10&q=${keyword}&sort=${filter}&after=${last}`
   } else {
-    requestURL = `https://oauth.reddit.com/r/${sub}/${filter}?limit=10`
+    requestURL = `https://oauth.reddit.com/r/${sub}/${filter}?limit=10&after=${last}`
   }
 
   const res = await AxiosClient.get(requestURL);
 
-  return res;
+  return res.data.data.children;
 }
 
 async function getPost(id:string) {

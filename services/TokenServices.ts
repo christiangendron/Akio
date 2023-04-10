@@ -14,7 +14,7 @@ async function getToken(): Promise<string> {
   // If it's not there, request a new one
   if (!token) {
     const res = await requestBasicToken();
-    token = res.data.access_token;
+    token = res.access_token;
   }
 
   // if we still don't have a token, throw an error
@@ -38,7 +38,7 @@ async function requestBasicToken(): Promise<RedditAccessTokenResponse> {
   // Save the token to the secure store
   await SecureStore.setItemAsync('accessToken', res.data.access_token);
 
-  return res;
+  return res.data;
 }
 
 const TokenServices = {getToken, requestBasicToken};

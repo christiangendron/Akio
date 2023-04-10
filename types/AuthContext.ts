@@ -10,11 +10,9 @@ export interface AuthContextProviderProps {
 }
 
 export type RedditAccessTokenResponse = {
-  data: {
-    access_token: string
-    token_type: string
-    device_id: string
-    expires_in: number
-    scope: string
-  }
+  access_token: string
+  token_type: string
+  device_id: string
+  expires_in: number
+  scope: string
 }

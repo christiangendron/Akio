@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
 import FilterBox from '../components/FilterBox';
 import NoPostsFound from '../components/NoPostsFound';
@@ -9,7 +9,6 @@ import Post from '../components/items/Post';
 import SearchBarComp from '../components/SearchBarComp';
 import RedditServices from '../services/RedditServices';
 import { SubredditProps } from '../types/Subreddit';
-import { RedditResponseRoot } from '../types/RedditResponseRoot';
 import { RedditResponseT3 } from '../types/RedditResponseT3';
 
 export default function Subreddit(props: SubredditProps) {
@@ -17,6 +16,11 @@ export default function Subreddit(props: SubredditProps) {
   const [keyword, setKeyword] = useState('');
   const subreddit = props.route.params.data;
   const navigation = useNavigation();
+  const last = useRef('');
+
+  const query = useInfiniteQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', keyword, filter, last.current), {
+    getNextPageParam: (lastPage) => lastPage[lastPage.length - 1].data.name,
+  });
 
   useEffect(() => {
     navigation.setOptions({
@@ -28,12 +32,10 @@ export default function Subreddit(props: SubredditProps) {
   }, [navigation]);
 
   useEffect(() => {
-    posts.refetch();
+    query.refetch();
   }, [filter]);
 
-  const posts = useQuery(`posts-${subreddit}-${filter}`, () => RedditServices.getPosts(subreddit, keyword, filter));
-
-  if (posts.isLoading) {
+  if (query.isLoading) {
     return (
       <View className='flex flex-1 items-center justify-center'>
         <ActivityIndicator />
@@ -41,17 +43,13 @@ export default function Subreddit(props: SubredditProps) {
     );
   }
 
-  if (posts.isError) {
-    console.log(posts)
+  if (query.isError) {
     return (
       <View className='flex flex-1'>
-        <ErrorMessage message="Error while getting posts." action={posts.refetch} actionMessage="Try again!" />
+        <ErrorMessage message="Error while getting posts." action={query.refetch} actionMessage="Try again!" />
       </View>
     );
   }
-
-  const redditResponse = posts?.data as RedditResponseRoot;
-  const postsData = redditResponse.data.data.children as RedditResponseT3[];
 
   const renderItem = ({ item }: { item: RedditResponseT3 }): JSX.Element => {
     return <Post key={item.data.id} data={item} />
@@ -60,17 +58,20 @@ export default function Subreddit(props: SubredditProps) {
   const searchBarData = {
     keyword: keyword,
     handleChange: setKeyword,
-    handleSubmit: posts.refetch,
+    handleSubmit: query.refetch,
   }
+
+  last.current = query.data?.pages[query.data?.pages.length - 1][query.data?.pages[query.data?.pages.length - 1].length - 1].data.name ?? '';
 
   return (
     <View className='flex flex-1'>
       <FlatList
-        data={postsData}
+        data={query.data?.pages.flatMap(page => page)}
         renderItem={renderItem}
-        refreshing={posts.isLoading}
+        refreshing={query.isLoading}
+        onEndReached={() => query.fetchNextPage()}
         ItemSeparatorComponent={() => <View className='h-2' />}
-        onRefresh={posts.refetch}
+        onRefresh={query.refetch}
         ListEmptyComponent={<NoPostsFound />}
         ListHeaderComponent={<SearchBarComp data={searchBarData} />}
       />
