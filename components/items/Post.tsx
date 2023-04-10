@@ -11,7 +11,7 @@ export default function Post(props: PostProps) {
     const currentPost = props.data.data;
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
   
-    const image = <MediaComp data={props.data} />
+    const media = <MediaComp data={props.data} />
 
     const title = <View className='p-3'><TouchableOpacity
     onPress={() => navigation.navigate('Details', { data: props.data })}>
@@ -23,7 +23,7 @@ export default function Post(props: PostProps) {
         <Text className='text-sm' onPress={() => navigation.navigate('Overview', { data: currentPost.author })}>{currentPost.author}</Text>
     </Text></View>
 
-    const selfText = <Text className='p-3'>{props.isDetails ? currentPost.selftext : shortenString(currentPost.selftext)}</Text>
+    const selfText = currentPost.selftext ? <Text className='p-3'>{props.isDetails ? currentPost.selftext : shortenString(currentPost.selftext)}</Text> : <></>
     
     // TODO deal with gallery posts
     if (currentPost.is_gallery != undefined) {
@@ -31,13 +31,22 @@ export default function Post(props: PostProps) {
         return (<></>)
     }
 
+    if (props.isDetails) {
+        return (
+            <View className='bg-white h-auto'>
+                {media}
+                {selfText}
+                {title}
+                <PostInteraction data={props.data} />
+            </View >
+        );
+    }
+
     return (
         <View className='bg-white h-auto'>
-            {!props.isDetails ? title : <></>}
-            {!props.isDetails && currentPost.selftext ? selfText : <></>}
-            {image}
-            {props.isDetails ? title : <></>}
-            {props.isDetails && currentPost.selftext ? selfText : <></>}
+            {title}
+            {media}
+            {selfText}
             <PostInteraction data={props.data} />
         </View >
     );

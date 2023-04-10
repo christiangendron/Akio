@@ -18,7 +18,7 @@ export default function Subreddit(props: SubredditProps) {
   const navigation = useNavigation();
   const last = useRef('');
 
-  const query = useInfiniteQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', filter, last.current), {
+  const query = useInfiniteQuery(`posts-${subreddit}-${filter}`, () => RedditServices.getPosts(subreddit, filter, last.current), {
     getNextPageParam: (lastPage) => lastPage[lastPage.length - 1].data.name,
   });
 
