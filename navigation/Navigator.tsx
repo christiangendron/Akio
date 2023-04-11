@@ -1,10 +1,7 @@
-import { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/Home';
-import { ActivityIndicator, View, StyleSheet, Image } from 'react-native';
-import ErrorMessage from '../components/ErrorMessage';
-import { AuthContext } from '../context/AuthContext';
+import { StyleSheet, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from '../screens/Settings';
 import Details from '../screens/Details';

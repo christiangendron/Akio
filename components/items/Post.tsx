@@ -13,15 +13,17 @@ export default function Post(props: PostProps) {
   
     const media = <MediaComp data={props.data} />
 
-    const title = <View className='p-3'><TouchableOpacity
-    onPress={() => navigation.navigate('Details', { data: props.data })}>
-    <Text className='font-bold'>{currentPost.title}</Text>
-</TouchableOpacity>
-    <Text>
-        <Text className='text-sm' onPress={() => navigation.navigate('Subreddit', { data: currentPost.subreddit })}>{currentPost.subreddit}</Text>
-        &nbsp;by&nbsp;
-        <Text className='text-sm' onPress={() => navigation.navigate('Overview', { data: currentPost.author })}>{currentPost.author}</Text>
-    </Text></View>
+    const title = (
+        <View className='p-3'>
+            <TouchableOpacity onPress={() => navigation.navigate('Details', { data: props.data })}>
+                <Text className='font-bold'>{currentPost.title}</Text>
+            </TouchableOpacity>
+            <View className='flex flex-row space-x-2'>
+                <Text className='text-sm' onPress={() => navigation.navigate('Subreddit', { data: currentPost.subreddit })}>{currentPost.subreddit}</Text>
+                <Text className='text-sm' onPress={() => navigation.navigate('Overview', { data: currentPost.author })}>{currentPost.author}</Text>
+            </View>
+        </View>
+    )
 
     const selfText = currentPost.selftext ? <Text className='p-3'>{props.isDetails ? currentPost.selftext : shortenString(currentPost.selftext)}</Text> : <></>
     
@@ -38,7 +40,7 @@ export default function Post(props: PostProps) {
                 {selfText}
                 {title}
                 <PostInteraction data={props.data} />
-            </View >
+            </View>
         );
     }
 
@@ -48,6 +50,6 @@ export default function Post(props: PostProps) {
             {media}
             {selfText}
             <PostInteraction data={props.data} />
-        </View >
+        </View>
     );
 }

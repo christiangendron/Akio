@@ -1,5 +1,3 @@
-import { UseQueryResult } from "react-query";
-
 export interface AuthContextValue {
     isAuth: boolean;
     setIsAuth: (isAuth: boolean) => void;
