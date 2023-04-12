@@ -19,6 +19,7 @@ export default function Home() {
 
   const query = useInfiniteQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', filter, last.current), {
     getNextPageParam: (lastPage) => lastPage[lastPage.length - 1].data.name,
+    retry: false
   });
 
   useEffect(() => {

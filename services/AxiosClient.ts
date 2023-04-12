@@ -9,7 +9,7 @@ const AxiosClient: AxiosInstance = axios.create({
 
 AxiosClient.interceptors.request.use(async (config) => {
   let token = await TokenServices.getToken();
-
+  
   if (config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }
