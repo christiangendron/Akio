@@ -31,6 +31,9 @@ export default function MediaComp(props: MediaCompProps) {
       isLooping
       onPlaybackStatusUpdate={status => setStatus(() => status)}
     />;
+  } else if (currentPost.is_gallery != undefined) {
+      console.log('This post is a gallery with ' + currentPost.gallery_data.items.length + ' items')
+      return (<></>)
   } else if (currentPost.preview && currentPost.preview.images) {
     const imageURI = decode(currentPost.preview.images[0].source.url);
     const { width, height } = currentPost.preview.images[0].source;

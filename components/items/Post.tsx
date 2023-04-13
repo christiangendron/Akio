@@ -26,12 +26,6 @@ export default function Post(props: PostProps) {
     )
 
     const selfText = currentPost.selftext ? <Text className='p-3'>{props.isDetails ? currentPost.selftext : shortenString(currentPost.selftext)}</Text> : <></>
-    
-    // TODO deal with gallery posts
-    if (currentPost.is_gallery != undefined) {
-        console.log('This post is a gallery with ' + currentPost.gallery_data.items.length + ' items')
-        return (<></>)
-    }
 
     if (props.isDetails) {
         return (

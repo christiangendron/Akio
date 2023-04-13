@@ -63,7 +63,10 @@ export default function Home() {
     handleSubmit: query.refetch,
   }
 
-  last.current = query.data?.pages[query.data?.pages.length - 1][query.data?.pages[query.data?.pages.length - 1].length - 1].data.name ?? '';
+  function onEndReached() {
+    last.current = query.data?.pages[query.data?.pages.length - 1][query.data?.pages[query.data?.pages.length - 1].length - 1].data.name ?? '';
+    query.fetchNextPage()
+  }
 
   return (
     <View className='flex flex-1 justify-center items-center'>
@@ -71,7 +74,7 @@ export default function Home() {
         data={query.data?.pages.flatMap(page => page)}
         renderItem={renderItem}
         refreshing={query.isLoading}
-        onEndReached={() => query.fetchNextPage()}
+        onEndReached={onEndReached}
         ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={0.5}
