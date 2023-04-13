@@ -12,14 +12,16 @@ import NoPostsFound from '../components/NoPostsFound';
 import { RedditResponseT3 } from '../types/RedditResponseT3';
 
 export default function Home() {
-  const [filter, setFilter] = useState('hot');
+  const [subreddit, setSubreddit] = useState('all');
+  const [filter, setFilter] = useState('best');
   const [keyword, setKeyword] = useState('');
   const last = useRef('');
   const navigation = useNavigation();
 
-  const query = useInfiniteQuery(`posts-all-${filter}`, () => RedditServices.getPosts('all', filter, last.current), {
-    getNextPageParam: (lastPage) => lastPage[lastPage.length - 1].data.name,
-    retry: false
+  const query = useInfiniteQuery({
+    queryKey: ['posts', subreddit, filter],
+    queryFn: () => RedditServices.getPosts(subreddit, filter, last.current),
+    getNextPageParam: (lastPage) => lastPage[lastPage.length - 1].data.name
   });
 
   useEffect(() => {
@@ -35,10 +37,6 @@ export default function Home() {
     });
   }, [navigation]);
   
-  useEffect(() => {
-    query.refetch();
-  }, [filter]);
-
   if (query.isLoading) {
     return (
       <View className='flex flex-1 justify-center items-center'>

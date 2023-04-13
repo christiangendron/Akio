@@ -19,8 +19,8 @@ function HomeStackScreen() {
     <HomeStack.Navigator>
       <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen name="Details" component={Details} />
+      <HomeStack.Screen name="Subreddit" component={Subreddit}/>
       <HomeStack.Screen name="Overview" component={Overview} />
-      <HomeStack.Screen name="Subreddit" component={Subreddit} />
     </HomeStack.Navigator>
   );
 }

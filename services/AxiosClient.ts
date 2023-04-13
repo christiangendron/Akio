@@ -20,7 +20,9 @@ AxiosClient.interceptors.request.use(async (config) => {
 AxiosClient.interceptors.response.use((response) => response, async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response.status && error.response.status === 401 && !originalRequest._retry) {
+      console.log('Got a 401, retrying with new token.')
+
       originalRequest._retry = true;
       
       // Make a call for a new access token

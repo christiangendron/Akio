@@ -23,6 +23,7 @@ async function getToken(): Promise<string> {
 
   // If it's not there, request one
   if (!token) {
+    console.log('There was no token in the secure store, getting a new one.')
     return (await requestBasicToken()).access_token;
   }
 
@@ -30,6 +31,8 @@ async function getToken(): Promise<string> {
 }
 
 async function requestBasicToken(): Promise<RedditAccessTokenResponse> {
+  console.log('Requesting a new token.')
+
   // Build the request  
   const dataform = new FormData();
   dataform.append('grant_type', 'https://oauth.reddit.com/grants/installed_client');
@@ -48,6 +51,11 @@ async function requestBasicToken(): Promise<RedditAccessTokenResponse> {
   return res.data;
 }
 
-const TokenServices = {getToken, requestBasicToken};
+async function clearToken() {
+  console.log('Clearing token.')
+  await SecureStore.deleteItemAsync('accessToken');
+}
+
+const TokenServices = {getToken, requestBasicToken, clearToken};
 
 export default TokenServices;

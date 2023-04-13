@@ -2,7 +2,11 @@ import { RedditResponseT3 } from '../types/RedditResponseT3';
 import AxiosClient from './AxiosClient';
 
 async function getPosts(sub:string, filter:String, last: string): Promise<RedditResponseT3[]> {
-  const res = await AxiosClient.get(`https://oauth.reddit.com/r/${sub}/${filter}?limit=10&after=${last}`);
+
+  console.log('LAST:', last);
+  const url = `https://oauth.reddit.com/r/${sub}/${filter}?limit=10&after=${last}`
+  console.log(url)
+  const res = await AxiosClient.get(url);
 
   return res.data.data.children;
 }

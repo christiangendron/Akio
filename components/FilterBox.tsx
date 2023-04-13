@@ -25,21 +25,21 @@ export default function FilterBox(props: FilterBoxProps) {
                         <View style={styles.modalView}>
                             <Text style={styles.title}>Sort by...</Text>
                             <Text style={styles.modalText} onPress={() => {
+                                props.data.setFilter('best');
+                                setModalVisible(!modalVisible);
+                            }}>Best</Text>
+                            <Text style={styles.modalText} onPress={() => {
                                 props.data.setFilter('hot');
                                 setModalVisible(!modalVisible);
                             }}>Hot</Text>
-                            <Text style={styles.modalText} onPress={() => {
-                                props.data.setFilter('new');
-                                setModalVisible(!modalVisible);
-                            }}>New</Text>
                             <Text style={styles.modalText} onPress={() => {
                                 props.data.setFilter('top')
                                 setModalVisible(!modalVisible);
                             }}>Top</Text>
                             <Text style={styles.modalText} onPress={() => {
-                                props.data.setFilter('controversial');
+                                props.data.setFilter('new');
                                 setModalVisible(!modalVisible);
-                            }}>Controversial</Text>
+                            }}>New</Text>
                         </View>
                         <View>
                             <Pressable
