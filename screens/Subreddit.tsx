@@ -73,7 +73,7 @@ export default function Subreddit(props: SubredditProps) {
         onEndReached={() => query.fetchNextPage(last.current as any)}
         ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={2}
         ListEmptyComponent={<NoPostsFound />}
         ListHeaderComponent={<SearchBarComp data={searchBarData} />}
       />
