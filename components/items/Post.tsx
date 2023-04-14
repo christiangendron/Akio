@@ -22,7 +22,7 @@ export default function Post(props: PostProps) {
     )
 
     const userNameAndSubreddit = (
-        <View className='p-3 text-xs text-gray-500 space-x-1 flex flex-row'>
+        <View className='px-3 text-xs text-gray-500 space-x-1 flex flex-row'>
             <Text>Posted by</Text>
             <Text onPress={() => navigation.navigate('Overview', { data: currentPost.author })}>u/{currentPost.author}</Text> 
             <Text>to</Text>
