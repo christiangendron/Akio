@@ -18,6 +18,7 @@ export default function App() {
   const akioApp = !allowed ? <Navigator /> : <ErrorMessage message="You must be authentificated to view this content" actionMessage="Get Authentificated" action={checkAuth} />;
 
   LogBox.ignoreLogs(['Could not find image']);
+  LogBox.ignoreLogs(['VirtualizedList: You have a large']);
 
   return (
     <QueryClientProvider client={queryClient}>

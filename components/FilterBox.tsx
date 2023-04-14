@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal, StyleSheet, Text, Pressable, View, Image, TouchableOpacity } from "react-native";
+import { Modal, Text, View, Image, TouchableOpacity } from "react-native";
 import { FilterBoxProps } from "../types/FilterBox";
 import Option from "./items/Option";
 
@@ -23,8 +23,8 @@ export default function FilterBox(props: FilterBoxProps) {
                     }}
                 >
                     <View className="flex flex-1 justify-end items-center">
-                        <View className="bg-white w-full p-1 flex items-center py-10 rounded-lg">
-                            <Text style={styles.title}>Sort by...</Text>
+                        <View className="bg-white w-full p-1 flex items-center pt-3 pb-10 rounded-lg">
+                            <Text className="pb-3">Sort by...</Text>
                             <Option icon="best" label="Best" handler={() => {
                                 props.data.setFilter('best');
                                 setModalVisible(!modalVisible);
@@ -55,55 +55,3 @@ export default function FilterBox(props: FilterBoxProps) {
         </>
     )
 }
-
-const styles = StyleSheet.create({
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: 'rgba(0,0,0,0.5)'
-    },
-    modalView: {
-        margin: 20,
-        width: '75%',
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5
-    },
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        width: '50%',
-        elevation: 2
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        decorationLine: 'underline',
-        marginBottom: 15,
-    },
-    buttonOpen: {
-        backgroundColor: "#F194FF",
-    },
-    buttonClose: {
-        backgroundColor: "#2196F3",
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center",
-    }
-});

@@ -39,7 +39,7 @@ export default function PostInteraction(props: PostInteractionProps) {
       <Image source={require('../assets/icons/upvote.png')} className='w-5 h-5' />
       <Image source={require('../assets/icons/downvote.png')} className='w-5 h-5' />
       <View>
-        <PostOption />
+        <PostOption id={props.data.data.id} name={props.data.data.name} />
       </View>
     </View>
   );

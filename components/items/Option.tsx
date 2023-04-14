@@ -1,5 +1,4 @@
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { timeSince } from '../../tools/Formating';
 import { OptionProps } from '../../types/Options';
 
 /**
@@ -9,13 +8,13 @@ import { OptionProps } from '../../types/Options';
 export default function Option(props: OptionProps) {
 
     const icon = props.icon ? 
-    <Image source={require(`../../assets/icons/best.png`)} className='mx-2 w-5 h-5 place-self-start' /> :
+    <Image source={require(`../../assets/icons/best.png`)} className='mx-2 w-5 h-5' /> :
     <></>;
 
     return (
         <TouchableOpacity onPress={props.handler} className="flex flex-row w-full justify-center p-5 bg-slate-200 rounded-lg m-1 items-center">
             {icon}
-            <Text className='text-center'>{props.label}</Text>
+            <Text className='text-center text-lg'>{props.label}</Text>
         </TouchableOpacity>
     );
 }
