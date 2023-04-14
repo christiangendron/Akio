@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { Modal, Text, View, Image, TouchableOpacity } from "react-native";
+import { Modal, View, Image, TouchableOpacity } from "react-native";
 import Option from "./items/Option";
 import { PostOptionsProps } from "../types/PostOptions";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from "@react-navigation/native";
+import { StackParams } from "../types/Navigator";
 
 export default function PostOptions(props: PostOptionsProps) {
     const [modalVisible, setModalVisible] = useState(false);
+    const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
     return (
         <>
@@ -23,8 +27,7 @@ export default function PostOptions(props: PostOptionsProps) {
                     }}
                 >
                     <View className="flex flex-1 justify-end items-center">
-                        <View className="bg-white w-full p-1 flex items-center pt-3 pb-10 rounded-lg">
-                            <Text className="pb-3">Option for {props.name}</Text>
+                        <View className="bg-white w-full p-1 flex items-center pt-1 pb-10 rounded-lg">
                             <Option label="Upvote" handler={() => {
                                 setModalVisible(!modalVisible);
                             }} />
@@ -33,6 +36,14 @@ export default function PostOptions(props: PostOptionsProps) {
                             }} />
                             <Option label="Save" handler={() => {
                                 setModalVisible(!modalVisible);
+                            }} />
+                            <Option label={`r/${props.subreddit}`} handler={() => {
+                                setModalVisible(!modalVisible);
+                                navigation.push('Subreddit', { data: props.subreddit })
+                            }} />
+                            <Option label={props.author} handler={() => {
+                                setModalVisible(!modalVisible);
+                                navigation.navigate('Overview', { data: props.author })
                             }} />
                             <Option label="Close" handler={() => {
                                 setModalVisible(!modalVisible);

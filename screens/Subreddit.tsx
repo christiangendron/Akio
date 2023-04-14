@@ -14,14 +14,14 @@ import { SubredditProps } from '../types/Subreddit';
 
 export default function Subreddit(props: SubredditProps) {
   const subreddit = useRef(props.route.params.data);
-  const [filter, setFilter] = useState('best');
   const [keyword, setKeyword] = useState('');
   const last = useRef('');
+  const filter = useRef('best');
   const navigation = useNavigation();
   
   const query = useInfiniteQuery({
-    queryKey: ['posts', subreddit, filter, keyword],
-    queryFn: (lastPostName) => RedditServices.getPosts(subreddit.current, filter, keyword, lastPostName.pageParam),
+    queryKey: ['posts', subreddit, filter.current, keyword],
+    queryFn: (lastPostName) => RedditServices.getPosts(subreddit.current, filter.current, keyword, lastPostName.pageParam),
     getNextPageParam: (lastPage) => last.current = lastPage[lastPage.length - 1].data.name
   });
 
@@ -33,7 +33,7 @@ export default function Subreddit(props: SubredditProps) {
       },
       headerTintColor: AppTheme.black,
       headerRight: () => (
-        <FilterBox data={{ filter, setFilter }} />
+        <FilterBox filter={filter} refetch={() => query.refetch()}  />
       ),
     });
   }, [navigation]);

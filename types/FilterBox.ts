@@ -1,6 +1,6 @@
 export interface FilterBoxProps {
-    data: {
-        filter: string;
-        setFilter: (filter: string) => void;
-    }
+    filter: {
+        current: string,
+    },
+    refetch: () => void,
 }

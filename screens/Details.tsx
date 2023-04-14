@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { View, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 import Comment from '../components/items/Comment';
@@ -11,24 +11,20 @@ import Post from '../components/items/Post';
 import { DetailsScreenProps } from '../types/Details';
 
 export default function Details(props: DetailsScreenProps) {
-  const [filter, setFilter] = useState('best');
+  const filter = useRef('best');
   const navigation = useNavigation();
   const currentPost = props.route.params.data;
+
+  const comments = useQuery(`comments-for-${currentPost.data.id}-${filter}-${currentPost.data.subreddit}`, () => RedditServices.getComments(currentPost.data.id, currentPost.data.subreddit, filter.current));
 
   useEffect(() => {
     navigation.setOptions({
       title: '',
       headerRight: () => (
-        <FilterBox data={{ filter, setFilter }} />
+        <FilterBox filter={filter} refetch={() => comments.refetch()}  />
       ),
     });
   }, [navigation]);
-
-  const comments = useQuery(`comments-for-${currentPost.data.id}-${filter}-${currentPost.data.subreddit}`, () => RedditServices.getComments(currentPost.data.id, currentPost.data.subreddit, filter));
-
-  useEffect(() => {
-    comments.refetch();
-  }, [filter]);
 
   const renderItem = ({ item }: { item: CommentItemProps }): JSX.Element => {
     return <Comment key={item.data.id} data={item.data} />

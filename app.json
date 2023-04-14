@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Akio",
-    "slug": "Akio",
+    "slug": "akio",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,7 +18,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.akio"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +29,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e47e6135-6e2a-4449-9a2f-ed2970e8cf44"
+      }
+    },
+    "owner": "christiangendron"
   }
 }
