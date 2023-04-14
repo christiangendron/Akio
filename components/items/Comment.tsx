@@ -11,6 +11,6 @@ export default function Comment(props: CommentItemProps) {
             <Text className='text-sm'>
                 {timeSince(props.data.created_utc)} · <Text>{props.data.ups} · {props.data.author}</Text>
             </Text>
-        </View >
+        </View>
     );
 }

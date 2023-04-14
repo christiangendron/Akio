@@ -5,6 +5,7 @@ import { SearchBarProps } from '../types/SearchBarComp';
 
 export default function SearchBarComp(props: SearchBarProps) {
     const [isFocused, setIsFocused] = useState<boolean>(false);
+    const [text, setText] = useState<string>(props.data.keyword);
 
     const cancel = isFocused ? <TouchableOpacity onPress={() => Keyboard.dismiss()}><Text>Cancel</Text></TouchableOpacity> : null;
 
@@ -16,8 +17,8 @@ export default function SearchBarComp(props: SearchBarProps) {
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
                 returnKeyType="go"
-                onSubmitEditing={() => props.data.handleSubmit()}
-                onChangeText={text => props.data.handleChange(text)} />
+                onSubmitEditing={() => props.data.handleChange(text)}
+                onChangeText={txt => setText(txt)} />
             {cancel}
         </View>
     );

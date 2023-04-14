@@ -1,6 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from '../screens/Home';
 import { StyleSheet, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from '../screens/Settings';
@@ -17,9 +16,8 @@ const HomeStack = createStackNavigator<StackParams>();
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="Subreddit" component={Subreddit} initialParams={{ data: 'all' }}/>
       <HomeStack.Screen name="Details" component={Details} />
-      <HomeStack.Screen name="Subreddit" component={Subreddit}/>
       <HomeStack.Screen name="Overview" component={Overview} />
     </HomeStack.Navigator>
   );

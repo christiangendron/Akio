@@ -19,7 +19,7 @@ export default function Post(props: PostProps) {
                 <Text className='font-bold'>{currentPost.title}</Text>
             </TouchableOpacity>
             <View className='flex flex-row space-x-2'>
-                <Text className='text-sm' onPress={() => navigation.navigate('Subreddit', { data: currentPost.subreddit })}>{currentPost.subreddit}</Text>
+                <Text className='text-sm' onPress={() => navigation.push('Subreddit', { data: currentPost.subreddit })}>{currentPost.subreddit}</Text>
                 <Text className='text-sm' onPress={() => navigation.navigate('Overview', { data: currentPost.author })}>{currentPost.author}</Text>
             </View>
         </View>

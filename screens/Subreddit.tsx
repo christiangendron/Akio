@@ -1,43 +1,46 @@
-import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
+import AppTheme from '../styles/AppTheme';
 import { useInfiniteQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
+import RedditServices from '../services/RedditServices';
+import { useNavigation } from '@react-navigation/native';
 import FilterBox from '../components/FilterBox';
-import NoPostsFound from '../components/NoPostsFound';
 import Post from '../components/items/Post';
 import SearchBarComp from '../components/SearchBarComp';
-import RedditServices from '../services/RedditServices';
-import { SubredditProps } from '../types/Subreddit';
+import NoPostsFound from '../components/NoPostsFound';
 import { RedditResponseT3 } from '../types/RedditResponseT3';
+import { SubredditProps } from '../types/Subreddit';
 
 export default function Subreddit(props: SubredditProps) {
-  const [filter, setFilter] = useState('hot');
+  const [subreddit, setSubreddit] = useState(props.route.params.data);
+  const [filter, setFilter] = useState('best');
   const [keyword, setKeyword] = useState('');
-  const subreddit = props.route.params.data;
-  const navigation = useNavigation();
   const last = useRef('');
-
-  const query = useInfiniteQuery(`posts-${subreddit}-${filter}`, () => RedditServices.getPosts(subreddit, filter, last.current), {
-    getNextPageParam: (lastPage) => lastPage[lastPage.length - 1].data.name,
+  const navigation = useNavigation();
+  
+  const query = useInfiniteQuery({
+    queryKey: ['posts', subreddit, filter, keyword],
+    queryFn: (lastPostName) => RedditServices.getPosts(subreddit, filter, keyword, lastPostName.pageParam),
+    getNextPageParam: (lastPage) => last.current = lastPage[lastPage.length - 1].data.name
   });
 
   useEffect(() => {
     navigation.setOptions({
       title: subreddit,
+      headerStyle: {
+        backgroundColor: AppTheme.lightgray
+      },
+      headerTintColor: AppTheme.black,
       headerRight: () => (
         <FilterBox data={{ filter, setFilter }} />
       ),
     });
   }, [navigation]);
-
-  useEffect(() => {
-    query.refetch();
-  }, [filter]);
-
+  
   if (query.isLoading) {
     return (
-      <View className='flex flex-1 items-center justify-center'>
+      <View className='flex flex-1 justify-center items-center'>
         <ActivityIndicator />
       </View>
     );
@@ -45,14 +48,14 @@ export default function Subreddit(props: SubredditProps) {
 
   if (query.isError) {
     return (
-      <View className='flex flex-1'>
+      <View className='flex flex-1 justify-center items-center'>
         <ErrorMessage message="Error while getting posts." action={query.refetch} actionMessage="Try again!" />
       </View>
     );
   }
 
   const renderItem = ({ item }: { item: RedditResponseT3 }): JSX.Element => {
-    return <Post key={item.data.id} data={item} />
+    return <Post key={item.data.id} data={item} />;
   };
 
   const searchBarData = {
@@ -61,15 +64,13 @@ export default function Subreddit(props: SubredditProps) {
     handleSubmit: query.refetch,
   }
 
-  last.current = query.data?.pages[query.data?.pages.length - 1][query.data?.pages[query.data?.pages.length - 1].length - 1].data.name ?? '';
-
   return (
-    <View className='flex flex-1'>
+    <View className='flex flex-1 justify-center items-center'>
       <FlatList
         data={query.data?.pages.flatMap(page => page)}
         renderItem={renderItem}
         refreshing={query.isLoading}
-        onEndReached={() => query.fetchNextPage()}
+        onEndReached={() => query.fetchNextPage(last.current as any)}
         ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={0.5}
