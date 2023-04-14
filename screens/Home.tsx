@@ -17,11 +17,11 @@ export default function Home() {
   const [keyword, setKeyword] = useState('');
   const last = useRef('');
   const navigation = useNavigation();
-
+  
   const query = useInfiniteQuery({
     queryKey: ['posts', subreddit, filter],
-    queryFn: () => RedditServices.getPosts(subreddit, filter, last.current),
-    getNextPageParam: (lastPage) => lastPage[lastPage.length - 1].data.name
+    queryFn: (lastPostName) => RedditServices.getPosts(subreddit, filter, lastPostName.pageParam),
+    getNextPageParam: (lastPage) => last.current = lastPage[lastPage.length - 1].data.name
   });
 
   useEffect(() => {
@@ -63,18 +63,13 @@ export default function Home() {
     handleSubmit: query.refetch,
   }
 
-  function onEndReached() {
-    last.current = query.data?.pages[query.data?.pages.length - 1][query.data?.pages[query.data?.pages.length - 1].length - 1].data.name ?? '';
-    query.fetchNextPage()
-  }
-
   return (
     <View className='flex flex-1 justify-center items-center'>
       <FlatList
         data={query.data?.pages.flatMap(page => page)}
         renderItem={renderItem}
         refreshing={query.isLoading}
-        onEndReached={onEndReached}
+        onEndReached={() => query.fetchNextPage(last.current as any)}
         ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={0.5}

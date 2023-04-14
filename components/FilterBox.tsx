@@ -33,6 +33,10 @@ export default function FilterBox(props: FilterBoxProps) {
                                 setModalVisible(!modalVisible);
                             }}>Hot</Text>
                             <Text style={styles.modalText} onPress={() => {
+                                props.data.setFilter('controversial');
+                                setModalVisible(!modalVisible);
+                            }}>Controversial</Text>
+                            <Text style={styles.modalText} onPress={() => {
                                 props.data.setFilter('top')
                                 setModalVisible(!modalVisible);
                             }}>Top</Text>
