@@ -14,6 +14,7 @@ export default function SearchBarComp(props: SearchBarProps) {
             <TextInput
                 className='bg-white p-3 m-3 w-3/4 rounded-full pl-5'
                 placeholder="Search for this subreddit..."
+                value={text}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
                 returnKeyType="go"

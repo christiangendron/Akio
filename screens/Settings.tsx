@@ -12,6 +12,12 @@ export default function Settings() {
         >
         <Text>Clear token</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => TokenServices.setExpiredToken()}
+        className='bg-primary rounded-lg p-2 mt-5'
+        >
+        <Text>Set expired token</Text>
+      </TouchableOpacity>
     </View>
   );
 }

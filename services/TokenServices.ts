@@ -52,10 +52,13 @@ async function requestBasicToken(): Promise<RedditAccessTokenResponse> {
 }
 
 async function clearToken() {
-  console.log('Clearing token.')
   await SecureStore.deleteItemAsync('accessToken');
 }
 
-const TokenServices = {getToken, requestBasicToken, clearToken};
+async function setExpiredToken() {
+  await SecureStore.setItemAsync('accessToken', '-SgmTOZjZkeACtNbareKwxjR9HaDEtA');
+}
+
+const TokenServices = {getToken, requestBasicToken, clearToken, setExpiredToken};
 
 export default TokenServices;

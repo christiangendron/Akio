@@ -2,7 +2,17 @@ import { RedditResponseT3 } from '../types/RedditResponseT3';
 import AxiosClient from './AxiosClient';
 
 async function getPosts(sub:string, filter:string, keyword: string,last: string): Promise<RedditResponseT3[]> {
-  const res = await AxiosClient.get(`https://oauth.reddit.com/r/${sub}/${filter}?limit=10&q=${keyword}&after=${last}`);
+  let res = null
+
+  if (keyword === '') {
+    res = await AxiosClient.get(`https://oauth.reddit.com/r/${sub}/${filter}?limit=10&q=${keyword}&after=${last}`);
+  } else {
+    res = await AxiosClient.get(`https://oauth.reddit.com/r/${sub}/search?q=${keyword}&sort=${filter}&limit=10&after=${last}`);
+  }
+
+  if (res === null) {
+    throw new Error('Getting post failed');
+  }
 
   return res.data.data.children;
 }
