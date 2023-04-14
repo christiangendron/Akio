@@ -13,9 +13,7 @@ export default function Account() {
     uri: 'exp://',
     scope: 'identity',
   }
-
-  console.log(settings)
-
+  
   async function openAuthSession () {
     setErrorMessage('')
 

@@ -15,7 +15,7 @@ export default function PostInteraction(props: PostInteractionProps) {
       <View>
         <TouchableOpacity
           className='flex-row space-x-1'
-          onPress={() => navigation.navigate('Details', { data: props.data })}>
+          onPress={() => navigation.push('Details', { data: props.data })}>
           <Image source={require('../assets/icons/up-arrow.png')} className='w-5 h-5' />
           <Text className='text-sm'>{roundedCount(currentPost.data.ups)}</Text>
         </TouchableOpacity>
@@ -23,7 +23,7 @@ export default function PostInteraction(props: PostInteractionProps) {
       <View>
         <TouchableOpacity
           className='flex-row space-x-1'
-          onPress={() => navigation.navigate('Details', { data: props.data })}>
+          onPress={() => navigation.push('Details', { data: props.data })}>
           <Image source={require('../assets/icons/chat.png')} className='w-5 h-5' />
           <Text className='text-sm'>{roundedCount(currentPost.data.num_comments)}</Text>
         </TouchableOpacity>
@@ -31,7 +31,7 @@ export default function PostInteraction(props: PostInteractionProps) {
       <View>
         <TouchableOpacity
           className='flex-row space-x-1'
-          onPress={() => navigation.navigate('Details', { data: props.data })}>
+          onPress={() => navigation.push('Details', { data: props.data })}>
           <Image source={require('../assets/icons/clock.png')} className='w-5 h-5' />
           <Text className='text-sm'>{timeSince(currentPost.data.created_utc)}</Text>
         </TouchableOpacity>
