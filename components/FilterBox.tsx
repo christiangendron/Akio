@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Modal, StyleSheet, Text, Pressable, View, Image, TouchableOpacity } from "react-native";
 import { FilterBoxProps } from "../types/FilterBox";
+import Option from "./items/Option";
 
 export default function FilterBox(props: FilterBoxProps) {
     const [modalVisible, setModalVisible] = useState(false);
@@ -8,49 +9,45 @@ export default function FilterBox(props: FilterBoxProps) {
     return (
         <>
             <TouchableOpacity
-                style={{ marginRight: 15, marginTop: 15, marginBottom: 15 }}
+                className="mr-2 mt-2 mb-2"
                 onPress={() => setModalVisible(true)}>
-                <Image style={{ width: 25, height: 25 }} source={require('../assets/icons/filter.png')} />
+                <Image className="w-7 h-7" source={require('../assets/icons/filter.png')} />
             </TouchableOpacity>
-            <View style={styles.centeredView}>
+            <View className="flex flex-1">
                 <Modal
-                    animationType="fade"
+                    animationType="slide"
                     transparent={true}
                     visible={modalVisible}
                     onRequestClose={() => {
                         setModalVisible(!modalVisible);
                     }}
                 >
-                    <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
+                    <View className="flex flex-1 justify-end items-center">
+                        <View className="bg-white w-full p-1 flex items-center py-10 rounded-lg">
                             <Text style={styles.title}>Sort by...</Text>
-                            <Text style={styles.modalText} onPress={() => {
+                            <Option icon="best" label="Best" handler={() => {
                                 props.data.setFilter('best');
                                 setModalVisible(!modalVisible);
-                            }}>Best</Text>
-                            <Text style={styles.modalText} onPress={() => {
+                            }} />
+                            <Option icon="hot" label="Hot" handler={() => {
                                 props.data.setFilter('hot');
                                 setModalVisible(!modalVisible);
-                            }}>Hot</Text>
-                            <Text style={styles.modalText} onPress={() => {
+                            }} />
+                            <Option icon="convtroversial" label="Controversial" handler={() => {
                                 props.data.setFilter('controversial');
                                 setModalVisible(!modalVisible);
-                            }}>Controversial</Text>
-                            <Text style={styles.modalText} onPress={() => {
-                                props.data.setFilter('top')
+                            }} />
+                            <Option icon="top" label="Top" handler={() => {
+                                props.data.setFilter('top');
                                 setModalVisible(!modalVisible);
-                            }}>Top</Text>
-                            <Text style={styles.modalText} onPress={() => {
+                            }} />
+                            <Option icon="new" label="New" handler={() => {
                                 props.data.setFilter('new');
                                 setModalVisible(!modalVisible);
-                            }}>New</Text>
-                        </View>
-                        <View>
-                            <Pressable
-                                style={[styles.button, styles.buttonClose]}
-                                onPress={() => setModalVisible(!modalVisible)}>
-                                <Text style={styles.textStyle}>Close</Text>
-                            </Pressable>
+                            }} />
+                            <Option label="Close" handler={() => {
+                                setModalVisible(!modalVisible);
+                            }} />
                         </View>
                     </View>
                 </Modal>
