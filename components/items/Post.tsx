@@ -14,14 +14,19 @@ export default function Post(props: PostProps) {
     const media = <MediaComp data={props.data} />
 
     const title = (
-        <View className='p-3'>
-            <TouchableOpacity onPress={() => navigation.navigate('Details', { data: props.data })}>
-                <Text className='font-bold'>{currentPost.title}</Text>
+        <View className='p-3 flex flex-row space-x-3 items-center'>
+            <TouchableOpacity onPress={() => navigation.push('Details', { data: props.data })}>
+                <Text className='font-bold'>{currentPost.title}</Text> 
             </TouchableOpacity>
-            <View className='flex flex-row space-x-2'>
-                <Text className='text-sm' onPress={() => navigation.push('Subreddit', { data: currentPost.subreddit })}>{currentPost.subreddit}</Text>
-                <Text className='text-sm' onPress={() => navigation.navigate('Overview', { data: currentPost.author })}>{currentPost.author}</Text>
-            </View>
+        </View>
+    )
+
+    const userNameAndSubreddit = (
+        <View className='p-3 text-xs text-gray-500 space-x-1 flex flex-row'>
+            <Text>Posted by</Text>
+            <Text onPress={() => navigation.navigate('Overview', { data: currentPost.author })}>u/{currentPost.author}</Text> 
+            <Text>to</Text>
+            <Text onPress={() => navigation.push('Subreddit', { data: currentPost.subreddit })}>r/{currentPost.subreddit}</Text>
         </View>
     )
 
@@ -29,10 +34,11 @@ export default function Post(props: PostProps) {
 
     if (props.isDetails) {
         return (
-            <View className='bg-white h-auto'>
+            <View className='bg-white h-auto mb-2'>
                 {media}
                 {selfText}
                 {title}
+                {userNameAndSubreddit}
                 <PostInteraction data={props.data} />
             </View>
         );

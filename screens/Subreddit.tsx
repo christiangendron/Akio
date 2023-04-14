@@ -13,7 +13,7 @@ import { RedditResponseT3 } from '../types/RedditResponseT3';
 import { SubredditProps } from '../types/Subreddit';
 
 export default function Subreddit(props: SubredditProps) {
-  const [subreddit, setSubreddit] = useState(props.route.params.data);
+  const subreddit = useRef(props.route.params.data);
   const [filter, setFilter] = useState('best');
   const [keyword, setKeyword] = useState('');
   const last = useRef('');
@@ -21,13 +21,13 @@ export default function Subreddit(props: SubredditProps) {
   
   const query = useInfiniteQuery({
     queryKey: ['posts', subreddit, filter, keyword],
-    queryFn: (lastPostName) => RedditServices.getPosts(subreddit, filter, keyword, lastPostName.pageParam),
+    queryFn: (lastPostName) => RedditServices.getPosts(subreddit.current, filter, keyword, lastPostName.pageParam),
     getNextPageParam: (lastPage) => last.current = lastPage[lastPage.length - 1].data.name
   });
 
   useEffect(() => {
     navigation.setOptions({
-      title: subreddit,
+      title: subreddit.current,
       headerStyle: {
         backgroundColor: AppTheme.lightgray
       },
