@@ -1,4 +1,5 @@
 export interface SettingsContextValue {
+  loadSettings: () => void;
   skipPinned: boolean;
   setSkipPinned: (value: boolean) => void;
   minimalBrowsing: boolean;
