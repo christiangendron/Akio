@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 import AppTheme from '../styles/AppTheme';
+import { useContext } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
 import RedditServices from '../services/RedditServices';
@@ -11,6 +12,7 @@ import SearchBarComp from '../components/SearchBarComp';
 import NoPostsFound from '../components/NoPostsFound';
 import { RedditResponseT3 } from '../types/RedditResponseT3';
 import { SubredditProps } from '../types/Subreddit';
+import { SettingsContext } from '../context/SettingsContext';
 
 export default function Subreddit(props: SubredditProps) {
   const subreddit = useRef(props.route.params.data);
@@ -18,6 +20,8 @@ export default function Subreddit(props: SubredditProps) {
   const last = useRef('');
   const filter = useRef('best');
   const navigation = useNavigation();
+  const settings = useContext(SettingsContext);
+
   
   const query = useInfiniteQuery({
     queryKey: ['posts', subreddit, filter.current, keyword],
@@ -55,7 +59,7 @@ export default function Subreddit(props: SubredditProps) {
   }
 
   const renderItem = ({ item }: { item: RedditResponseT3 }): JSX.Element => {
-    return item.data.stickied ? <></> : <Post key={item.data.id} data={item} />;
+    return settings?.skipPinned && item.data.stickied ? <></> : <Post key={item.data.id} data={item} />;
   };
 
   const searchBarData = {

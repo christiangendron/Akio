@@ -53,7 +53,7 @@ export default function Post(props: PostProps) {
             {media}
             {selfText}
             {settings?.minimalBrowsing ? <></> : userNameAndSubreddit}
-            <PostInteraction data={props.data} />
+            {settings?.minimalBrowsing ? <></> : <PostInteraction data={props.data} />}
         </View>
     );
 }
