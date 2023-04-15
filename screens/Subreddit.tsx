@@ -79,7 +79,7 @@ export default function Subreddit(props: SubredditProps) {
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
         ListEmptyComponent={<NoPostsFound />}
-        ListHeaderComponent={<SearchBarComp data={searchBarData} />}
+        ListHeaderComponent={settings?.searchBar ? <SearchBarComp data={searchBarData} /> : <></>}
       />
     </View>
   );

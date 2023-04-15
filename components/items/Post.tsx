@@ -24,15 +24,9 @@ export default function Post(props: PostProps) {
         </View>
     )
 
-    const userNameAndSubreddit = (
-        <View className='px-3 text-xs text-gray-500 space-x-1 flex flex-row'>
-            <Text>Posted by</Text>
-            <Text onPress={() => navigation.navigate('Overview', { data: currentPost.author })}>u/{currentPost.author}</Text> 
-            <Text>to</Text>
-            <Text onPress={() => navigation.push('Subreddit', { data: currentPost.subreddit })}>r/{currentPost.subreddit}</Text>
-        </View>
-    )
-
+    const userName = <Text onPress={() => navigation.navigate('Overview', { data: currentPost.author })}>u/{currentPost.author}</Text> 
+    const subreddit = <Text onPress={() => navigation.push('Subreddit', { data: currentPost.subreddit })}>r/{currentPost.subreddit}</Text>
+  
     const selfText = currentPost.selftext ? <Text className='p-3'>{props.isDetails ? currentPost.selftext : shortenString(currentPost.selftext)}</Text> : <></>
 
     if (props.isDetails) {
@@ -41,7 +35,8 @@ export default function Post(props: PostProps) {
                 {media}
                 {selfText}
                 {title}
-                {userNameAndSubreddit}
+                {userName}
+                {subreddit}
                 <PostInteraction data={props.data} />
             </View>
         );
@@ -52,7 +47,8 @@ export default function Post(props: PostProps) {
             {title}
             {media}
             {selfText}
-            {settings?.minimalBrowsing ? <></> : userNameAndSubreddit}
+            {settings?.showUserName ? userName : <></>}
+            {settings?.showSubReddit ? subreddit : <></>}
             {settings?.minimalBrowsing ? <></> : <PostInteraction data={props.data} />}
         </View>
     );

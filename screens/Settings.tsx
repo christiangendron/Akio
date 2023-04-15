@@ -22,6 +22,9 @@ export default function Settings() {
         <Text className='mt-20 text-lg ml-3'>Apperence settings</Text>
         <Setting label='Remove sticked post' current={settings.skipPinned} handler={() => settings?.setSkipPinned(!settings.skipPinned)}/>
         <Setting label='Minimal browsing' current={settings.minimalBrowsing} handler={() => settings?.setMinimalBrowsing(!settings.minimalBrowsing)}/>
+        <Setting label='Always show author' current={settings.showUserName} handler={() => settings?.setShowUserName(!settings.showUserName)}/>
+        <Setting label='Always show subreddit' current={settings.showSubReddit} handler={() => settings?.setShowSubReddit(!settings.showSubReddit)}/>
+        <Setting label='Show search bar' current={settings.searchBar} handler={() => settings?.setSearchBar(!settings.searchBar)}/>
         <Text className='mt-20 text-lg ml-3'>Developpement</Text>
         <TouchableOpacity
           onPress={() => TokenServices.clearToken()}
