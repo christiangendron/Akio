@@ -55,7 +55,7 @@ export default function Subreddit(props: SubredditProps) {
   }
 
   const renderItem = ({ item }: { item: RedditResponseT3 }): JSX.Element => {
-    return <Post key={item.data.id} data={item} />;
+    return item.data.stickied ? <></> : <Post key={item.data.id} data={item} />;
   };
 
   const searchBarData = {

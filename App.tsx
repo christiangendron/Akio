@@ -5,6 +5,7 @@ import useLocalAuth from './hooks/useLocalAuth';
 import {QueryClientProvider, QueryClient} from 'react-query';
 import AuthContextProvider from './context/AuthContext';
 import ErrorMessage from './components/ErrorMessage';
+import SettingContextProvider from './context/SettingsContext';
 
 const queryClient = new QueryClient();
 
@@ -19,11 +20,14 @@ export default function App() {
 
   LogBox.ignoreLogs(['Could not find image']);
   LogBox.ignoreLogs(['VirtualizedList: You have a large']);
+  LogBox.ignoreLogs(['Sending `onAnimatedValueUpdate` with no']);
 
   return (
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
-        {akioApp}
+        <SettingContextProvider>
+          {akioApp}
+        </SettingContextProvider>
       </AuthContextProvider>
     </QueryClientProvider>
   );
