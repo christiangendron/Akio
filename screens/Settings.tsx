@@ -21,6 +21,7 @@ export default function Settings() {
       <ScrollView className='flex w-full'>      
         <Text className='mt-20 text-lg ml-3'>Apperence settings</Text>
         <Setting label='Remove sticked post' current={settings.skipPinned} handler={() => settings?.setSkipPinned(!settings.skipPinned)}/>
+        <Setting label='Minimal browsing' current={settings.minimalBrowsing} handler={() => settings?.setMinimalBrowsing(!settings.minimalBrowsing)}/>
         <Text className='mt-20 text-lg ml-3'>Developpement</Text>
         <TouchableOpacity
           onPress={() => TokenServices.clearToken()}

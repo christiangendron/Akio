@@ -1,4 +1,5 @@
 import { Text, View, TouchableOpacity } from 'react-native';
+import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import PostInteraction from '../PostInteraction';
@@ -6,8 +7,10 @@ import { StackParams } from '../../types/Navigator';
 import MediaComp from '../MediaComp';
 import { PostProps } from '../../types/Post';
 import { shortenString } from '../../tools/Formating';
+import { SettingsContext } from '../../context/SettingsContext';
 
 export default function Post(props: PostProps) {
+    const settings = useContext(SettingsContext);
     const currentPost = props.data.data;
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
   
@@ -49,6 +52,7 @@ export default function Post(props: PostProps) {
             {title}
             {media}
             {selfText}
+            {settings?.minimalBrowsing ? <></> : userNameAndSubreddit}
             <PostInteraction data={props.data} />
         </View>
     );
