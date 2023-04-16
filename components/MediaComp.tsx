@@ -1,20 +1,21 @@
-import React from 'react';
-import { Dimensions, Image } from 'react-native';
+import React, { useState } from 'react';
+import { Dimensions, Image, View } from 'react-native';
 import { decode } from 'html-entities';
 import { Video, ResizeMode } from 'expo-av';
 import { MediaCompProps } from '../types/MediaComp';
+import ImageView from "react-native-image-viewing";
 
 export default function MediaComp(props: MediaCompProps) {
   const currentPost = props.data.data;
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
+  const [visible, setIsVisible] = useState(false);
 
   let content = undefined;
 
   if (currentPost.is_video) {
-    const videoURI = decode(currentPost.media.reddit_video.fallback_url);
+    const videoURI = currentPost.media.reddit_video.fallback_url;
     const { width, height } = currentPost.media.reddit_video;
-
     // Calculate the aspect ratio of the video
     const aspectRatio = width / height;
 
@@ -31,9 +32,21 @@ export default function MediaComp(props: MediaCompProps) {
       isLooping
       onPlaybackStatusUpdate={status => setStatus(() => status)}
     />;
-  } else if (currentPost.is_gallery != undefined) {
-      console.log('This post is a gallery with ' + currentPost.gallery_data.items.length + ' items')
-      return (<></>)
+  } else if (currentPost.is_gallery) {
+      console.log('buildin gallery')
+      // make an array from the items in this gallery
+      const images = currentPost.gallery_data.items.map((item) => {
+        return {
+          uri: `https://i.redd.it/${item.media_id}.png`,
+        };
+     });
+    
+      content = <ImageView
+      images={images}
+      imageIndex={0}
+      visible={visible}
+      onRequestClose={() => setIsVisible(false)}
+    />
   } else if (currentPost.preview && currentPost.preview.images) {
     const imageURI = decode(currentPost.preview.images[0].source.url);
     const { width, height } = currentPost.preview.images[0].source;
@@ -45,10 +58,8 @@ export default function MediaComp(props: MediaCompProps) {
     const imageHeight = Dimensions.get('window').width / aspectRatio;
   
     // Renders the image with the specified properties
-    content = <Image 
-      source={{ uri: imageURI }} 
-      style={{ width: Dimensions.get('window').width, height: imageHeight, resizeMode: 'contain' }} 
-    />;
+    content = <Image source={{ uri: imageURI }} style={{ width: Dimensions.get('window').width, height: imageHeight, resizeMode: 'contain' }} />;
+
   }
 
   return (
