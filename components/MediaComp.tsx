@@ -33,20 +33,23 @@ export default function MediaComp(props: MediaCompProps) {
       onPlaybackStatusUpdate={status => setStatus(() => status)}
     />;
   } else if (currentPost.is_gallery) {
-      console.log('buildin gallery')
-      // make an array from the items in this gallery
       const images = currentPost.gallery_data.items.map((item) => {
         return {
           uri: `https://i.redd.it/${item.media_id}.png`,
         };
      });
-    
-      content = <ImageView
-      images={images}
-      imageIndex={0}
-      visible={visible}
-      onRequestClose={() => setIsVisible(false)}
-    />
+
+      content = (
+        <View>
+            <ImageView
+              images={images}
+              imageIndex={0}
+              visible={visible}
+              onRequestClose={() => setIsVisible(false)}
+            />
+        </View>
+        
+      )
   } else if (currentPost.preview && currentPost.preview.images) {
     const imageURI = decode(currentPost.preview.images[0].source.url);
     const { width, height } = currentPost.preview.images[0].source;
@@ -61,6 +64,7 @@ export default function MediaComp(props: MediaCompProps) {
     content = <Image source={{ uri: imageURI }} style={{ width: Dimensions.get('window').width, height: imageHeight, resizeMode: 'contain' }} />;
 
   }
+
 
   return (
     <>
