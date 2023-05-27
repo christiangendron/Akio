@@ -1,10 +1,13 @@
 import { View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import AppTheme from '../styles/AppTheme';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Account() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const navigation = useNavigation();
 
   const settings = {
     clientID: process.env.CLIENT_ID,
@@ -13,6 +16,16 @@ export default function Account() {
     uri: 'exp://',
     scope: 'identity',
   }
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: 'Account',
+      headerStyle: {
+        backgroundColor: AppTheme.lightgray
+      },
+      headerTintColor: AppTheme.black,
+    });
+  }, [navigation]);
   
   async function openAuthSession () {
     setErrorMessage('')

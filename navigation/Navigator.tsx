@@ -36,6 +36,25 @@ function SearchStackScreen() {
   );
 }
 
+function AccountStackScreen() {
+  return (
+    <SearchStack.Navigator>
+      <SearchStack.Screen name="Account" component={Account} />
+      <SearchStack.Screen name="Details" component={Details} />
+      <SearchStack.Screen name="Overview" component={Overview} />
+      <SearchStack.Screen name="Subreddit" component={Subreddit} />
+    </SearchStack.Navigator>
+  );
+}
+
+function SettingsStackScreen() {
+  return (
+    <SearchStack.Navigator>
+      <SearchStack.Screen name="Settings" component={Settings} />
+    </SearchStack.Navigator>
+  );
+}
+
 const Tab = createBottomTabNavigator<TabParams>();
 
 export default function App() {
@@ -63,17 +82,6 @@ export default function App() {
             ),
             title: 'Home',
           }} />
-        <Tab.Screen name="Account" component={Account} options={{
-          tabBarIcon: ({ focused }) => (
-            focused ? <Image
-            className='w-5 h-5 mt-5'
-              source={require('../assets/icons/account-selected.png')}
-            /> : <Image
-            className='w-5 h-5 mt-5'
-              source={require('../assets/icons/account.png')}
-            />
-          ),
-        }} />
         <Tab.Screen
           name="SearchStack"
           component={SearchStackScreen}
@@ -89,7 +97,22 @@ export default function App() {
             ),
             title: 'Search',
           }} />
-        <Tab.Screen name="Settings" component={Settings} options={{
+          <Tab.Screen name="Account" 
+          component={AccountStackScreen} 
+          options={{
+          tabBarIcon: ({ focused }) => (
+            focused ? <Image
+            className='w-5 h-5 mt-5'
+              source={require('../assets/icons/account-selected.png')}
+            /> : <Image
+            className='w-5 h-5 mt-5'
+              source={require('../assets/icons/account.png')}
+            />
+          ),
+        }} />
+        <Tab.Screen name="Settings" 
+        component={SettingsStackScreen} 
+        options={{
           tabBarIcon: ({ focused }) => (
             focused ? <Image
             className='w-5 h-5 mt-5'
