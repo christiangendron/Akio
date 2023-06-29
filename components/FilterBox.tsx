@@ -24,7 +24,7 @@ export default function FilterBox(props: FilterBoxProps) {
                 >
                     <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>
                         <View className="flex flex-1 justify-end items-center">
-                            <View className="bg-slate-100 w-full p-1 flex items-center pt-1 pb-10 rounded-lg">
+                            <View className="bg-slate-300 w-full p-1 flex items-center pt-1 pb-10 rounded-lg">
                                 <Option icon={true} label="Best" filter={props.filter.current} selectable={true} handler={() => {
                                     props.filter.current = 'best'
                                     setModalVisible(!modalVisible);
