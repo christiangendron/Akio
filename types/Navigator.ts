@@ -20,7 +20,16 @@ export type TabParams = {
     Overview: {
       data: string;
     };
+    Account: {
+      data: string;
+    };
     Subreddit: {
+      data: string;
+    };
+    Settings: {
+      data: string;
+    };
+    SettingHome: {
       data: string;
     };
     Search: any;

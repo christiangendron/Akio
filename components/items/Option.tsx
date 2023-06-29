@@ -7,7 +7,7 @@ import { useRef } from 'react';
  * @param props needs an icon, a text and a function
  */
 export default function Option(props: OptionProps) {
-    const style = useRef('flex flex-row w-full justify-center p-5 bg-slate-200 rounded-lg m-1 items-center');
+    const style = useRef('flex flex-row w-full justify-center p-5 bg-slate-300 rounded-lg m-1 items-center');
 
     if (props.selectable && props.filter == props.label.toLowerCase()) {
         style.current = 'flex flex-row w-full justify-center p-5 bg-slate-400 rounded-lg m-1 items-center'

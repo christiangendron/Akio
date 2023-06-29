@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from '../screens/Settings';
 import Details from '../screens/Details';
 import Subreddit from '../screens/Subreddit';
-import Account from '../screens/Account';
 import AppTheme from '../styles/AppTheme';
 import Overview from '../screens/Overview';
 import Search from '../screens/Search';
@@ -36,21 +35,12 @@ function SearchStackScreen() {
   );
 }
 
-function AccountStackScreen() {
-  return (
-    <SearchStack.Navigator>
-      <SearchStack.Screen name="Account" component={Account} />
-      <SearchStack.Screen name="Details" component={Details} />
-      <SearchStack.Screen name="Overview" component={Overview} />
-      <SearchStack.Screen name="Subreddit" component={Subreddit} />
-    </SearchStack.Navigator>
-  );
-}
+const SettingsStack = createStackNavigator<StackParams>();
 
 function SettingsStackScreen() {
   return (
     <SearchStack.Navigator>
-      <SearchStack.Screen name="Settings" component={Settings} />
+      <SettingsStack.Screen name="SettingHome" component={Settings} />
     </SearchStack.Navigator>
   );
 }
@@ -97,19 +87,6 @@ export default function App() {
             ),
             title: 'Search',
           }} />
-          <Tab.Screen name="Account" 
-          component={AccountStackScreen} 
-          options={{
-          tabBarIcon: ({ focused }) => (
-            focused ? <Image
-            className='w-5 h-5 mt-5'
-              source={require('../assets/icons/account-selected.png')}
-            /> : <Image
-            className='w-5 h-5 mt-5'
-              source={require('../assets/icons/account.png')}
-            />
-          ),
-        }} />
         <Tab.Screen name="Settings" 
         component={SettingsStackScreen} 
         options={{

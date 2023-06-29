@@ -7,7 +7,7 @@ export const SettingsContext = createContext<SettingsContextValue | null>(null);
 export default function SettingContextProvider(props: SettingsContextProviderProps) {
   const [skipPinned, setSkipPinned] = useState(true);
   const [showUserName, setShowUserName] = useState(false);
-  const [showSubReddit, setShowSubReddit] = useState(false);
+  const [showSubReddit, setShowSubReddit] = useState(true);
   const [minimalBrowsing, setMinimalBrowsing] = useState(false);
   const [searchBar, setSearchBar] = useState(true);
 

@@ -33,24 +33,24 @@ export default function Settings() {
   return (
     <View className='flex flex-1 justify-center items-center'>
       <ScrollView className='flex w-full'>      
-        <Text className='text-lg ml-3'>Apperence settings</Text>
+        <Text className='text-lg ml-3'>Appearance settings</Text>
         <Setting label='Remove sticked post' current={settings.skipPinned} handler={() => settings?.setSkipPinned(!settings.skipPinned)}/>
-        <Setting label='Minimal browsing' current={settings.minimalBrowsing} handler={() => settings?.setMinimalBrowsing(!settings.minimalBrowsing)}/>
         <Setting label='Always show author' current={settings.showUserName} handler={() => settings?.setShowUserName(!settings.showUserName)}/>
         <Setting label='Always show subreddit' current={settings.showSubReddit} handler={() => settings?.setShowSubReddit(!settings.showSubReddit)}/>
+        <Setting label='Minimal browsing' current={settings.minimalBrowsing} handler={() => settings?.setMinimalBrowsing(!settings.minimalBrowsing)}/>
         <Setting label='Show search bar' current={settings.searchBar} handler={() => settings?.setSearchBar(!settings.searchBar)}/>
         <Text className='text-lg ml-3'>Developpement</Text>
-        <TouchableOpacity
-          onPress={() => TokenServices.clearToken()}
-          className='bg-primary rounded-lg p-2 mt-5'
-        >
-        <Text>Clear token</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-        onPress={() => TokenServices.setExpiredToken()}
-        className='bg-primary rounded-lg p-2 mt-5'
-        >
-        <Text>Set expired token</Text>
+          <TouchableOpacity
+            onPress={() => TokenServices.clearToken()}
+            className='bg-primary rounded-lg p-5 m-1'
+          >
+          <Text>Clear token</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+          onPress={() => TokenServices.setExpiredToken()}
+          className='bg-primary rounded-lg p-5 m-1'
+          >
+          <Text>Set expired token</Text>
       </TouchableOpacity>
       </ScrollView>
     </View>

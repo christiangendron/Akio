@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import Subreddit from '../components/items/Subreddit';
 import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -20,7 +20,7 @@ export default function Search() {
   return (
     <View className='flex flex-1 justify-center items-center'>
       <ScrollView className='flex w-full'>
-        <Text className='mt-20 text-lg ml-3'>Popular subreddits</Text>
+        <Text className='text-lg ml-3'>Popular subreddits</Text>
         <Subreddit />
         <Subreddit />
         <Subreddit />
