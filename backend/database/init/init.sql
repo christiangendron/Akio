@@ -23,19 +23,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `post`
+-- Structure de la table `sub`
 --
 
-CREATE TABLE `post` (
+CREATE TABLE `community` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `title` VARCHAR(256) NOT NULL,
-  `description` VARCHAR(256) NOT NULL,
-  `upvotes` float(11) NOT NULL,
-  `downvotes` float(11) NOT NULL,
-  `media_url` VARCHAR(256) NOT NULL,
-  `sub_id` float(11) NOT NULL,
-  `user_id` float(11) NOT NULL
+  `name` VARCHAR(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `community` (`id`, `name`) VALUES
+('1', 'canada'),
+('2', 'dogs'),
+('3', 'story');
 
 --
 -- Structure de la table `user`
@@ -52,18 +51,38 @@ INSERT INTO `user` (`id`, `username`, `role`) VALUES
 ('2', 'bob', 'user');
 
 --
--- Structure de la table `sub`
+-- Structure de la table `post`
 --
 
-CREATE TABLE `sub` (
+CREATE TABLE `post` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `sub` VARCHAR(256) NOT NULL
+  `title` VARCHAR(256) NOT NULL,
+  `text_content` TEXT NOT NULL,
+  `votes` int(11) NOT NULL,
+  `media_url` VARCHAR(512) NULL,
+  `community_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  FOREIGN KEY (`community_id`) REFERENCES `community` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `sub` (`id`, `sub`) VALUES
-('1', 'canada'),
-('2', 'dogs'),
-('3', 'story');
+INSERT INTO `post` (`id`, `title`, `text_content`, `votes`, `media_url`, `community_id`, `user_id`) VALUES
+('1', 'Lorem ipsum dolor sit amet', 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum', 1, NULL, 1, 1),
+('2', 'Consectetur adipiscing elit', 'Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi', 1, NULL, 1, 1);
+
+--
+-- Structure de la table `comment`
+--
+
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `text_content` VARCHAR(256) NOT NULL,
+  `votes` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  FOREIGN KEY (`post_id`) REFERENCES `post` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

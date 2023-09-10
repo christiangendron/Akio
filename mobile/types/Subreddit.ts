@@ -1,7 +1,8 @@
 export interface SubredditProps {
     route: {
       params: {
-        data: string;
+        name: string;
+        id: number;
       }
     }
   }

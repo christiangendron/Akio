@@ -1,5 +1,5 @@
-import { RedditResponseT3 } from "./RedditResponseT3";
+import { PostProps } from "./Post";
 
 export interface PostInteractionProps {
-    data: RedditResponseT3
+    data: PostProps
   }

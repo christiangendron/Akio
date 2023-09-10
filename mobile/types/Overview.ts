@@ -1,7 +1,8 @@
 export type OverviewProps = {
     route: {
       params: {
-        data: string;
+        name: string;
+        id: number;
       }
     }
   }

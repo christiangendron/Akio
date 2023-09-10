@@ -1,3 +1,4 @@
+import { PostProps } from "./Post";
 import { RedditResponseT3 } from "./RedditResponseT3";
 
 export type TabParams = {
@@ -15,16 +16,19 @@ export type TabParams = {
       data: string;
     };
     Details: {
-      data: RedditResponseT3
+      data: PostProps;
     };
     Overview: {
-      data: string;
+      name: string;
+      id: number;
     };
     Account: {
-      data: string;
+      name: string;
+      id: number;
     };
-    Subreddit: {
-      data: string;
+    Community: {
+      name: string;
+      id: number;
     };
     Settings: {
       data: string;

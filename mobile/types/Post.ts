@@ -1,6 +1,13 @@
-import { RedditResponseT3 } from "./RedditResponseT3";
-
 export interface PostProps {
-    data: RedditResponseT3,
-    isDetails?: boolean
+    author: string;
+    subreddit: string;
+    id: string;
+    title: string;
+    text_content: string;
+    votes: number;
+    media_url: string;
+    community_id: number;
+    user_id: number;
+    name: string;
+    username: string;
 }

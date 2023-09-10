@@ -2,10 +2,6 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { OptionProps } from '../../types/Options';
 import { useRef } from 'react';
 
-/**
- * Option component for items in modal window.
- * @param props needs an icon, a text and a function
- */
 export default function Option(props: OptionProps) {
     const style = useRef('flex flex-row w-full justify-center p-5 bg-slate-50 rounded-lg m-1 items-center');
 

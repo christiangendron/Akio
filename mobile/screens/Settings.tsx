@@ -1,6 +1,5 @@
 import { View, Text, ScrollView} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import TokenServices from '../services/TokenServices';
 import { useContext, useEffect } from 'react';
 import { SettingsContext } from '../context/SettingsContext';
 import Setting from '../components/items/Setting';
@@ -39,19 +38,6 @@ export default function Settings() {
         <Setting label='Always show subreddit' current={settings.showSubReddit} handler={() => settings?.setShowSubReddit(!settings.showSubReddit)}/>
         <Setting label='Minimal browsing' current={settings.minimalBrowsing} handler={() => settings?.setMinimalBrowsing(!settings.minimalBrowsing)}/>
         <Setting label='Show search bar' current={settings.searchBar} handler={() => settings?.setSearchBar(!settings.searchBar)}/>
-        <Text className='text-lg ml-3'>Developpement</Text>
-          <TouchableOpacity
-            onPress={() => TokenServices.clearToken()}
-            className='bg-primary rounded-lg p-5 m-1'
-          >
-          <Text>Clear token</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-          onPress={() => TokenServices.setExpiredToken()}
-          className='bg-primary rounded-lg p-5 m-1'
-          >
-          <Text>Set expired token</Text>
-      </TouchableOpacity>
       </ScrollView>
     </View>
   );

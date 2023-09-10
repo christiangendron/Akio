@@ -1,9 +1,9 @@
-import { RedditResponseT3 } from "./RedditResponseT3";
+import { PostProps } from "./Post";
 
 export type DetailsScreenProps = {
   route: {
     params: {
-      data: RedditResponseT3;
+      data: PostProps;
     }
   }
 };

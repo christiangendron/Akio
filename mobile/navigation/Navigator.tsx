@@ -4,7 +4,7 @@ import { StyleSheet, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from '../screens/Settings';
 import Details from '../screens/Details';
-import Subreddit from '../screens/Subreddit';
+import Community from '../screens/Community';
 import AppTheme from '../styles/AppTheme';
 import Overview from '../screens/Overview';
 import Search from '../screens/Search';
@@ -15,7 +15,7 @@ const HomeStack = createStackNavigator<StackParams>();
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Subreddit" component={Subreddit} initialParams={{ data: 'all' }}/>
+      <HomeStack.Screen name="Community" component={Community} initialParams={{ data: 'all' }}/>
       <HomeStack.Screen name="Details" component={Details} />
       <HomeStack.Screen name="Overview" component={Overview} />
     </HomeStack.Navigator>
@@ -30,7 +30,7 @@ function SearchStackScreen() {
       <SearchStack.Screen name="Search" component={Search} />
       <SearchStack.Screen name="Details" component={Details} />
       <SearchStack.Screen name="Overview" component={Overview} />
-      <SearchStack.Screen name="Subreddit" component={Subreddit} />
+      <SearchStack.Screen name="Community" component={Community} />
     </SearchStack.Navigator>
   );
 }

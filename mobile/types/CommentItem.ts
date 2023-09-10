@@ -1,10 +1,9 @@
 export interface CommentItemProps {
     data: {
         id: string;
-        author: string;
-        body: string;
-        ups: number;
-        created_utc: number;
-        edited: boolean;
+        text_content: string;
+        votes: number;
+        user_id: number;
+        post_id: number;
     }
 }
