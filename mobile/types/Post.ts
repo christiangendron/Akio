@@ -1,7 +1,7 @@
 export interface PostProps {
     author: string;
     subreddit: string;
-    id: string;
+    id: number;
     title: string;
     text_content: string;
     votes: number;

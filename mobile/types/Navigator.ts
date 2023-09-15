@@ -15,9 +15,7 @@ export type TabParams = {
     Home: {
       data: string;
     };
-    Details: {
-      data: PostProps;
-    };
+    Details: PostProps;
     Overview: {
       name: string;
       id: number;

@@ -8,15 +8,16 @@ import PostInteraction from '../PostInteraction';
 export default function Post(props: PostProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
-
     return (
-        <View className='bg-white h-auto'>
-            <View className='p-3 flex flex-row space-x-3 items-center'>
-                <TouchableOpacity onPress={() => navigation.push('Details', { data: props })}>
+        <View className='bg-white h-auto p-2 gap-2 mb-1'>
+            <View className='flex flex-row space-x-3 items-center'>
+                <TouchableOpacity onPress={() => navigation.push('Details', { ...props })}>
                     <Text className='font-bold text-lg'>{props.title}</Text> 
                 </TouchableOpacity>
             </View>
-            <Text>{props.text_content}</Text>
+            <TouchableOpacity onPress={() => navigation.push('Details', { ...props })}>
+                <Text>{props.text_content}</Text>
+            </TouchableOpacity>
             <PostInteraction {...props} />
         </View>
     );

@@ -5,7 +5,7 @@ import { SearchBarProps } from '../types/SearchBarComp';
 
 export default function SearchBarComp(props: SearchBarProps) {
     const [isFocused, setIsFocused] = useState<boolean>(false);
-    const [text, setText] = useState<string>(props.data.keyword);
+    const [text, setText] = useState<string>(props.keyword);
 
     const cancel = isFocused ? (
         <TouchableOpacity className='flex-row space-x-1' onPress={() => Keyboard.dismiss()}>
@@ -14,15 +14,15 @@ export default function SearchBarComp(props: SearchBarProps) {
     ) : null;
 
     return (
-        <View className='flex flex-row w-full justify-center items-center p-2'>
+        <View className='flex flex-row w-full justify-center items-center p-2 mb-2'>
             <TextInput
                 className='flex-1 bg-white p-3 w-full rounded-lg pl-5'
-                placeholder="Search for this subreddit..."
+                placeholder="Search in this community..."
                 value={text}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
                 returnKeyType="go"
-                onSubmitEditing={() => props.data.handleChange(text)}
+                onSubmitEditing={() => props.handleChange(text)}
                 onChangeText={txt => setText(txt)} />
             {cancel}
         </View>

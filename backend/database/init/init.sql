@@ -84,6 +84,11 @@ CREATE TABLE `comment` (
   FOREIGN KEY (`post_id`) REFERENCES `post` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `comment` (`id`, `text_content`, `votes`, `user_id`, `post_id`) VALUES
+('1', 'Sed do eiusmod tempor incididunt', 1, 1, 1),
+('2', 'Consectetur adipiscing elit', 1, 2, 1),
+('3', 'in voluptate velit esse cillum', 1, 1, 2);
+
 COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

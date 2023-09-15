@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const PostController = require('../controllers/PostController');
+const CommentController = require('../controllers/CommentController');
 const UserController = require('../controllers/UserController');
 const CommunityController = require('../controllers/CommunityController');
 
@@ -10,6 +11,9 @@ router.route('/post/')
 
 router.route('/post/:id')
     .delete(PostController.delete);
+
+router.route('/post/:id/comments')
+    .get(CommentController.index)
 
 router.route('/post/community/:id')
     .get(PostController.indexByCommunityId)

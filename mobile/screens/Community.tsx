@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 import AppTheme from '../styles/AppTheme';
 import { useQuery } from 'react-query';
@@ -9,16 +9,17 @@ import NoPostsFound from '../components/NoPostsFound';
 import { SubredditProps } from '../types/Subreddit';
 import AkioServices from '../services/AkioServices';
 import { PostProps } from '../types/Post';
+import SearchBarComp from '../components/SearchBarComp';
 
 export default function Community(props: SubredditProps) {
   const community = useRef(props.route.params.name);
   const community_id = useRef(props.route.params.id);
-
+  const [keyword, setKeyword] = useState('');
   const navigation = useNavigation();
 
   const query = useQuery({
-    queryKey: ['posts', community],
-    queryFn: () => AkioServices.getPosts(community.current),
+    queryKey: ['posts', community, community_id],
+    queryFn: () => AkioServices.getPosts(community_id.current),
   });
 
   useEffect(() => {
@@ -60,6 +61,7 @@ export default function Community(props: SubredditProps) {
         ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
+        ListHeaderComponent={<SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/>}
         ListEmptyComponent={<NoPostsFound />}
       />
     </View>
