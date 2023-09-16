@@ -54,7 +54,7 @@ export default function Overview(props: OverviewProps) {
         data={query.data}
         renderItem={renderItem}
         refreshing={query.isLoading}
-        ItemSeparatorComponent={() => <View className='h-5' />}
+        ItemSeparatorComponent={() => <View className='h-4' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
         ListHeaderComponent={<View className='mt-1'/>}
