@@ -47,7 +47,7 @@ export default function Search() {
 
   return (
     <View className='flex flex-1 justify-center items-center'>
-      <ScrollView className='flex w-screen'>
+      <ScrollView className='flex w-screen mt-1'>
         {communities}
       </ScrollView>
     </View>
