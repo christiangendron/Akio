@@ -2,8 +2,9 @@ import axios, { AxiosInstance } from 'axios';
 import { PostProps } from '../types/Post';
 import { CommunityProps } from '../types/Community';
 import { CommentItemProps } from '../types/CommentItem';
+import {BACKEND_URL} from '@env';
 
-const baseURL = 'http://192.168.1.173:3000/api/';
+const baseURL = BACKEND_URL;
 
 const AxiosClient: AxiosInstance = axios.create({
   baseURL,
