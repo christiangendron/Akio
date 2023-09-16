@@ -15,7 +15,7 @@ const HomeStack = createStackNavigator<StackParams>();
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Community" component={Community} initialParams={{ data: 'all' }}/>
+      <HomeStack.Screen name="Community" component={Community} initialParams={{ name: 'Home', id: 0 }}/>
       <HomeStack.Screen name="Details" component={Details} />
       <HomeStack.Screen name="Overview" component={Overview} />
     </HomeStack.Navigator>

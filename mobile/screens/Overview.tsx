@@ -8,6 +8,7 @@ import ErrorMessage from '../components/ErrorMessage';
 import Post from '../components/items/Post';
 import { PostProps } from '../types/Post';
 import NoPostsFound from '../components/NoPostsFound';
+import AppTheme from '../styles/AppTheme';
 
 export default function Overview(props: OverviewProps) {
   const navigation = useNavigation();
@@ -15,6 +16,10 @@ export default function Overview(props: OverviewProps) {
   useEffect(() => {
     navigation.setOptions({
       title: props.route.params.name,
+      headerStyle: {
+        backgroundColor: AppTheme.lightgray
+      },
+      headerTintColor: AppTheme.black,
     });
   }, [navigation]);
 

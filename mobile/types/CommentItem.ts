@@ -4,4 +4,5 @@ export interface CommentItemProps {
     votes: number;
     user_id: number;
     post_id: number;
+    username: string;
 }

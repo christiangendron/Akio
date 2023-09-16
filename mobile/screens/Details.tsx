@@ -8,10 +8,23 @@ import Comment from '../components/items/Comment';
 import { CommentItemProps } from '../types/CommentItem';
 import Post from '../components/items/Post';
 import NoPostsFound from '../components/NoPostsFound';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect } from 'react';
+import AppTheme from '../styles/AppTheme';
 
 export default function Details(props: DetailsScreenProps) {
+  const navigation = useNavigation();
   const current = props.route.params;
   
+  useEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: AppTheme.lightgray
+      },
+      headerTintColor: AppTheme.black,
+    });
+  }, [navigation]);
+
   const query = useQuery({
     queryKey: ['comments', current.id],
     queryFn: () => AkioServices.getComments(current.id),

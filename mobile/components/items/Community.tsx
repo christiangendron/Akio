@@ -9,7 +9,7 @@ export default function Community(props: CommunityProps) {
 
     return (
         <TouchableOpacity onPress={() => navigation.push('Community', { name: props.name, id: props.id })}>
-            <View className='flex flex-row bg-slate-300 p-3 justify-between rounded-lg m-1'>
+            <View className='flex flex-row bg-gray-300 p-3 justify-between rounded-lg m-1'>
                 <Text className='text-center text-lg'>{props.name}</Text>
             </View>
         </TouchableOpacity>
