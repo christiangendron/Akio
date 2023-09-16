@@ -34,7 +34,7 @@ export default function PostOptions(props: PostOptionsProps) {
                     }} />
                     <Option label={props.username} handler={() => {
                         setModalVisible(!modalVisible);
-                        navigation.navigate('Overview', { id: props.user_id, name: props.community })
+                        navigation.navigate('Overview', { id: props.user_id, name: props.username })
                     }} />
                     <Option label="Close" handler={() => {
                         setModalVisible(!modalVisible);
