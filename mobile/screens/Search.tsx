@@ -18,7 +18,7 @@ export default function Search() {
 
   useEffect(() => {
     navigation.setOptions({
-      title: 'Search',
+      title: 'Communities',
       headerStyle: {
         backgroundColor: AppTheme.lightgray
       },
@@ -49,7 +49,6 @@ export default function Search() {
   return (
     <View className='flex flex-1 justify-center items-center'>
       <ScrollView className='flex w-screen'>
-        <Text className='text-lg ml-3'>Popular communities</Text>
         {communities}
       </ScrollView>
     </View>

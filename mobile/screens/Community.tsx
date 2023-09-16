@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 import AppTheme from '../styles/AppTheme';
 import { useQuery } from 'react-query';
@@ -10,11 +10,13 @@ import { SubredditProps } from '../types/Subreddit';
 import AkioServices from '../services/AkioServices';
 import { PostProps } from '../types/Post';
 import SearchBarComp from '../components/SearchBarComp';
+import { SettingsContext } from '../context/SettingsContext';
 
 export default function Community(props: SubredditProps) {
   const community = useRef(props.route.params.name);
   const community_id = useRef(props.route.params.id);
   const [keyword, setKeyword] = useState('');
+  const settings = useContext(SettingsContext);
   const navigation = useNavigation();
 
   const query = useQuery({
@@ -52,6 +54,8 @@ export default function Community(props: SubredditProps) {
     return <Post key={item.id} {...item} />;
   };
 
+  const search = query.data?.length != 0 ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/> : null
+
   return (
     <View className='flex flex-1 justify-center items-center'>
       <FlatList
@@ -61,8 +65,8 @@ export default function Community(props: SubredditProps) {
         ItemSeparatorComponent={() => <View className='h-4' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={query.data?.length != 0 ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/> : null}
-        ListEmptyComponent={ <NoPostsFound />}
+        ListHeaderComponent={settings.searchBar ? search : null}
+        ListEmptyComponent={<NoPostsFound />}
       />
     </View>
   );

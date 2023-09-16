@@ -32,12 +32,10 @@ export default function Settings() {
   return (
     <View className='flex flex-1 justify-center items-center'>
       <ScrollView className='flex w-full'>      
-        <Text className='text-lg ml-3'>Appearance settings</Text>
-        <Setting label='Remove sticked post' current={settings.skipPinned} handler={() => settings?.setSkipPinned(!settings.skipPinned)}/>
-        <Setting label='Always show author' current={settings.showUserName} handler={() => settings?.setShowUserName(!settings.showUserName)}/>
-        <Setting label='Always show subreddit' current={settings.showSubReddit} handler={() => settings?.setShowSubReddit(!settings.showSubReddit)}/>
-        <Setting label='Minimal browsing' current={settings.minimalBrowsing} handler={() => settings?.setMinimalBrowsing(!settings.minimalBrowsing)}/>
-        <Setting label='Show search bar' current={settings.searchBar} handler={() => settings?.setSearchBar(!settings.searchBar)}/>
+        <Setting label='Show author' current={settings.showUsername} handler={() => settings?.setShowUsername(!settings.showUsername)}/>
+        <Setting label='Show community' current={settings.showCommunity} handler={() => settings?.setShowCommunity(!settings.showCommunity)}/>
+        <Setting label='Show votes' current={settings.showVotes} handler={() => settings?.setShowVotes(!settings.showVotes)}/>
+        <Setting label='Show search' current={settings.searchBar} handler={() => settings?.setSearchBar(!settings.searchBar)}/>
       </ScrollView>
     </View>
   );

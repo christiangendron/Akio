@@ -85,7 +85,7 @@ export default function App() {
                 source={require('../assets/icons/search.png')}
               />
             ),
-            title: 'Search',
+            title: 'Communities',
           }} />
         <Tab.Screen name="Settings" 
         component={SettingsStackScreen} 
