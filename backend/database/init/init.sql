@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `sub`
+-- Structure de la table `community`
 --
 
 CREATE TABLE `community` (

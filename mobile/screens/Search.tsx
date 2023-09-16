@@ -1,5 +1,4 @@
-import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
-import Subreddit from '../components/items/Community';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
 import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AppTheme from '../styles/AppTheme';
