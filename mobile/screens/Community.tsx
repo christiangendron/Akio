@@ -18,8 +18,8 @@ export default function Community(props: SubredditProps) {
   const navigation = useNavigation();
 
   const query = useQuery({
-    queryKey: ['posts', community, community_id],
-    queryFn: () => AkioServices.getPosts(community_id.current),
+    queryKey: ['posts', community, community_id, keyword],
+    queryFn: () => AkioServices.getPosts(community_id.current, keyword),
   });
 
   useEffect(() => {
@@ -58,11 +58,11 @@ export default function Community(props: SubredditProps) {
         data={query.data}
         renderItem={renderItem}
         refreshing={query.isLoading}
-        ItemSeparatorComponent={() => <View className='h-2' />}
+        ItemSeparatorComponent={() => <View className='h-4' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={<SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/>}
-        ListEmptyComponent={<NoPostsFound />}
+        ListHeaderComponent={query.data?.length != 0 ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/> : null}
+        ListEmptyComponent={ <NoPostsFound />}
       />
     </View>
   );

@@ -1,17 +1,26 @@
 const query = require('../database/mariadb');
 
 module.exports.index = async (req, res) => {
-    const data = await query('SELECT post.*, user.username, community.name FROM `post` LEFT JOIN user ON post.user_id = user.id LEFT JOIN community on post.community_id = community.id');
+    let data = await query('SELECT post.*, user.username, community.name FROM `post` LEFT JOIN user ON post.user_id = user.id LEFT JOIN community on post.community_id = community.id');
+
+    if (req.query.keyword) {
+        data = data.filter(item => item.text_content.includes(req.query.keyword));
+    }
+
     res.json({ msg: "List of all post", body: data });
 };
 
 module.exports.indexByCommunityId = async (req, res) => {
     const community_id = req.params.id;
 
-    const data = await query(
+    let data = await query(
         'SELECT post.*, user.username, community.name FROM `post` LEFT JOIN user ON post.user_id = user.id LEFT JOIN community on post.community_id = community.id WHERE post.community_id = (?)',
         [community_id]
     );
+
+    if (req.query.keyword) {
+        data = data.filter(item => item.text_content.includes(req.query.keyword));
+    }
 
     res.json({ msg: "List of post for specific community id", body: data });
 };
@@ -19,10 +28,14 @@ module.exports.indexByCommunityId = async (req, res) => {
 module.exports.indexByUserId = async (req, res) => {
     const user_id = req.params.id;
 
-    const data = await query(
+    let data = await query(
         'SELECT post.*, user.username, community.name FROM `post` LEFT JOIN user ON post.user_id = user.id LEFT JOIN community on post.community_id = community.id WHERE post.user_id = (?)',
         [user_id]
     );
+
+    if (req.query.keyword) {
+        data = data.filter(item => item.text_content.includes(req.query.keyword));
+    }
 
     res.json({ msg: "List of post for specific user id", body: data });
 };

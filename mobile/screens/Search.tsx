@@ -16,8 +16,6 @@ export default function Search() {
     queryFn: () => AkioServices.getCommunities(),
   });
 
-  console.log(query.data)
-
   useEffect(() => {
     navigation.setOptions({
       title: 'Search',
@@ -45,12 +43,12 @@ export default function Search() {
   }
 
   const communities = query.data?.map((item)=> {
-    return <Community {...item } />
+    return <Community key={item.id} {...item } />
   })
 
   return (
     <View className='flex flex-1 justify-center items-center'>
-      <ScrollView className='flex w-full'>
+      <ScrollView className='flex w-screen'>
         <Text className='text-lg ml-3'>Popular communities</Text>
         {communities}
       </ScrollView>
