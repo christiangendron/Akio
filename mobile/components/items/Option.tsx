@@ -3,10 +3,10 @@ import { OptionProps } from '../../types/Options';
 import { useRef } from 'react';
 
 export default function Option(props: OptionProps) {
-    const style = useRef('flex flex-row w-full justify-center p-5 bg-slate-50 rounded-lg m-1 items-center');
+    const style = useRef('flex flex-row w-full justify-center p-5 bg-gray-50 rounded-lg m-1 items-center');
 
     if (props.selectable && props.filter == props.label.toLowerCase()) {
-        style.current = 'flex flex-row w-full justify-center p-5 bg-slate-400 rounded-lg m-1 items-center'
+        style.current = 'flex flex-row w-full justify-center p-5 bg-gray-400 rounded-lg m-1 items-center'
     }
     
     const icon = props.icon ? 

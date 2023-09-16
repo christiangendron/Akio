@@ -1,6 +1,7 @@
 export interface PostOptionsProps {
-    id: string;
-    name: string;
-    author: string;
-    subreddit: string;
+    id: number;
+    username: string;
+    user_id: number;
+    community: string;
+    community_id: number;
 }
