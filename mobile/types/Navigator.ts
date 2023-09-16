@@ -1,5 +1,4 @@
 import { PostProps } from "./Post";
-import { RedditResponseT3 } from "./RedditResponseT3";
 
 export type TabParams = {
     Home: any;

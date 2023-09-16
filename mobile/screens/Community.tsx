@@ -6,13 +6,13 @@ import ErrorMessage from '../components/ErrorMessage';
 import { useNavigation } from '@react-navigation/native';
 import Post from '../components/items/Post';
 import NoPostsFound from '../components/NoPostsFound';
-import { SubredditProps } from '../types/Subreddit';
 import AkioServices from '../services/AkioServices';
 import { PostProps } from '../types/Post';
 import SearchBarComp from '../components/SearchBarComp';
 import { SettingsContext } from '../context/SettingsContext';
+import { CommunityNavigationProps } from '../types/Community';
 
-export default function Community(props: SubredditProps) {
+export default function Community(props: CommunityNavigationProps) {
   const community = useRef(props.route.params.name);
   const community_id = useRef(props.route.params.id);
   const [keyword, setKeyword] = useState('');

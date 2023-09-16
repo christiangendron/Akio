@@ -29,8 +29,6 @@ export default function SettingContextProvider(props: any) {
   }
 
   const loadSettings = async () => {
-    console.log('loading settings')
-
     const settings = await SecureStore.getItemAsync('settings');
 
     if (settings) {
