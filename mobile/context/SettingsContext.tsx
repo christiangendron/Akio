@@ -15,9 +15,7 @@ export default function SettingContextProvider(props: any) {
     saveSettings();
   }, [skipPinned, showUsername, showCommunity, showVotes, minimalBrowsing, searchBar])
 
-  const saveSettings = async () => {
-    console.log('saving settings')
-    
+  const saveSettings = async () => {    
     await SecureStore.setItemAsync('settings', JSON.stringify({
       skipPinned,
       showUsername,

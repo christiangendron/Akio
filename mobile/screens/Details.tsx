@@ -59,7 +59,7 @@ export default function Details(props: DetailsScreenProps) {
         ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={<View className='mb-2'><Post {...current} /></View>}
+        ListHeaderComponent={<View className='mb-2 mt-1'><Post {...current} /></View>}
         ListEmptyComponent={<NoPostsFound />}
       />
     </View>
