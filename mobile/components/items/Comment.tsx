@@ -4,11 +4,9 @@ import { CommentItemProps } from '../../types/CommentItem';
 export default function Comment(props: CommentItemProps) {
     return (
         <View className="bg-white p-2 w-screen">
-            <Text className=''>
-                {props.text_content}
-            </Text>
+            <Text>{props.text_content}</Text>
             <Text className='text-sm text-gray-500'>
-                <Text>by {props.username} · {props.votes} votes</Text>
+                by {props.username} · {props.votes} ↑
             </Text>
         </View>
     );

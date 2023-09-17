@@ -1,7 +1,6 @@
 export interface OptionProps {
     label: string,
     icon?: boolean,
-    filter?: string;
-    selectable?: boolean,
+    selected?: boolean,
     handler: () => void
 }

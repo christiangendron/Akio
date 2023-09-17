@@ -57,7 +57,7 @@ export default function Overview(props: OverviewProps) {
         ItemSeparatorComponent={() => <View className='h-4' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={<View className='mt-1'/>}
+        ListHeaderComponent={<View className='mt-2'/>}
         ListEmptyComponent={<NoPostsFound />}
       />
     </View>

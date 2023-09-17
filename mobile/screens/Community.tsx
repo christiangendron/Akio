@@ -11,6 +11,8 @@ import { PostProps } from '../types/Post';
 import SearchBarComp from '../components/SearchBarComp';
 import { SettingsContext } from '../context/SettingsContext';
 import { CommunityNavigationProps } from '../types/Community';
+import FilterBox from '../components/ControlPanel';
+import ControlPanel from '../components/ControlPanel';
 
 export default function Community(props: CommunityNavigationProps) {
   const community = useRef(props.route.params.name);
@@ -31,6 +33,9 @@ export default function Community(props: CommunityNavigationProps) {
         backgroundColor: AppTheme.lightgray
       },
       headerTintColor: AppTheme.black,
+      headerRight: () => (
+        <ControlPanel id={community_id.current} name={community.current} refetch={() => query.refetch()}  />
+      ),
     });
   }, [navigation]);
   
@@ -65,7 +70,7 @@ export default function Community(props: CommunityNavigationProps) {
         ItemSeparatorComponent={() => <View className='h-4' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={settings.searchBar ? search : null}
+        ListHeaderComponent={<View className='mt-2'/>}
         ListEmptyComponent={<NoPostsFound />}
       />
     </View>

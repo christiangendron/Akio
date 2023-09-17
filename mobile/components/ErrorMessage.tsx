@@ -7,9 +7,7 @@ export default function ErrorMessage(props:ErrorMessageProps) {
       <Text className='text-lg mb-6'>
         {props.message}
       </Text>
-      <TouchableOpacity
-        onPress={props.action}
-        className='bg-lightBlue rounded-full text-center p-5'>
+      <TouchableOpacity onPress={props.action} className='bg-lightBlue rounded-full text-center p-5'>
         <Text className='text-white text-lg'>
           {props.actionMessage}
         </Text>

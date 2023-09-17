@@ -10,40 +10,39 @@ export default function PostOptions(props: PostOptionsProps) {
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
-    const modal = <View className="flex flex-1">
-    <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
+    const modal = 
+        <View className="flex flex-1">
+            <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
             setModalVisible(!modalVisible);
-        }}
-    >
-        <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>
-            <View className="flex flex-1 justify-end items-center">
-                <View className="bg-gray-400 w-full p-1 flex items-center pb-10 rounded-lg">
-                    <Option label="Upvote" handler={() => {
-                        setModalVisible(!modalVisible);
-                    }} />
-                    <Option label="Downvote" handler={() => {
-                        setModalVisible(!modalVisible);
-                    }} />
-                    <Option label={`${props.community}`} handler={() => {
+            }}
+            >
+                <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>
+                    <View className="flex flex-1 justify-end items-center">
+                        <View className="bg-gray-300 w-full p-1 flex items-center pb-10 rounded-lg">
+                        <Option label={`${props.community}`} handler={() => {
                         setModalVisible(!modalVisible);
                         navigation.push('Community', { id: props.community_id, name: props.community })
-                    }} />
-                    <Option label={props.username} handler={() => {
+                        }} />
+                        <Option label={props.username} handler={() => {
                         setModalVisible(!modalVisible);
                         navigation.navigate('Overview', { id: props.user_id, name: props.username })
-                    }} />
-                    <Option label="Close" handler={() => {
+                        }} />
+                        <Option label="Delete" handler={() => {
                         setModalVisible(!modalVisible);
-                    }} />
-                </View>
-            </View>
-        </TouchableWithoutFeedback>
-    </Modal>
-</View>
+                        }} />
+                        <Option label="Close" handler={() => {
+                        setModalVisible(!modalVisible);
+                        }} />
+                        </View>
+                    </View>
+                </TouchableWithoutFeedback>
+            </Modal>
+        </View>
+
     return (
         <>
             <TouchableOpacity className='flex-row flex space-x-1 bg-gray-300 rounded-lg p-2 ml-1 mt-1' onPress={() => setModalVisible(true)}>

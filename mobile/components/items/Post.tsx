@@ -9,7 +9,7 @@ export default function Post(props: PostProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
     return (
-        <View className='bg-white h-auto px-2 gap-2'>
+        <View className='bg-white px-2 gap-2'>
             <TouchableOpacity onPress={() => navigation.push('Details', { ...props })}>
                     <Text className='font-bold text-lg'>{props.title}</Text> 
             </TouchableOpacity>

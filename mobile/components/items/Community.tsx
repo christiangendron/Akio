@@ -7,11 +7,11 @@ import { CommunityProps } from '../../types/Community';
 export default function Community(props: CommunityProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
+    const community_name = props.name.charAt(0).toUpperCase() + props.name.slice(1);
+
     return (
-        <TouchableOpacity onPress={() => navigation.push('Community', { name: props.name, id: props.id })}>
-            <View className='flex flex-row bg-gray-300 p-3 justify-between rounded-lg m-1'>
-                <Text className='text-center text-lg'>{props.name}</Text>
-            </View>
+        <TouchableOpacity onPress={() => navigation.push('Community', { name: props.name, id: props.id })} className='flex flex-row bg-gray-300 p-3 justify-between rounded-lg m-1'>
+            <Text className='text-lg'>{community_name}</Text>
         </TouchableOpacity>
     );
 }

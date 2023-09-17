@@ -6,6 +6,7 @@ import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
 import Community from '../components/items/Community';
 import ErrorMessage from '../components/ErrorMessage';
+import ControlPanel from '../components/ControlPanel';
 
 export default function Search() {
   const navigation = useNavigation();
@@ -22,6 +23,9 @@ export default function Search() {
         backgroundColor: AppTheme.lightgray
       },
       headerTintColor: AppTheme.black,
+      headerRight: () => (
+        <ControlPanel id={1} name={'communities'} refetch={() => query.refetch()}  />
+      ),
     });
   }, [navigation]);
 

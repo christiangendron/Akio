@@ -1,6 +1,6 @@
-# Installation Guide for the Application
+# Installation Guide for the backend
 
-Experience our app by following these easy installation steps:
+Start the backend by following these easy installation steps:
 
 1. **Install Docker**  
    Make sure you have docker installed.
