@@ -1,0 +1,44 @@
+services:
+  akio-backend:
+    container_name: "akio-backend"
+    build: ./server
+    ports:
+      - "3000:80"
+    depends_on:
+      - mariadb
+    volumes:
+      - "./server:/app"
+      - "/app/node_modules"
+    networks:
+      - backend
+
+  phpmyadmin:
+    container_name: "akio-phpmyadmin"
+    image: phpmyadmin:5.2
+    ports:
+      - "8084:80"
+    environment:
+      - PMA_HOST=mariadb
+    depends_on:
+      - mariadb
+    networks:
+      - backend
+
+  mariadb:
+    container_name: "akio-mariadb"
+    image: mariadb:10.6
+    ports:
+      - ":3306"
+    environment:
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_DATABASE=akiodb
+    volumes:
+      - "./database/init:/docker-entrypoint-initdb.d"
+      - "./database/data/mariadb:/var/lib/mysql"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+    name: "backend"
