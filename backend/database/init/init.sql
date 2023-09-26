@@ -32,9 +32,9 @@ CREATE TABLE `community` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `community` (`id`, `name`) VALUES
-('1', 'canada'),
-('2', 'dogs'),
-('3', 'story');
+('1', 'canada', 'Welcome to Canada, the ultimate online gathering place for all things Canadian! Join us to discuss Canadian news, culture, breathtaking landscapes, and connect with fellow Canucks.'),
+('2', 'dogs', 'Join the woof-tastic world of r/Dogs! A pawsome space for dog lovers to share adorable pics, training tips, and heartwarming stories.'),
+('3', 'story', 'Welcome to Story, the official subreddit for all things story related! Share your stories, read others, and connect with fellow storytellers.');
 
 --
 -- Structure de la table `user`
