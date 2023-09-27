@@ -28,7 +28,7 @@ module.exports.create = async (req, res) => {
                         },
                         "description": {
                             "type": "string",
-                            "description": "Description of the community",
+                            "description": "Description of the community (max 250 char)",
                         },
                     } 
                 },
@@ -36,8 +36,6 @@ module.exports.create = async (req, res) => {
         ],
         model: 'gpt-3.5-turbo',
     }); 
-
-    console.log(openAiRequest.choices[0])
 
     const parsedRes = JSON.parse(openAiRequest.choices[0].message.function_call.arguments);
 
