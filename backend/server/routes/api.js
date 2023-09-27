@@ -14,6 +14,10 @@ router.route('/post/:id')
 
 router.route('/post/:id/comments')
     .get(CommentController.index)
+    .post(CommentController.create)
+
+router.route('/comment/:id')
+    .get(CommentController.delete)
 
 router.route('/post/community/:id')
     .get(PostController.indexByCommunityId)

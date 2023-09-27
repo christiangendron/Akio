@@ -13,8 +13,6 @@ module.exports.index = async (req, res) => {
 module.exports.create = async (req, res) => {
     const communityList = await query('SELECT community.name from community');
 
-    console.log(communityList)
-
     const openAiRequest = await openai.chat.completions.create({
         messages: [{ role: 'user', content: `Create me a subreddit (community on specific subject) not already in this list : ${communityList}` }],
         functions: [
@@ -40,8 +38,6 @@ module.exports.create = async (req, res) => {
       }); 
 
     const parsedRes = JSON.parse(openAiRequest.choices[0].message.function_call.arguments);
-
-    console.log(parsedRes)
 
     const creation_query = await query('INSERT INTO community (name, description) VALUES (?, ?)', [parsedRes.name, parsedRes.description])
     const last_created = await query('SELECT * FROM community WHERE id = (?)', [creation_query.insertId])
