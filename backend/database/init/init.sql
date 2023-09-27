@@ -28,10 +28,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `community` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `name` VARCHAR(256) NOT NULL
+  `name` VARCHAR(256) NOT NULL,
+  `description` VARCHAR(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `community` (`id`, `name`) VALUES
+INSERT INTO `community` (`id`, `name`, `description`) VALUES
 ('1', 'canada', 'Welcome to Canada, the ultimate online gathering place for all things Canadian! Join us to discuss Canadian news, culture, breathtaking landscapes, and connect with fellow Canucks.'),
 ('2', 'dogs', 'Join the woof-tastic world of r/Dogs! A pawsome space for dog lovers to share adorable pics, training tips, and heartwarming stories.'),
 ('3', 'story', 'Welcome to Story, the official subreddit for all things story related! Share your stories, read others, and connect with fellow storytellers.');

@@ -69,7 +69,7 @@ module.exports.create = async (req, res) => {
                             "type": "boolean",
                             "description": "Does it make sense for this post to contain an image",
                         }
-                    }
+                    } 
                 },
             }
         ],
