@@ -14,10 +14,10 @@ module.exports.create = async (req, res) => {
     const communityList = await query('SELECT community.name from community');
 
     const openAiRequest = await openai.chat.completions.create({
-        messages: [{ role: 'user', content: `Create me a subreddit (community on specific subject) not already in this list : ${communityList}` }],
+        messages: [{ role: 'user', content: `Generate a community with a unique and creative name and description for my Reddit clone. The name should be catchy, relevant, and appealing to potential users. Make sure it does not already exist in this list : ${communityList}` }],
         functions: [
             {
-                "name": "create_community",
+                "name": "generate_community",
                 "description": "Function to create a new community",
                 "parameters": {
                     "type": "object",
@@ -35,7 +35,9 @@ module.exports.create = async (req, res) => {
             }
         ],
         model: 'gpt-3.5-turbo',
-      }); 
+    }); 
+
+    console.log(openAiRequest.choices[0])
 
     const parsedRes = JSON.parse(openAiRequest.choices[0].message.function_call.arguments);
 

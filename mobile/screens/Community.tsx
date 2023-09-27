@@ -11,7 +11,6 @@ import { PostProps } from '../types/Post';
 import SearchBarComp from '../components/SearchBarComp';
 import { SettingsContext } from '../context/SettingsContext';
 import { CommunityNavigationProps } from '../types/Community';
-import FilterBox from '../components/ControlPanel';
 import ControlPanel from '../components/ControlPanel';
 
 export default function Community(props: CommunityNavigationProps) {
@@ -34,7 +33,7 @@ export default function Community(props: CommunityNavigationProps) {
       },
       headerTintColor: AppTheme.black,
       headerRight: () => (
-        <ControlPanel id={community_id.current} name={community.current} refetch={() => query.refetch()}  />
+        <ControlPanel community_id={community_id.current} community_name={community.current} user_id={1} refetch={() => query.refetch()}  />
       ),
     });
   }, [navigation]);

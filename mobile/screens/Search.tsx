@@ -24,7 +24,7 @@ export default function Search() {
       },
       headerTintColor: AppTheme.black,
       headerRight: () => (
-        <ControlPanel id={1} name={'communities'} refetch={() => query.refetch()}  />
+        <ControlPanel community_id={undefined} community_name={undefined} refetch={undefined}  />
       ),
     });
   }, [navigation]);

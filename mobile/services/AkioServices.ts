@@ -37,6 +37,17 @@ async function getCommunities(): Promise<CommunityProps[]> {
   return res.data.body;
 }
 
-const AkioServices = {getPosts, getCommunities, getComments, getUserPosts};
+async function generatePost(community_id: number, community_name: string, user_id: number): Promise<PostProps[]> { 
+  const res = await AxiosClient.post('post', {community_name, community_id, user_id});
+  return res.data.body;
+}
+
+async function generateCommunity(): Promise<CommunityProps[]> { 
+  const res = await AxiosClient.post('community');
+  return res.data.body;
+}
+
+
+const AkioServices = {getPosts, getCommunities, getComments, getUserPosts, generatePost, generateCommunity};
 
 export default AkioServices;

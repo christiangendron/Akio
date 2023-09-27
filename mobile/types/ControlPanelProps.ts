@@ -1,5 +1,6 @@
 export interface ControlPanelProps {
-    id: number,
-    name: string,
+    community_id: number,
+    community_name: string,
+    user_id: number,
     refetch: () => void,
 }
