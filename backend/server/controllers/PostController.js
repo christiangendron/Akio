@@ -79,12 +79,18 @@ module.exports.create = async (req, res) => {
     const parsedRes = JSON.parse(openAiRequest.choices[0].message.function_call.arguments);
 
     if (parsedRes.has_media) {
-        // TODO: Generate an image and place the url in the media_url field
+        const imageRequest = await openai.images.generate({
+            prompt: parsedRes.text_content,
+            n: 1,
+            size: "512x512",
+          });
+
+        parsedRes.media_url = original_url = imageRequest.data[0].url;
     }
 
     const creation_query = await query(
         'INSERT INTO post (title, text_content, votes, media_url, community_id, user_id) VALUES (?, ?, ?, ?, ?, ?)',
-        [parsedRes.title, parsedRes.text_content, Math.floor(Math.random() * (99 - 1 + 1)) + 1, '', data.community_id, data.user_id]
+        [parsedRes.title, parsedRes.text_content, Math.floor(Math.random() * (99 - 1 + 1)) + 1, parsedRes.media_url, data.community_id, data.user_id]
     )
 
     const last_created = await query('SELECT * FROM post WHERE id = (?)', [creation_query.insertId])

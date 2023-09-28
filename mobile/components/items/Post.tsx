@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../../types/Navigator';
@@ -27,6 +27,7 @@ export default function Post(props: PostProps) {
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.push('Details', { ...props })}>
                 <Text>{props.text_content}</Text>
+                {props.media_url ? <Image source={{ uri: props.media_url }} className='w-auto h-96 my-1 bg-gray-400' /> : null}
             </TouchableOpacity>
             <PostInteraction {...props} />
         </View>
