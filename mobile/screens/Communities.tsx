@@ -4,10 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import AppTheme from '../styles/AppTheme';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
-import Community from '../components/items/Community';
+import Community, { CommunityProps } from '../components/items/Community';
 import ErrorMessage from '../components/ErrorMessage';
 import NothingFound from '../components/NothingFound';
-import { CommunityProps } from '../types/Community';
 import GenerateCommunity from '../components/buttons/GenerateCommunity';
 
 export default function Communities() {

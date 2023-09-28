@@ -1,8 +1,13 @@
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../../types/Navigator';
-import { CommunityProps } from '../../types/Community';
+
+export interface CommunityProps {
+    id: number;
+    name: string;
+    description: string;
+}
 
 export default function Community(props: CommunityProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();

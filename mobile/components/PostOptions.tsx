@@ -1,11 +1,18 @@
 import { useState } from "react";
-import { Modal, View, Image, TouchableOpacity, TouchableWithoutFeedback, Text } from "react-native";
+import { Modal, View, TouchableOpacity, TouchableWithoutFeedback, Text } from "react-native";
 import Option from "./items/Option";
-import { PostOptionsProps } from "../types/PostOptions";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from "@react-navigation/native";
 import { StackParams } from "../types/Navigator";
 import useDeletePostMutation from "../hooks/useDeletePostMutation";
+
+interface PostOptionsProps {
+    id: number;
+    username: string;
+    user_id: number;
+    community: string;
+    community_id: number;
+}
 
 export default function PostOptions(props: PostOptionsProps) {
     const [modalVisible, setModalVisible] = useState(false);

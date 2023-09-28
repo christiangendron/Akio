@@ -1,5 +1,8 @@
 import { Text, View } from 'react-native';
-import { NothingFoundProps } from '../types/NothingFound';
+
+interface NothingFoundProps {
+  type: string;
+}
 
 export default function NothingFound(props: NothingFoundProps) {
   return (

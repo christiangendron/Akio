@@ -7,7 +7,7 @@ interface PostMutation {
     user_id: number;
 }
 
-export default function useGeneratePostMutations() {
+export default function usePostMutations() {
     const queryClient = useQueryClient()
 
     const postsMutations = useMutation({

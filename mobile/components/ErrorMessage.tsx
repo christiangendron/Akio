@@ -1,5 +1,10 @@
 import {Text, View, TouchableOpacity} from 'react-native';
-import { ErrorMessageProps } from '../types/ErrorMessage';
+
+interface ErrorMessageProps {
+  message: string;
+  action: () => void;
+  actionMessage: string;
+}
 
 export default function ErrorMessage(props:ErrorMessageProps) {
   return (

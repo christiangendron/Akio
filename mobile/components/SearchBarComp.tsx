@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, Keyboard, Image } from 'react-native';
+import { View, TextInput, Keyboard, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { SearchBarProps } from '../types/SearchBarComp';
+
+type SearchBarProps = {
+    keyword: string;
+    handleChange: (text: string) => void;
+    handleSubmit: () => void;
+}
 
 export default function SearchBarComp(props: SearchBarProps) {
     const [isFocused, setIsFocused] = useState<boolean>(false);

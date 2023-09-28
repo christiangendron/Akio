@@ -1,5 +1,4 @@
 import { View, Text, ScrollView} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useContext, useEffect } from 'react';
 import { SettingsContext } from '../context/SettingsContext';
 import Setting from '../components/items/Setting';

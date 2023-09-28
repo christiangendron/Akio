@@ -1,5 +1,13 @@
 import { Text, View } from 'react-native';
-import { CommentItemProps } from '../../types/CommentItem';
+
+export interface CommentItemProps {
+    id: string;
+    text_content: string;
+    votes: number;
+    user_id: number;
+    post_id: number;
+    username: string;
+}
 
 export default function Comment(props: CommentItemProps) {
     return (

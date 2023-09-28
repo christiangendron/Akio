@@ -5,8 +5,7 @@ import { OverviewProps } from '../types/Overview';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
 import ErrorMessage from '../components/ErrorMessage';
-import Post from '../components/items/Post';
-import { PostProps } from '../types/Post';
+import Post, { PostProps } from '../components/items/Post';
 import AppTheme from '../styles/AppTheme';
 import NothingFound from '../components/NothingFound';
 

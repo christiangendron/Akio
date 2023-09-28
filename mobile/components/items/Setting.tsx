@@ -1,5 +1,10 @@
 import { Text, Switch, View } from 'react-native';
-import { SettingsItemProps } from '../../types/SettingsItem';
+
+interface SettingsItemProps {
+    label: string;
+    current: boolean;
+    handler: (value: boolean) => void;
+}
 
 export default function Setting(props: SettingsItemProps) {
     return (
