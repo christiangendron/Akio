@@ -7,10 +7,11 @@ import ErrorMessage from '../components/ErrorMessage';
 import Comment from '../components/items/Comment';
 import { CommentItemProps } from '../types/CommentItem';
 import Post from '../components/items/Post';
-import NoPostsFound from '../components/NoPostsFound';
+import NoPostsFound from '../components/NothingFound';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 import AppTheme from '../styles/AppTheme';
+import GenerateComment from '../components/buttons/GenerateComment';
 
 export default function Details(props: DetailsScreenProps) {
   const navigation = useNavigation();
@@ -60,7 +61,8 @@ export default function Details(props: DetailsScreenProps) {
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
         ListHeaderComponent={<View className='mb-2 mt-2'><Post {...current} /></View>}
-        ListEmptyComponent={<NoPostsFound />}
+        ListEmptyComponent={<NoPostsFound type="comments"/>}
+        ListFooterComponent={<View className='mt-2'><GenerateComment post_id={current.id} /></View>}
       />
     </View>
   );

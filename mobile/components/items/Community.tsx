@@ -10,7 +10,7 @@ export default function Community(props: CommunityProps) {
     const community_name = props.name.charAt(0).toUpperCase() + props.name.slice(1);
 
     return (
-        <TouchableOpacity onPress={() => navigation.push('Community', { name: props.name, id: props.id })} className='flex bg-gray-300 p-3 justify-between rounded-lg m-1'>
+        <TouchableOpacity onPress={() => navigation.push('Community', { name: props.name, id: props.id })} className='flex bg-gray-300 p-2 justify-between rounded-lg'>
             <Text className='text-lg font-bold'>{community_name}</Text>
             <Text className='text-sm'>{props.description}</Text>
         </TouchableOpacity>

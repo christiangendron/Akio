@@ -47,7 +47,16 @@ async function generateCommunity(): Promise<CommunityProps[]> {
   return res.data.body;
 }
 
+async function generateComment(post_id: number): Promise<CommunityProps[]> { 
+  const res = await AxiosClient.post('post/' + post_id + '/comments');
+  return res.data.body;
+}
 
-const AkioServices = {getPosts, getCommunities, getComments, getUserPosts, generatePost, generateCommunity};
+async function deletePost(post_id: number): Promise<CommunityProps[]> { 
+  const res = await AxiosClient.delete('post/' + post_id);
+  return res.data.data;
+}
+
+const AkioServices = {getPosts, getCommunities, getComments, getUserPosts, generatePost, generateCommunity, generateComment, deletePost};
 
 export default AkioServices;

@@ -33,5 +33,5 @@ export type TabParams = {
     SettingHome: {
       data: string;
     };
-    Search: any;
+    Communities: any;
   }

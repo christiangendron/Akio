@@ -1,14 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
-import { View, Text, ActivityIndicator, FlatList } from 'react-native';
+import { View, ActivityIndicator, FlatList } from 'react-native';
 import { OverviewProps } from '../types/Overview';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
 import ErrorMessage from '../components/ErrorMessage';
 import Post from '../components/items/Post';
 import { PostProps } from '../types/Post';
-import NoPostsFound from '../components/NoPostsFound';
 import AppTheme from '../styles/AppTheme';
+import NothingFound from '../components/NothingFound';
 
 export default function Overview(props: OverviewProps) {
   const navigation = useNavigation();
@@ -58,7 +58,7 @@ export default function Overview(props: OverviewProps) {
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
         ListHeaderComponent={<View className='mt-2'/>}
-        ListEmptyComponent={<NoPostsFound />}
+        ListEmptyComponent={<NothingFound type="posts" />}
       />
     </View>
   );

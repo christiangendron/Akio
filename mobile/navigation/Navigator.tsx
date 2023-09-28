@@ -7,7 +7,7 @@ import Details from '../screens/Details';
 import Community from '../screens/Community';
 import AppTheme from '../styles/AppTheme';
 import Overview from '../screens/Overview';
-import Search from '../screens/Search';
+import Communities from '../screens/Communities';
 import { StackParams, TabParams } from '../types/Navigator';
 
 const HomeStack = createStackNavigator<StackParams>();
@@ -27,7 +27,7 @@ const SearchStack = createStackNavigator<StackParams>();
 function SearchStackScreen() {
   return (
     <SearchStack.Navigator>
-      <SearchStack.Screen name="Search" component={Search} />
+      <SearchStack.Screen name="Communities" component={Communities} />
       <SearchStack.Screen name="Details" component={Details} />
       <SearchStack.Screen name="Overview" component={Overview} />
       <SearchStack.Screen name="Community" component={Community} />

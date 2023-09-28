@@ -5,13 +5,13 @@ import { useQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
 import { useNavigation } from '@react-navigation/native';
 import Post from '../components/items/Post';
-import NoPostsFound from '../components/NoPostsFound';
+import NoPostsFound from '../components/NothingFound';
 import AkioServices from '../services/AkioServices';
 import { PostProps } from '../types/Post';
 import SearchBarComp from '../components/SearchBarComp';
 import { SettingsContext } from '../context/SettingsContext';
 import { CommunityNavigationProps } from '../types/Community';
-import ControlPanel from '../components/ControlPanel';
+import GeneratePost from '../components/buttons/GeneratePost';
 
 export default function Community(props: CommunityNavigationProps) {
   const community = useRef(props.route.params.name);
@@ -32,9 +32,6 @@ export default function Community(props: CommunityNavigationProps) {
         backgroundColor: AppTheme.lightgray
       },
       headerTintColor: AppTheme.black,
-      headerRight: () => (
-        <ControlPanel community_id={community_id.current} community_name={community.current} user_id={1} refetch={() => query.refetch()}  />
-      ),
     });
   }, [navigation]);
   
@@ -70,7 +67,8 @@ export default function Community(props: CommunityNavigationProps) {
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
         ListHeaderComponent={<View className='mt-2'/>}
-        ListEmptyComponent={<NoPostsFound />}
+        ListEmptyComponent={<NoPostsFound type="posts" />}
+        ListFooterComponent={<View className='mt-2'><GeneratePost community_id={community_id.current} community_name={community.current} /></View>}
       />
     </View>
   );

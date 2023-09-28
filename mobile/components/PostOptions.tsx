@@ -5,10 +5,13 @@ import { PostOptionsProps } from "../types/PostOptions";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from "@react-navigation/native";
 import { StackParams } from "../types/Navigator";
+import useDeletePostMutation from "../hooks/useDeletePostMutation";
 
 export default function PostOptions(props: PostOptionsProps) {
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
+
+    const deleteMutation = useDeletePostMutation();
 
     const modal = 
         <View className="flex flex-1">
@@ -32,6 +35,7 @@ export default function PostOptions(props: PostOptionsProps) {
                         navigation.navigate('Overview', { id: props.user_id, name: props.username })
                         }} />
                         <Option label="Delete" handler={() => {
+                            deleteMutation.mutate({ post_id: props.id });
                         setModalVisible(!modalVisible);
                         }} />
                         <Option label="Close" handler={() => {
