@@ -82,7 +82,7 @@ CREATE TABLE `comment` (
   `user_id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
   FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  FOREIGN KEY (`post_id`) REFERENCES `post` (`id`)
+  FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `comment` (`id`, `text_content`, `votes`, `user_id`, `post_id`) VALUES
