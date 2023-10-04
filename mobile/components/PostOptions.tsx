@@ -31,7 +31,7 @@ export default function PostOptions(props: PostOptionsProps) {
             }}
             >
                 <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>
-                    <View className="flex flex-1 justify-end items-center">
+                    <View className="flex flex-1 justify-end items-center" style={{backgroundColor: 'rgba(0,0,0,0.5)'}}>
                         <View className="bg-gray-300 w-full p-1 flex items-center pb-10 rounded-lg">
                         <Option label={`${props.community}`} handler={() => {
                         setModalVisible(!modalVisible);

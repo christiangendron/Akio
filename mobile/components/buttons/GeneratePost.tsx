@@ -13,7 +13,6 @@ export default function GeneratePost(props: GeneratePostProps) {
     const variables = {
         community_id: props.community_id,
         community_name: props.community_name,
-        user_id: 1,
     };
     
     if (mutation.isLoading) return (

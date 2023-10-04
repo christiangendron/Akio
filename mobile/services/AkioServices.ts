@@ -1,8 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
-import { PostProps } from '../types/Post';
-import { CommunityProps } from '../types/Community';
-import { CommentItemProps } from '../types/CommentItem';
 import {BACKEND_URL} from '@env';
+import { PostProps } from '../components/items/Post';
+import { CommentItemProps } from '../components/items/Comment';
+import { CommunityProps } from '../components/items/Community';
 
 const baseURL = BACKEND_URL;
 
@@ -37,8 +37,8 @@ async function getCommunities(): Promise<CommunityProps[]> {
   return res.data.body;
 }
 
-async function generatePost(community_id: number, community_name: string, user_id: number): Promise<PostProps[]> { 
-  const res = await AxiosClient.post('post', {community_name, community_id, user_id});
+async function generatePost(community_id: number, community_name: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.post('post', {community_name, community_id});
   return res.data.body;
 }
 

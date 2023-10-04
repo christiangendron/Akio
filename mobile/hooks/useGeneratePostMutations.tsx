@@ -4,7 +4,6 @@ import AkioServices from '../services/AkioServices';
 interface PostMutation {
     community_id: number;
     community_name: string;
-    user_id: number;
 }
 
 export default function usePostMutations() {
@@ -12,7 +11,7 @@ export default function usePostMutations() {
 
     const postsMutations = useMutation({
         mutationFn: (variables : PostMutation) => {
-            return AkioServices.generatePost(variables.community_id, variables.community_name, variables.user_id);
+            return AkioServices.generatePost(variables.community_id, variables.community_name);
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['posts'] })
