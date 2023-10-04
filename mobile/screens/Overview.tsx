@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 import { OverviewProps } from '../types/Overview';
 import { useQuery } from 'react-query';
@@ -8,9 +8,11 @@ import ErrorMessage from '../components/ErrorMessage';
 import Post, { PostProps } from '../components/items/Post';
 import AppTheme from '../styles/AppTheme';
 import NothingFound from '../components/NothingFound';
+import SearchBarComp from '../components/SearchBarComp';
 
 export default function Overview(props: OverviewProps) {
   const navigation = useNavigation();
+  const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
     navigation.setOptions({
@@ -23,8 +25,8 @@ export default function Overview(props: OverviewProps) {
   }, [navigation]);
 
   const query = useQuery({
-    queryKey: ['posts', props.route.params.id],
-    queryFn: () => AkioServices.getUserPosts(props.route.params.id),
+    queryKey: ['user-posts', props.route.params.id, keyword],
+    queryFn: () => AkioServices.getUserPosts(props.route.params.id, keyword),
   });
 
   if (query.isLoading) {
@@ -56,7 +58,7 @@ export default function Overview(props: OverviewProps) {
         ItemSeparatorComponent={() => <View className='h-4' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={<View className='mt-2'/>}
+        ListHeaderComponent={<SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/>}
         ListEmptyComponent={<NothingFound type="posts" />}
       />
     </View>
