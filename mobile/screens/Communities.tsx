@@ -56,7 +56,6 @@ export default function Communities() {
         ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={<View className='mt-2'/>}
         ListEmptyComponent={<NothingFound type="posts" />}
         ListFooterComponent={<View className='mt-2'><GenerateCommunity /></View>}
       />

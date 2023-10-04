@@ -54,8 +54,10 @@ export default function Community(props: CommunityNavigationProps) {
     return <Post key={item.id} {...item} />;
   };
 
-  const search = query.data?.length != 0 ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/> : null
+  const search = query.data?.length != 0 ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/> : null;
 
+  const generationPostButton = community_id.current != 0 ? <View className='mt-2'><GeneratePost community_id={community_id.current} community_name={community.current} /></View> : null;
+  
   return (
     <View className='flex flex-1 justify-center items-center'>
       <FlatList
@@ -67,7 +69,7 @@ export default function Community(props: CommunityNavigationProps) {
         onEndReachedThreshold={2}
         ListHeaderComponent={<View className='mt-2'/>}
         ListEmptyComponent={<NoPostsFound type="posts" />}
-        ListFooterComponent={<View className='mt-2'><GeneratePost community_id={community_id.current} community_name={community.current} /></View>}
+        ListFooterComponent={generationPostButton}
       />
     </View>
   );

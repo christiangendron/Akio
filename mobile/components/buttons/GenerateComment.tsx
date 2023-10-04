@@ -1,5 +1,6 @@
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import useGenerateCommentMutations from '../../hooks/useGenerateCommentMutations';
+import ErrorMessage from '../ErrorMessage';
 
 interface GenerateCommentProps {
     post_id: number;
@@ -15,6 +16,12 @@ export default function GenerateComment(props: GenerateCommentProps) {
     if (mutation.isLoading) return (
         <View className='bg-gray-300 p-5'>
             <ActivityIndicator />
+        </View>
+    )
+
+    if (mutation.error) return (
+        <View className='bg-gray-300 p-5'>
+            <ErrorMessage message="The generation failed." actionMessage="Try again" action={() => mutation.mutate(variables)} />
         </View>
     )
 

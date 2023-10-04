@@ -1,5 +1,6 @@
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import useGeneratePostMutations from '../../hooks/useGeneratePostMutations';
+import ErrorMessage from '../ErrorMessage';
 
 interface GeneratePostProps {
     community_id: number;
@@ -21,6 +22,12 @@ export default function GeneratePost(props: GeneratePostProps) {
         </View>
     )
 
+    if (mutation.error) return (
+        <View className='bg-gray-300 p-5'>
+            <ErrorMessage message="The generation failed." actionMessage="Try again" action={() => mutation.mutate(variables)} />
+        </View>
+    )
+    
     return (
         <TouchableOpacity onPress={() => mutation.mutate(variables)} className='bg-gray-300 p-5'>
             <Text className='text-center'>Generate a post</Text>

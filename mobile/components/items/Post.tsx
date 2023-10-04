@@ -27,7 +27,7 @@ export default function Post(props: PostProps) {
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.push('Details', { ...props })}>
                 <Text>{props.text_content}</Text>
-                {props.media_url ? <Image source={{ uri: props.media_url }} className='w-auto h-96 my-1 bg-gray-400' /> : null}
+                {props.media_url ? <Image source={{ uri: props.media_url }} className='w-auto h-96 my-1 bg-gray-400 -mx-2' /> : null}
             </TouchableOpacity>
             <PostInteraction {...props} />
         </View>

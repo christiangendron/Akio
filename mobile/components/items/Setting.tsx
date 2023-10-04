@@ -8,7 +8,7 @@ interface SettingsItemProps {
 
 export default function Setting(props: SettingsItemProps) {
     return (
-        <View className='flex flex-row bg-gray-300 p-3 justify-between rounded-lg m-1'>
+        <View className='flex flex-row bg-gray-200 p-3 justify-between rounded-lg m-1'>
             <Text className='text-lg'>{props.label}</Text>
             <Switch value={props.current} onValueChange={() => props.handler(!props.current)}/>
         </View>
