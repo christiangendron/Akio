@@ -11,6 +11,7 @@ import SearchBarComp from '../components/SearchBarComp';
 import { SettingsContext } from '../context/SettingsContext';
 import { CommunityNavigationProps } from '../types/Community';
 import GeneratePost from '../components/buttons/GeneratePost';
+import SmallPost, { SmallPostProps } from '../components/items/SmallPost';
 
 export default function Community(props: CommunityNavigationProps) {
   const community = useRef(props.route.params.name);
@@ -50,8 +51,8 @@ export default function Community(props: CommunityNavigationProps) {
     );
   }
 
-  const renderItem = ({ item }: { item: PostProps }): JSX.Element => {
-    return <Post key={item.id} {...item} />;
+  const renderItem = ({ item }: { item: SmallPostProps }): JSX.Element => {
+    return <SmallPost key={item.id} {...item} />;
   };
 
   const generationPostButton = community_id.current != 0 ? <View className='mt-2'><GeneratePost community_id={community_id.current} community_name={community.current} /></View> : null;

@@ -9,6 +9,7 @@ import Post, { PostProps } from '../components/items/Post';
 import AppTheme from '../styles/AppTheme';
 import NothingFound from '../components/NothingFound';
 import SearchBarComp from '../components/SearchBarComp';
+import SmallPost, { SmallPostProps } from '../components/items/SmallPost';
 
 export default function Overview(props: OverviewProps) {
   const navigation = useNavigation();
@@ -45,8 +46,8 @@ export default function Overview(props: OverviewProps) {
     );
   }
 
-  const renderItem = ({ item }: { item: PostProps }): JSX.Element => {
-    return <Post key={item.id} {...item} />;
+  const renderItem = ({ item }: { item: SmallPostProps }): JSX.Element => {
+    return <SmallPost key={item.id} {...item} />;
   };
 
   return (
