@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput, Keyboard, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -12,11 +12,11 @@ export default function SearchBarComp(props: SearchBarProps) {
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const [text, setText] = useState<string>(props.keyword);
 
-    const cancel = isFocused ? (
-        <TouchableOpacity className='flex-row space-x-1' onPress={() => Keyboard.dismiss()}>
-            <Image source={require('../assets/icons/cancel.png')} className='mx-2 w-5 h-5' />
-        </TouchableOpacity>
-    ) : null;
+    const clear = () => {
+        setText('');
+        props.handleChange('');
+        Keyboard.dismiss();
+    };
 
     return (
         <View className='flex flex-row w-screen justify-center items-center p-2 mb-2'>
@@ -26,10 +26,12 @@ export default function SearchBarComp(props: SearchBarProps) {
                 value={text}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
-                returnKeyType="go"
+                returnKeyType="search"
                 onSubmitEditing={() => props.handleChange(text)}
                 onChangeText={txt => setText(txt)} />
-            {cancel}
+            <TouchableOpacity className='flex-row space-x-1' onPress={clear}>
+                {isFocused ? <Image source={require('../assets/icons/cancel.png')} className='mx-2 w-5 h-5' /> : null}
+            </TouchableOpacity>
         </View>
     );
 };

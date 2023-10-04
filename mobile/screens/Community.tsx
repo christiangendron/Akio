@@ -45,7 +45,7 @@ export default function Community(props: CommunityNavigationProps) {
   if (query.isError) {
     return (
       <View className='flex flex-1 justify-center items-center'>
-        <ErrorMessage message="Error while getting posts." action={query.refetch} actionMessage="Try again!" />
+        <ErrorMessage message={`Error while getting posts for ${community.current}`} action={query.refetch} actionMessage="Try again!" />
       </View>
     );
   }
@@ -54,20 +54,19 @@ export default function Community(props: CommunityNavigationProps) {
     return <Post key={item.id} {...item} />;
   };
 
-  const search = query.data?.length != 0 ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/> : null;
-
   const generationPostButton = community_id.current != 0 ? <View className='mt-2'><GeneratePost community_id={community_id.current} community_name={community.current} /></View> : null;
   
   return (
     <View className='flex flex-1 justify-center items-center'>
       <FlatList
+        className='w-screen'
         data={query.data}
         renderItem={renderItem}
         refreshing={query.isLoading}
         ItemSeparatorComponent={() => <View className='h-4' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={<View className='mt-2'/>}
+        ListHeaderComponent={<SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/>}
         ListEmptyComponent={<NoPostsFound type="posts" />}
         ListFooterComponent={generationPostButton}
       />

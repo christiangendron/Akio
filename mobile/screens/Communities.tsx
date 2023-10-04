@@ -50,6 +50,7 @@ export default function Communities() {
   return (
     <View className='flex flex-1 justify-center items-center'>
       <FlatList
+        className='w-screen'
         data={query.data}
         renderItem={renderItem}
         refreshing={query.isLoading}
