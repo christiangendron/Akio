@@ -1,8 +1,13 @@
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../../types/Navigator';
-import { CommunityProps } from '../../types/Community';
+
+export interface CommunityProps {
+    id: number;
+    name: string;
+    description: string;
+}
 
 export default function Community(props: CommunityProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
@@ -10,8 +15,9 @@ export default function Community(props: CommunityProps) {
     const community_name = props.name.charAt(0).toUpperCase() + props.name.slice(1);
 
     return (
-        <TouchableOpacity onPress={() => navigation.push('Community', { name: props.name, id: props.id })} className='flex flex-row bg-gray-300 p-3 justify-between rounded-lg m-1'>
-            <Text className='text-lg'>{community_name}</Text>
+        <TouchableOpacity onPress={() => navigation.push('Community', { name: props.name, id: props.id })} className='flex bg-white p-2 justify-between'>
+            <Text className='text-lg font-bold'>{community_name}</Text>
+            <Text className='text-sm'>{props.description}</Text>
         </TouchableOpacity>
     );
 }

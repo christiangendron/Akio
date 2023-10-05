@@ -1,8 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
-import { PostProps } from '../types/Post';
-import { CommunityProps } from '../types/Community';
-import { CommentItemProps } from '../types/CommentItem';
 import {BACKEND_URL} from '@env';
+import { PostProps } from '../components/items/Post';
+import { CommentItemProps } from '../components/items/Comment';
+import { CommunityProps } from '../components/items/Community';
 
 const baseURL = BACKEND_URL;
 
@@ -22,8 +22,8 @@ async function getPosts(community_id:number, keyword: string): Promise<PostProps
   return res.data.body;
 }
 
-async function getUserPosts(user_id:number,): Promise<PostProps[]> { 
-  const res = await AxiosClient.get('post/user/' + user_id);
+async function getUserPosts(user_id:number, keyword: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.get('post/user/' + user_id + '?keyword=' + keyword);
   return res.data.body;
 }
 
@@ -37,6 +37,31 @@ async function getCommunities(): Promise<CommunityProps[]> {
   return res.data.body;
 }
 
-const AkioServices = {getPosts, getCommunities, getComments, getUserPosts};
+async function generatePost(community_id: number, community_name: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.post('post', {community_name, community_id});
+  return res.data.body;
+}
+
+async function generateCommunity(): Promise<CommunityProps[]> { 
+  const res = await AxiosClient.post('community');
+  return res.data.body;
+}
+
+async function generateComment(post_id: number): Promise<CommunityProps[]> { 
+  const res = await AxiosClient.post('post/' + post_id + '/comments');
+  return res.data.body;
+}
+
+async function generateUser(): Promise<any> { 
+  const res = await AxiosClient.post('user');
+  return res.data.body;
+}
+
+async function deletePost(post_id: number): Promise<CommunityProps[]> { 
+  const res = await AxiosClient.delete('post/' + post_id);
+  return res.data.data;
+}
+
+const AkioServices = {getPosts, getCommunities, getComments, getUserPosts, generatePost, generateCommunity, generateComment, deletePost, generateUser};
 
 export default AkioServices;

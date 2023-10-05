@@ -4,15 +4,14 @@ import AppTheme from '../styles/AppTheme';
 import { useQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
 import { useNavigation } from '@react-navigation/native';
-import Post from '../components/items/Post';
-import NoPostsFound from '../components/NoPostsFound';
+import Post, { PostProps } from '../components/items/Post';
+import NoPostsFound from '../components/NothingFound';
 import AkioServices from '../services/AkioServices';
-import { PostProps } from '../types/Post';
 import SearchBarComp from '../components/SearchBarComp';
 import { SettingsContext } from '../context/SettingsContext';
 import { CommunityNavigationProps } from '../types/Community';
-import FilterBox from '../components/ControlPanel';
-import ControlPanel from '../components/ControlPanel';
+import GeneratePost from '../components/buttons/GeneratePost';
+import SmallPost, { SmallPostProps } from '../components/items/SmallPost';
 
 export default function Community(props: CommunityNavigationProps) {
   const community = useRef(props.route.params.name);
@@ -33,9 +32,6 @@ export default function Community(props: CommunityNavigationProps) {
         backgroundColor: AppTheme.lightgray
       },
       headerTintColor: AppTheme.black,
-      headerRight: () => (
-        <ControlPanel id={community_id.current} name={community.current} refetch={() => query.refetch()}  />
-      ),
     });
   }, [navigation]);
   
@@ -50,28 +46,30 @@ export default function Community(props: CommunityNavigationProps) {
   if (query.isError) {
     return (
       <View className='flex flex-1 justify-center items-center'>
-        <ErrorMessage message="Error while getting posts." action={query.refetch} actionMessage="Try again!" />
+        <ErrorMessage message={`Error while getting posts for ${community.current}`} action={query.refetch} actionMessage="Try again!" />
       </View>
     );
   }
 
-  const renderItem = ({ item }: { item: PostProps }): JSX.Element => {
-    return <Post key={item.id} {...item} />;
+  const renderItem = ({ item }: { item: SmallPostProps }): JSX.Element => {
+    return <SmallPost key={item.id} {...item} />;
   };
 
-  const search = query.data?.length != 0 ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/> : null
-
+  const generationPostButton = community_id.current != 0 ? <View className='mt-2'><GeneratePost community_id={community_id.current} community_name={community.current} /></View> : null;
+  
   return (
     <View className='flex flex-1 justify-center items-center'>
       <FlatList
+        className='w-screen'
         data={query.data}
         renderItem={renderItem}
         refreshing={query.isLoading}
         ItemSeparatorComponent={() => <View className='h-4' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={<View className='mt-2'/>}
-        ListEmptyComponent={<NoPostsFound />}
+        ListHeaderComponent={<SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/>}
+        ListEmptyComponent={<NoPostsFound type="posts" />}
+        ListFooterComponent={generationPostButton}
       />
     </View>
   );

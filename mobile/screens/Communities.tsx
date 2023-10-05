@@ -1,14 +1,15 @@
-import { View, ScrollView, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, FlatList } from 'react-native';
 import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AppTheme from '../styles/AppTheme';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
-import Community from '../components/items/Community';
+import Community, { CommunityProps } from '../components/items/Community';
 import ErrorMessage from '../components/ErrorMessage';
-import ControlPanel from '../components/ControlPanel';
+import NothingFound from '../components/NothingFound';
+import GenerateCommunity from '../components/buttons/GenerateCommunity';
 
-export default function Search() {
+export default function Communities() {
   const navigation = useNavigation();
 
   const query = useQuery({
@@ -23,9 +24,6 @@ export default function Search() {
         backgroundColor: AppTheme.lightgray
       },
       headerTintColor: AppTheme.black,
-      headerRight: () => (
-        <ControlPanel id={1} name={'communities'} refetch={() => query.refetch()}  />
-      ),
     });
   }, [navigation]);
 
@@ -45,15 +43,23 @@ export default function Search() {
     );
   }
 
-  const communities = query.data?.map((item)=> {
-    return <Community key={item.id} {...item } />
-  })
+  const renderItem = ({ item }: { item: CommunityProps }): JSX.Element => {
+    return <Community key={item.id} {...item } />;
+  };
 
   return (
     <View className='flex flex-1 justify-center items-center'>
-      <ScrollView className='flex w-screen mt-1'>
-        {communities}
-      </ScrollView>
+      <FlatList
+        className='w-screen'
+        data={query.data}
+        renderItem={renderItem}
+        refreshing={query.isLoading}
+        ItemSeparatorComponent={() => <View className='h-2' />}
+        onRefresh={query.refetch}
+        onEndReachedThreshold={2}
+        ListEmptyComponent={<NothingFound type="posts" />}
+        ListFooterComponent={<View className='mt-2'><GenerateCommunity /></View>}
+      />
     </View>
   );
 }

@@ -1,6 +1,12 @@
-import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { OptionProps } from '../../types/Options';
+import { Text, TouchableOpacity } from 'react-native';
 import { useRef } from 'react';
+
+interface OptionProps {
+    label: string,
+    icon?: boolean,
+    selected?: boolean,
+    handler: () => void
+}
 
 export default function Option(props: OptionProps) {
     const style = useRef('flex flex-row w-full justify-center p-5 bg-gray-50 rounded-lg m-1 items-center');

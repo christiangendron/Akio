@@ -1,17 +1,20 @@
-import {Text, View, TouchableOpacity} from 'react-native';
-import { ErrorMessageProps } from '../types/ErrorMessage';
+import {Text, TouchableOpacity} from 'react-native';
+
+interface ErrorMessageProps {
+  message: string;
+  action: () => void;
+  actionMessage: string;
+}
 
 export default function ErrorMessage(props:ErrorMessageProps) {
   return (
-    <View className='flex flex-col items-center justify-center h-full'>
-      <Text className='text-lg mb-6'>
+    <TouchableOpacity onPress={props.action} className='flex flex-col items-center justify-center'>
+      <Text>
         {props.message}
       </Text>
-      <TouchableOpacity onPress={props.action} className='bg-lightBlue rounded-full text-center p-5'>
-        <Text className='text-white text-lg'>
-          {props.actionMessage}
-        </Text>
-      </TouchableOpacity>
-    </View>
+      <Text>
+        ↺ {props.actionMessage}
+      </Text>
+    </TouchableOpacity>
   );
 }
