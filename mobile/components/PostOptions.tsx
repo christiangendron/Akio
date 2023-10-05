@@ -5,6 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from "@react-navigation/native";
 import { StackParams } from "../types/Navigator";
 import useDeletePostMutation from "../hooks/useDeletePostMutation";
+import Pill from "./items/Pill";
 
 interface PostOptionsProps {
     id: number;
@@ -56,9 +57,7 @@ export default function PostOptions(props: PostOptionsProps) {
 
     return (
         <>
-            <TouchableOpacity className='flex-row flex space-x-1 bg-gray-300 rounded-lg p-2 ml-1 mt-1' onPress={() => setModalVisible(true)}>
-                <Text>...</Text> 
-            </TouchableOpacity> 
+            <Pill text='...' handler={() => setModalVisible(true)} />
             {modalVisible ? modal : <></>}
         </>
     )
