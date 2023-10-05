@@ -19,16 +19,15 @@ export interface SmallPostProps {
 
 export default function SmallPost(props: SmallPostProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
-
+    const image = props.media_url ? <Image source={{ uri: props.media_url }} className='h-96 bg-gray-400 mb-2' /> : null;
+        
     return (
-        <View className='bg-white px-2 gap-2'>
-            <TouchableOpacity onPress={() => navigation.push('Details', { ...props })}>
-                    <Text className='font-bold text-lg'>{props.title}</Text> 
+        <View className='bg-white'>
+            <TouchableOpacity onPress={() => navigation.push('Details', { ...props })} className='p-2'>
+                <Text className='font-bold text-lg'>{props.title}</Text>
+                <Text>{props.text_content}</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.push('Details', { ...props })}>
-                <Text>{props.text_content.slice(0,200)}...</Text>
-                {props.media_url ? <Image source={{ uri: props.media_url }} className='w-auto h-96 my-1 bg-gray-400 -mx-2' /> : null}
-            </TouchableOpacity>
+            {image}
             <PostInteraction {...props} />
         </View>
     );

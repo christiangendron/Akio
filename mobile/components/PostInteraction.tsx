@@ -19,7 +19,7 @@ export default function PostInteraction(props: PostProps) {
   const options =  <PostOptions id={props.id} username={props.username} user_id={props.user_id} community={props.name} community_id={props.community_id} />;
 
   return (
-    <View className='flex-row m-1'>
+    <View className='flex-row mx-2 mb-2'>
       {settings?.showCommunity ? community : null}
       {settings?.showVotes ? votes : null}
       {settings?.showUsername ? username : null}
