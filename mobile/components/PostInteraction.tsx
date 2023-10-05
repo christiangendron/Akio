@@ -23,7 +23,7 @@ export default function PostInteraction(props: PostProps) {
       {settings?.showCommunity ? community : null}
       {settings?.showVotes ? votes : null}
       {settings?.showUsername ? username : null}
-      {options}
+      {settings?.showOptions ? options : null}
     </View>
   );
 }
