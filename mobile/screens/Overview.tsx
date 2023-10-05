@@ -61,7 +61,7 @@ export default function Overview(props: OverviewProps) {
         ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={settings.searchBar ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/> : <View className='h-2'/>}
+        ListHeaderComponent={settings.searchBar ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/> : null}
         ListEmptyComponent={<NothingFound type="posts" />}
       />
     </View>

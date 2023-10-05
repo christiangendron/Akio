@@ -19,7 +19,7 @@ export default function SearchBarComp(props: SearchBarProps) {
     };
 
     return (
-        <View className='flex flex-row w-screen justify-center items-center p-2 mb-2'>
+        <View className='flex flex-row w-screen justify-center items-center p-2'>
             <TextInput
                 className='flex-1 bg-white p-3 w-full rounded-lg pl-5'
                 placeholder="Search in this community..."

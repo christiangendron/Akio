@@ -25,7 +25,7 @@ export default function SmallPost(props: SmallPostProps) {
         <View className='bg-white'>
             <TouchableOpacity onPress={() => navigation.push('Details', { ...props })} className='p-2'>
                 <Text className='font-bold text-lg'>{props.title}</Text>
-                <Text>{props.text_content}</Text>
+                <Text>{props.text_content.slice(0,200)}...</Text>
             </TouchableOpacity>
             {image}
             <PostInteraction {...props} />
