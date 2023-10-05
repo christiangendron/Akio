@@ -22,13 +22,13 @@ export default function Post(props: PostProps) {
 
     return (
         <View className='bg-white px-2 gap-2'>
-            <TouchableOpacity onPress={() => navigation.push('Details', { ...props })}>
-                    <Text className='font-bold text-lg'>{props.title}</Text> 
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.push('Details', { ...props })}>
+            <View>
+                <Text className='font-bold text-lg'>{props.title}</Text> 
+            </View>
+            <View>
                 <Text>{props.text_content}</Text>
                 {props.media_url ? <Image source={{ uri: props.media_url }} className='w-auto h-96 my-1 bg-gray-400 -mx-2' /> : null}
-            </TouchableOpacity>
+            </View>
             <PostInteraction {...props} />
         </View>
     );
