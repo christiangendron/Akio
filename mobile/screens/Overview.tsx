@@ -1,19 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 import { OverviewProps } from '../types/Overview';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
 import ErrorMessage from '../components/ErrorMessage';
-import Post, { PostProps } from '../components/items/Post';
 import AppTheme from '../styles/AppTheme';
 import NothingFound from '../components/NothingFound';
 import SearchBarComp from '../components/SearchBarComp';
 import SmallPost, { SmallPostProps } from '../components/items/SmallPost';
+import { SettingsContext } from '../context/SettingsContext';
 
 export default function Overview(props: OverviewProps) {
   const navigation = useNavigation();
   const [keyword, setKeyword] = useState('');
+  const settings = useContext(SettingsContext);
 
   useEffect(() => {
     navigation.setOptions({
@@ -59,7 +60,7 @@ export default function Overview(props: OverviewProps) {
         ItemSeparatorComponent={() => <View className='h-4' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={<SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/>}
+        ListHeaderComponent={settings.searchBar ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/> : <View className='h-2'/>}
         ListEmptyComponent={<NothingFound type="posts" />}
       />
     </View>
