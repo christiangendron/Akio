@@ -64,7 +64,7 @@ CREATE TABLE `post` (
   `community_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  FOREIGN KEY (`community_id`) REFERENCES `community` (`id`)
+  FOREIGN KEY (`community_id`) REFERENCES `community` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `post` (`id`, `title`, `text_content`, `votes`, `media_url`, `community_id`, `user_id`) VALUES

@@ -67,7 +67,7 @@ export default function Community(props: CommunityNavigationProps) {
         ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={settings.searchBar ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/> : null}
+        ListHeaderComponent={settings.searchBar ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch} placeholder='Search in this community...'/> : null}
         ListEmptyComponent={<NoPostsFound type="posts" />}
         ListFooterComponent={generationPostButton}
       />

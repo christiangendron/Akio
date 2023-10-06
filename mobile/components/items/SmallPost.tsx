@@ -5,7 +5,7 @@ import { StackParams } from '../../types/Navigator';
 import PostInteraction from '../PostInteraction';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import useDeletePostMutation from '../../hooks/useDeletePostMutation';
-import trashCan from '../../assets/icons/trash-can.png';
+const trashCan = require('../../assets/icons/trash-can.png');
 
 export interface SmallPostProps {
     author: string;

@@ -6,6 +6,7 @@ type SearchBarProps = {
     keyword: string;
     handleChange: (text: string) => void;
     handleSubmit: () => void;
+    placeholder: string;
 }
 
 export default function SearchBarComp(props: SearchBarProps) {
@@ -22,7 +23,7 @@ export default function SearchBarComp(props: SearchBarProps) {
         <View className='flex flex-row w-screen justify-center items-center p-2'>
             <TextInput
                 className='flex-1 bg-white p-3 w-full rounded-lg pl-5'
-                placeholder="Search in this community..."
+                placeholder={props.placeholder}
                 value={text}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
