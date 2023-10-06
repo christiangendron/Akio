@@ -62,8 +62,13 @@ async function deletePost(post_id: number): Promise<CommunityProps[]> {
   return res.data.data;
 }
 
-async function deleteCommunity(post_id: number): Promise<CommunityProps[]> { 
-  const res = await AxiosClient.delete('community/' + post_id);
+async function deleteCommunity(community_id: number): Promise<CommunityProps[]> { 
+  const res = await AxiosClient.delete('community/' + community_id);
+  return res.data.data;
+}
+
+async function deleteComment(comment_id: number): Promise<CommunityProps[]> { 
+  const res = await AxiosClient.delete('comment/' + comment_id);
   return res.data.data;
 }
 
@@ -77,6 +82,8 @@ const AkioServices = {
   generateComment, 
   deletePost, 
   generateUser,
-  deleteCommunity};
+  deleteCommunity,
+  deleteComment
+};
 
 export default AkioServices;
