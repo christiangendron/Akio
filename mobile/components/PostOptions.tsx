@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal, View, TouchableOpacity, TouchableWithoutFeedback, Text } from "react-native";
+import { Modal, View, TouchableWithoutFeedback } from "react-native";
 import Option from "./items/Option";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from "@react-navigation/native";

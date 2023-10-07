@@ -4,7 +4,6 @@ import AppTheme from '../styles/AppTheme';
 import { useQuery } from 'react-query';
 import ErrorMessage from '../components/ErrorMessage';
 import { useNavigation } from '@react-navigation/native';
-import Post, { PostProps } from '../components/items/Post';
 import NoPostsFound from '../components/NothingFound';
 import AkioServices from '../services/AkioServices';
 import SearchBarComp from '../components/SearchBarComp';
@@ -54,8 +53,6 @@ export default function Community(props: CommunityNavigationProps) {
   const renderItem = ({ item }: { item: SmallPostProps }): JSX.Element => {
     return <SmallPost key={item.id} {...item} />;
   };
-
-  const generationPostButton = community_id.current != 0 ? <View className='mt-2'><GeneratePost community_id={community_id.current} community_name={community.current} /></View> : null;
   
   return (
     <View className='flex flex-1 justify-center items-center'>
@@ -69,7 +66,7 @@ export default function Community(props: CommunityNavigationProps) {
         onEndReachedThreshold={2}
         ListHeaderComponent={settings.searchBar ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch} placeholder='Search in this community...'/> : null}
         ListEmptyComponent={<NoPostsFound type="posts" />}
-        ListFooterComponent={generationPostButton}
+        ListFooterComponent={<View className='mt-2'><GeneratePost community_id={community_id.current} community_name={community.current} /></View>}
       />
     </View>
   );
