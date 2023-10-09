@@ -1,60 +1,41 @@
 const query = require('../database/mariadb');
-const { OpenAI } = require('openai');
-
-const openai = new OpenAI({
-    apiKey: process.env.OPEN_AI_KEY
-});
+const OpenAI = require('../services/OpenAIServices');
 
 module.exports.index = async (req, res) => {
     const data = await query('SELECT * from user');
-    res.json({ msg: "List of users", body: data });
+    res.status(200).json({ msg: "List of users", body: data });
 };
 
 module.exports.create = async (req, res) => {
-    const data = req.body;
+    const openAIres = await OpenAI.ask('Generate a new user, provide original usernames and not common names like John Doe');
 
-    const openAiRequest = await askOpenAI();
+    if (!openAIres.username || !openAIres.role) {
+        res.status(503).json({ msg: `OpenAI returned something empty or incomplete, user creation failed.`}); return;
+    }
 
-    const creation_query = await query(
-        'INSERT INTO user (username, role) VALUES (?, ?)',
-        [openAiRequest.username, openAiRequest.role]
-    )
+    const insert = await query('INSERT INTO user (username, role) VALUES (?, ?)',[openAIres.username, openAIres.role])
 
-    const last_created = await query('SELECT * FROM user WHERE id = (?)', [creation_query.insertId])
+    if (insert.affectedRows == 0) {
+        res.status(500).json({ msg: `User creation failed to save to the database.`}); return;
+    }
 
-    res.json({ msg: "Created a user", body: last_created });
+    res.status(201).json({ 
+        msg: "A new user was created.", 
+        body: { 
+            id: Number(insert.insertId), 
+            username: openAIres.username, 
+            role: openAIres.role 
+        } 
+    });
 };
 
 module.exports.delete = async (req, res) => {
     const user_id = req.params.id;
-    await query('DELETE FROM user WHERE user.id=(?)', [user_id]);
-    res.json({ msg: "Deleted a user", body: "Deleted a user with id: " + user_id });
+    const deleteQuery = await query('DELETE FROM user WHERE user.id=(?)', [user_id]);
+
+    if (deleteQuery.affectedRows == 0) {
+        res.status(500).json({ msg: "User deletion failed." }); return;
+    }
+
+    res.status(204).json({ msg: "Deleted a user", body: "Deleted a user with id: " + user_id });
 };
-
-async function askOpenAI() {
-    const openAiRequest = await openai.chat.completions.create({
-        messages: [{ role: 'user', content: `Generate a new user for website, provide original usernames and not common names like John Doe` }],
-        functions: [
-            {
-                "name": "generate_user",
-                "description": "Function to create a user",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "username": {
-                            "type": "string",
-                            "description": "original name for the user, no variable of jhon doe",
-                        },
-                        "role": {
-                            "type": "string",
-                            "description": "admin or user or moderator",
-                        },
-                    } 
-                },
-            }
-        ],
-        model: 'gpt-3.5-turbo',
-      }); 
-
-    return JSON.parse(openAiRequest.choices[0].message.function_call.arguments);
-}

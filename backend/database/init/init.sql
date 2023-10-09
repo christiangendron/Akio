@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `community` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `name` VARCHAR(256) NOT NULL,
-  `description` VARCHAR(256) NOT NULL
+  `description` VARCHAR(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `community` (`id`, `name`, `description`) VALUES

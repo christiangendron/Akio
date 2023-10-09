@@ -22,6 +22,7 @@ export default function Community(props: CommunityNavigationProps) {
   const query = useQuery({
     queryKey: ['posts', community, community_id, keyword],
     queryFn: () => AkioServices.getPosts(community_id.current, keyword),
+    retry: false,
   });
 
   useEffect(() => {
