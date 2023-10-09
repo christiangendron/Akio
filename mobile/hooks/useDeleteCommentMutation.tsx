@@ -14,7 +14,7 @@ export default function useDeleteCommentMutation() {
             },
             onSuccess: () => {
                 queryClient.invalidateQueries({ queryKey: ['comments'] })
-            },
+            }
         })
 
         return deleteCommentMutation;

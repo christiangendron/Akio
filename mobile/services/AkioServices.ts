@@ -42,7 +42,7 @@ async function generatePost(community_id: number, community_name: string): Promi
   return res.data.body;
 }
 
-async function generateCommunity(): Promise<CommunityProps[]> { 
+async function generateCommunity(): Promise<CommunityProps[]> {
   const res = await AxiosClient.post('community');
   return res.data.body;
 }

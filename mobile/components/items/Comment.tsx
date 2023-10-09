@@ -1,5 +1,5 @@
 import { Text, View, TouchableOpacity, Image } from 'react-native';
-import useDeleteCommentMutation from '../../hooks/useDeleteCommentMutatino';
+import useDeleteCommentMutation from '../../hooks/useDeleteCommentMutation';
 const trashCan = require('../../assets/icons/trash-can.png');
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
