@@ -1,5 +1,6 @@
 import { Text, View, Image } from 'react-native';
 import PostInteraction from '../PostInteraction';
+import Media from '../Media';
 
 export interface PostProps {
     author: string;
@@ -15,8 +16,7 @@ export interface PostProps {
 }
 
 export default function Post(props: PostProps) {
-    const backendUrl = process.env.BACKEND_IMAGE_URL;
-    const image = props.media_url ? <Image source={{ uri: backendUrl + props.media_url }} className='h-96 bg-gray-400 mb-2' /> : null;
+    const image = props.media_url ? <Media media_url={props.media_url} /> : null;
     
     return (
         <View className='bg-white'>

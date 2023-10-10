@@ -5,6 +5,7 @@ import { StackParams } from '../../types/Navigator';
 import PostInteraction from '../PostInteraction';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import useDeletePostMutation from '../../hooks/useDeletePostMutation';
+import Media from '../Media';
 const trashCan = require('../../assets/icons/trash-can.png');
 
 export interface SmallPostProps {
@@ -23,9 +24,6 @@ export interface SmallPostProps {
 export default function SmallPost(props: SmallPostProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
     
-    const backendUrl = process.env.BACKEND_IMAGE_URL;
-    const image = props.media_url ? <Image source={{ uri: backendUrl + props.media_url }} className='h-96 bg-gray-400 mb-2' /> : null;
-
     const deleteMutation = useDeletePostMutation();
 
     const deletePost = () => {
@@ -36,6 +34,8 @@ export default function SmallPost(props: SmallPostProps) {
     return (<TouchableOpacity onPress={deletePost} className='bg-red-500 justify-center'>
             <Image source={trashCan} className='h-10 w-10 m-5' />
     </TouchableOpacity>);};
+
+    const image = props.media_url ? <Media media_url={props.media_url} /> : null;
 
     return (
         <Swipeable renderRightActions={renderRightActions}>
