@@ -8,6 +8,7 @@ export default function SettingContextProvider(props: any) {
   const [showUsername, setShowUsername] = useState(true);
   const [showCommunity, setShowCommunity] = useState(true);
   const [showVotes, setShowVotes] = useState(true);
+  const [showOptions, setShowOptions] = useState(true);
   const [minimalBrowsing, setMinimalBrowsing] = useState(false);
   const [searchBar, setSearchBar] = useState(true);
 
@@ -53,6 +54,8 @@ export default function SettingContextProvider(props: any) {
     setShowVotes,
     searchBar,
     setSearchBar,
+    showOptions,
+    setShowOptions,
     loadSettings,
   };
 

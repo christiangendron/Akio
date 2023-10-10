@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { roundedCount } from '../tools/Formating';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -7,21 +7,23 @@ import PostOptions from './PostOptions';
 import { useContext } from 'react';
 import { SettingsContext } from '../context/SettingsContext';
 import { PostProps } from './items/Post';
+import Pill from './items/Pill';
 
 export default function PostInteraction(props: PostProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
   const settings = useContext(SettingsContext);
 
-  const community = <TouchableOpacity className='flex-row flex space-x-1 bg-gray-300 rounded-lg p-2' onPress={() => navigation.push('Community', { name: props.name, id: props.community_id })}><Text>{props.name}</Text></TouchableOpacity>;
-  const votes = <TouchableOpacity className='flex-row flex space-x-1 bg-gray-300 rounded-lg p-2' onPress={() => navigation.push('Details', { ...props })}><Text>{roundedCount(props.votes)}↑</Text></TouchableOpacity>;
-  const username = <TouchableOpacity className='flex-row flex space-x-1 bg-gray-300 rounded-lg p-2' onPress={() => navigation.navigate('Overview', { name: props.username, id: props.user_id })}><Text>{props.username}</Text></TouchableOpacity>;
-  
+  const community = <Pill text={props.name} handler={() => navigation.push('Community', { name: props.name, id: props.community_id })}/>;
+  const votes = <Pill text={roundedCount(props.votes).toString() + '↑'} handler={() => navigation.push('Details', { ...props })}/>;
+  const username = <Pill text={props.username} handler={() => navigation.navigate('Overview', { name: props.username, id: props.user_id })}/>;
+  const options =  <PostOptions id={props.id} username={props.username} user_id={props.user_id} community={props.name} community_id={props.community_id} />;
+
   return (
-    <View className='gap-1 flex-row p-2'>
+    <View className='flex-row mx-2 mb-2'>
       {settings?.showCommunity ? community : null}
       {settings?.showVotes ? votes : null}
       {settings?.showUsername ? username : null}
-      <PostOptions id={props.id} username={props.username} user_id={props.user_id} community={props.name} community_id={props.community_id} />
+      {settings?.showOptions ? options : null}
     </View>
   );
 }

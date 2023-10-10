@@ -1,19 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 import { OverviewProps } from '../types/Overview';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
 import ErrorMessage from '../components/ErrorMessage';
-import Post, { PostProps } from '../components/items/Post';
 import AppTheme from '../styles/AppTheme';
 import NothingFound from '../components/NothingFound';
 import SearchBarComp from '../components/SearchBarComp';
 import SmallPost, { SmallPostProps } from '../components/items/SmallPost';
+import { SettingsContext } from '../context/SettingsContext';
 
 export default function Overview(props: OverviewProps) {
   const navigation = useNavigation();
   const [keyword, setKeyword] = useState('');
+  const settings = useContext(SettingsContext);
 
   useEffect(() => {
     navigation.setOptions({
@@ -53,13 +54,14 @@ export default function Overview(props: OverviewProps) {
   return (
     <View className='flex flex-1 justify-center items-center'>
       <FlatList
+        className='w-screen'
         data={query.data}
         renderItem={renderItem}
         refreshing={query.isLoading}
-        ItemSeparatorComponent={() => <View className='h-4' />}
+        ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={<SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch}/>}
+        ListHeaderComponent={settings.searchBar ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch} placeholder='Search in this user posts...'/> : null}
         ListEmptyComponent={<NothingFound type="posts" />}
       />
     </View>

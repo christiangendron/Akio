@@ -2,6 +2,7 @@ import Navigator from './navigation/Navigator';
 import {LogBox} from 'react-native';
 import {QueryClientProvider, QueryClient} from 'react-query';
 import SettingContextProvider from './context/SettingsContext';
+import 'react-native-gesture-handler';
 
 const queryClient = new QueryClient();
 

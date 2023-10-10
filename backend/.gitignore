@@ -1,3 +1,4 @@
 database/data/mariadb
 server/node_modules
 */.env
+images

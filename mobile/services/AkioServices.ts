@@ -42,7 +42,7 @@ async function generatePost(community_id: number, community_name: string): Promi
   return res.data.body;
 }
 
-async function generateCommunity(): Promise<CommunityProps[]> { 
+async function generateCommunity(): Promise<CommunityProps[]> {
   const res = await AxiosClient.post('community');
   return res.data.body;
 }
@@ -62,6 +62,28 @@ async function deletePost(post_id: number): Promise<CommunityProps[]> {
   return res.data.data;
 }
 
-const AkioServices = {getPosts, getCommunities, getComments, getUserPosts, generatePost, generateCommunity, generateComment, deletePost, generateUser};
+async function deleteCommunity(community_id: number): Promise<CommunityProps[]> { 
+  const res = await AxiosClient.delete('community/' + community_id);
+  return res.data.data;
+}
+
+async function deleteComment(comment_id: number): Promise<CommunityProps[]> { 
+  const res = await AxiosClient.delete('comment/' + comment_id);
+  return res.data.data;
+}
+
+const AkioServices = {
+  getPosts, 
+  getCommunities, 
+  getComments, 
+  getUserPosts, 
+  generatePost, 
+  generateCommunity, 
+  generateComment, 
+  deletePost, 
+  generateUser,
+  deleteCommunity,
+  deleteComment
+};
 
 export default AkioServices;
