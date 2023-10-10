@@ -22,7 +22,10 @@ export interface SmallPostProps {
 
 export default function SmallPost(props: SmallPostProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
-    const image = props.media_url ? <Image source={{ uri: props.media_url }} className='h-96 bg-gray-400 mb-2' /> : null;
+    
+    const backendUrl = process.env.BACKEND_IMAGE_URL;
+    const image = props.media_url ? <Image source={{ uri: backendUrl + props.media_url }} className='h-96 bg-gray-400 mb-2' /> : null;
+
     const deleteMutation = useDeletePostMutation();
 
     const deletePost = () => {

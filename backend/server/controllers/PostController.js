@@ -1,5 +1,6 @@
 const query = require('../database/mariadb');
 const OpenAI = require('../services/OpenAIServices');
+const ImageService = require('../services/ImageService');
 
 module.exports.index = async (req, res) => {
     let keywordFilter = '';
@@ -82,7 +83,8 @@ module.exports.create = async (req, res) => {
     }
 
     if (openAIres.has_media) {
-        openAIres.media_url = await OpenAI.imagine(openAIres.text_content)
+        const imageRequest = await OpenAI.imagine(openAIres.text_content)
+        openAIres.media_url = await ImageService.saveImages(imageRequest);
     }
 
     // Random info for the post for now
