@@ -1,7 +1,7 @@
-import { Image, Text, View } from 'react-native';
+import { Image } from 'react-native';
 import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Modal } from 'react-native';
+import ImageView from "react-native-image-viewing";
 
 type MediaProps = {
     media_url: string;
@@ -9,22 +9,21 @@ type MediaProps = {
 
 export default function Media(props: MediaProps) {
     const backendUrl = process.env.BACKEND_IMAGE_URL;
-    const [modalVisible, setModalVisible] = React.useState(false);
+    const [visible, setVisible] = React.useState(false);
+
+    const images = [
+        {
+          uri: backendUrl + props.media_url,
+        }
+    ];
+
+    if (visible) return (
+        <ImageView images={images} imageIndex={0} visible={visible} onRequestClose={() => setVisible(false)}/>
+    )
 
     return (
-        <>
-            <Modal visible={modalVisible} transparent={true}>
-                <View className='flex flex-1 bg-black justify-center'>
-                    <Image source={{ uri: backendUrl + props.media_url }} className='h-96 bg-gray-400 mb-2' />
-                    <TouchableOpacity onPress={() => setModalVisible(modalVisible => !modalVisible)}>
-                        <Text className='text-white text-center text-lg m-5'>Close</Text>
-                    </TouchableOpacity>
-                </View>
-            </Modal>
-            <TouchableOpacity onPress={() => setModalVisible(modalVisible => !modalVisible)}>
-                <Image source={{ uri: backendUrl + props.media_url }} className='h-96 bg-gray-400 mb-2' />
-            </TouchableOpacity>
-        </>
-        
+        <TouchableOpacity onPress={() => setVisible(true)}>
+            <Image source={{ uri: backendUrl + props.media_url }} className='h-96 bg-gray-400 mb-2' />
+        </TouchableOpacity>
     )
 }
