@@ -53,6 +53,8 @@ export default function Community(props: CommunityNavigationProps) {
   const renderItem = ({ item }: { item: SmallPostProps }): JSX.Element => {
     return <SmallPost key={item.id} {...item} />;
   };
+
+  const generationButton = community_id.current !== 0 ? <View className='mt-2'><GeneratePost community_id={community_id.current} community_name={community.current} /></View> : null;
   
   return (
     <View className='flex flex-1 justify-center items-center'>
@@ -66,7 +68,7 @@ export default function Community(props: CommunityNavigationProps) {
         onEndReachedThreshold={2}
         ListHeaderComponent={settings.searchBar ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch} placeholder='Search in this community...'/> : null}
         ListEmptyComponent={<NoPostsFound type="posts" />}
-        ListFooterComponent={<View className='mt-2'><GeneratePost community_id={community_id.current} community_name={community.current} /></View>}
+        ListFooterComponent={generationButton}
       />
     </View>
   );
