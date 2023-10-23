@@ -5,7 +5,13 @@ import SettingContextProvider from './context/SettingsContext';
 import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    }
+  }
+});
 
 export default function App() {
   LogBox.ignoreLogs(['Could not find image']);
