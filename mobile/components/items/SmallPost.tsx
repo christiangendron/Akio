@@ -9,7 +9,6 @@ import Media from '../Media';
 const trashCan = require('../../assets/icons/trash-can.png');
 
 export interface SmallPostProps {
-    author: string;
     id: number;
     title: string;
     text_content: string;
@@ -17,7 +16,7 @@ export interface SmallPostProps {
     media_url: string;
     community_id: number;
     user_id: number;
-    name: string;
+    community_name: string;
     username: string;
 }
 

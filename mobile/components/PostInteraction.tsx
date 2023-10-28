@@ -13,15 +13,13 @@ export default function PostInteraction(props: PostProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
   const settings = useContext(SettingsContext);
 
-  const community = <Pill text={props.name} handler={() => navigation.push('Community', { name: props.name, id: props.community_id })}/>;
-  const votes = <Pill text={roundedCount(props.votes).toString() + '↑'} handler={() => navigation.push('Details', { ...props })}/>;
+  const community = <Pill text={props.community_name} handler={() => navigation.push('Community', { name: props.community_name, id: props.community_id })}/>;
   const username = <Pill text={props.username} handler={() => navigation.navigate('Overview', { name: props.username, id: props.user_id })}/>;
-  const options =  <PostOptions id={props.id} username={props.username} user_id={props.user_id} community={props.name} community_id={props.community_id} />;
+  const options =  <PostOptions id={props.id} username={props.username} user_id={props.user_id} community={props.community_name} community_id={props.community_id} />;
 
   return (
     <View className='flex-row mx-2 mb-2'>
       {settings?.showCommunity ? community : null}
-      {settings?.showVotes ? votes : null}
       {settings?.showUsername ? username : null}
       {settings?.showOptions ? options : null}
     </View>

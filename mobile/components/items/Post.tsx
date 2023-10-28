@@ -3,7 +3,6 @@ import PostInteraction from '../PostInteraction';
 import Media from '../Media';
 
 export interface PostProps {
-    author: string;
     id: number;
     title: string;
     text_content: string;
@@ -11,7 +10,7 @@ export interface PostProps {
     media_url: string;
     community_id: number;
     user_id: number;
-    name: string;
+    community_name: string;
     username: string;
 }
 
