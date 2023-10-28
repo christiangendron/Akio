@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AuthRequest;
 use App\Http\Resources\AuthResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\RegisterRequest;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -25,5 +28,18 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json(['data' => AuthResource::make($user)])->setStatusCode(200);
+    }
+
+    public function register(RegisterRequest $registerRequest)
+    {
+        $request = $registerRequest->validated();
+
+        $user = new User;
+        $user->username = $request['username'];
+        $user->email = $request['email'];
+        $user->password = Hash::make($request['password']);
+        $user->save();
+
+        return response()->json(['data' => AuthResource::make($user)])->setStatusCode(201);
     }
 }
