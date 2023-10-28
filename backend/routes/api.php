@@ -32,30 +32,27 @@ Route::prefix('auth')
 
 Route::prefix('community')
     ->controller(CommunityController::class)
-    ->middleware('auth:sanctum')
     ->group(function() {
         Route::get('/', 'index');
-        Route::post('/', 'store');
-        Route::delete('/{community}', 'destroy');
+        Route::post('/', 'store')->middleware('auth:sanctum');
+        Route::delete('/{community}', 'destroy')->middleware('auth:sanctum');
 });
 
 Route::prefix('post')
     ->controller(PostController::class)
-    ->middleware('auth:sanctum')
     ->group(function() {
-        Route::get('/', 'index');
+        Route::get('/{keyword?}', 'index');
         Route::get('/{post}', 'show');
-        Route::post('community/{community}', 'store');
-        Route::delete('/{post}', 'destroy');
-        Route::get('/community/{community}', 'getPostFromCommunity');
-        Route::get('/user/{user}', 'getPostFromUser');
+        Route::post('community/{community}', 'store')->middleware('auth:sanctum');
+        Route::delete('/{post}', 'destroy')->middleware('auth:sanctum');
+        Route::get('/community/{community}/{keyword?}', 'getPostFromCommunity');
+        Route::get('/user/{user}/{keyword?}', 'getPostFromUser');
 });
 
 Route::prefix('comment')
     ->controller(CommentController::class)
-    ->middleware('auth:sanctum')
     ->group(function() {
         Route::get('/post/{post}', 'getCommentByPostId');
-        Route::post('/post/{post}', 'store');
-        Route::delete('/{comment}', 'destroy');
+        Route::post('/post/{post}', 'store')->middleware('auth:sanctum');
+        Route::delete('/{comment}', 'destroy')->middleware('auth:sanctum');
 });

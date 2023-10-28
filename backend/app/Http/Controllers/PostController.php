@@ -10,8 +10,13 @@ use App\Models\Community;
 
 class PostController extends Controller
 {
-    public function index()
-    {
+    public function index(string $keyword = null)
+    {   
+        if ($keyword) {
+            $post = Post::where('title', 'like', "%{$keyword}%")->orWhere('text_content', 'like', "%{$keyword}%")->get();
+            return PostResource::collection($post);
+        }
+
         $post = Post::all();
         return PostResource::collection($post);
     }
@@ -31,14 +36,24 @@ class PostController extends Controller
         return response()->json(["message" => 'Post created'], 201);
     }
 
-    public function getPostFromCommunity($community_id)
+    public function getPostFromCommunity($community_id, string $keyword = null)
     {
+        if ($keyword) {
+            $post = Post::where('title', 'like', "%{$keyword}%")->orWhere('text_content', 'like', "%{$keyword}%")->where('community_id', $community_id)->get();
+            return PostResource::collection($post);
+        }
+
         $posts = Post::where('community_id', $community_id)->get();
         return PostResource::collection($posts);
     }
 
-    public function getPostFromUser($user_id)
+    public function getPostFromUser($user_id, string $keyword = null)
     {
+        if ($keyword) {
+            $post = Post::where('title', 'like', "%{$keyword}%")->orWhere('text_content', 'like', "%{$keyword}%")->where('user_id', $user_id)->get();
+            return PostResource::collection($post);
+        }
+
         $posts = Post::where('user_id', $user_id)->get();
         return PostResource::collection($posts);
     }
