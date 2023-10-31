@@ -4,6 +4,8 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Models\Community;
+use App\Policies\CommunityPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Community::class => CommunityPolicy::class,
+        Post::class => PostPolicy::class,
+        Comment::class => CommentPolicy::class,
     ];
 
     /**

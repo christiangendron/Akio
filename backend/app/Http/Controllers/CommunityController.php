@@ -34,6 +34,8 @@ class CommunityController extends Controller
 
     public function destroy(Community $community)
     {
+        $this->authorize('destroy', $community);
+
         $community->delete();
         return response()->json(["message" => 'Community deleted'], 200);
     }
