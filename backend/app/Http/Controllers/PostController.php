@@ -70,4 +70,34 @@ class PostController extends Controller
         $post->delete();
         return response()->json(["message" => 'Post deleted'], 200);
     }
+
+    public function generate(Community $community, string $keyword = null)
+    {   
+        $prompt = 'Create a post in the style of a Reddit post for this community' . $community['name'];
+
+        if ($keyword) {
+            $prompt = $prompt . 'With an emphasis on : ' . $keyword;
+        }
+
+        $res = OpenAIController::ask($prompt);
+
+        try {
+            $post = new Post;
+            $post->title = json_decode($res)->title;
+            $post->text_content = json_decode($res)->text_content;
+
+            if (json_decode($res)->has_media) {
+                // generate media
+            }
+
+            $post->media_url = null;
+            $post->user_id = auth()->user()->id;
+            $post->community_id = $community['id'];
+            $post->save();
+        } catch (Exception $e) {
+            return response()->json(["message" => 'Post generation failed'], 500);
+        }
+        
+        return response()->json(["message" => 'Post generated'], 201);
+    }
 }

@@ -52,6 +52,27 @@ class OpenAIController extends Controller
                     ],
                 ],
             ],
+            [
+                "name" => "generate_post",
+                "description" => "Function to create a new post message",
+                "parameters" => [
+                    "type" => "object",
+                    "properties" => [
+                        "title" => [
+                            "type" => "string",
+                            "description" => "Title of the post",
+                        ],
+                        "text_content" => [
+                            "type" => "string",
+                            "description" => "Text content of the post related to the community",
+                        ],
+                        "has_media" => [
+                            "type" => "boolean",
+                            "description" => "Does it make sense for this post to contain an image",
+                        ],
+                    ],
+                ],
+            ]
         ];
     }
 }

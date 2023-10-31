@@ -30,11 +30,9 @@ async function getCommunities(): Promise<CommunityProps[]> {
   return res.data.data;
 }
 
-async function generatePost(community_id: number, community_name: string): Promise<PostProps[]> { 
-  throw new Error('Not implemented');
-
-  const res = await AxiosClient.post('post', {community_name, community_id});
-  return res.data.body;
+async function generatePost(community_id: number): Promise<PostProps[]> { 
+  const res = await AxiosClient.post(`post/community/${community_id}/generate`);
+  return res.data.data;
 }
 
 async function generateCommunity(): Promise<CommunityProps[]> {

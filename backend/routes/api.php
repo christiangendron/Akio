@@ -45,6 +45,7 @@ Route::prefix('post')
         Route::get('/{keyword?}', 'index');
         Route::get('/{post}', 'show');
         Route::post('community/{community}', 'store')->middleware('auth:sanctum');
+        Route::post('community/{community}/generate/{keyword?}', 'generate')->middleware('auth:sanctum');
         Route::delete('/{post}', 'destroy')->middleware('auth:sanctum');
         Route::get('/community/{community}/{keyword?}', 'getPostFromCommunity');
         Route::get('/user/{user}/{keyword?}', 'getPostFromUser');
