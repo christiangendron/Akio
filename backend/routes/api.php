@@ -36,6 +36,7 @@ Route::prefix('community')
         Route::get('/', 'index');
         Route::post('/', 'store')->middleware('auth:sanctum');
         Route::delete('/{community}', 'destroy')->middleware('auth:sanctum');
+        Route::post('/generate/{keyword?}','generate')->middleware('auth:sanctum');
 });
 
 Route::prefix('post')

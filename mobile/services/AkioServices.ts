@@ -38,10 +38,8 @@ async function generatePost(community_id: number, community_name: string): Promi
 }
 
 async function generateCommunity(): Promise<CommunityProps[]> {
-  throw new Error('Not implemented');
-
-  const res = await AxiosClient.post('community');
-  return res.data.body;
+  const res = await AxiosClient.post('community/generate');
+  return res.data.data;
 }
 
 async function generateComment(post_id: number): Promise<CommunityProps[]> { 
