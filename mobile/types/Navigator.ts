@@ -19,17 +19,14 @@ export type TabParams = {
       name: string;
       id: number;
     };
-    Account: {
-      name: string;
+    AccountHome: {
       id: number;
     };
     Community: {
       name: string;
       id: number;
     };
-    Settings: {
-      data: string;
-    };
+    Settings: any;
     SettingHome: {
       data: string;
     };

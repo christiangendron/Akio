@@ -1,14 +1,7 @@
-import axios, { AxiosInstance } from 'axios';
-import {BACKEND_URL} from '@env';
 import { PostProps } from '../components/items/Post';
 import { CommentItemProps } from '../components/items/Comment';
 import { CommunityProps } from '../components/items/Community';
-
-const baseURL = BACKEND_URL;
-
-const AxiosClient: AxiosInstance = axios.create({
-  baseURL,
-});
+import AxiosClient from './AxiosClient';
 
 async function getPosts(community_id:number, keyword: string): Promise<PostProps[]> { 
   let res = null;

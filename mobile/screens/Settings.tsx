@@ -8,7 +8,6 @@ import GenerateUser from '../components/buttons/GenerateUser';
 
 export default function Settings() {
   const settings = useContext(SettingsContext);
-
   const navigation = useNavigation();
 
   useEffect(() => {

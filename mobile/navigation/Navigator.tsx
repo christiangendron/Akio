@@ -9,6 +9,7 @@ import AppTheme from '../styles/AppTheme';
 import Overview from '../screens/Overview';
 import Communities from '../screens/Communities';
 import { StackParams, TabParams } from '../types/Navigator';
+import Account from '../screens/Account';
 
 const HomeStack = createStackNavigator<StackParams>();
 
@@ -35,12 +36,13 @@ function SearchStackScreen() {
   );
 }
 
-const SettingsStack = createStackNavigator<StackParams>();
+const AccountStack = createStackNavigator<StackParams>();
 
-function SettingsStackScreen() {
+function AccountStackScreen() {
   return (
     <SearchStack.Navigator>
-      <SettingsStack.Screen name="SettingHome" component={Settings} />
+      <AccountStack.Screen name="AccountHome" component={Account} />
+      <SearchStack.Screen name="Settings" component={Settings} />
     </SearchStack.Navigator>
   );
 }
@@ -87,16 +89,16 @@ export default function App() {
             ),
             title: 'Communities',
           }} />
-        <Tab.Screen name="Settings" 
-        component={SettingsStackScreen} 
+        <Tab.Screen name="Account" 
+        component={AccountStackScreen} 
         options={{
           tabBarIcon: ({ focused }) => (
             focused ? <Image
             className='w-5 h-5 mt-5'
-              source={require('../assets/icons/settings-selected.png')}
+              source={require('../assets/icons/account-selected.png')}
             /> : <Image
             className='w-5 h-5 mt-5'
-              source={require('../assets/icons/settings.png')}
+              source={require('../assets/icons/account.png')}
             />
           ),
         }} />

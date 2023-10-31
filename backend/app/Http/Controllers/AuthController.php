@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -41,5 +42,18 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json(['data' => AuthResource::make($user)])->setStatusCode(201);
+    }
+
+    public function logout(Request $request) 
+    {
+        if ($request->bearerToken() == null) {
+            return response()->json(['message' => 'You must be auth to logout.'])->setStatusCode(401);
+        }
+
+        [, $token] = explode('|', $request->bearerToken());
+        $req = DB::table("personal_access_tokens")->where("token", hash("sha256", $token));
+        $req->delete();
+
+        return response()->json(['message' => 'Logged out.'])->setStatusCode(200);
     }
 }

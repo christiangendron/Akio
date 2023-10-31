@@ -17,11 +17,11 @@ class AuthResource extends JsonResource
         return [
             'user' => [
                 'id' => $this->id,
-                'username' => $this->name,
+                'username' => $this->username,
                 'email' => $this->email,
                 'is_admin' => $this->is_admin,
             ],
-            'token' => $this->createToken($this->name.auth()->id())->plainTextToken
+            'token' => $this->createToken($this->id.auth()->id())->plainTextToken
         ];
     }
 }
