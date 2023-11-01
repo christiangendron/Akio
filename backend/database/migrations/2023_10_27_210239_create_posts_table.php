@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('text_content', 512);
+            $table->text('text_content');
             $table->string('media_url', 512)->nullable();
             $table->foreignIdFor(User::class)->references('id')->on('users')->onDelete('cascade');
             $table->foreignIdFor(Community::class)->references('id')->on('communities')->onDelete('cascade');

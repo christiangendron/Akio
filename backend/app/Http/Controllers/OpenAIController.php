@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use GuzzleHttp\Client;
 use Config;
 
 class OpenAIController extends Controller
@@ -30,6 +32,30 @@ class OpenAIController extends Controller
         $parsedData = json_decode($response);
 
         return $parsedData->choices[0]->message->function_call->arguments;
+    }
+
+    public static function imagine($prompt)
+    {
+        $response = Http::accept('application/json')
+        ->withToken(config('env.OPENAI_API_KEY'))
+        ->post('https://api.openai.com/v1/images/generations', [
+            'prompt' => $prompt,
+            'n' => 1,
+            'size'=> '512x512',
+        ]);
+        
+        $parsedData = json_decode($response);
+
+        return OpenAIController::downloadImage($parsedData->data[0]->url);
+    }
+
+    private static function downloadImage($imageUrl)
+    {
+        $imageName = uniqid() . '.jpg';
+        $client = new Client();
+        $response = $client->get($imageUrl);
+        Storage::disk('public')->put($imageName, $response->getBody());
+        return $imageName;
     }
 
     private static function getFunctions()

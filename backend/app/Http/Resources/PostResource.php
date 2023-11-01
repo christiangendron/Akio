@@ -20,7 +20,7 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'text_content' => $this->text_content,
-            'media_url' => $this->description,
+            'media_url' => $this->media_url,
             'user_id' => $this->user_id,
             'username' => User::find($this->user_id)->username,
             'community_id' => $this->community_id,

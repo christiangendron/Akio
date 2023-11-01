@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Community;
+use App\Http\Controllers\OpenAIController;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -66,7 +68,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('destroy', $post);
-
+        Storage::disk('public')->delete($post->media_url);
         $post->delete();
         return response()->json(["message" => 'Post deleted'], 200);
     }
@@ -85,12 +87,14 @@ class PostController extends Controller
             $post = new Post;
             $post->title = json_decode($res)->title;
             $post->text_content = json_decode($res)->text_content;
+            $image = null;
 
             if (json_decode($res)->has_media) {
-                // generate media
+                $imagePrompt = 'Create an image for this message' . json_decode($res)->text_content;
+                $image = OpenAIController::imagine($imagePrompt);
             }
 
-            $post->media_url = null;
+            $post->media_url = $image;
             $post->user_id = auth()->user()->id;
             $post->community_id = $community['id'];
             $post->save();
