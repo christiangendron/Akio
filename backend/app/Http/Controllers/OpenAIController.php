@@ -98,6 +98,19 @@ class OpenAIController extends Controller
                         ],
                     ],
                 ],
+            ],
+            [
+                "name" => "generate_comment",
+                "description" => "Function to create a new comment",
+                "parameters" => [
+                    "type" => "object",
+                    "properties" => [
+                        "text_content" => [
+                            "type" => "string",
+                            "description" => "The content of the comment",
+                        ],
+                    ],
+                ],
             ]
         ];
     }

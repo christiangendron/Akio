@@ -22,7 +22,7 @@ async function getUserPosts(user_id:number, keyword: string): Promise<PostProps[
 
 async function getComments(post_id:number,): Promise<CommentItemProps[]> {
   const res = await AxiosClient.get('comment/post/' + post_id);
-  return res.data.body;
+  return res.data.data;
 }
 
 async function getCommunities(): Promise<CommunityProps[]> { 
@@ -41,10 +41,8 @@ async function generateCommunity(): Promise<CommunityProps[]> {
 }
 
 async function generateComment(post_id: number): Promise<CommunityProps[]> { 
-  throw new Error('Not implemented');
-
-  const res = await AxiosClient.post('post/' + post_id + '/comments');
-  return res.data.body;
+  const res = await AxiosClient.post('comment/post/' + post_id + '/generate');
+  return res.data.data;
 }
 
 async function generateUser(): Promise<any> { 

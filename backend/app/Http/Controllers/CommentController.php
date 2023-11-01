@@ -36,4 +36,27 @@ class CommentController extends Controller
         $comment->delete();
         return response()->json(["message" => 'Comment deleted'], 200);
     }
+
+    public function generate(Post $post, string $keyword = null)
+    {
+        $prompt = 'Create a unique (catchy, relevant) and creative comment for this post' . $post['text_content'];
+
+        if ($keyword) {
+            $prompt = $prompt . 'With an emphasis on : ' . $keyword;
+        }
+
+        $res = OpenAIController::ask($prompt);
+
+        try {
+            $comment = new Comment;
+            $comment->text_content = json_decode($res)->text_content;
+            $comment->user_id = auth()->user()->id;
+            $comment->post_id = $post['id'];
+            $comment->save();
+        } catch (Exception $e) {
+            return response()->json(["message" => 'Comment generation failed'], 500);
+        }
+        
+        return response()->json(["message" => 'Comment generated'], 201);
+    }
 }

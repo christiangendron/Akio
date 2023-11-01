@@ -56,5 +56,6 @@ Route::prefix('comment')
     ->group(function() {
         Route::get('/post/{post}', 'getCommentByPostId');
         Route::post('/post/{post}', 'store')->middleware('auth:sanctum');
+        Route::post('/post/{post}/generate/{keyword?}', 'generate')->middleware('auth:sanctum');
         Route::delete('/{comment}', 'destroy')->middleware('auth:sanctum');
 });
