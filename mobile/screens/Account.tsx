@@ -1,4 +1,4 @@
-import { View, Platform, Button, KeyboardAvoidingView} from 'react-native';
+import { View, Platform, Button, KeyboardAvoidingView, ScrollView} from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 import AppTheme from '../styles/AppTheme';
 import { useNavigation } from '@react-navigation/native';
@@ -39,6 +39,7 @@ export default function Account() {
   )
 
   return (
+    <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
       <KeyboardAvoidingView className='flex flex-1 justify-center items-center' behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View className='flex flex-row'>
           <Button title='Login' onPress={() => setState('login')}/>
@@ -46,5 +47,6 @@ export default function Account() {
         </View>
         {LoginOrRegister}
       </KeyboardAvoidingView>
+    </ScrollView>
   );
 }

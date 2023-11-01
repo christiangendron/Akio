@@ -20,6 +20,7 @@ export default function useRegisterMutation() {
             authContext.setIsAuth(true);
             authContext.setIsAdmin(res.data.data.user.is_admin);
             authContext.setUserEmail(res.data.data.user.email);
+            authContext.setUserId(res.data.data.user.id);
         },
     })
 

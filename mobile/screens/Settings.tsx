@@ -32,7 +32,6 @@ export default function Settings() {
       <ScrollView className='flex w-full mt-1'>      
         <Setting label='Show author' current={settings.showUsername} handler={() => settings?.setShowUsername(!settings.showUsername)}/>
         <Setting label='Show community' current={settings.showCommunity} handler={() => settings?.setShowCommunity(!settings.showCommunity)}/>
-        <Setting label='Show votes' current={settings.showVotes} handler={() => settings?.setShowVotes(!settings.showVotes)}/>
         <Setting label='Show options' current={settings.showOptions} handler={() => settings?.setShowOptions(!settings.showOptions)}/>
         <Setting label='Show search' current={settings.searchBar} handler={() => settings?.setSearchBar(!settings.searchBar)}/>
       </ScrollView>
