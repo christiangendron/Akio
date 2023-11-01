@@ -45,13 +45,6 @@ async function generateComment(post_id: number): Promise<CommunityProps[]> {
   return res.data.data;
 }
 
-async function generateUser(): Promise<any> { 
-  throw new Error('Not implemented');
-
-  const res = await AxiosClient.post('user');
-  return res.data.body;
-}
-
 async function deletePost(post_id: number): Promise<CommunityProps[]> { 
   const res = await AxiosClient.delete('post/' + post_id);
   return res.data.message;
@@ -76,7 +69,6 @@ const AkioServices = {
   generateCommunity, 
   generateComment, 
   deletePost, 
-  generateUser,
   deleteCommunity,
   deleteComment
 };
