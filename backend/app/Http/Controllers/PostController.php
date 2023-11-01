@@ -68,7 +68,11 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('destroy', $post);
-        Storage::disk('public')->delete($post->media_url);
+
+        if ($post->media_url) {
+            Storage::disk('public')->delete($post->media_url);
+        }
+        
         $post->delete();
         return response()->json(["message" => 'Post deleted'], 200);
     }
