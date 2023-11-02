@@ -54,6 +54,7 @@ Route::prefix('post')
 Route::prefix('comment')
     ->controller(CommentController::class)
     ->group(function() {
+        Route::get('{comment}', 'getCommentById');
         Route::get('/post/{post}', 'getCommentByPostId');
         Route::post('/post/{post}', 'store')->middleware('auth:sanctum');
         Route::post('/post/{post}/generate/{keyword?}', 'generate')->middleware('auth:sanctum');

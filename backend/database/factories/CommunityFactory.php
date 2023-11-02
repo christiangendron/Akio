@@ -17,7 +17,9 @@ class CommunityFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->text(7),
+            'description' => fake()->text(50),
+            'user_id' => $this->faker->numberBetween(1, 3),
         ];
     }
 }

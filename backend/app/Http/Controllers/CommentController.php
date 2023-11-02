@@ -10,6 +10,11 @@ use App\Models\Post;
 
 class CommentController extends Controller
 {
+    public function getCommentById(Comment $comment)
+    {
+        return new CommentResource($comment);
+    }
+
     public function store(CommentRequest $commentRequest, Post $post)
     {
         $request = $commentRequest->validated();
@@ -20,7 +25,7 @@ class CommentController extends Controller
         $comment->post_id = $post['id'];
         $comment->save();
 
-        return response()->json(["message" => 'Comment created'], 201);
+        return response()->json(["message" => 'Comment created', "data" => CommentResource::make($comment)], 201);
     }
     
     public function getCommentByPostId($id)
@@ -47,16 +52,12 @@ class CommentController extends Controller
 
         $res = OpenAIController::ask($prompt);
 
-        try {
-            $comment = new Comment;
-            $comment->text_content = json_decode($res)->text_content;
-            $comment->user_id = auth()->user()->id;
-            $comment->post_id = $post['id'];
-            $comment->save();
-        } catch (Exception $e) {
-            return response()->json(["message" => 'Comment generation failed'], 500);
-        }
+        $comment = new Comment;
+        $comment->text_content = json_decode($res)->text_content;
+        $comment->user_id = auth()->user()->id;
+        $comment->post_id = $post['id'];
+        $comment->save();
         
-        return response()->json(["message" => 'Comment generated'], 201);
+        return response()->json(["message" => 'Comment generated', "data" => CommentResource::make($comment)], 201);
     }
 }
