@@ -52,8 +52,10 @@ class CommentController extends Controller
 
         $res = OpenAIController::ask($prompt);
 
+        $parsedResponse = json_decode($res);
+
         $comment = new Comment;
-        $comment->text_content = json_decode($res)->text_content;
+        $comment->text_content = $parsedResponse->text_content;
         $comment->user_id = auth()->user()->id;
         $comment->post_id = $post['id'];
         $comment->save();

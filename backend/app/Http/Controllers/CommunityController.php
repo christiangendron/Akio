@@ -56,9 +56,11 @@ class CommunityController extends Controller
 
         $res = OpenAIController::ask($prompt);
 
+        $parsedResponse = json_decode($res);
+
         $community = new Community;
-        $community->name = json_decode($res)->name;
-        $community->description = json_decode($res)->description;
+        $community->name = $parsedResponse->name;
+        $community->description = $parsedResponse->description;
         $community->user_id = auth()->id();
         $community->save();
         
