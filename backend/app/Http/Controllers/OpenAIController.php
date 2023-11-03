@@ -49,7 +49,7 @@ class OpenAIController extends Controller
         return OpenAIController::downloadImage($parsedData->data[0]->url);
     }
 
-    private static function downloadImage($imageUrl)
+    public static function downloadImage($imageUrl)
     {
         $imageName = uniqid() . '.jpg';
         $client = new Client();

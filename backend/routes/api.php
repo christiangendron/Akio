@@ -34,6 +34,7 @@ Route::prefix('community')
     ->controller(CommunityController::class)
     ->group(function() {
         Route::get('/', 'index');
+        Route::get('/{community}', 'getCommunityById');
         Route::post('/', 'store')->middleware('auth:sanctum');
         Route::delete('/{community}', 'destroy')->middleware('auth:sanctum');
         Route::post('/generate/{keyword?}','generate')->middleware('auth:sanctum');
@@ -42,8 +43,9 @@ Route::prefix('community')
 Route::prefix('post')
     ->controller(PostController::class)
     ->group(function() {
-        Route::get('/{keyword?}', 'index');
-        Route::get('/{post}', 'show');
+        Route::get('/', 'index');
+        Route::get('/{post}', 'getPostById');
+        Route::get('/search/{keyword?}', 'index');
         Route::post('community/{community}', 'store')->middleware('auth:sanctum');
         Route::post('community/{community}/generate/{keyword?}', 'generate')->middleware('auth:sanctum');
         Route::delete('/{post}', 'destroy')->middleware('auth:sanctum');

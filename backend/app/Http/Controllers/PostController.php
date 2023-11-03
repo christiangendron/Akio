@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+    public function getPostById(Post $post)
+    {
+        return PostResource::make($post);
+    }
+
     public function index(string $keyword = null)
     {   
         if ($keyword) {
@@ -35,7 +40,7 @@ class PostController extends Controller
         $post->community_id = $community['id'];
         $post->save();
 
-        return response()->json(["message" => 'Post created'], 201);
+        return response()->json(["message" => 'Post created', "data" => PostResource::make($post)], 201);
     }
 
     public function getPostFromCommunity($community_id, string $keyword = null)
@@ -60,11 +65,6 @@ class PostController extends Controller
         return PostResource::collection($posts);
     }
 
-    public function show(Post $post)
-    {
-        return response()->json($post, 200);
-    }
-
     public function destroy(Post $post)
     {
         $this->authorize('destroy', $post);
@@ -79,7 +79,7 @@ class PostController extends Controller
 
     public function generate(Community $community, string $keyword = null)
     {   
-        $prompt = 'Create a post in the style of a Reddit post for this community' . $community['name'];
+        $prompt = 'Generate a post in the style of a Reddit post for this community' . $community['name'];
 
         if ($keyword) {
             $prompt = $prompt . 'With an emphasis on : ' . $keyword;
@@ -87,25 +87,23 @@ class PostController extends Controller
 
         $res = OpenAIController::ask($prompt);
 
-        try {
-            $post = new Post;
-            $post->title = json_decode($res)->title;
-            $post->text_content = json_decode($res)->text_content;
-            $image = null;
+        $parsedResponse = json_decode($res);
 
-            if (json_decode($res)->has_media) {
-                $imagePrompt = 'Create an image for this message' . json_decode($res)->text_content;
-                $image = OpenAIController::imagine($imagePrompt);
-            }
+        $post = new Post;
+        $post->title = $parsedResponse->title;
+        $post->text_content = $parsedResponse->text_content;
+        $image = null;
 
-            $post->media_url = $image;
-            $post->user_id = auth()->user()->id;
-            $post->community_id = $community['id'];
-            $post->save();
-        } catch (Exception $e) {
-            return response()->json(["message" => 'Post generation failed'], 500);
+        if (isset($parsedResponse->has_media) && $parsedResponse->has_media) {
+            $imagePrompt = 'Create an image for this message' . $parsedResponse->text_content;
+            $image = OpenAIController::imagine($imagePrompt);
         }
+
+        $post->media_url = $image;
+        $post->user_id = auth()->user()->id;
+        $post->community_id = $community['id'];
+        $post->save();
         
-        return response()->json(["message" => 'Post generated'], 201);
+        return response()->json(["message" => 'Post generated', 'data' => PostResource::make($post)], 201);
     }
 }

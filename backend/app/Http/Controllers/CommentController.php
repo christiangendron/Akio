@@ -44,7 +44,7 @@ class CommentController extends Controller
 
     public function generate(Post $post, string $keyword = null)
     {
-        $prompt = 'Create a unique (catchy, relevant) and creative comment for this post' . $post['text_content'];
+        $prompt = 'Generate a unique (catchy, relevant) and creative comment for this post' . $post['text_content'];
 
         if ($keyword) {
             $prompt = $prompt . 'With an emphasis on : ' . $keyword;
