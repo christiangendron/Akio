@@ -16,6 +16,11 @@ class CommunityController extends Controller
         return CommunityResource::collection($community);
     }
 
+    public function getCommunityById(Community $community)
+    {
+        return CommunityResource::make($community);
+    }
+
     public function store(CommunityRequest $communityRequest)
     {   
         $request = $communityRequest->validated();
@@ -30,7 +35,7 @@ class CommunityController extends Controller
         $community->user_id = auth()->id();
         $community->save();
 
-        return response()->json(["message" => 'Community created'], 201);
+        return response()->json(["message" => 'Community created', "data" => CommunityResource::make($community)], 201);
     }
 
     public function destroy(Community $community)
@@ -51,16 +56,12 @@ class CommunityController extends Controller
 
         $res = OpenAIController::ask($prompt);
 
-        try {
-            $community = new Community;
-            $community->name = json_decode($res)->name;
-            $community->description = json_decode($res)->description;
-            $community->user_id = auth()->id();
-            $community->save();
-        } catch (Exception $e) {
-            return response()->json(["message" => 'Community generation failed'], 500);
-        }
+        $community = new Community;
+        $community->name = json_decode($res)->name;
+        $community->description = json_decode($res)->description;
+        $community->user_id = auth()->id();
+        $community->save();
         
-        return response()->json(["message" => 'Community generated'], 201);
+        return response()->json(["message" => 'Community generated', "data" => CommunityResource::make($community)], 201);
     }
 }
