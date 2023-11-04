@@ -3,7 +3,7 @@
 Experience our app by following these easy installation steps:
 
 1. **Set Up Environment Variables:**  
-   After cloning, navigate to the repository's directory and find the `.env` file. This file is where you need to set your environment variables. We've provided an example file to guide you in setting up these variables correctly.
+   After cloning, navigate to the repository's directory and find the `.env` file. This file is where you need to set your environment variables. We've provided an example file to guide you in setting up these variables correctly. Alternatively, you may leave the default values from the example and use my server personal for testing.
 
 2. **Install Expo on Your Phone:**  
    This application is built with Expo, a framework for developing universal React applications. If you don't have Expo installed on your phone, you can download it from the [App Store](https://apps.apple.com/app/apple-store/id982107779) if you're an iOS user, or from the [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&referrer=www) if you're an Android user.
