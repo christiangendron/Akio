@@ -12,11 +12,6 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
-    public function getPostById(Post $post)
-    {
-        return PostResource::make($post);
-    }
-
     public function index(string $keyword = null)
     {   
         if ($keyword) {

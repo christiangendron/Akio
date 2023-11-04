@@ -68,18 +68,6 @@ class PostsIndexTest extends TestCase
         ]);
     }
 
-    public function testGetPostById()
-    {
-        // Get post by ID
-        $response = $this->json('get', '/api/post/1');
-
-        // Expect a 200 response and validate the response JSON data
-        $response->assertStatus(200);
-        $response->assertJsonPath('data.title', 'Test Post');
-        $response->assertJsonPath('data.text_content', 'This is a test post');
-        $response->assertJsonPath('data.user_id', $this->user->id);
-    }
-
     public function testGetAllPosts()
     {
         // Get all posts
@@ -93,14 +81,14 @@ class PostsIndexTest extends TestCase
     public function testGetAllPostsWithKeyword()
     {
         // Get all posts with keyword dogs
-        $response = $this->json('get', '/api/post/search/dogs');
+        $response = $this->json('get', '/api/post/dogs');
 
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);
         $response->assertJsonCount(1, 'data');
 
         // Get all posts with keyword cats
-        $response = $this->json('get', '/api/post/search/cats');
+        $response = $this->json('get', '/api/post/cats');
 
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);

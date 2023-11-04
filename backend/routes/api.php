@@ -44,8 +44,7 @@ Route::prefix('post')
     ->controller(PostController::class)
     ->group(function() {
         Route::get('/', 'index');
-        Route::get('/{post}', 'getPostById');
-        Route::get('/search/{keyword?}', 'index');
+        Route::get('/{keyword?}', 'index');
         Route::post('community/{community}', 'store')->middleware('auth:sanctum');
         Route::post('community/{community}/generate/{keyword?}', 'generate')->middleware('auth:sanctum');
         Route::delete('/{post}', 'destroy')->middleware('auth:sanctum');

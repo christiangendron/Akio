@@ -16,7 +16,7 @@ async function getPosts(community_id:number, keyword: string): Promise<PostProps
 }
 
 async function getUserPosts(user_id:number, keyword: string): Promise<PostProps[]> { 
-  const res = await AxiosClient.get('post/user/' + user_id + '?keyword=' + keyword);
+  const res = await AxiosClient.get('post/user/' + user_id + '/' + keyword);
   return res.data.data;
 }
 
