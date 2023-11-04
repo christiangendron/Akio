@@ -1,19 +1,24 @@
-import { Text, TouchableOpacity, Image } from 'react-native';
+import { Text, TouchableOpacity, Image, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../../types/Navigator';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import useDeleteCommunityMutation from '../../hooks/useDeleteCommunityMutation';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 const trashCan = require('../../assets/icons/trash-can.png');
 
 export interface CommunityProps {
     id: number;
     name: string;
     description: string;
+    user_id: number;
 }
 
 export default function Community(props: CommunityProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
+    const authContext = useContext(AuthContext);
+
     const deleteMutation = useDeleteCommunityMutation();
 
     const deletePost = () => {
@@ -27,12 +32,21 @@ export default function Community(props: CommunityProps) {
 
     const community_name = props.name.charAt(0).toUpperCase() + props.name.slice(1);
 
-    return (
+
+    const content = <TouchableOpacity onPress={() => navigation.push('Community', { name: props.name, id: props.id })} className='flex bg-white p-2 justify-between'>
+        <Text className='text-lg font-bold'>{community_name}</Text>
+        <Text className='text-sm'>{props.description}</Text>
+    </TouchableOpacity>
+
+    if (authContext.userId === props.user_id || authContext.isAdmin) return (
         <Swipeable renderRightActions={renderRightActions}>
-            <TouchableOpacity onPress={() => navigation.push('Community', { name: props.name, id: props.id })} className='flex bg-white p-2 justify-between'>
-                <Text className='text-lg font-bold'>{community_name}</Text>
-                <Text className='text-sm'>{props.description}</Text>
-            </TouchableOpacity>
+            {content}
         </Swipeable>
+    )
+
+    return (
+        <View>
+            {content}
+        </View>
     );
 }

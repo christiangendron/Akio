@@ -4,7 +4,6 @@ import ErrorMessage from '../ErrorMessage';
 
 interface GeneratePostProps {
     community_id: number;
-    community_name: string;
 }
 
 export default function GeneratePost(props: GeneratePostProps) {
@@ -12,7 +11,6 @@ export default function GeneratePost(props: GeneratePostProps) {
 
     const variables = {
         community_id: props.community_id,
-        community_name: props.community_name,
     };
     
     if (mutation.isLoading) return (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Modal, View, TouchableWithoutFeedback } from "react-native";
 import Option from "./items/Option";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackParams } from "../types/Navigator";
 import useDeletePostMutation from "../hooks/useDeletePostMutation";
 import Pill from "./items/Pill";
+import { AuthContext } from "../context/AuthContext";
 
 interface PostOptionsProps {
     id: number;
@@ -18,9 +19,11 @@ interface PostOptionsProps {
 export default function PostOptions(props: PostOptionsProps) {
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
+    const authContext = useContext(AuthContext);
 
     const deleteMutation = useDeletePostMutation();
 
+    const deleteOption = <Option label="Delete" handler={() => {deleteMutation.mutate({ post_id: props.id });setModalVisible(!modalVisible);}} />
     const modal = 
         <View className="flex flex-1">
             <Modal
@@ -42,10 +45,7 @@ export default function PostOptions(props: PostOptionsProps) {
                         setModalVisible(!modalVisible);
                         navigation.navigate('Overview', { id: props.user_id, name: props.username })
                         }} />
-                        <Option label="Delete" handler={() => {
-                            deleteMutation.mutate({ post_id: props.id });
-                        setModalVisible(!modalVisible);
-                        }} />
+                        {authContext.userId === props.user_id || authContext.isAdmin ? deleteOption : null}
                         <Option label="Close" handler={() => {
                         setModalVisible(!modalVisible);
                         }} />
