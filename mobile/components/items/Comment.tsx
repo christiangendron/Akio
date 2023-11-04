@@ -4,6 +4,9 @@ const trashCan = require('../../assets/icons/trash-can.png');
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackParams } from '../../types/Navigator';
 
 export interface CommentItemProps {
     id: number;
@@ -15,6 +18,7 @@ export interface CommentItemProps {
 }
 
 export default function Comment(props: CommentItemProps) {
+    const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
     const deleteCommentMutation = useDeleteCommentMutation();
     const authContext = useContext(AuthContext);
 
@@ -29,9 +33,11 @@ export default function Comment(props: CommentItemProps) {
 
     const content = <View className="bg-white p-2 w-screen">
             <Text>{props.text_content}</Text>
-            <Text className='text-sm text-gray-500'>
-                by {props.username}
-            </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Overview', { name: props.username, id: props.user_id })}>
+                <Text className='text-sm text-gray-500'>
+                    by {props.username}
+                </Text>
+            </TouchableOpacity> 
         </View>
 
     if (props.user_id === authContext.userId || authContext.isAdmin) return (
