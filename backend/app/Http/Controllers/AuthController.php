@@ -46,10 +46,6 @@ class AuthController extends Controller
 
     public function logout(Request $request) 
     {
-        if ($request->bearerToken() == null) {
-            return response()->json(['message' => 'You must be auth to logout.'])->setStatusCode(401);
-        }
-
         [, $token] = explode('|', $request->bearerToken());
         $req = DB::table("personal_access_tokens")->where("token", hash("sha256", $token));
         $req->delete();
