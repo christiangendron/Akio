@@ -44,6 +44,7 @@ class CommentIndexTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonPath('data.text_content', 'This is a comment');
         $response->assertJsonPath('data.username', $this->user->username);
+        $response->assertJsonPath('data.user_id', $this->user->id);
         $this->comment->forceDelete();
     }
     

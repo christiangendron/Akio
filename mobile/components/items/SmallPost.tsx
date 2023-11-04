@@ -6,6 +6,8 @@ import PostInteraction from '../PostInteraction';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import useDeletePostMutation from '../../hooks/useDeletePostMutation';
 import Media from '../Media';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 const trashCan = require('../../assets/icons/trash-can.png');
 
 export interface SmallPostProps {
@@ -22,7 +24,7 @@ export interface SmallPostProps {
 
 export default function SmallPost(props: SmallPostProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
-    
+    const authContext = useContext(AuthContext);
     const deleteMutation = useDeletePostMutation();
 
     const deletePost = () => {
@@ -36,16 +38,24 @@ export default function SmallPost(props: SmallPostProps) {
 
     const image = props.media_url ? <Media media_url={props.media_url} /> : null;
 
-    return (
+    const content = <View className='bg-white'>
+            <TouchableOpacity onPress={() => navigation.push('Details', { ...props })} className='p-2'>
+                <Text className='font-bold text-lg'>{props.title}</Text>
+                <Text>{props.text_content.slice(0,200)}...</Text>
+            </TouchableOpacity>
+            {image}
+            <PostInteraction {...props} />
+        </View>
+    
+    if (props.user_id === authContext.userId || authContext.isAdmin) return (
         <Swipeable renderRightActions={renderRightActions}>
-            <View className='bg-white'>
-                <TouchableOpacity onPress={() => navigation.push('Details', { ...props })} className='p-2'>
-                    <Text className='font-bold text-lg'>{props.title}</Text>
-                    <Text>{props.text_content.slice(0,200)}...</Text>
-                </TouchableOpacity>
-                {image}
-                <PostInteraction {...props} />
-            </View>
+            {content}
         </Swipeable>
+    );
+    
+    return (
+        <View>
+            {content}
+        </View>
     );
 }

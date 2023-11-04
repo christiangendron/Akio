@@ -19,6 +19,7 @@ class CommentResource extends JsonResource
             'id' => $this->id,
             'text_content' => $this->text_content,
             'username' => User::find($this->user_id)->username,
+            'user_id' => $this->user_id,
         ];
     }
 }
