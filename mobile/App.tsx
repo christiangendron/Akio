@@ -19,6 +19,9 @@ export default function App() {
   LogBox.ignoreLogs(['VirtualizedList: You have a large']);
   LogBox.ignoreLogs(['Sending `onAnimatedValueUpdate` with no']);
 
+  console.log('BACKEND_URL', process.env.BACKEND_URL);
+  console.log('BACKEND_IMAGE_URL', process.env.BACKEND_IMAGE_URL)
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
