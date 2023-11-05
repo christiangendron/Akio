@@ -8,14 +8,16 @@ import Comment, { CommentItemProps } from '../components/items/Comment';
 import Post from '../components/items/Post';
 import NoPostsFound from '../components/NothingFound';
 import { useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import AppTheme from '../styles/AppTheme';
 import GenerateComment from '../components/buttons/GenerateComment';
+import { AuthContext } from '../context/AuthContext';
 
 export default function Details(props: DetailsScreenProps) {
   const navigation = useNavigation();
   const current = props.route.params;
-  
+  const authContext = useContext(AuthContext);
+
   useEffect(() => {
     navigation.setOptions({
       headerStyle: {
@@ -50,6 +52,8 @@ export default function Details(props: DetailsScreenProps) {
     return <Comment key={item.id} {...item} />;
   };
 
+  const generation = <View className='mt-2'><GenerateComment post_id={current.id} /></View>
+
   return (
     <View className='flex flex-1 justify-center items-center'>
       <FlatList
@@ -61,7 +65,7 @@ export default function Details(props: DetailsScreenProps) {
         onEndReachedThreshold={2}
         ListHeaderComponent={<View className='mb-2'><Post {...current} /></View>}
         ListEmptyComponent={<NoPostsFound type="comments"/>}
-        ListFooterComponent={<View className='mt-2'><GenerateComment post_id={current.id} /></View>}
+        ListFooterComponent={authContext.isAuth ? generation : null}
       />
     </View>
   );

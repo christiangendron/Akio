@@ -1,6 +1,7 @@
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import useGenerateCommunityMutations from '../../hooks/useGenerateCommunityMutations';
 import ErrorMessage from '../ErrorMessage';
+import { AxiosError } from 'axios';
 
 export default function GenerateCommunity() {
     const mutation = useGenerateCommunityMutations();
@@ -11,9 +12,9 @@ export default function GenerateCommunity() {
         </View>
     )
 
-    if (mutation.error) return (
+    if (mutation.error instanceof Error) return (
         <View className='bg-gray-300 p-5'>
-            <ErrorMessage message="The generation failed." actionMessage="Try again" action={() => mutation.mutate()} />
+            <ErrorMessage message={mutation.error.message} actionMessage="Try again" action={() => mutation.mutate()} />
         </View>
     )
 

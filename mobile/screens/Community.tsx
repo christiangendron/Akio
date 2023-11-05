@@ -11,9 +11,11 @@ import { SettingsContext } from '../context/SettingsContext';
 import { CommunityNavigationProps } from '../types/Community';
 import GeneratePost from '../components/buttons/GeneratePost';
 import SmallPost, { SmallPostProps } from '../components/items/SmallPost';
+import { AuthContext } from '../context/AuthContext';
 
 export default function Community(props: CommunityNavigationProps) {
   const community = useRef(props.route.params.name);
+  const authContext = useContext(AuthContext);
   const community_id = useRef(props.route.params.id);
   const [keyword, setKeyword] = useState('');
   const settings = useContext(SettingsContext);
@@ -54,7 +56,7 @@ export default function Community(props: CommunityNavigationProps) {
     return <SmallPost key={item.id} {...item} />;
   };
 
-  const generationButton = community_id.current !== 0 ? <View className='mt-2'><GeneratePost community_id={community_id.current} community_name={community.current} /></View> : null;
+  const generationButton = community_id.current !== 0 ? <View className='mt-2'><GeneratePost community_id={community_id.current} /></View> : null;
   
   return (
     <View className='flex flex-1 justify-center items-center'>
@@ -68,7 +70,7 @@ export default function Community(props: CommunityNavigationProps) {
         onEndReachedThreshold={2}
         ListHeaderComponent={settings.searchBar ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch} placeholder='Search in this community...'/> : null}
         ListEmptyComponent={<NoPostsFound type="posts" />}
-        ListFooterComponent={generationButton}
+        ListFooterComponent={authContext.isAuth ? generationButton : null}
       />
     </View>
   );

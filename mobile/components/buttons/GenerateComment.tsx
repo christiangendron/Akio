@@ -19,9 +19,9 @@ export default function GenerateComment(props: GenerateCommentProps) {
         </View>
     )
 
-    if (mutation.error) return (
+    if (mutation.error instanceof Error) return (
         <View className='bg-gray-300 p-5'>
-            <ErrorMessage message="The generation failed." actionMessage="Try again" action={() => mutation.mutate(variables)} />
+            <ErrorMessage message={mutation.error.message} actionMessage="Try again" action={() => mutation.mutate(variables)} />
         </View>
     )
 
