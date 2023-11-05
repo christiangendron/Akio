@@ -39,6 +39,7 @@ class AuthController extends Controller
         $user->username = $request['username'];
         $user->email = $request['email'];
         $user->password = Hash::make($request['password']);
+        $user->is_admin = 0;
         $user->save();
 
         return response()->json(['data' => AuthResource::make($user)])->setStatusCode(201);
