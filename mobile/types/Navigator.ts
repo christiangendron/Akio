@@ -22,6 +22,7 @@ export type TabParams = {
     AccountHome: {
       id: number;
     };
+    Register: any;
     Community: {
       name: string;
       id: number;
