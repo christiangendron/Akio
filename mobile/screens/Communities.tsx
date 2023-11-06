@@ -1,5 +1,5 @@
 import { View, ActivityIndicator, FlatList } from 'react-native';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AppTheme from '../styles/AppTheme';
 import { useQuery } from 'react-query';
@@ -8,9 +8,11 @@ import Community, { CommunityProps } from '../components/items/Community';
 import ErrorMessage from '../components/ErrorMessage';
 import NothingFound from '../components/NothingFound';
 import GenerateCommunity from '../components/buttons/GenerateCommunity';
+import { AuthContext } from '../context/AuthContext';
 
 export default function Communities() {
   const navigation = useNavigation();
+  const authContext = useContext(AuthContext);
 
   const query = useQuery({
     queryKey: ['community-list'],
@@ -47,6 +49,8 @@ export default function Communities() {
     return <Community key={item.id} {...item } />;
   };
 
+  const generation = <View className='mt-2'><GenerateCommunity /></View>
+
   return (
     <View className='flex flex-1 justify-center items-center'>
       <FlatList
@@ -57,8 +61,8 @@ export default function Communities() {
         ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListEmptyComponent={<NothingFound type="posts" />}
-        ListFooterComponent={<View className='mt-2'><GenerateCommunity /></View>}
+        ListEmptyComponent={<NothingFound type="communities" />}
+        ListFooterComponent={authContext.isAuth ? generation: null}
       />
     </View>
   );

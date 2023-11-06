@@ -32,16 +32,16 @@ docker run --rm \
     composer install --ignore-platform-reqs
 ```
 
-4. Generate key
-
-```bash
-./vendor/bin/sail artisan key:generate
-```
-
-5. Launch the project with 
+4. Launch the project with 
 
 ```bash
 ./vendor/bin/sail up -d 
+```
+
+5. Generate key
+
+```bash
+./vendor/bin/sail artisan key:generate
 ```
 
 6. Execute migrations

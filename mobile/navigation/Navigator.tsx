@@ -10,6 +10,7 @@ import Overview from '../screens/Overview';
 import Communities from '../screens/Communities';
 import { StackParams, TabParams } from '../types/Navigator';
 import Account from '../screens/Account';
+import RegisterScreen from '../screens/Register';
 
 const HomeStack = createStackNavigator<StackParams>();
 
@@ -43,6 +44,7 @@ function AccountStackScreen() {
     <SearchStack.Navigator>
       <AccountStack.Screen name="AccountHome" component={Account} />
       <SearchStack.Screen name="Settings" component={Settings} />
+      <SearchStack.Screen name="Register" component={RegisterScreen} />
     </SearchStack.Navigator>
   );
 }

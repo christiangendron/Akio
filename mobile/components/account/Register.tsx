@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Keyboard, Text, View } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 import useRegisterMutation from '../../hooks/useRegisterMutation';
@@ -6,7 +6,11 @@ import CustomInput from '../CustomInput';
 import { AxiosError } from 'axios';
 import CustomButton from '../CustomButton';
 
-function Register() {
+type RegisterProps = {
+  onComplete: () => void
+}
+
+function Register(props: RegisterProps) {
     const { control, handleSubmit, formState: { errors } } = useForm({defaultValues: {username: '', email: '', password: ''}});
     const registerMutation = useRegisterMutation();
 
@@ -14,6 +18,12 @@ function Register() {
       Keyboard.dismiss();
       registerMutation.mutate(data)
     };
+
+    useEffect(() => {
+      if (registerMutation.isSuccess) {
+        props.onComplete();
+      }
+    }, [registerMutation])
 
     const error = (registerMutation.error as AxiosError<{message: string}>)?.response?.data?.message;
 
