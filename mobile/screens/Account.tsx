@@ -1,4 +1,4 @@
-import { View, Platform, Button, KeyboardAvoidingView, ScrollView} from 'react-native';
+import { View, Platform, Button, KeyboardAvoidingView, ScrollView, TouchableOpacity, Image} from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 import AppTheme from '../styles/AppTheme';
 import { useNavigation } from '@react-navigation/native';
@@ -22,15 +22,15 @@ export default function Account() {
       },
       headerTintColor: AppTheme.black,
       headerRight: () => (
-        <Button
-          onPress={() => navigation.navigate('Settings')}
-          title="Settings"
-        />
+        <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+          <Image source={require('../assets/icons/settings.png')} className='h-5 w-5 mr-3'/>
+        </TouchableOpacity>
       ),
     });
   }, [navigation]);
 
   const LoginOrRegister = state == 'login' ? <Login /> : <Register />;
+  const LoginOrRegisterButton = state == 'login' ? <Button title='Register' onPress={() => setState('register')} /> : <Button title='Login' onPress={() => setState('login')}/>;
 
   if (authContext.isAuth) return (
     <View className='flex flex-1 justify-center items-center'>
@@ -41,10 +41,7 @@ export default function Account() {
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
       <KeyboardAvoidingView className='flex flex-1 justify-center items-center' behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <View className='flex flex-row'>
-          <Button title='Login' onPress={() => setState('login')}/>
-          <Button title='Register' onPress={() => setState('register')}/>
-        </View>
+        {LoginOrRegisterButton}
         {LoginOrRegister}
       </KeyboardAvoidingView>
     </ScrollView>
