@@ -10,7 +10,7 @@ export default function useLogoutMutation() {
         mutationFn: () => {
             return AuthServices.logout();
         },
-        onSuccess: () => {
+        onMutate: () => {
             authContext.setIsAuth(false);
             authContext.setIsAdmin('');
             authContext.setUserEmail('');
