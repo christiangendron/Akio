@@ -55,7 +55,7 @@ export default function Communities() {
   }
 
   const renderItem = ({ item }: { item: CommunityProps }): JSX.Element => {
-    return <Community key={item.id} {...item } />;
+    return <Community key={item.id} {...item } keyToInvalidate={key} />;
   };
 
   return (

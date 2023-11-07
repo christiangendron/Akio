@@ -1,8 +1,7 @@
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import ErrorMessage from './ErrorMessage';
 import { useEffect } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import AkioServices from '../services/AkioServices';
+import useGenerateMutation from '../hooks/useGenerateMutation';
 
 type GenerateCommentProps = {
     id: number;
@@ -19,16 +18,7 @@ export type GenerateItemVariables = {
 }
 
 export default function GenerateButton(props: GenerateCommentProps) {
-    const queryClient = useQueryClient()
-
-    const mutation = useMutation({
-        mutationFn: (variables : GenerateItemVariables) => {
-            return AkioServices.generateItem(variables);
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [props.keyToInvalidate] })
-        },
-    })
+    const mutation = useGenerateMutation(props.keyToInvalidate);
 
     const variables = {
         id: props.id,

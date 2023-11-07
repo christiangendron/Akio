@@ -4,9 +4,9 @@ import Option from "./items/Option";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from "@react-navigation/native";
 import { StackParams } from "../types/Navigator";
-import useDeletePostMutation from "../hooks/useDeletePostMutation";
 import Pill from "./items/Pill";
 import { AuthContext } from "../context/AuthContext";
+import useDeleteItemMutation from "../hooks/useDeleteItem";
 
 interface PostOptionsProps {
     id: number;
@@ -14,6 +14,7 @@ interface PostOptionsProps {
     user_id: number;
     community: string;
     community_id: number;
+    keyToInvalidate: string;
 }
 
 export default function PostOptions(props: PostOptionsProps) {
@@ -21,9 +22,9 @@ export default function PostOptions(props: PostOptionsProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
     const authContext = useContext(AuthContext);
 
-    const deleteMutation = useDeletePostMutation();
+    const deleteMutation = useDeleteItemMutation(props.keyToInvalidate);
 
-    const deleteOption = <Option label="Delete" handler={() => {deleteMutation.mutate({ post_id: props.id });setModalVisible(!modalVisible);}} />
+    const deleteOption = <Option label="Delete" handler={() => {deleteMutation.mutate({ id: props.id, type: "post" });setModalVisible(!modalVisible);}} />
     const modal = 
         <View className="flex flex-1">
             <Modal

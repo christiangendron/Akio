@@ -4,10 +4,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../../types/Navigator';
 import PostInteraction from '../PostInteraction';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import useDeletePostMutation from '../../hooks/useDeletePostMutation';
 import Media from '../Media';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import useDeleteItemMutation from '../../hooks/useDeleteItem';
 const trashCan = require('../../assets/icons/trash-can.png');
 
 export interface SmallPostProps {
@@ -20,15 +20,16 @@ export interface SmallPostProps {
     user_id: number;
     community_name: string;
     username: string;
+    keyToInvalidate: string;
 }
 
 export default function SmallPost(props: SmallPostProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
     const authContext = useContext(AuthContext);
-    const deleteMutation = useDeletePostMutation();
+    const deleteMutation = useDeleteItemMutation(props.keyToInvalidate);
 
     const deletePost = () => {
-        deleteMutation.mutate({ post_id: props.id });
+        deleteMutation.mutate({ id: props.id, type: 'post'});
     };
 
     const renderRightActions = () => {
@@ -44,7 +45,7 @@ export default function SmallPost(props: SmallPostProps) {
                 <Text>{props.text_content.slice(0,200)}...</Text>
             </TouchableOpacity>
             {image}
-            <PostInteraction {...props} />
+            <PostInteraction {...props} keyToInvalidate={props.keyToInvalidate} />
         </View>
     
     if (props.user_id === authContext.userId || authContext.isAdmin) return (

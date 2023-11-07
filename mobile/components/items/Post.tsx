@@ -12,6 +12,7 @@ export interface PostProps {
     user_id: number;
     community_name: string;
     username: string;
+    keyToInvalidate: string;
 }
 
 export default function Post(props: PostProps) {

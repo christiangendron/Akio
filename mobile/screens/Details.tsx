@@ -59,7 +59,7 @@ export default function Details(props: DetailsScreenProps) {
   }
 
   const renderItem = ({ item }: { item: CommentItemProps }): JSX.Element => {
-    return <Comment key={item.id} {...item} />;
+    return <Comment key={item.id} {...item} keyToInvalidate={key} />;
   };
 
   return (

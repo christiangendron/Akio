@@ -64,7 +64,7 @@ export default function Community(props: CommunityNavigationProps) {
   }
 
   const renderItem = ({ item }: { item: SmallPostProps }): JSX.Element => {
-    return <SmallPost key={item.id} {...item} />;
+    return <SmallPost key={item.id} {...item} keyToInvalidate={key} />;
   };
   
   return (
