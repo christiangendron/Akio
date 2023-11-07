@@ -45,7 +45,7 @@ export default function Community(props: CommunityNavigationProps) {
         authContext.isAuth ? generationButtonNavigation : null
       ),
     });
-  }, [navigation]);
+  }, [navigation, authContext.isAuth]);
   
   if (query.isLoading) {
     return (

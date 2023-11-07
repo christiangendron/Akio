@@ -35,7 +35,7 @@ export default function Details(props: DetailsScreenProps) {
         authContext.isAuth ? generationButtonNavigation : null
       ),
     });
-  }, [navigation]);
+  }, [navigation, authContext.isAuth]);
 
   const query = useQuery({
     queryKey: [key],
