@@ -2,6 +2,7 @@ import { PostProps } from '../components/items/Post';
 import { CommentItemProps } from '../components/items/Comment';
 import { CommunityProps } from '../components/items/Community';
 import AxiosClient from './AxiosClient';
+import { GenerateItemVariables } from '../components/GenerateButton';
 
 async function getPosts(community_id:number, keyword: string): Promise<PostProps[]> { 
   let res = null;
@@ -30,18 +31,17 @@ async function getCommunities(): Promise<CommunityProps[]> {
   return res.data.data;
 }
 
-async function generatePost(community_id: number): Promise<PostProps[]> { 
-  const res = await AxiosClient.post(`post/community/${community_id}/generate`);
-  return res.data.data;
-}
+async function generateItem(variables: GenerateItemVariables): Promise<any> { 
+  let res = null;
+  
+  if (variables.type === 'post') {
+    res = await AxiosClient.post(`post/community/${variables.id}/generate/` + variables.inspiration);
+  } else if (variables.type === 'community') {
+    res = await AxiosClient.post('community/generate/' + variables.inspiration);
+  } else {
+    res = await AxiosClient.post(`comment/post/${variables.id}/generate/` + variables.inspiration);
+  }
 
-async function generateCommunity(): Promise<CommunityProps[]> {
-  const res = await AxiosClient.post('community/generate');
-  return res.data.data;
-}
-
-async function generateComment(post_id: number): Promise<CommunityProps[]> { 
-  const res = await AxiosClient.post('comment/post/' + post_id + '/generate');
   return res.data.data;
 }
 
@@ -65,12 +65,10 @@ const AkioServices = {
   getCommunities, 
   getComments, 
   getUserPosts, 
-  generatePost, 
-  generateCommunity, 
-  generateComment, 
   deletePost, 
   deleteCommunity,
-  deleteComment
+  deleteComment,
+  generateItem
 };
 
 export default AkioServices;
