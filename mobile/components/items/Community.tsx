@@ -39,7 +39,7 @@ export default function Community(props: CommunityProps) {
         <Text className='text-sm'>{props.description}</Text>
     </TouchableOpacity>
 
-    if (authContext.userId === props.user_id || authContext.isAdmin) return (
+    if (authContext.canDelete(props.user_id)) return (
         <Swipeable renderRightActions={renderRightActions}>
             {content}
         </Swipeable>

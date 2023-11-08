@@ -48,7 +48,7 @@ export default function SmallPost(props: SmallPostProps) {
             <PostInteraction {...props} keyToInvalidate={props.keyToInvalidate} />
         </View>
     
-    if (props.user_id === authContext.userId || authContext.isAdmin) return (
+    if (authContext.canDelete(props.user_id)) return (
         <Swipeable renderRightActions={renderRightActions}>
             {content}
         </Swipeable>

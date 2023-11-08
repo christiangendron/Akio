@@ -24,6 +24,9 @@ export default function AuthContextProvider(props: any) {
     });
   }, []);
 
+  const canDelete = (id: number) => {
+    return isAdmin || userId === id;
+  }
 
   const allowedContent: any = {
     userId,
@@ -34,6 +37,7 @@ export default function AuthContextProvider(props: any) {
     setUserEmail,
     isAdmin,
     setIsAdmin,
+    canDelete,
   };
 
   return (

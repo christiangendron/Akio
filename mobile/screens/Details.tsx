@@ -1,11 +1,10 @@
 
 import { ActivityIndicator, FlatList, TouchableOpacity, View, Image } from 'react-native';
-import { DetailsScreenProps } from '../types/Details';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
 import ErrorMessage from '../components/ErrorMessage';
 import Comment, { CommentItemProps } from '../components/items/Comment';
-import Post from '../components/items/Post';
+import Post, { PostProps } from '../components/items/Post';
 import NoPostsFound from '../components/NothingFound';
 import { useNavigation } from '@react-navigation/native';
 import { useContext, useEffect } from 'react';
@@ -13,6 +12,12 @@ import AppTheme from '../styles/AppTheme';
 import { AuthContext } from '../context/AuthContext';
 import { StackParams } from '../types/Navigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+export type DetailsScreenProps = {
+  route: {
+    params: PostProps;
+  }
+};
 
 export default function Details(props: DetailsScreenProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
@@ -32,7 +37,7 @@ export default function Details(props: DetailsScreenProps) {
       },
       headerTintColor: AppTheme.black,
       headerRight: () => (
-        authContext.isAuth ? generationButtonNavigation : null
+        generationButtonNavigation
       ),
     });
   }, [navigation, authContext.isAuth]);

@@ -25,7 +25,7 @@ export default function Post(props: PostProps) {
                 <Text>{props.text_content}</Text>
             </View>
             {image}
-            <PostInteraction {...props} />
+            <PostInteraction {...props} keyToInvalidate={props.keyToInvalidate} />
         </View>
     );
 }

@@ -46,7 +46,7 @@ export default function PostOptions(props: PostOptionsProps) {
                         setModalVisible(!modalVisible);
                         navigation.navigate('Overview', { id: props.user_id, name: props.username })
                         }} />
-                        {authContext.userId === props.user_id || authContext.isAdmin ? deleteOption : null}
+                        {authContext.canDelete(props.user_id) ? deleteOption : null}
                         <Option label="Close" handler={() => {
                         setModalVisible(!modalVisible);
                         }} />

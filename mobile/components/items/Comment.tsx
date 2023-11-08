@@ -41,7 +41,7 @@ export default function Comment(props: CommentItemProps) {
             </TouchableOpacity> 
         </View>
 
-    if (props.user_id === authContext.userId || authContext.isAdmin) return (
+    if (authContext.canDelete(props.user_id)) return (
         <Swipeable renderRightActions={renderRightActions}>
             {content}
         </Swipeable>

@@ -8,11 +8,19 @@ import NoPostsFound from '../components/NothingFound';
 import AkioServices from '../services/AkioServices';
 import SearchBarComp from '../components/SearchBarComp';
 import { SettingsContext } from '../context/SettingsContext';
-import { CommunityNavigationProps } from '../types/Community';
 import SmallPost, { SmallPostProps } from '../components/items/SmallPost';
 import { AuthContext } from '../context/AuthContext';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../types/Navigator';
+
+export interface CommunityNavigationProps {
+  route: {
+    params: {
+      name: string;
+      id: number;
+    }
+  }
+}
 
 export default function Community(props: CommunityNavigationProps) {
   const community = useRef(props.route.params.name);
@@ -42,7 +50,7 @@ export default function Community(props: CommunityNavigationProps) {
       },
       headerTintColor: AppTheme.black,
       headerRight: () => (
-        authContext.isAuth ? generationButtonNavigation : null
+        generationButtonNavigation
       ),
     });
   }, [navigation, authContext.isAuth]);

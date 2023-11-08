@@ -33,7 +33,7 @@ export default function Communities() {
       },
       headerTintColor: AppTheme.black,
       headerRight: () => (
-        authContext.isAuth ? generationButtonNavigation : null
+        generationButtonNavigation
       ),
     });
   }, [navigation, authContext.isAuth]);
