@@ -47,12 +47,12 @@ class CommunityController extends Controller
         return response()->json(["message" => 'Community deleted'], 200);
     }
 
-    public function generate(string $keyword = null)
+    public function generate(Request $request)
     {   
         $prompt = 'Generate a community with a unique and creative name and description. The name should be catchy, relevant, and appealing to potential users.';
 
-        if ($keyword) {
-            $prompt = $prompt . 'On the topic of : ' . $keyword;
+        if ($request->inspiration) {
+            $prompt = $prompt . 'On the topic of : ' . $request->inspiration;
         }
 
         $res = OpenAIController::ask($prompt);

@@ -22,6 +22,7 @@ export type TabParams = {
     AccountHome: {
       id: number;
     };
+    Account: any;
     Register: any;
     Generate: {
       type: string;

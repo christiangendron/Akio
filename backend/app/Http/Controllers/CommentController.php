@@ -43,12 +43,12 @@ class CommentController extends Controller
         return response()->json(["message" => 'Comment deleted'], 200);
     }
 
-    public function generate(Post $post, string $keyword = null)
+    public function generate(Request $request, Post $post)
     {
         $prompt = 'Generate a unique (catchy, relevant) and creative comment for this post' . $post['text_content'];
 
-        if ($keyword) {
-            $prompt = $prompt . 'With an emphasis on : ' . $keyword;
+        if ($request->inspiration) {
+            $prompt = $prompt . 'With an emphasis on : ' . $request->inspiration;
         }
 
         $res = OpenAIController::ask($prompt);
