@@ -8,6 +8,7 @@ export default function AuthContextProvider(props: any) {
   const [userId, setUserId] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [username, setUsername] = useState(null);
 
   useEffect(() => {
     AuthServices.getUserInfo()
@@ -17,6 +18,7 @@ export default function AuthContextProvider(props: any) {
           setUserId(res.user_id);
           setUserEmail(res.email);
           setIsAdmin(res.is_admin);
+          setUsername(res.username);
         } 
     })
     .catch((err: any) => {
@@ -38,6 +40,8 @@ export default function AuthContextProvider(props: any) {
     isAdmin,
     setIsAdmin,
     canDelete,
+    username,
+    setUsername,
   };
 
   return (

@@ -29,7 +29,9 @@ export default function Account() {
 
   if (authContext.isAuth) return (
     <View className='flex flex-1 justify-center items-center'>
-      <Logged />
+      <ScrollView className='flex w-full mt-1'>
+        <Logged />
+      </ScrollView>
     </View>
   )
 
