@@ -21,8 +21,13 @@ class CommunityGenerateTest extends TestCase
 
     public function testGenerateWithoutAuth()
     {
+        $data = [
+            'inspiration' => '',
+            'has_image' => false,
+        ];
+
         // Generate a community
-        $response = $this->json('post', '/api/community/generate');
+        $response = $this->json('post', '/api/community/generate', $data);
 
         // Expect a 401 (Unauthorized) response
         $response->assertStatus(401);
@@ -30,8 +35,13 @@ class CommunityGenerateTest extends TestCase
 
     public function testGenerateWithAuth()
     {
+        $data = [
+            'inspiration' => '',
+            'has_image' => false,
+        ];
+
         // Generate a community
-        $response = $this->actingAs($this->user)->json('post', '/api/community/generate');
+        $response = $this->actingAs($this->user)->json('post', '/api/community/generate', $data);
 
         // Expect a 201 (Created) response and validate the response JSON data
         $response->assertStatus(201);
@@ -40,8 +50,13 @@ class CommunityGenerateTest extends TestCase
 
     public function testGenerateWithAuthAndKeyword()
     {
+        $data = [
+            'inspiration' => '',
+            'has_image' => false,
+        ];
+
         // Generate a community
-        $response = $this->actingAs($this->user)->json('post', '/api/community/generate/dogs');
+        $response = $this->actingAs($this->user)->json('post', '/api/community/generate', $data);
 
         // Expect a 201 (Created) response and validate the response JSON data
         $response->assertStatus(201);

@@ -27,7 +27,12 @@ class CommentGenerateTest extends TestCase
     // Test comment generation without authentication
     public function testCommentGenerationNotAuth()
     {
-        $response = $this->json('post', '/api/comment/post/1/generate');
+        $data = [
+            'inspiration' => '',
+            'has_image' => false,
+        ];
+    
+        $response = $this->json('post', '/api/comment/post/1/generate', $data);
 
         // Expect a 401 (Unauthorized) response
         $response->assertStatus(401);
@@ -36,7 +41,12 @@ class CommentGenerateTest extends TestCase
     // Test comment generation with authentication
     public function testCommentGenerationWithAuth()
     {
-        $response = $this->actingAs($this->user)->json('post', '/api/comment/post/1/generate');
+        $data = [
+            'inspiration' => '',
+            'has_image' => false,
+        ];
+
+        $response = $this->actingAs($this->user)->json('post', '/api/comment/post/1/generate', $data);
 
         // Expect a 201 (Created) response
         $response->assertStatus(201);
@@ -46,7 +56,12 @@ class CommentGenerateTest extends TestCase
     // Test comment generation with authentication and a keyword
     public function testCommentGenerationWithAuthAndKeyword()
     {
-        $response = $this->actingAs($this->user)->json('post', '/api/comment/post/1/generate/dogs');
+        $data = [
+            'inspiration' => '',
+            'has_image' => false,
+        ];
+
+        $response = $this->actingAs($this->user)->json('post', '/api/comment/post/1/generate/', $data);
 
         // Expect a 201 (Created) response
         $response->assertStatus(201);
