@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Modal, View, TouchableWithoutFeedback } from "react-native";
+import { View, TouchableWithoutFeedback } from "react-native";
 import Option from "./items/Option";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from "@react-navigation/native";
@@ -7,6 +7,7 @@ import { StackParams } from "../types/Navigator";
 import Pill from "./items/Pill";
 import { AuthContext } from "../context/AuthContext";
 import useDeleteItemMutation from "../hooks/useDeleteItem";
+import Modal from "react-native-modal";
 
 interface PostOptionsProps {
     id: number;
@@ -28,16 +29,12 @@ export default function PostOptions(props: PostOptionsProps) {
     const modal = 
         <View className="flex flex-1">
             <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-            setModalVisible(!modalVisible);
-            }}
+                isVisible={true}
+                animationIn="slideInUp"
+                animationOut="slideOutDown"
             >
                 <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>
-                    <View className="flex flex-1 justify-end items-center" style={{backgroundColor: 'rgba(0,0,0,0.5)'}}>
-                        <View className="bg-gray-300 w-full p-1 flex items-center pb-10 rounded-lg">
+                        <View className="bg-white w-full p-1 flex items-center rounded-lg">
                         <Option label={`${props.community}`} handler={() => {
                         setModalVisible(!modalVisible);
                         navigation.push('Community', { id: props.community_id, name: props.community })
@@ -51,7 +48,6 @@ export default function PostOptions(props: PostOptionsProps) {
                         setModalVisible(!modalVisible);
                         }} />
                         </View>
-                    </View>
                 </TouchableWithoutFeedback>
             </Modal>
         </View>

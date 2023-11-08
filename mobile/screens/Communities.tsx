@@ -49,7 +49,9 @@ export default function Communities() {
   if (query.isError) {
     return (
       <View className='flex flex-1 justify-center items-center'>
-        <ErrorMessage message="Error while getting communities." action={query.refetch} actionMessage="Try again!" />
+        <View className='bg-black w-full p-5'>
+          <ErrorMessage message="Error while getting communities" action={query.refetch} actionMessage="Try again!" />
+        </View>
       </View>
     );
   }
@@ -61,7 +63,7 @@ export default function Communities() {
   return (
     <View className='flex flex-1 justify-center items-center'>
       <FlatList
-        className='w-screen'
+        className='w-screen mt-2'
         data={query.data}
         renderItem={renderItem}
         refreshing={query.isLoading}

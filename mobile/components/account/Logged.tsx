@@ -10,10 +10,10 @@ function Logged() {
     return (
         <View className='w-full'>
             <UserCard />
-            <MenuItem withSwitch={false} label='Saved posts' handler={() => console.log('Saved posts')}/>
-            <MenuItem withSwitch={false} label='My posts' handler={() => console.log('My posts')}/>
-            <MenuItem withSwitch={false} label='Delete my account' handler={() => console.log('Delete my account')}/>
-            <MenuItem withSwitch={false} label='Log out' handler={() => logoutMutation.mutate()}/>
+            <MenuItem label='Saved posts' handler={() => console.log('Saved posts')}/>
+            <MenuItem label='My posts' handler={() => console.log('My posts')}/>
+            <MenuItem label='Delete my account' handler={() => console.log('Delete my account')}/>
+            <MenuItem label='Log out' handler={() => logoutMutation.mutate()}/>
         </View>
     )
 }

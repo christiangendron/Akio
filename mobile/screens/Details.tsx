@@ -58,7 +58,9 @@ export default function Details(props: DetailsScreenProps) {
   if (query.isError) {
     return (
       <View className='flex flex-1 justify-center items-center'>
-        <ErrorMessage message="Error while getting posts." action={query.refetch} actionMessage="Try again!" />
+        <View className='bg-black w-full p-5'>
+          <ErrorMessage message="Error while getting posts." action={query.refetch} actionMessage="Try again!" />
+        </View>
       </View>
     );
   }
