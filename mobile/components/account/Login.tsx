@@ -2,9 +2,9 @@ import React from 'react'
 import { Keyboard, Text, View } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 import useLoginMutation from '../../hooks/useLoginMutation';
-import CustomInput from '../CustomInput';
+import CustomInput from '../shared/CustomInput';
 import { AxiosError } from 'axios';
-import CustomButton from '../CustomButton';
+import CustomButton from '../shared/CustomButton';
 
 function Login() {
     const { control, handleSubmit, formState: { errors } } = useForm({defaultValues: {email: '', password: ''}});

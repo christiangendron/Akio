@@ -1,13 +1,13 @@
 import { View } from 'react-native';
-import { roundedCount } from '../tools/Formating';
+import { roundedCount } from '../../tools/Formating';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParams } from '../types/Navigator';
+import { StackParams } from '../../types/Navigator';
 import PostOptions from './PostOptions';
 import { useContext } from 'react';
-import { SettingsContext } from '../context/SettingsContext';
-import { PostProps } from './items/Post';
-import Pill from './items/Pill';
+import { SettingsContext } from '../../context/SettingsContext';
+import { PostProps } from '../items/Post';
+import Pill from '../items/Pill';
 
 export default function PostInteraction(props: PostProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();

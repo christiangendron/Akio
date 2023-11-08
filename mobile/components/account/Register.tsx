@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { Keyboard, Text, View } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 import useRegisterMutation from '../../hooks/useRegisterMutation';
-import CustomInput from '../CustomInput';
+import CustomInput from '../shared/CustomInput';
 import { AxiosError } from 'axios';
-import CustomButton from '../CustomButton';
+import CustomButton from '../shared/CustomButton';
 
 type RegisterProps = {
   onComplete: () => void

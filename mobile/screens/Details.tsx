@@ -2,10 +2,10 @@
 import { ActivityIndicator, FlatList, TouchableOpacity, View, Image } from 'react-native';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
-import ErrorMessage from '../components/ErrorMessage';
+import ErrorMessage from '../components/shared/ErrorMessage';
 import Comment, { CommentItemProps } from '../components/items/Comment';
 import Post, { PostProps } from '../components/items/Post';
-import NoPostsFound from '../components/NothingFound';
+import NoPostsFound from '../components/shared/NothingFound';
 import { useNavigation } from '@react-navigation/native';
 import { useContext, useEffect } from 'react';
 import AppTheme from '../styles/AppTheme';

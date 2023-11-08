@@ -3,10 +3,10 @@ import { useContext, useEffect, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
-import ErrorMessage from '../components/ErrorMessage';
+import ErrorMessage from '../components/shared/ErrorMessage';
 import AppTheme from '../styles/AppTheme';
-import NothingFound from '../components/NothingFound';
-import SearchBarComp from '../components/SearchBarComp';
+import NothingFound from '../components/shared/NothingFound';
+import SearchBarComp from '../components/shared/SearchBarComp';
 import SmallPost, { SmallPostProps } from '../components/items/SmallPost';
 import { SettingsContext } from '../context/SettingsContext';
 

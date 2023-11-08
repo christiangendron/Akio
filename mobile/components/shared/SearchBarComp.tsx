@@ -31,7 +31,7 @@ export default function SearchBarComp(props: SearchBarProps) {
                 onSubmitEditing={() => props.handleChange(text)}
                 onChangeText={txt => setText(txt)} />
             <TouchableOpacity className='flex-row space-x-1' onPress={clear}>
-                {isFocused ? <Image source={require('../assets/icons/cancel.png')} className='mx-2 w-5 h-5' /> : null}
+                {isFocused ? <Image source={require('../../assets/icons/cancel.png')} className='mx-2 w-5 h-5' /> : null}
             </TouchableOpacity>
         </View>
     );

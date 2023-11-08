@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
-import Option from "./items/Option";
+import Option from "../items/Option";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from "@react-navigation/native";
-import { StackParams } from "../types/Navigator";
-import Pill from "./items/Pill";
-import { AuthContext } from "../context/AuthContext";
-import useDeleteItemMutation from "../hooks/useDeleteItem";
+import { StackParams } from "../../types/Navigator";
+import Pill from "../items/Pill";
+import { AuthContext } from "../../context/AuthContext";
+import useDeleteItemMutation from "../../hooks/useDeleteItem";
 import Modal from "react-native-modal";
 
 interface PostOptionsProps {
@@ -35,11 +35,11 @@ export default function PostOptions(props: PostOptionsProps) {
             >
                 <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>
                         <View className="bg-white w-full p-1 flex items-center rounded-lg">
-                        <Option label={`${props.community}`} handler={() => {
+                        <Option label={`In ${props.community}`} handler={() => {
                         setModalVisible(!modalVisible);
                         navigation.push('Community', { id: props.community_id, name: props.community })
                         }} />
-                        <Option label={props.username} handler={() => {
+                        <Option label={`By ${props.username}`} handler={() => {
                         setModalVisible(!modalVisible);
                         navigation.navigate('Overview', { id: props.user_id, name: props.username })
                         }} />

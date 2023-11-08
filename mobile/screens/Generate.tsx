@@ -2,10 +2,10 @@ import { View, Text, ScrollView, KeyboardAvoidingView, Platform, Switch} from 'r
 import { useContext, useEffect, useState } from 'react';
 import AppTheme from '../styles/AppTheme';
 import { useNavigation } from '@react-navigation/native';
-import CustomInput from '../components/CustomInput';
+import CustomInput from '../components/shared/CustomInput';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../types/Navigator';
-import GenerateButton from '../components/GenerateButton';
+import GenerateButton from '../components/shared/GenerateButton';
 import { AuthContext } from '../context/AuthContext';
 import NotAuth from '../components/account/NotAuth';
 
