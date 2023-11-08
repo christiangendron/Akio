@@ -50,7 +50,8 @@ class OpenAIController extends Controller
         ]);
 
         if ($response->status() != 200) {
-            throw new \Exception('The OpenAi request (imagine) failed with status ' . $response->status());
+            error_log($response->body());
+            throw new \Exception('The OpenAi request (imagine) failed with status ' . $response->status() . $response->status()->message);
         }
         
         $parsedData = json_decode($response);
@@ -100,10 +101,6 @@ class OpenAIController extends Controller
                         "text_content" => [
                             "type" => "string",
                             "description" => "Text content of the post related to the community",
-                        ],
-                        "has_media" => [
-                            "type" => "boolean",
-                            "description" => "Does it make sense for this post to contain an image",
                         ],
                     ],
                 ],

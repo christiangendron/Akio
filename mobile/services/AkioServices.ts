@@ -33,11 +33,18 @@ async function getCommunities(): Promise<CommunityProps[]> {
 
 async function generateItem(variables: GenerateItemVariables): Promise<any> { 
   if (variables.type === 'post') {
-    return await AxiosClient.post(`post/community/${variables.id}/generate/` + variables.inspiration);
+    return await AxiosClient.post(`post/community/${variables.id}/generate/`, {
+      inspiration: variables.inspiration,
+      with_image: variables.with_image,
+    });
   } else if (variables.type === 'community') {
-    return await AxiosClient.post('community/generate/' + variables.inspiration);
+    return await AxiosClient.post('community/generate/', {
+      inspiration: variables.inspiration,
+    });
   } else {
-    return await AxiosClient.post(`comment/post/${variables.id}/generate/` + variables.inspiration);
+    return await AxiosClient.post(`comment/post/${variables.id}/generate/`, {
+      inspiration: variables.inspiration,
+    });
   }
 }
 

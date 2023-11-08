@@ -7,8 +7,8 @@ interface PillProps {
 
 export default function Pill(props: PillProps) {
     return (
-        <TouchableOpacity className='bg-gray-300 p-2 rounded-lg mr-1' onPress={props.handler}>
-            <Text>{props.text}</Text>
+        <TouchableOpacity className='bg-black p-2 rounded-lg mr-1' onPress={props.handler}>
+            <Text className='text-white'>{props.text}</Text>
         </TouchableOpacity>
     );
 }

@@ -73,12 +73,18 @@ class PostController extends Controller
         return response()->json(["message" => 'Post deleted'], 200);
     }
 
-    public function generate(Community $community, string $keyword = null)
-    {   
+    public function generate(Request $request, Community $community)
+    {      
         $prompt = 'Generate a post in the style of a Reddit post for this community' . $community['name'];
 
-        if ($keyword) {
-            $prompt = $prompt . 'With an emphasis on : ' . $keyword;
+        if ($request->inspiration) {
+            $prompt = $prompt . 'With an emphasis on : ' . $request->inspiration;
+        }
+
+        if ($request->with_image) {
+            $prompt = $prompt . 'This post will be coupled with an image.';
+        } else {
+            $prompt = $prompt . 'This post will not contain an image.';
         }
 
         $res = OpenAIController::ask($prompt);
@@ -86,7 +92,6 @@ class PostController extends Controller
         $validator = Validator::make($res, [
             'title' => 'required',
             'text_content' => 'required',
-            'has_media' => 'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -97,8 +102,8 @@ class PostController extends Controller
 
         $image = null;
 
-        if (isset($validated['has_media']) && $validated['has_media']) {
-            $imagePrompt = 'Create an image for this message' . $validated['text_content'];
+        if ($request->with_image) {
+            $imagePrompt = 'Create an fictional image inspired by this message' . $validated['text_content'];
             $image = OpenAIController::imagine($imagePrompt);
         }
 

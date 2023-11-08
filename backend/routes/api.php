@@ -37,7 +37,7 @@ Route::prefix('community')
         Route::get('/{community}', 'getCommunityById');
         Route::post('/', 'store')->middleware('auth:sanctum');
         Route::delete('/{community}', 'destroy')->middleware('auth:sanctum');
-        Route::post('/generate/{keyword?}','generate')->middleware('auth:sanctum');
+        Route::post('/generate/','generate')->middleware('auth:sanctum');
 });
 
 Route::prefix('post')
@@ -46,7 +46,7 @@ Route::prefix('post')
         Route::get('/', 'index');
         Route::get('/{keyword?}', 'index');
         Route::post('community/{community}', 'store')->middleware('auth:sanctum');
-        Route::post('community/{community}/generate/{keyword?}', 'generate')->middleware('auth:sanctum');
+        Route::post('community/{community}/generate/', 'generate')->middleware('auth:sanctum');
         Route::delete('/{post}', 'destroy')->middleware('auth:sanctum');
         Route::get('/community/{community}/{keyword?}', 'getPostFromCommunity');
         Route::get('/user/{user}/{keyword?}', 'getPostFromUser');
@@ -58,6 +58,6 @@ Route::prefix('comment')
         Route::get('{comment}', 'getCommentById');
         Route::get('/post/{post}', 'getCommentByPostId');
         Route::post('/post/{post}', 'store')->middleware('auth:sanctum');
-        Route::post('/post/{post}/generate/{keyword?}', 'generate')->middleware('auth:sanctum');
+        Route::post('/post/{post}/generate/', 'generate')->middleware('auth:sanctum');
         Route::delete('/{comment}', 'destroy')->middleware('auth:sanctum');
 });
