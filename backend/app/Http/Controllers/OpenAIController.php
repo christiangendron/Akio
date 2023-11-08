@@ -28,10 +28,14 @@ class OpenAIController extends Controller
                 'messages' => $messages,
                 'functions' => $functions,
             ]);
-            
-        $parsedData = json_decode($response);
 
-        return $parsedData->choices[0]->message->function_call->arguments;
+        if ($response->status() != 200) {
+            throw new \Exception('The OpenAi request (ask) failed with status ' . $response->status());
+        }
+            
+        $parsedData = json_decode($response)->choices[0]->message->function_call->arguments;
+
+        return json_decode($parsedData, true);
     }
 
     public static function imagine($prompt)
@@ -39,10 +43,15 @@ class OpenAIController extends Controller
         $response = Http::accept('application/json')
         ->withToken(config('env.OPENAI_API_KEY'))
         ->post('https://api.openai.com/v1/images/generations', [
+            "model" => "dall-e-3",
             'prompt' => $prompt,
             'n' => 1,
-            'size'=> '512x512',
+            'size'=> '1024x1024',
         ]);
+
+        if ($response->status() != 200) {
+            throw new \Exception('The OpenAi request (imagine) failed with status ' . $response->status());
+        }
         
         $parsedData = json_decode($response);
 

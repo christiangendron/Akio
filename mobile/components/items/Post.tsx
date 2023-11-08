@@ -12,6 +12,7 @@ export interface PostProps {
     user_id: number;
     community_name: string;
     username: string;
+    keyToInvalidate: string;
 }
 
 export default function Post(props: PostProps) {
@@ -24,7 +25,7 @@ export default function Post(props: PostProps) {
                 <Text>{props.text_content}</Text>
             </View>
             {image}
-            <PostInteraction {...props} />
+            <PostInteraction {...props} keyToInvalidate={props.keyToInvalidate} />
         </View>
     );
 }

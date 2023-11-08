@@ -7,6 +7,7 @@ use App\Models\Community;
 use App\Http\Resources\CommunityResource;
 use App\Http\Requests\CommunityRequest;
 use App\Http\Controllers\OpenAIController;
+use Illuminate\Support\Facades\Validator;
 
 class CommunityController extends Controller
 {
@@ -56,11 +57,20 @@ class CommunityController extends Controller
 
         $res = OpenAIController::ask($prompt);
 
-        $parsedResponse = json_decode($res);
+        $validator = Validator::make($res, [
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(["message" => 'OpenAi did not return the appropriate field'], 422);
+        }
+
+        $validated = $validator->validated();
 
         $community = new Community;
-        $community->name = $parsedResponse->name;
-        $community->description = $parsedResponse->description;
+        $community->name = $validated['name'];
+        $community->description = $validated['description'];
         $community->user_id = auth()->id();
         $community->save();
         

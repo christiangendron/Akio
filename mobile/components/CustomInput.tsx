@@ -4,7 +4,7 @@ import { TextInput } from 'react-native'
 type CustomInputProps = {
     placeholder: string,
     onBlur?: () => void,
-    onChangeText: () => void,
+    onChangeText: (text: string) => void,
     value: string,
     secureTextEntry?: boolean,
     isError: boolean | undefined,

@@ -1,4 +1,4 @@
-import { View, ActivityIndicator, FlatList } from 'react-native';
+import { View, ActivityIndicator, FlatList, TouchableOpacity, Image } from 'react-native';
 import { useContext, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AppTheme from '../styles/AppTheme';
@@ -7,17 +7,23 @@ import AkioServices from '../services/AkioServices';
 import Community, { CommunityProps } from '../components/items/Community';
 import ErrorMessage from '../components/ErrorMessage';
 import NothingFound from '../components/NothingFound';
-import GenerateCommunity from '../components/buttons/GenerateCommunity';
 import { AuthContext } from '../context/AuthContext';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackParams } from '../types/Navigator';
 
 export default function Communities() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
   const authContext = useContext(AuthContext);
 
+  const key = `community-list`;
   const query = useQuery({
-    queryKey: ['community-list'],
+    queryKey: [key],
     queryFn: () => AkioServices.getCommunities(),
   });
+
+  const generationButtonNavigation = <TouchableOpacity onPress={() => navigation.navigate('Generate', { type: "community", id: 0, invalidate: key })}>
+    <Image source={require('../assets/icons/new.png')} className='h-5 w-5 mr-3'/>
+  </TouchableOpacity>
 
   useEffect(() => {
     navigation.setOptions({
@@ -26,8 +32,11 @@ export default function Communities() {
         backgroundColor: AppTheme.lightgray
       },
       headerTintColor: AppTheme.black,
+      headerRight: () => (
+        generationButtonNavigation
+      ),
     });
-  }, [navigation]);
+  }, [navigation, authContext.isAuth]);
 
   if (query.isLoading) {
     return (
@@ -46,10 +55,8 @@ export default function Communities() {
   }
 
   const renderItem = ({ item }: { item: CommunityProps }): JSX.Element => {
-    return <Community key={item.id} {...item } />;
+    return <Community key={item.id} {...item } keyToInvalidate={key} />;
   };
-
-  const generation = <View className='mt-2'><GenerateCommunity /></View>
 
   return (
     <View className='flex flex-1 justify-center items-center'>
@@ -62,7 +69,6 @@ export default function Communities() {
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
         ListEmptyComponent={<NothingFound type="communities" />}
-        ListFooterComponent={authContext.isAuth ? generation: null}
       />
     </View>
   );

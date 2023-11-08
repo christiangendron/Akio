@@ -3,9 +3,9 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../../types/Navigator';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import useDeleteCommunityMutation from '../../hooks/useDeleteCommunityMutation';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import useDeleteItemMutation from '../../hooks/useDeleteItem';
 const trashCan = require('../../assets/icons/trash-can.png');
 
 export interface CommunityProps {
@@ -13,16 +13,17 @@ export interface CommunityProps {
     name: string;
     description: string;
     user_id: number;
+    keyToInvalidate: string;
 }
 
 export default function Community(props: CommunityProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
     const authContext = useContext(AuthContext);
 
-    const deleteMutation = useDeleteCommunityMutation();
+    const deleteMutation = useDeleteItemMutation(props.keyToInvalidate);
 
     const deletePost = () => {
-        deleteMutation.mutate({ community_id: props.id })
+        deleteMutation.mutate({ id: props.id, type: "community" })
     };
     
     const renderRightActions = () => {
@@ -38,7 +39,7 @@ export default function Community(props: CommunityProps) {
         <Text className='text-sm'>{props.description}</Text>
     </TouchableOpacity>
 
-    if (authContext.userId === props.user_id || authContext.isAdmin) return (
+    if (authContext.canDelete(props.user_id)) return (
         <Swipeable renderRightActions={renderRightActions}>
             {content}
         </Swipeable>

@@ -1,22 +1,34 @@
 
-import { ActivityIndicator, FlatList, View } from 'react-native';
-import { DetailsScreenProps } from '../types/Details';
+import { ActivityIndicator, FlatList, TouchableOpacity, View, Image } from 'react-native';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
 import ErrorMessage from '../components/ErrorMessage';
 import Comment, { CommentItemProps } from '../components/items/Comment';
-import Post from '../components/items/Post';
+import Post, { PostProps } from '../components/items/Post';
 import NoPostsFound from '../components/NothingFound';
 import { useNavigation } from '@react-navigation/native';
 import { useContext, useEffect } from 'react';
 import AppTheme from '../styles/AppTheme';
-import GenerateComment from '../components/buttons/GenerateComment';
 import { AuthContext } from '../context/AuthContext';
+import { StackParams } from '../types/Navigator';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+export type DetailsScreenProps = {
+  route: {
+    params: PostProps;
+  }
+};
 
 export default function Details(props: DetailsScreenProps) {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
   const current = props.route.params;
   const authContext = useContext(AuthContext);
+
+  const key = `comment-${current.id}`;
+
+  const generationButtonNavigation = <TouchableOpacity onPress={() => navigation.navigate('Generate', { type: "comment", id: current.id, invalidate: key })}>
+    <Image source={require('../assets/icons/new.png')} className='h-5 w-5 mr-3'/>
+  </TouchableOpacity>
 
   useEffect(() => {
     navigation.setOptions({
@@ -24,11 +36,14 @@ export default function Details(props: DetailsScreenProps) {
         backgroundColor: AppTheme.lightgray
       },
       headerTintColor: AppTheme.black,
+      headerRight: () => (
+        generationButtonNavigation
+      ),
     });
-  }, [navigation]);
+  }, [navigation, authContext.isAuth]);
 
   const query = useQuery({
-    queryKey: ['comments', current.id],
+    queryKey: [key],
     queryFn: () => AkioServices.getComments(current.id),
   });
 
@@ -49,10 +64,8 @@ export default function Details(props: DetailsScreenProps) {
   }
 
   const renderItem = ({ item }: { item: CommentItemProps }): JSX.Element => {
-    return <Comment key={item.id} {...item} />;
+    return <Comment key={item.id} {...item} keyToInvalidate={key} />;
   };
-
-  const generation = <View className='mt-2'><GenerateComment post_id={current.id} /></View>
 
   return (
     <View className='flex flex-1 justify-center items-center'>
@@ -65,7 +78,6 @@ export default function Details(props: DetailsScreenProps) {
         onEndReachedThreshold={2}
         ListHeaderComponent={<View className='mb-2'><Post {...current} /></View>}
         ListEmptyComponent={<NoPostsFound type="comments"/>}
-        ListFooterComponent={authContext.isAuth ? generation : null}
       />
     </View>
   );

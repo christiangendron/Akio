@@ -9,6 +9,7 @@ use App\Http\Resources\PostResource;
 use App\Models\Community;
 use App\Http\Controllers\OpenAIController;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -82,18 +83,28 @@ class PostController extends Controller
 
         $res = OpenAIController::ask($prompt);
 
-        $parsedResponse = json_decode($res);
+        $validator = Validator::make($res, [
+            'title' => 'required',
+            'text_content' => 'required',
+            'has_media' => 'nullable',
+        ]);
 
-        $post = new Post;
-        $post->title = $parsedResponse->title;
-        $post->text_content = $parsedResponse->text_content;
+        if ($validator->fails()) {
+            return response()->json(["message" => 'OpenAi did not return the appropriate field'], 422);
+        }
+
+        $validated = $validator->validated();
+
         $image = null;
 
-        if (isset($parsedResponse->has_media) && $parsedResponse->has_media) {
-            $imagePrompt = 'Create an image for this message' . $parsedResponse->text_content;
+        if (isset($validated['has_media']) && $validated['has_media']) {
+            $imagePrompt = 'Create an image for this message' . $validated['text_content'];
             $image = OpenAIController::imagine($imagePrompt);
         }
 
+        $post = new Post;
+        $post->title = $validated['title'];
+        $post->text_content = $validated['text_content'];
         $post->media_url = $image;
         $post->user_id = auth()->user()->id;
         $post->community_id = $community['id'];

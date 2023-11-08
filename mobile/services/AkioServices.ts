@@ -2,6 +2,7 @@ import { PostProps } from '../components/items/Post';
 import { CommentItemProps } from '../components/items/Comment';
 import { CommunityProps } from '../components/items/Community';
 import AxiosClient from './AxiosClient';
+import { GenerateItemVariables } from '../components/GenerateButton';
 
 async function getPosts(community_id:number, keyword: string): Promise<PostProps[]> { 
   let res = null;
@@ -30,34 +31,24 @@ async function getCommunities(): Promise<CommunityProps[]> {
   return res.data.data;
 }
 
-async function generatePost(community_id: number): Promise<PostProps[]> { 
-  const res = await AxiosClient.post(`post/community/${community_id}/generate`);
-  return res.data.data;
+async function generateItem(variables: GenerateItemVariables): Promise<any> { 
+  if (variables.type === 'post') {
+    return await AxiosClient.post(`post/community/${variables.id}/generate/` + variables.inspiration);
+  } else if (variables.type === 'community') {
+    return await AxiosClient.post('community/generate/' + variables.inspiration);
+  } else {
+    return await AxiosClient.post(`comment/post/${variables.id}/generate/` + variables.inspiration);
+  }
 }
 
-async function generateCommunity(): Promise<CommunityProps[]> {
-  const res = await AxiosClient.post('community/generate');
-  return res.data.data;
-}
-
-async function generateComment(post_id: number): Promise<CommunityProps[]> { 
-  const res = await AxiosClient.post('comment/post/' + post_id + '/generate');
-  return res.data.data;
-}
-
-async function deletePost(post_id: number): Promise<CommunityProps[]> { 
-  const res = await AxiosClient.delete('post/' + post_id);
-  return res.data.message;
-}
-
-async function deleteCommunity(community_id: number): Promise<CommunityProps[]> { 
-  const res = await AxiosClient.delete('community/' + community_id);
-  return res.data.message;
-}
-
-async function deleteComment(comment_id: number): Promise<CommunityProps[]> { 
-  const res = await AxiosClient.delete('comment/' + comment_id);
-  return res.data.message;
+async function deleteItem(variables: any): Promise<any> {
+  if (variables.type === 'post') {
+    return await AxiosClient.delete('post/' + variables.id);
+  } else if (variables.type === 'community') {
+    return await AxiosClient.delete('community/' + variables.id);
+  } else {
+    return await AxiosClient.delete('comment/' + variables.id);
+  }
 }
 
 const AkioServices = {
@@ -65,12 +56,8 @@ const AkioServices = {
   getCommunities, 
   getComments, 
   getUserPosts, 
-  generatePost, 
-  generateCommunity, 
-  generateComment, 
-  deletePost, 
-  deleteCommunity,
-  deleteComment
+  generateItem,
+  deleteItem
 };
 
 export default AkioServices;

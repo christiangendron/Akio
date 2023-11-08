@@ -1,5 +1,4 @@
 import { Text, View, TouchableOpacity, Image } from 'react-native';
-import useDeleteCommentMutation from '../../hooks/useDeleteCommentMutation';
 const trashCan = require('../../assets/icons/trash-can.png');
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { useContext } from 'react';
@@ -7,6 +6,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../../types/Navigator';
+import useDeleteItemMutation from '../../hooks/useDeleteItem';
 
 export interface CommentItemProps {
     id: number;
@@ -15,15 +15,16 @@ export interface CommentItemProps {
     user_id: number;
     post_id: number;
     username: string;
+    keyToInvalidate: string;
 }
 
 export default function Comment(props: CommentItemProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
-    const deleteCommentMutation = useDeleteCommentMutation();
+    const deleteCommentMutation = useDeleteItemMutation(props.keyToInvalidate);
     const authContext = useContext(AuthContext);
 
     const deletePost = () => {
-        deleteCommentMutation.mutate({ comment_id: props.id })
+        deleteCommentMutation.mutate({ id: props.id, type: 'comment' })
     };
     
     const renderRightActions = () => {
@@ -40,7 +41,7 @@ export default function Comment(props: CommentItemProps) {
             </TouchableOpacity> 
         </View>
 
-    if (props.user_id === authContext.userId || authContext.isAdmin) return (
+    if (authContext.canDelete(props.user_id)) return (
         <Swipeable renderRightActions={renderRightActions}>
             {content}
         </Swipeable>

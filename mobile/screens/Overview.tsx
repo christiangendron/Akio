@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useContext, useEffect, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
-import { OverviewProps } from '../types/Overview';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
 import ErrorMessage from '../components/ErrorMessage';
@@ -10,6 +9,15 @@ import NothingFound from '../components/NothingFound';
 import SearchBarComp from '../components/SearchBarComp';
 import SmallPost, { SmallPostProps } from '../components/items/SmallPost';
 import { SettingsContext } from '../context/SettingsContext';
+
+export type OverviewProps = {
+  route: {
+    params: {
+      name: string;
+      id: number;
+    }
+  }
+}
 
 export default function Overview(props: OverviewProps) {
   const navigation = useNavigation();
