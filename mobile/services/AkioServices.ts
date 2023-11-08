@@ -40,6 +40,7 @@ async function generateItem(variables: GenerateItemVariables): Promise<any> {
   } else if (variables.type === 'community') {
     return await AxiosClient.post('community/generate/', {
       inspiration: variables.inspiration,
+      with_image: variables.with_image,
     });
   } else {
     return await AxiosClient.post(`comment/post/${variables.id}/generate/`, {
