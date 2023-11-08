@@ -38,11 +38,15 @@ export default function GenerateButton(props: GenerateCommentProps) {
         </View>
     )
 
-    if (mutation.error instanceof Error) return (
-        <View className='bg-gray-300 p-5'>
-            <ErrorMessage message={mutation.error.message} actionMessage="Try again" action={() => mutation.mutate(variables)} />
-        </View>
-    )
+    if (mutation.error instanceof Error) {
+        const errorMessage = (mutation.error as any).response?.data?.message;
+
+        return (
+            <View className='bg-gray-300 p-5'>
+                <ErrorMessage message={errorMessage} actionMessage="Try again" action={() => mutation.mutate(variables)} />
+            </View>
+        )
+    }
 
     return (
         <TouchableOpacity onPress={() => mutation.mutate(variables)} className='bg-gray-300 p-5'>
