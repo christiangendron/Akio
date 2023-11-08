@@ -104,7 +104,7 @@ class PostController extends Controller
 
         if ($request->with_image) {
             $imagePrompt = 'Create an fictional image inspired by this message' . $validated['text_content'];
-            $image = OpenAIController::imagine($imagePrompt);
+            $image = OpenAIController::imagine($imagePrompt, "dall-e-3", "1024x1024");
         }
 
         $post = new Post;

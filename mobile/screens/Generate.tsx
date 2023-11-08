@@ -53,7 +53,7 @@ export default function Generate(props: GenerateNavigationProps) {
         <Text className='text-center text-lg mb-3'>Generate a {props.route.params.type}</Text>
         <View className='w-full'>
           <CustomInput placeholder='Inspiration for the generation (optional)' onChangeText={setInspiration} value={inspiration} isError={false} />
-          {props.route.params.type === 'post' && withImageOption}
+          {props.route.params.type === 'post' || props.route.params.type === 'community' ? withImageOption: null}
           <GenerateButton 
             id={props.route.params.id} 
             type={props.route.params.type} 

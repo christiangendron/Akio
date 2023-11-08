@@ -38,15 +38,15 @@ class OpenAIController extends Controller
         return json_decode($parsedData, true);
     }
 
-    public static function imagine($prompt)
+    public static function imagine($prompt, $model, $size)
     {
         $response = Http::accept('application/json')
         ->withToken(config('env.OPENAI_API_KEY'))
         ->post('https://api.openai.com/v1/images/generations', [
-            "model" => "dall-e-3",
+            "model" => $model,
             'prompt' => $prompt,
             'n' => 1,
-            'size'=> '1024x1024',
+            'size'=> $size,
         ]);
 
         if ($response->status() != 200) {

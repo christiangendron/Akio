@@ -26,8 +26,13 @@ class PostsGenerateTest extends TestCase
 
     public function testGeneratePostWithoutAuth()
     {
+        $data = [
+            'inspiration' => '',
+            'has_image' => false,
+        ];
+
         // Create a post without auth
-        $response = $this->json('post', '/api/post/community/' . $this->community->id . '/generate');
+        $response = $this->json('post', '/api/post/community/' . $this->community->id . '/generate', $data);
 
         // Expect a 401 (Unauthorized) response
         $response->assertStatus(401);
@@ -35,8 +40,13 @@ class PostsGenerateTest extends TestCase
 
     public function testGeneratePost()
     {
+        $data = [
+            'inspiration' => '',
+            'has_image' => false,
+        ];
+
         // Create a post with long timeout (open ai request with images takes a long time)
-        $response = $this->actingAs($this->user)->withHeaders(['timeout' => 60])->json('post', '/api/post/community/' . $this->community->id . '/generate');
+        $response = $this->actingAs($this->user)->withHeaders(['timeout' => 60])->json('post', '/api/post/community/' . $this->community->id . '/generate', $data);
 
         // Expect a 201 (Created) response and validate the response JSON data
         $response->assertStatus(201);
@@ -46,8 +56,13 @@ class PostsGenerateTest extends TestCase
 
     public function testGeneratePostWithKeyword()
     {
+        $data = [
+            'inspiration' => 'dogs',
+            'has_image' => false,
+        ];
+
         // Create a post with long timeout (open ai request with images takes a long time)
-        $response = $this->actingAs($this->user)->withHeaders(['timeout' => 60])->json('post', '/api/post/community/' . $this->community->id . '/generate/dogs');
+        $response = $this->actingAs($this->user)->withHeaders(['timeout' => 60])->json('post', '/api/post/community/' . $this->community->id . '/generate', $data);
 
         // Expect a 201 (Created) response and validate the response JSON data
         $response->assertStatus(201);

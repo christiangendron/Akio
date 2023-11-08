@@ -68,9 +68,17 @@ class CommunityController extends Controller
 
         $validated = $validator->validated();
 
+        $image = null;
+
+        if ($request->with_image) {
+            $imagePrompt = 'Create a clean, simple and circular logo for this community' . $validated['description'];
+            $image = OpenAIController::imagine($imagePrompt, "dall-e-3", "1024x1024");
+        }
+
         $community = new Community;
         $community->name = $validated['name'];
         $community->description = $validated['description'];
+        $community->media_url = $image;
         $community->user_id = auth()->id();
         $community->save();
         
