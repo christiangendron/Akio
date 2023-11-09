@@ -30,7 +30,7 @@ export default function Community(props: CommunityProps) {
     };
     
     const renderRightActions = () => {
-    return (<TouchableOpacity onPress={deletePost} className='bg-red-500 justify-center rounded-l-lg'>
+    return (<TouchableOpacity onPress={deletePost} className='bg-red-500 justify-center rounded-l-lg mt-2'>
             <Image source={trashCan} className='h-10 w-10 m-5' />
     </TouchableOpacity>);};
 
@@ -40,12 +40,15 @@ export default function Community(props: CommunityProps) {
     <Image source={{ uri: backendUrl + props.media_url }} className='h-16 w-16 rounded-full overflow-hidden m-2 border border-1' /> : 
     <Image source={require('../../assets/images/default-community.png')} className='h-16 w-16 rounded-full overflow-hidden m-2 border border-1' />
 
-    const content = <TouchableOpacity onPress={() => navigation.push('Community', { name: props.name, id: props.id })} className='flex flex-row bg-white justify-between items-center mx-2 rounded-lg'>
-        {image}
-        <View className='flex flex-col w-4/5 pr-3 pb-1'>
-            <Text className='text-lg font-bold'>{community_name}</Text>
-            <Text className='text-sm'>{shortenString(props.description, 125)}</Text>
-        </View>
+    const content = 
+    <TouchableOpacity 
+        onPress={() => navigation.push('Community', { name: props.name, id: props.id })} 
+        className='flex flex-row bg-white rounded-lg mx-2 mt-2 items-center'>
+            {image}
+            <View className='flex flex-col w-4/5 pr-3 pb-1'>
+                <Text className='text-lg font-bold'>{community_name}</Text>
+                <Text className='text-sm'>{shortenString(props.description, 125)}</Text>
+            </View>
     </TouchableOpacity>
 
     if (authContext.canDelete(props.user_id)) return (

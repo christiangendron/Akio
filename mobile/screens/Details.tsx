@@ -68,13 +68,13 @@ export default function Details(props: DetailsScreenProps) {
   return (
     <View className='flex flex-1 justify-center items-center'>
       <FlatList
+        className='w-screen'
         data={query.data}
         renderItem={renderItem}
         refreshing={query.isLoading}
-        ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
-        ListHeaderComponent={<View className='mb-2'><Post {...current} /></View>}
+        ListHeaderComponent={<Post {...current} />}
         ListEmptyComponent={<NoPostsFound type="comments"/>}
       />
     </View>

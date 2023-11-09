@@ -60,11 +60,10 @@ export default function Communities() {
   return (
     <View className='flex flex-1 justify-center items-center'>
       <FlatList
-        className='w-screen mt-2'
+        className='w-screen'
         data={query.data}
         renderItem={renderItem}
         refreshing={query.isLoading}
-        ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
         ListEmptyComponent={<NothingFound type="communities" />}

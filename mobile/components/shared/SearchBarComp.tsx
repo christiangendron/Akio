@@ -20,9 +20,9 @@ export default function SearchBarComp(props: SearchBarProps) {
     };
 
     return (
-        <View className='flex flex-row w-screen justify-center items-center p-2'>
+        <View className='flex flex-row justify-center items-center mx-2 mt-2'>
             <TextInput
-                className='flex-1 bg-white p-3 w-full rounded-lg pl-5'
+                className='flex flex-1 bg-white p-3 w-full rounded-lg pl-5'
                 placeholder={props.placeholder}
                 value={text}
                 onBlur={() => setIsFocused(false)}

@@ -33,13 +33,13 @@ export default function SmallPost(props: SmallPostProps) {
     };
 
     const renderRightActions = () => {
-    return (<TouchableOpacity onPress={deletePost} className='bg-red-500 justify-center'>
+    return (<TouchableOpacity onPress={deletePost} className='bg-red-500 justify-center rounded-l-lg mt-2'>
             <Image source={trashCan} className='h-10 w-10 m-5' />
     </TouchableOpacity>);};
 
     const image = props.media_url ? <Media media_url={props.media_url} /> : null;
 
-    const content = <View className='bg-white'>
+    const content = <View className='bg-white rounded-lg mx-2 mt-2'>
             <TouchableOpacity onPress={() => navigation.push('Details', { ...props })} className='p-2'>
                 <Text className='font-bold text-lg'>{props.title}</Text>
                 <Text>{props.text_content.slice(0,200)}...</Text>

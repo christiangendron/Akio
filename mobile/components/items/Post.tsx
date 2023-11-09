@@ -19,7 +19,7 @@ export default function Post(props: PostProps) {
     const image = props.media_url ? <Media media_url={props.media_url} /> : null;
     
     return (
-        <View className='bg-white'>
+        <View className='bg-white rounded-lg mt-2 mx-2'>
             <View className='p-2'>
                 <Text className='font-bold text-lg'>{props.title}</Text>
                 <Text>{props.text_content}</Text>
