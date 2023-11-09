@@ -2,6 +2,7 @@ import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import ErrorMessage from './ErrorMessage';
 import { useEffect } from 'react';
 import useGenerateMutation from '../../hooks/useGenerateMutation';
+import Option from '../items/Option';
 
 type GenerateCommentProps = {
     id: number;
@@ -30,30 +31,26 @@ export default function GenerateButton(props: GenerateCommentProps) {
     };
 
     useEffect(() => {
-      if (mutation.isSuccess) {
-        props.onComplete();
-      }
-    }, [mutation])
-    
+        if (mutation.isSuccess) {
+            props.onComplete();
+        }
+    }, [mutation.isSuccess]);
+
     if (mutation.isLoading) return (
-        <View className='bg-black p-5'>
-            <ActivityIndicator />
-        </View>
+        <Option label='Generate' handler={() => mutation.mutate(variables)} isLoading={true} />
     )
 
     if (mutation.error instanceof Error) {
         const errorMessage = (mutation.error as any).response?.data?.message;
 
         return (
-            <View className='bg-black p-5'>
+            <View className='bg-black p-5 w-full rounded-lg'>
                 <ErrorMessage message={errorMessage} actionMessage="Try again" action={() => mutation.mutate(variables)} />
             </View>
         )
     }
 
     return (
-        <TouchableOpacity onPress={() => mutation.mutate(variables)} className='bg-black p-5'>
-            <Text className='text-center text-white'>Generate</Text>
-        </TouchableOpacity>
+        <Option label='Generate' handler={() => mutation.mutate(variables)} />
     );
 }

@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { useRef } from 'react';
 
 interface OptionProps {
@@ -6,6 +6,7 @@ interface OptionProps {
     icon?: boolean,
     selected?: boolean,
     handler: () => void
+    isLoading?: boolean,
 }
 
 export default function Option(props: OptionProps) {
@@ -14,6 +15,12 @@ export default function Option(props: OptionProps) {
     if (props.selected) {
         style.current = 'flex flex-row w-full justify-center p-5 bg-gray-400 rounded-lg m-1 items-center'
     }
+
+    if (props.isLoading) return (
+        <View className={style.current}>
+            <ActivityIndicator />
+        </View>
+    )
 
     return (
         <TouchableOpacity onPress={props.handler} className={style.current}>

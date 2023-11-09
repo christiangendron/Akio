@@ -11,7 +11,6 @@ import Communities from '../screens/Communities';
 import { StackParams, TabParams } from '../types/Navigator';
 import Account from '../screens/Account';
 import RegisterScreen from '../screens/Register';
-import Generate from '../screens/Generate';
 
 const HomeStack = createStackNavigator<StackParams>();
 
@@ -21,7 +20,6 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Community" component={Community} initialParams={{ name: 'Home', id: 0 }}/>
       <HomeStack.Screen name="Details" component={Details} />
       <HomeStack.Screen name="Overview" component={Overview} />
-      <SearchStack.Screen name="Generate" component={Generate} />
     </HomeStack.Navigator>
   );
 }
@@ -35,7 +33,6 @@ function SearchStackScreen() {
       <SearchStack.Screen name="Details" component={Details} />
       <SearchStack.Screen name="Overview" component={Overview} />
       <SearchStack.Screen name="Community" component={Community} />
-      <SearchStack.Screen name="Generate" component={Generate} />
     </SearchStack.Navigator>
   );
 }

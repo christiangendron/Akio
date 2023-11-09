@@ -1,5 +1,5 @@
 
-import { ActivityIndicator, FlatList, TouchableOpacity, View, Image } from 'react-native';
+import { ActivityIndicator, FlatList, View } from 'react-native';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
 import ErrorMessage from '../components/shared/ErrorMessage';
@@ -12,6 +12,7 @@ import AppTheme from '../styles/AppTheme';
 import { AuthContext } from '../context/AuthContext';
 import { StackParams } from '../types/Navigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import GenerateModal from '../components/modal/GenerateModal';
 
 export type DetailsScreenProps = {
   route: {
@@ -23,12 +24,7 @@ export default function Details(props: DetailsScreenProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
   const current = props.route.params;
   const authContext = useContext(AuthContext);
-
-  const key = `comment-${current.id}`;
-
-  const generationButtonNavigation = <TouchableOpacity onPress={() => navigation.navigate('Generate', { type: "comment", id: current.id, invalidate: key })}>
-    <Image source={require('../assets/icons/new.png')} className='h-5 w-5 mr-3'/>
-  </TouchableOpacity>
+  const queryKey = `comment-${current.id}`;
 
   useEffect(() => {
     navigation.setOptions({
@@ -37,13 +33,13 @@ export default function Details(props: DetailsScreenProps) {
       },
       headerTintColor: AppTheme.black,
       headerRight: () => (
-        generationButtonNavigation
+        <GenerateModal type="comment" id={current.id} keyToInvalidate={queryKey} />
       ),
     });
   }, [navigation, authContext.isAuth]);
 
   const query = useQuery({
-    queryKey: [key],
+    queryKey: [queryKey],
     queryFn: () => AkioServices.getComments(current.id),
   });
 
@@ -66,7 +62,7 @@ export default function Details(props: DetailsScreenProps) {
   }
 
   const renderItem = ({ item }: { item: CommentItemProps }): JSX.Element => {
-    return <Comment key={item.id} {...item} keyToInvalidate={key} />;
+    return <Comment key={item.id} {...item} keyToInvalidate={queryKey} />;
   };
 
   return (

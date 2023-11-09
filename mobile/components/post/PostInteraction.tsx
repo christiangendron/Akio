@@ -1,9 +1,8 @@
 import { View } from 'react-native';
-import { roundedCount } from '../../tools/Formating';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../../types/Navigator';
-import PostOptions from './PostOptions';
+import PostOptions from '../modal/PostOptionsModal';
 import { useContext } from 'react';
 import { SettingsContext } from '../../context/SettingsContext';
 import { PostProps } from '../items/Post';

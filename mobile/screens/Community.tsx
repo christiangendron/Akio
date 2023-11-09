@@ -12,6 +12,7 @@ import SmallPost, { SmallPostProps } from '../components/items/SmallPost';
 import { AuthContext } from '../context/AuthContext';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../types/Navigator';
+import GenerateModal from '../components/modal/GenerateModal';
 
 export interface CommunityNavigationProps {
   route: {
@@ -37,11 +38,6 @@ export default function Community(props: CommunityNavigationProps) {
     queryFn: () => AkioServices.getPosts(community_id.current, keyword),
   });
 
-  const generationButtonNavigation = community_id.current !== 0 ? 
-  <TouchableOpacity onPress={() => navigation.navigate('Generate', { type: "post", id: community_id.current, invalidate: key })}>
-    <Image source={require('../assets/icons/new.png')} className='h-5 w-5 mr-3'/>
-  </TouchableOpacity> : null;
-
   useEffect(() => {
     navigation.setOptions({
       title: community.current,
@@ -50,7 +46,7 @@ export default function Community(props: CommunityNavigationProps) {
       },
       headerTintColor: AppTheme.black,
       headerRight: () => (
-        generationButtonNavigation
+        community_id.current !== 0 ? <GenerateModal type="post" id={community_id.current} keyToInvalidate={key} /> : null
       ),
     });
   }, [navigation, authContext.isAuth]);

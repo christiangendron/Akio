@@ -10,6 +10,7 @@ import NothingFound from '../components/shared/NothingFound';
 import { AuthContext } from '../context/AuthContext';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../types/Navigator';
+import GenerateModal from '../components/modal/GenerateModal';
 
 export default function Communities() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
@@ -21,10 +22,6 @@ export default function Communities() {
     queryFn: () => AkioServices.getCommunities(),
   });
 
-  const generationButtonNavigation = <TouchableOpacity onPress={() => navigation.navigate('Generate', { type: "community", id: 0, invalidate: key })}>
-    <Image source={require('../assets/icons/new.png')} className='h-5 w-5 mr-3'/>
-  </TouchableOpacity>
-
   useEffect(() => {
     navigation.setOptions({
       title: 'Communities',
@@ -33,7 +30,7 @@ export default function Communities() {
       },
       headerTintColor: AppTheme.black,
       headerRight: () => (
-        generationButtonNavigation
+        <GenerateModal type="community" id={0} keyToInvalidate={key} />
       ),
     });
   }, [navigation, authContext.isAuth]);

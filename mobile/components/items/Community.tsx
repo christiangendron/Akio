@@ -30,7 +30,7 @@ export default function Community(props: CommunityProps) {
     };
     
     const renderRightActions = () => {
-    return (<TouchableOpacity onPress={deletePost} className='bg-red-500 justify-center'>
+    return (<TouchableOpacity onPress={deletePost} className='bg-red-500 justify-center rounded-l-lg'>
             <Image source={trashCan} className='h-10 w-10 m-5' />
     </TouchableOpacity>);};
 
