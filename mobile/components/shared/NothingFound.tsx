@@ -6,8 +6,8 @@ interface NothingFoundProps {
 
 export default function NothingFound(props: NothingFoundProps) {
   return (
-    <View className='w-screen'>
-      <Text className='text-center bg-white p-5'>
+    <View className='rounded-lg m-2 bg-white'>
+      <Text className='text-center p-5'>
         No {props.type} found
       </Text>
     </View>
