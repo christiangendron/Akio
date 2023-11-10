@@ -37,7 +37,7 @@ export default function Community(props: CommunityProps) {
     const community_name = props.name.charAt(0).toUpperCase() + props.name.slice(1);
 
     const image = props.media_url ? 
-    <Image source={{ uri: backendUrl + props.media_url }} className='h-16 w-16 rounded-full overflow-hidden m-2 border border-1' /> : 
+    <Image source={{ uri: backendUrl + 'sm-' + props.media_url }} className='h-16 w-16 rounded-full overflow-hidden m-2 border border-1' /> : 
     <Image source={require('../../assets/images/default-community.png')} className='h-16 w-16 rounded-full overflow-hidden m-2 border border-1' />
 
     const content = 
