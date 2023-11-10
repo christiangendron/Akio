@@ -67,6 +67,8 @@ class PostController extends Controller
 
         if ($post->media_url) {
             Storage::disk('public')->delete($post->media_url);
+            Storage::disk('public')->delete('sm-' . $post->media_url);
+            Storage::disk('public')->delete('md-' . $post->media_url);
         }
         
         $post->delete();
