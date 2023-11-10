@@ -10,20 +10,16 @@ interface OptionProps {
 }
 
 export default function Option(props: OptionProps) {
-    const style = useRef('flex flex-row w-full justify-center p-5 bg-black rounded-lg m-1 items-center');
-
-    if (props.selected) {
-        style.current = 'flex flex-row w-full justify-center p-5 bg-gray-400 rounded-lg m-1 items-center'
-    }
+    const style = 'w-full p-5 bg-black rounded-lg items-center m-1';
 
     if (props.isLoading) return (
-        <View className={style.current}>
+        <View className={style}>
             <ActivityIndicator />
         </View>
     )
 
     return (
-        <TouchableOpacity onPress={props.handler} className={style.current}>
+        <TouchableOpacity onPress={props.handler} className={style}>
             <Text className='text-center text-white'>{props.label}</Text>
         </TouchableOpacity>
     );

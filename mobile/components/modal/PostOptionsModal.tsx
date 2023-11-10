@@ -33,7 +33,7 @@ export default function PostOptionsModal(props: PostOptionsProps) {
 
     const deleteOption = <Option label="Delete" handler={() => {deleteMutation.mutate({ id: props.id, type: "post" });setModalVisible(!modalVisible);}} />
 
-    const modalContent = <View className="bg-white w-full p-1 flex items-center rounded-lg">
+    const modalContent = <View className="bg-secondary dark:bg-secondaryDark rounded-lg flex items-center p-2">
         <Option label={`In ${props.community}`} handler={() => {
         toggleModal();
         navigation.push('Community', { id: props.community_id, name: props.community })

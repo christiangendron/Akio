@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import useDeleteItemMutation from '../../hooks/useDeleteItem';
 import { shortenString } from '../../tools/Formating';
-const trashCan = require('../../assets/icons/trash-can.png');
+import { FontAwesome5 } from '@expo/vector-icons'; 
 
 export interface CommunityProps {
     id: number;
@@ -30,8 +30,8 @@ export default function Community(props: CommunityProps) {
     };
     
     const renderRightActions = () => {
-    return (<TouchableOpacity onPress={deletePost} className='bg-red-500 justify-center rounded-l-lg mt-2'>
-            <Image source={trashCan} className='h-10 w-10 m-5' />
+    return (<TouchableOpacity onPress={deletePost} className='bg-red-500 justify-center rounded-l-lg mt-2 p-5'>
+            <FontAwesome5 name="trash-alt" size={40} color="white" /> 
     </TouchableOpacity>);};
 
     const community_name = props.name.charAt(0).toUpperCase() + props.name.slice(1);
@@ -43,11 +43,11 @@ export default function Community(props: CommunityProps) {
     const content = 
     <TouchableOpacity 
         onPress={() => navigation.push('Community', { name: props.name, id: props.id })} 
-        className='flex flex-row bg-white rounded-lg mx-2 mt-2 items-center'>
+        className='flex flex-row bg-secondary dark:bg-secondaryDark rounded-lg mx-2 mt-2 items-center'>
             {image}
             <View className='flex flex-col w-4/5 pr-3 pb-1'>
-                <Text className='text-lg font-bold'>{community_name}</Text>
-                <Text className='text-sm'>{shortenString(props.description, 125)}</Text>
+                <Text className='text-lg font-bold dark:text-white'>{community_name}</Text>
+                <Text className='text-sm dark:text-white'>{shortenString(props.description, 125)}</Text>
             </View>
     </TouchableOpacity>
 

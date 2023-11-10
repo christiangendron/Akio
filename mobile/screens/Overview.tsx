@@ -4,7 +4,6 @@ import { View, ActivityIndicator, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
 import ErrorMessage from '../components/shared/ErrorMessage';
-import AppTheme from '../styles/AppTheme';
 import NothingFound from '../components/shared/NothingFound';
 import SearchBarComp from '../components/shared/SearchBarComp';
 import SmallPost, { SmallPostProps } from '../components/items/SmallPost';
@@ -27,10 +26,6 @@ export default function Overview(props: OverviewProps) {
   useEffect(() => {
     navigation.setOptions({
       title: props.route.params.name,
-      headerStyle: {
-        backgroundColor: AppTheme.lightgray
-      },
-      headerTintColor: AppTheme.black,
     });
   }, [navigation]);
 
@@ -60,7 +55,7 @@ export default function Overview(props: OverviewProps) {
   };
 
   return (
-    <View className='flex flex-1 justify-center items-center'>
+    <View className='flex flex-1 justify-center items-center bg-background dark:bg-backgroundDark'>
       <FlatList
         className='w-screen'
         data={query.data}
@@ -68,6 +63,7 @@ export default function Overview(props: OverviewProps) {
         refreshing={query.isLoading}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
+        ListFooterComponent={<View className='h-3'/>}
         ListHeaderComponent={settings.searchBar ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch} placeholder='Search in this user posts...'/> : null}
         ListEmptyComponent={<NothingFound type="posts" />}
       />

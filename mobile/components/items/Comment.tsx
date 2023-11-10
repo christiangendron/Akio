@@ -1,5 +1,5 @@
 import { Text, View, TouchableOpacity, Image } from 'react-native';
-const trashCan = require('../../assets/icons/trash-can.png');
+import { FontAwesome5 } from '@expo/vector-icons'; 
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
@@ -28,14 +28,14 @@ export default function Comment(props: CommentItemProps) {
     };
     
     const renderRightActions = () => {
-    return (<TouchableOpacity onPress={deletePost} className='bg-red-500 justify-center rounded-l-lg mt-2'>
-            <Image source={trashCan} className='h-5 w-5 m-5' />
+    return (<TouchableOpacity onPress={deletePost} className='bg-red-500 justify-center rounded-l-lg mt-2 p-5'>
+            <FontAwesome5 name="trash-alt" size={40} color="white" />
     </TouchableOpacity>);};
 
-    const content = <View className="bg-white p-2 rounded-lg mt-2 mx-2">
-            <Text>{props.text_content}</Text>
+    const content = <View className="bg-secondary dark:bg-secondaryDark p-2 rounded-lg mt-2 mx-2">
+            <Text className='dark:text-white'>{props.text_content}</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Overview', { name: props.username, id: props.user_id })}>
-                <Text className='text-sm text-gray-500'>
+                <Text className='text-sm dark:text-white dark:font-bold'>
                     by {props.username}
                 </Text>
             </TouchableOpacity> 

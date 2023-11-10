@@ -1,7 +1,6 @@
-import { View, ActivityIndicator, FlatList, TouchableOpacity, Image } from 'react-native';
+import { View, ActivityIndicator, FlatList } from 'react-native';
 import { useContext, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import AppTheme from '../styles/AppTheme';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
 import Community, { CommunityProps } from '../components/items/Community';
@@ -15,7 +14,7 @@ import GenerateModal from '../components/modal/GenerateModal';
 export default function Communities() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
   const authContext = useContext(AuthContext);
-
+  
   const key = `community-list`;
   const query = useQuery({
     queryKey: [key],
@@ -25,10 +24,6 @@ export default function Communities() {
   useEffect(() => {
     navigation.setOptions({
       title: 'Communities',
-      headerStyle: {
-        backgroundColor: AppTheme.lightgray
-      },
-      headerTintColor: AppTheme.black,
       headerRight: () => (
         <GenerateModal type="community" id={0} keyToInvalidate={key} />
       ),
@@ -37,7 +32,7 @@ export default function Communities() {
 
   if (query.isLoading) {
     return (
-      <View className='flex flex-1 justify-center items-center'>
+      <View className='flex flex-1 justify-center items-center bg-background dark:bg-backgroundDark'>
         <ActivityIndicator />
       </View>
     );
@@ -45,7 +40,7 @@ export default function Communities() {
 
   if (query.isError) {
     return (
-      <View className='flex flex-1 justify-center items-center'>
+      <View className='flex flex-1 justify-center items-center bg-background dark:bg-backgroundDark'>
         <View className='bg-black w-full p-5'>
           <ErrorMessage message="Error while getting communities" action={query.refetch} actionMessage="Try again!" />
         </View>
@@ -58,7 +53,7 @@ export default function Communities() {
   };
 
   return (
-    <View className='flex flex-1 justify-center items-center'>
+    <View className='flex flex-1 justify-center items-center bg-background dark:bg-backgroundDark'>
       <FlatList
         className='w-screen'
         data={query.data}
@@ -66,6 +61,7 @@ export default function Communities() {
         refreshing={query.isLoading}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
+        ListFooterComponent={<View className='h-3'/>}
         ListEmptyComponent={<NothingFound type="communities" />}
       />
     </View>

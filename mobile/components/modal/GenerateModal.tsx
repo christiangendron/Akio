@@ -5,6 +5,8 @@ import CustomInput from "../shared/CustomInput";
 import GenerateButton from "../shared/GenerateButton";
 import { AuthContext } from "../../context/AuthContext";
 import NotAuth from "../account/NotAuth";
+import { Ionicons } from '@expo/vector-icons'; 
+import { useColorScheme } from "nativewind";
 
 type CustomModalProps = {
     type: string;
@@ -17,27 +19,28 @@ export default function GenerateModal(props: CustomModalProps) {
     const [inspiration, setInspiration] = useState('');
     const [withImage, setWithImage] = useState(false);
     const authContext = useContext(AuthContext);
+    const { colorScheme } = useColorScheme();
 
     const toggleModal = () => {
         setModalVisible(!modalVisible);
     }
 
-    const withImageOption = <View className='flex flex-grow w-full flex-row bg-gray-200 p-3 justify-between items-center mb-1 rounded-lg'>
+    const withImageOption = <View className='flex flex-grow w-full flex-row bg-secondary dark:bg-secondaryDark p-3 justify-between items-center mb-1 rounded-lg'>
         <View>
-        <Text className='text-lg'>Generate with an image</Text>
-        <Text className='text-xsm text-gray-400'>Takes much longer...</Text>
+            <Text className='dark:text-white'>Generate with an image</Text>
+            <Text className='text-xsm text-gray-400'>Takes much longer...</Text>
         </View>
         <Switch value={withImage} onValueChange={() => setWithImage(!withImage)}/>
     </View>
 
-    const modalContent = <View className="bg-white w-full flex items-center rounded-lg p-1">
-        <Text className='text-center text-lg my-3 font-semibold'>Generate a {props.type}</Text>
+    const modalContent = <View className="bg-background dark:bg-backgroundDark rounded-lg flex items-center p-2">
+        <Text className='text-lg my-3 font-semibold dark:text-white'>Generate a {props.type}</Text>
         <CustomInput 
             placeholder='Inspiration for the generation (optional)' 
             onChangeText={setInspiration} 
             value={inspiration} 
             isError={false}
-            extraStyles="rounded-lg"
+            extraStyles="rounded-lg bg-secondary dark:bg-secondaryDark dark:text-white"
          />
         {props.type !== 'comment' ? withImageOption : null}
         <GenerateButton 
@@ -52,8 +55,8 @@ export default function GenerateModal(props: CustomModalProps) {
 
     return (
        <>
-            <TouchableOpacity onPress={toggleModal}>
-                <Image source={require('../../assets/icons/new.png')} className='h-5 w-5 mr-3'/>
+            <TouchableOpacity onPress={toggleModal} className="mr-3">
+                <Ionicons name="create-outline" size={24} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />
             </TouchableOpacity>
             <Modal
                 isVisible={modalVisible}

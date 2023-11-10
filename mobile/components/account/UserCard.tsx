@@ -6,16 +6,16 @@ function UserCard() {
     const authContext = useContext(AuthContext);
 
     return (
-        <View className='flex flex-row bg-white rounded-lg m-2'>
+        <View className='flex flex-row bg-secondary dark:bg-secondaryDark rounded-lg m-2'>
             <Image source={require('../../assets/images/default-community.png')} className='h-16 w-16 rounded-full overflow-hidden m-2 border border-1' />
             <View className='flex justify-center'>
-                <Text>
+                <Text className='dark:text-white'>
                     {authContext.username}
                 </Text>
-                <Text>
+                <Text className='dark:text-white'>
                     {authContext.userEmail}
                 </Text>
-                <Text>
+                <Text className='dark:text-white'>
                     Joined in 2023
                 </Text>
             </View>

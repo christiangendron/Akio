@@ -12,11 +12,12 @@ type CustomInputProps = {
 }
 
 function CustomInput(props: CustomInputProps) {
-    const tailwindClass = props.isError ? 'bg-gray-200 h-14 border-2 px-2 border-red-500 my-1 w-full' : 'bg-gray-200 px-2 h-14 my-1 w-full';
+    const tailwindClass = props.isError ? 'dark:bg-secondaryDark h-14 border-2 px-2 border-red-500 my-1 w-full rounded-lg' : 'dark:bg-secondaryDark px-2 h-14 my-1 w-full rounded-lg';
     
     return (
         <TextInput
         placeholder={props.placeholder}
+        placeholderTextColor={'#9CA3AF'}
         onBlur={props.onBlur}
         onChangeText={props.onChangeText}
         value={props.value}

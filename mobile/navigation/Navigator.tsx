@@ -1,22 +1,32 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, Image } from 'react-native';
+import { Image, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from '../screens/Settings';
 import Details from '../screens/Details';
 import Community from '../screens/Community';
-import AppTheme from '../styles/AppTheme';
 import Overview from '../screens/Overview';
 import Communities from '../screens/Communities';
 import { StackParams, TabParams } from '../types/Navigator';
 import Account from '../screens/Account';
 import RegisterScreen from '../screens/Register';
+import { useColorScheme } from 'nativewind';
+import { Ionicons } from '@expo/vector-icons'; 
 
 const HomeStack = createStackNavigator<StackParams>();
 
 function HomeStackScreen() {
+  const { colorScheme } = useColorScheme();
+  
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator
+      screenOptions={{
+      headerShadowVisible: false,
+      headerStyle: {
+        backgroundColor: colorScheme === 'dark' ? '#181818' : '#ffffff',
+      },
+      headerTintColor: colorScheme === 'dark' ? '#ffffff' : '#000000',
+      }}>
       <HomeStack.Screen name="Community" component={Community} initialParams={{ name: 'Home', id: 0 }}/>
       <HomeStack.Screen name="Details" component={Details} />
       <HomeStack.Screen name="Overview" component={Overview} />
@@ -27,8 +37,17 @@ function HomeStackScreen() {
 const SearchStack = createStackNavigator<StackParams>();
 
 function SearchStackScreen() {
+  const { colorScheme } = useColorScheme();
+
   return (
-    <SearchStack.Navigator>
+    <SearchStack.Navigator
+      screenOptions={{
+      headerShadowVisible: false,
+      headerStyle: {
+        backgroundColor: colorScheme === 'dark' ? '#181818' : '#ffffff',
+      },
+      headerTintColor: colorScheme === 'dark' ? '#ffffff' : '#000000',
+      }}>
       <SearchStack.Screen name="Communities" component={Communities} />
       <SearchStack.Screen name="Details" component={Details} />
       <SearchStack.Screen name="Overview" component={Overview} />
@@ -40,8 +59,17 @@ function SearchStackScreen() {
 const AccountStack = createStackNavigator<StackParams>();
 
 function AccountStackScreen() {
+  const { colorScheme } = useColorScheme();
+
   return (
-    <SearchStack.Navigator>
+    <SearchStack.Navigator
+      screenOptions={{
+      headerShadowVisible: false,
+      headerStyle: {
+        backgroundColor: colorScheme === 'dark' ? '#181818' : '#ffffff',
+      },
+      headerTintColor: colorScheme === 'dark' ? '#ffffff' : '#000000',
+      }}>
       <AccountStack.Screen name="AccountHome" component={Account} />
       <SearchStack.Screen name="Settings" component={Settings} />
       <SearchStack.Screen name="Register" component={RegisterScreen} />
@@ -52,27 +80,26 @@ function AccountStackScreen() {
 const Tab = createBottomTabNavigator<TabParams>();
 
 export default function App() {
-
+  const { colorScheme } = useColorScheme();
+  
   return (
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
+          tabBarActiveTintColor: colorScheme === 'dark' ? '#ffffff' : '#000000',
           headerShown: false,
-          tabBarStyle: styles.tab,
-          tabBarActiveTintColor: AppTheme.black,
+          tabBarStyle: {
+            backgroundColor: colorScheme === 'dark' ? '#181818' : '#ffffff',
+            borderTopWidth:0
+          }
         }}>
         <Tab.Screen
           name="HomeStack"
           component={HomeStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              focused ? <Image
-              className='w-5 h-5 mt-5'
-                source={require('../assets/icons/home-selected.png')}
-              /> : <Image
-              className='w-5 h-5 mt-5'
-                source={require('../assets/icons/home.png')}
-              />
+              focused ? <View className='mt-3'><Ionicons name="ios-home-sharp" size={25} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} /></View>
+               : <View className='mt-3'><Ionicons name="ios-home-outline" size={25} color={colorScheme === 'dark' ? '#ffffff' : '#000000'}  /></View>
             ),
             title: 'Home',
           }} />
@@ -81,13 +108,8 @@ export default function App() {
           component={SearchStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              focused ? <Image
-              className='w-5 h-5 mt-5'
-                source={require('../assets/icons/search-selected.png')}
-              /> : <Image
-                className='w-5 h-5 mt-5'
-                source={require('../assets/icons/search.png')}
-              />
+              focused ? <View className='mt-3'><Ionicons name="ios-list-circle" size={25} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} /></View>
+               : <View className='mt-3'><Ionicons name="ios-list-circle-outline" size={25} color={colorScheme === 'dark' ? '#ffffff' : '#000000'}  /></View>
             ),
             title: 'Communities',
           }} />
@@ -95,22 +117,11 @@ export default function App() {
         component={AccountStackScreen} 
         options={{
           tabBarIcon: ({ focused }) => (
-            focused ? <Image
-            className='w-5 h-5 mt-5'
-              source={require('../assets/icons/account-selected.png')}
-            /> : <Image
-            className='w-5 h-5 mt-5'
-              source={require('../assets/icons/account.png')}
-            />
+            focused ? <View className='mt-3'><Ionicons name="ios-person-sharp" size={25} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} /></View>
+            : <View className='mt-3'><Ionicons name="ios-person-outline" size={25} color={colorScheme === 'dark' ? '#ffffff' : '#000000'}  /></View>
           ),
         }} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  tab: {
-    backgroundColor: AppTheme.lightgray,
-  },
-});
