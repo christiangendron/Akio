@@ -12,6 +12,7 @@ import { AuthContext } from '../context/AuthContext';
 import { StackParams } from '../types/Navigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import GenerateModal from '../components/modal/GenerateModal';
+import SwipeableDelete from '../components/shared/SwipeableDelete';
 
 export type DetailsScreenProps = {
   route: {
@@ -57,7 +58,8 @@ export default function Details(props: DetailsScreenProps) {
   }
 
   const renderItem = ({ item }: { item: CommentItemProps }): JSX.Element => {
-    return <Comment key={item.id} {...item} keyToInvalidate={queryKey} />;
+    return <SwipeableDelete id={item.id} user_id={item.user_id} type='post' keyToInvalidate={queryKey} component={<Comment key={item.id} {...item} />}/> ;
+
   };
 
   return (

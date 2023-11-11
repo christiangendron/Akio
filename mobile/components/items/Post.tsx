@@ -1,6 +1,6 @@
-import { Text, View, Image } from 'react-native';
-import PostInteraction from '../post/PostInteraction';
-import Media from '../post/Media';
+import { Text, View } from 'react-native';
+import PostInteraction from '../shared/PostInteraction';
+import Media from '../shared/Media';
 
 export interface PostProps {
     id: number;

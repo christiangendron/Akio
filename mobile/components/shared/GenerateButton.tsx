@@ -1,4 +1,4 @@
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import ErrorMessage from './ErrorMessage';
 import { useEffect } from 'react';
 import useGenerateMutation from '../../hooks/useGenerateMutation';

@@ -89,7 +89,7 @@ class CommunityController extends Controller
         $image = null;
 
         if ($request->with_image) {
-            $imagePrompt = 'Create a clean, simple and circular logo for this community' . $validated['description'];
+            $imagePrompt = 'Create a clean, simple and logo for this community with a strong focus to the center of the image on the following topic :' . $validated['description'];
             $image = OpenAIController::imagine($imagePrompt, "dall-e-3", "1024x1024");
         }
 

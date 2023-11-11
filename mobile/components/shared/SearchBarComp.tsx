@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Keyboard, Image } from 'react-native';
+import { View, TextInput, Keyboard } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons'; 
 import { useColorScheme } from 'nativewind';

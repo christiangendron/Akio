@@ -1,4 +1,4 @@
-import { View, Platform, KeyboardAvoidingView, ScrollView, TouchableOpacity, Image, Text, StatusBar} from 'react-native';
+import { View, Platform, KeyboardAvoidingView, ScrollView, TouchableOpacity, Text} from 'react-native';
 import { useContext, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Login from '../components/account/Login';

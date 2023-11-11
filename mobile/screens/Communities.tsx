@@ -10,6 +10,7 @@ import { AuthContext } from '../context/AuthContext';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../types/Navigator';
 import GenerateModal from '../components/modal/GenerateModal';
+import SwipeableDelete from '../components/shared/SwipeableDelete';
 
 export default function Communities() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
@@ -49,7 +50,7 @@ export default function Communities() {
   }
 
   const renderItem = ({ item }: { item: CommunityProps }): JSX.Element => {
-    return <Community key={item.id} {...item } keyToInvalidate={key} />;
+    return <SwipeableDelete id={item.id} user_id={item.user_id} type='comment' keyToInvalidate={key} component={<Community key={item.id} {...item } />} />;
   };
 
   return (

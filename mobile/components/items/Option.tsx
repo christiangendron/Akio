@@ -1,5 +1,4 @@
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import { useRef } from 'react';
 
 interface OptionProps {
     label: string,

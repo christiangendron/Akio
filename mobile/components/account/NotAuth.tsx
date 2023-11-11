@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react'
-import { Text, Image, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { StackParams } from '../../types/Navigator';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { useColorScheme } from 'nativewind';

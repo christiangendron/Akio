@@ -1,4 +1,4 @@
-import { Platform, KeyboardAvoidingView, ScrollView, Image } from 'react-native';
+import { Platform, KeyboardAvoidingView, ScrollView } from 'react-native';
 import Register from '../components/account/Register';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';

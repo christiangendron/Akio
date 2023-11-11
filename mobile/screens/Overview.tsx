@@ -8,6 +8,7 @@ import NothingFound from '../components/shared/NothingFound';
 import SearchBarComp from '../components/shared/SearchBarComp';
 import SmallPost, { SmallPostProps } from '../components/items/SmallPost';
 import { SettingsContext } from '../context/SettingsContext';
+import SwipeableDelete from '../components/shared/SwipeableDelete';
 
 export type OverviewProps = {
   route: {
@@ -22,6 +23,7 @@ export default function Overview(props: OverviewProps) {
   const navigation = useNavigation();
   const [keyword, setKeyword] = useState('');
   const settings = useContext(SettingsContext);
+  const keyToInvalidate = `user-posts-${props.route.params.id}-${keyword}`;
 
   useEffect(() => {
     navigation.setOptions({
@@ -30,7 +32,7 @@ export default function Overview(props: OverviewProps) {
   }, [navigation]);
 
   const query = useQuery({
-    queryKey: ['user-posts', props.route.params.id, keyword],
+    queryKey: [keyToInvalidate],
     queryFn: () => AkioServices.getUserPosts(props.route.params.id, keyword),
   });
 
@@ -51,7 +53,7 @@ export default function Overview(props: OverviewProps) {
   }
 
   const renderItem = ({ item }: { item: SmallPostProps }): JSX.Element => {
-    return <SmallPost key={item.id} {...item} />;
+    return <SwipeableDelete id={item.id} user_id={item.user_id} type='post' keyToInvalidate={keyToInvalidate} component={<SmallPost key={item.id} {...item} keyToInvalidate={keyToInvalidate} />}/> ;
   };
 
   return (

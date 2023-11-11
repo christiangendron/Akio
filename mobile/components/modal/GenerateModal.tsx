@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { View, Text, Image, TouchableOpacity, Switch } from "react-native";
+import { View, Text, TouchableOpacity, Switch } from "react-native";
 import Modal from "react-native-modal";
 import CustomInput from "../shared/CustomInput";
 import GenerateButton from "../shared/GenerateButton";

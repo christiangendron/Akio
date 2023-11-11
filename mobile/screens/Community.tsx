@@ -14,6 +14,7 @@ import { StackParams } from '../types/Navigator';
 import GenerateModal from '../components/modal/GenerateModal';
 import { useColorScheme } from "nativewind";
 import { Ionicons } from '@expo/vector-icons'; 
+import SwipeableDelete from '../components/shared/SwipeableDelete';
 
 export interface CommunityNavigationProps {
   route: {
@@ -72,7 +73,7 @@ export default function Community(props: CommunityNavigationProps) {
   }
 
   const renderItem = ({ item }: { item: SmallPostProps }): JSX.Element => {
-    return <SmallPost key={item.id} {...item} keyToInvalidate={key} />;
+    return <SwipeableDelete id={item.id} user_id={item.user_id} type='post' keyToInvalidate={key} component={<SmallPost key={item.id} {...item} keyToInvalidate={key} />}/> ;
   };
   
   return (
