@@ -50,7 +50,7 @@ export default function Communities() {
   }
 
   const renderItem = ({ item }: { item: CommunityProps }): JSX.Element => {
-    return <SwipeableDelete id={item.id} user_id={item.user_id} type='comment' keyToInvalidate={key} component={<Community key={item.id} {...item } />} />;
+    return <SwipeableDelete id={item.id} user_id={item.user_id} type='community' keyToInvalidate={key} component={<Community key={item.id} {...item } />} />;
   };
 
   return (

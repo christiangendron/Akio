@@ -58,7 +58,7 @@ export default function Details(props: DetailsScreenProps) {
   }
 
   const renderItem = ({ item }: { item: CommentItemProps }): JSX.Element => {
-    return <SwipeableDelete id={item.id} user_id={item.user_id} type='post' keyToInvalidate={queryKey} component={<Comment key={item.id} {...item} />}/> ;
+    return <SwipeableDelete id={item.id} user_id={item.user_id} type='comment' keyToInvalidate={queryKey} component={<Comment key={item.id} {...item} />}/> ;
 
   };
 
