@@ -8,6 +8,7 @@ type CustomInputProps = {
     value: string,
     secureTextEntry?: boolean,
     isError: boolean | undefined,
+    disabled?: boolean,
     extraStyles?: string,
 }
 
@@ -23,6 +24,7 @@ function CustomInput(props: CustomInputProps) {
         value={props.value}
         secureTextEntry={props.secureTextEntry}
         className={tailwindClass + ' ' + props.extraStyles}
+        editable={!props.disabled}
         />
     )
 }

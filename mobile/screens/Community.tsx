@@ -11,6 +11,7 @@ import { useColorScheme } from "nativewind";
 import { Ionicons } from '@expo/vector-icons'; 
 import CustomFlatList from '../components/shared/CustomFlatList';
 import SearchBarComp from '../components/shared/SearchBarComp';
+import Icon from '../components/shared/Icon';
 
 export interface CommunityNavigationProps {
   route: {
@@ -42,9 +43,7 @@ export default function Community(props: CommunityNavigationProps) {
       headerRight: () => (
         community_id.current !== 0 ? 
         <GenerateModal type="post" id={community_id.current} keyToInvalidate={queryKey} /> : 
-        <TouchableOpacity onPress={toggleColorScheme} className='mr-3'>
-          <Ionicons name="moon" size={24} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />
-        </TouchableOpacity>
+        <Icon icon={<Ionicons name="moon" size={24} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />} handler={toggleColorScheme} extraStyles='mr-3'/>
       ),
     });
   }, [navigation, authContext.isAuth, colorScheme]);

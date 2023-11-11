@@ -57,8 +57,8 @@ function Login() {
           {error && <Text className='text-center text-red-500'>{error}</Text>}
 
           <CustomButton
-            onPress={handleSubmit(onSubmit)}
-            text='Submit'
+            handler={handleSubmit(onSubmit)}
+            label='Submit'
             isLoading={loginMutation.isLoading}
           />
         </View>

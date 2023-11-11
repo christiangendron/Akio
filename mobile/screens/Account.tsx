@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useColorScheme } from 'nativewind';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import Register from '../components/account/Register';
+import Icon from '../components/shared/Icon';
 
 type AccountScreenProps = {
   route: {
@@ -26,15 +27,13 @@ export default function Account(props: AccountScreenProps) {
   const [showRegister, setShowRegister] = useState(props.route.params.showRegister);
   const { colorScheme } = useColorScheme();
 
-  const settingGear = <TouchableOpacity onPress={() => navigation.navigate('Settings')} className='mr-3'>
-    <Ionicons name="ios-settings-outline" size={25} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />
-  </TouchableOpacity>
+  const settings = <Icon icon={<Ionicons name="ios-settings-outline" size={25} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />} handler={() => navigation.navigate('Settings')} extraStyles='mr-3'/>
 
   useEffect(() => {
     navigation.setOptions({
       title: authContext.isAuth ? 'Account' : showRegister ? 'Register' : 'Login',
       headerRight: () => (
-        props.route.params.showSettings ? settingGear : null
+        props.route.params.showSettings ? settings : null
       ),
     });
   }, [navigation, authContext.isAuth, colorScheme, showRegister]);
