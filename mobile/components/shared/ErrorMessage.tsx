@@ -9,7 +9,7 @@ interface ErrorMessageProps {
 export default function ErrorMessage(props:ErrorMessageProps) {
   return (
     <TouchableOpacity onPress={props.action} className='flex flex-col items-center justify-center'>
-      <Text className='text-white'>
+      <Text className='dark:text-white'>
         {props.message} ↺
       </Text>
     </TouchableOpacity>
