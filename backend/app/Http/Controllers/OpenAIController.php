@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Client;
+use App\Http\Controllers\ImageController;
 use Config;
 
 class OpenAIController extends Controller
@@ -56,16 +57,7 @@ class OpenAIController extends Controller
         
         $parsedData = json_decode($response);
 
-        return OpenAIController::downloadImage($parsedData->data[0]->url);
-    }
-
-    public static function downloadImage($imageUrl)
-    {
-        $imageName = uniqid() . '.jpg';
-        $client = new Client();
-        $response = $client->get($imageUrl);
-        Storage::disk('public')->put($imageName, $response->getBody());
-        return $imageName;
+        return ImageController::downloadImage($parsedData->data[0]->url);
     }
 
     private static function getFunctions()

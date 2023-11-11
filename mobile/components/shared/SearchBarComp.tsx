@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, TextInput, Keyboard, Image } from 'react-native';
+import { View, TextInput, Keyboard } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Feather } from '@expo/vector-icons'; 
+import { useColorScheme } from 'nativewind';
 
 type SearchBarProps = {
     keyword: string;
@@ -12,6 +14,7 @@ type SearchBarProps = {
 export default function SearchBarComp(props: SearchBarProps) {
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const [text, setText] = useState<string>(props.keyword);
+    const { colorScheme } = useColorScheme();
 
     const clear = () => {
         setText('');
@@ -19,10 +22,15 @@ export default function SearchBarComp(props: SearchBarProps) {
         Keyboard.dismiss();
     };
 
+    const clearButton = <TouchableOpacity className='flex-row space-x-1 mx-3' onPress={clear}>
+        {isFocused ? <Feather name="x-circle" size={24} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} /> : null}
+    </TouchableOpacity>
+
     return (
-        <View className='flex flex-row w-screen justify-center items-center p-2'>
+        <View className='flex flex-row justify-center items-center mx-2 mt-2'>
             <TextInput
-                className='flex-1 bg-white p-3 w-full rounded-lg pl-5'
+                placeholderTextColor='#ccc'
+                className='flex flex-1 bg-secondary dark:bg-secondaryDark p-3 w-full rounded-lg pl-5 dark:text-white'
                 placeholder={props.placeholder}
                 value={text}
                 onBlur={() => setIsFocused(false)}
@@ -30,9 +38,7 @@ export default function SearchBarComp(props: SearchBarProps) {
                 returnKeyType="search"
                 onSubmitEditing={() => props.handleChange(text)}
                 onChangeText={txt => setText(txt)} />
-            <TouchableOpacity className='flex-row space-x-1' onPress={clear}>
-                {isFocused ? <Image source={require('../assets/icons/cancel.png')} className='mx-2 w-5 h-5' /> : null}
-            </TouchableOpacity>
+            {isFocused ? clearButton : null}
         </View>
     );
 };

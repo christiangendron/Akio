@@ -2,7 +2,7 @@ import { PostProps } from '../components/items/Post';
 import { CommentItemProps } from '../components/items/Comment';
 import { CommunityProps } from '../components/items/Community';
 import AxiosClient from './AxiosClient';
-import { GenerateItemVariables } from '../components/GenerateButton';
+import { GenerateItemVariables } from '../components/shared/GenerateButton';
 
 async function getPosts(community_id:number, keyword: string): Promise<PostProps[]> { 
   let res = null;

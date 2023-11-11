@@ -8,6 +8,8 @@ use App\Http\Resources\CommunityResource;
 use App\Http\Requests\CommunityRequest;
 use App\Http\Controllers\OpenAIController;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Post;
 
 class CommunityController extends Controller
 {
@@ -43,6 +45,22 @@ class CommunityController extends Controller
     {
         $this->authorize('destroy', $community);
 
+        // Get all posts from this community to delete their images
+        $posts = $community->posts;
+
+        foreach ($posts as $post) {
+            error_log($post->media_url);
+            Storage::disk('public')->delete($post->media_url);
+            Storage::disk('public')->delete('sm-' . $post->media_url);
+            Storage::disk('public')->delete('md-' . $post->media_url);
+        }
+
+        if ($community->media_url) {
+            Storage::disk('public')->delete($community->media_url);
+            Storage::disk('public')->delete('sm-' . $community->media_url);
+            Storage::disk('public')->delete('md-' . $community->media_url);
+        }
+
         $community->delete();
         return response()->json(["message" => 'Community deleted'], 200);
     }
@@ -71,7 +89,7 @@ class CommunityController extends Controller
         $image = null;
 
         if ($request->with_image) {
-            $imagePrompt = 'Create a clean, simple and circular logo for this community' . $validated['description'];
+            $imagePrompt = 'Create a clean, simple and logo for this community with a strong focus to the center of the image on the following topic :' . $validated['description'];
             $image = OpenAIController::imagine($imagePrompt, "dall-e-3", "1024x1024");
         }
 

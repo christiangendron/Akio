@@ -3,12 +3,12 @@ import { useContext, useEffect, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 import AkioServices from '../services/AkioServices';
-import ErrorMessage from '../components/ErrorMessage';
-import AppTheme from '../styles/AppTheme';
-import NothingFound from '../components/NothingFound';
-import SearchBarComp from '../components/SearchBarComp';
+import ErrorMessage from '../components/shared/ErrorMessage';
+import NothingFound from '../components/shared/NothingFound';
+import SearchBarComp from '../components/shared/SearchBarComp';
 import SmallPost, { SmallPostProps } from '../components/items/SmallPost';
 import { SettingsContext } from '../context/SettingsContext';
+import SwipeableDelete from '../components/shared/SwipeableDelete';
 
 export type OverviewProps = {
   route: {
@@ -23,19 +23,16 @@ export default function Overview(props: OverviewProps) {
   const navigation = useNavigation();
   const [keyword, setKeyword] = useState('');
   const settings = useContext(SettingsContext);
+  const keyToInvalidate = `user-posts-${props.route.params.id}-${keyword}`;
 
   useEffect(() => {
     navigation.setOptions({
       title: props.route.params.name,
-      headerStyle: {
-        backgroundColor: AppTheme.lightgray
-      },
-      headerTintColor: AppTheme.black,
     });
   }, [navigation]);
 
   const query = useQuery({
-    queryKey: ['user-posts', props.route.params.id, keyword],
+    queryKey: [keyToInvalidate],
     queryFn: () => AkioServices.getUserPosts(props.route.params.id, keyword),
   });
 
@@ -56,19 +53,19 @@ export default function Overview(props: OverviewProps) {
   }
 
   const renderItem = ({ item }: { item: SmallPostProps }): JSX.Element => {
-    return <SmallPost key={item.id} {...item} />;
+    return <SwipeableDelete id={item.id} user_id={item.user_id} type='post' keyToInvalidate={keyToInvalidate} component={<SmallPost key={item.id} {...item} keyToInvalidate={keyToInvalidate} />}/> ;
   };
 
   return (
-    <View className='flex flex-1 justify-center items-center'>
+    <View className='flex flex-1 justify-center items-center bg-background dark:bg-backgroundDark'>
       <FlatList
         className='w-screen'
         data={query.data}
         renderItem={renderItem}
         refreshing={query.isLoading}
-        ItemSeparatorComponent={() => <View className='h-2' />}
         onRefresh={query.refetch}
         onEndReachedThreshold={2}
+        ListFooterComponent={<View className='h-3'/>}
         ListHeaderComponent={settings.searchBar ? <SearchBarComp keyword={keyword} handleChange={setKeyword} handleSubmit={query.refetch} placeholder='Search in this user posts...'/> : null}
         ListEmptyComponent={<NothingFound type="posts" />}
       />

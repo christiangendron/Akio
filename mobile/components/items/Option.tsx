@@ -1,23 +1,25 @@
-import { Text, TouchableOpacity } from 'react-native';
-import { useRef } from 'react';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 
 interface OptionProps {
     label: string,
     icon?: boolean,
     selected?: boolean,
     handler: () => void
+    isLoading?: boolean,
 }
 
 export default function Option(props: OptionProps) {
-    const style = useRef('flex flex-row w-full justify-center p-5 bg-gray-50 rounded-lg m-1 items-center');
+    const style = 'w-full p-5 bg-black rounded-lg items-center m-1';
 
-    if (props.selected) {
-        style.current = 'flex flex-row w-full justify-center p-5 bg-gray-400 rounded-lg m-1 items-center'
-    }
+    if (props.isLoading) return (
+        <View className={style}>
+            <ActivityIndicator />
+        </View>
+    )
 
     return (
-        <TouchableOpacity onPress={props.handler} className={style.current}>
-            <Text className='text-center'>{props.label}</Text>
+        <TouchableOpacity onPress={props.handler} className={style}>
+            <Text className='text-center text-white'>{props.label}</Text>
         </TouchableOpacity>
     );
 }

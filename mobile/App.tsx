@@ -5,6 +5,8 @@ import SettingContextProvider from './context/SettingsContext';
 import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AuthContextProvider from './context/AuthContext';
+import { StatusBar } from 'expo-status-bar';
+import { useColorScheme } from 'nativewind';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,18 +17,18 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
-  LogBox.ignoreLogs(['Could not find image']);
-  LogBox.ignoreLogs(['VirtualizedList: You have a large']);
-  LogBox.ignoreLogs(['Sending `onAnimatedValueUpdate` with no']);
-
   console.log('BACKEND_URL', process.env.BACKEND_URL);
   console.log('BACKEND_IMAGE_URL', process.env.BACKEND_IMAGE_URL)
 
+  const { colorScheme } = useColorScheme();
+
+  const statusBar = colorScheme === 'dark' ? <StatusBar style="light" /> : <StatusBar style="dark" />
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
         <AuthContextProvider>
           <SettingContextProvider>
+            {statusBar}
             <Navigator />
           </SettingContextProvider>
         </AuthContextProvider>

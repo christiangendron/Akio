@@ -51,7 +51,7 @@ async function getUserInfo() {
     const username = await SecureStore.getItemAsync('username');
     const user_id = await SecureStore.getItemAsync('user_id');
     const is_admin = await SecureStore.getItemAsync('is_admin');
-
+    
     return {
         email: email,
         username: username,

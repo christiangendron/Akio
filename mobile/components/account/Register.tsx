@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { Keyboard, Text, View } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 import useRegisterMutation from '../../hooks/useRegisterMutation';
-import CustomInput from '../CustomInput';
+import CustomInput from '../shared/CustomInput';
 import { AxiosError } from 'axios';
-import CustomButton from '../CustomButton';
+import CustomButton from '../shared/CustomButton';
 
 type RegisterProps = {
   onComplete: () => void
@@ -28,7 +28,7 @@ function Register(props: RegisterProps) {
     const error = (registerMutation.error as AxiosError<{message: string}>)?.response?.data?.message;
 
     return (
-        <View className='w-full'>
+        <View className='w-3/4'>
           <Controller
             control={control}
             rules={{
@@ -40,6 +40,7 @@ function Register(props: RegisterProps) {
                 onChangeText={onChange}
                 value={value}
                 isError={!!errors.username}
+                extraStyles='bg-secondary'
               />
             )}
             name="username"
@@ -56,6 +57,7 @@ function Register(props: RegisterProps) {
                 onChangeText={onChange}
                 value={value}
                 isError={!!errors.email}
+                extraStyles='bg-secondary'
               />
             )}
             name="email"
@@ -73,6 +75,7 @@ function Register(props: RegisterProps) {
                 value={value}
                 secureTextEntry={true}
                 isError={!!errors.password}
+                extraStyles='bg-secondary'
               />
             )}
             name="password"

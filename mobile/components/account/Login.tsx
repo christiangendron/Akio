@@ -2,9 +2,9 @@ import React from 'react'
 import { Keyboard, Text, View } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 import useLoginMutation from '../../hooks/useLoginMutation';
-import CustomInput from '../CustomInput';
+import CustomInput from '../shared/CustomInput';
 import { AxiosError } from 'axios';
-import CustomButton from '../CustomButton';
+import CustomButton from '../shared/CustomButton';
 
 function Login() {
     const { control, handleSubmit, formState: { errors } } = useForm({defaultValues: {email: '', password: ''}});
@@ -18,7 +18,7 @@ function Login() {
     const error = (loginMutation.error as AxiosError<{message: string}>)?.response?.data?.message;
     
     return (
-        <View className='w-full'>
+        <View className='w-3/4'>
           <Controller
             control={control}
             rules={{
@@ -30,6 +30,7 @@ function Login() {
                 onChangeText={onChange}
                 value={value}
                 isError={!!errors.email}
+                extraStyles='bg-secondary'
               />
             )}
             name="email"
@@ -47,6 +48,7 @@ function Login() {
                 value={value}
                 isError={!!errors.password}
                 secureTextEntry={true}
+                extraStyles='bg-secondary'
               />
             )}
             name="password"

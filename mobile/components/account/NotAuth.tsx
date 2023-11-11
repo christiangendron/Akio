@@ -1,25 +1,38 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react'
-import { ScrollView, Text, Image, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { StackParams } from '../../types/Navigator';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { useColorScheme } from 'nativewind';
 
-function NotAuth() {
+type NotAuthProps = {
+    closeModal: () => void;
+}
+
+function NotAuth(props: NotAuthProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
+    const { colorScheme } = useColorScheme();
 
     return (
-        <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
-            <View className='flex flex-1 justify-center items-center'> 
-                <Image source={require('../../assets/icons/noAccount.png')} className='h-20 w-20 mb-5'/>
-                <Text className='text-center mb-3'>You need an account to generate content</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Account')} className='mt-5'>
-                    <Text className='text-center bg-black p-5 text-white'>I already have an account</Text>
+        <View className='flex justify-center items-center bg-secondary dark:bg-backgroundDark p-5 rounded-lg'> 
+            <MaterialCommunityIcons name="account-alert" size={75} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />
+            <Text className='text-center mb-3 dark:text-white'>You need an account to generate content</Text>
+            <View className='flex flex-row'>
+                <TouchableOpacity onPress={() => {
+                    props.closeModal();
+                    navigation.navigate('Account')
+                }} className='mt-1 rounded-l-lg bg-secondaryDark'>
+                    <Text className='text-center p-5 text-white'>I have an account</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Register')} className='mt-5'>
-                    <Text className='text-center bg-black p-5 text-white'>Create one</Text>
+                <TouchableOpacity onPress={() => {
+                    props.closeModal();
+                    navigation.navigate('Register')
+                }} className='mt-1 rounded-r-lg bg-black'>
+                    <Text className='text-center  p-5 text-white'>Create one</Text>
                 </TouchableOpacity>
             </View>
-        </ScrollView>
+        </View>
     )
 }
 

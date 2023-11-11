@@ -24,11 +24,6 @@ export type TabParams = {
     };
     Account: any;
     Register: any;
-    Generate: {
-      type: string;
-      id: number;
-      invalidate: string;
-    }
     Community: {
       name: string;
       id: number;

@@ -1,6 +1,6 @@
-import { Text, View, Image } from 'react-native';
-import PostInteraction from '../PostInteraction';
-import Media from '../Media';
+import { Text, View } from 'react-native';
+import PostInteraction from '../shared/PostInteraction';
+import Media from '../shared/Media';
 
 export interface PostProps {
     id: number;
@@ -19,10 +19,10 @@ export default function Post(props: PostProps) {
     const image = props.media_url ? <Media media_url={props.media_url} /> : null;
     
     return (
-        <View className='bg-white'>
+        <View className='bg-secondary dark:bg-secondaryDark rounded-lg mt-2 mx-2'>
             <View className='p-2'>
-                <Text className='font-bold text-lg'>{props.title}</Text>
-                <Text>{props.text_content}</Text>
+                <Text className='font-bold text-lg dark:text-white'>{props.title}</Text>
+                <Text className='dark:text-white'>{props.text_content}</Text>
             </View>
             {image}
             <PostInteraction {...props} keyToInvalidate={props.keyToInvalidate} />
