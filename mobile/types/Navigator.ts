@@ -20,9 +20,13 @@ export type TabParams = {
       id: number;
     };
     AccountHome: {
-      id: number;
+      showRegister: boolean;
+      showSettings: boolean;
     };
-    Account: any;
+    Account: {
+      showRegister: boolean;
+      showSettings: boolean;
+    };
     Register: any;
     Community: {
       name: string;

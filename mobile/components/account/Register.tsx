@@ -6,11 +6,7 @@ import CustomInput from '../shared/CustomInput';
 import { AxiosError } from 'axios';
 import CustomButton from '../shared/CustomButton';
 
-type RegisterProps = {
-  onComplete: () => void
-}
-
-function Register(props: RegisterProps) {
+function Register() {
     const { control, handleSubmit, formState: { errors } } = useForm({defaultValues: {username: '', email: '', password: ''}});
     const registerMutation = useRegisterMutation();
 
@@ -18,12 +14,6 @@ function Register(props: RegisterProps) {
       Keyboard.dismiss();
       registerMutation.mutate(data)
     };
-
-    useEffect(() => {
-      if (registerMutation.isSuccess) {
-        props.onComplete();
-      }
-    }, [registerMutation])
 
     const error = (registerMutation.error as AxiosError<{message: string}>)?.response?.data?.message;
 

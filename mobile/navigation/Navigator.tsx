@@ -9,7 +9,6 @@ import Overview from '../screens/Overview';
 import Communities from '../screens/Communities';
 import { StackParams, TabParams } from '../types/Navigator';
 import Account from '../screens/Account';
-import RegisterScreen from '../screens/Register';
 import { useColorScheme } from 'nativewind';
 import { Ionicons } from '@expo/vector-icons'; 
 
@@ -30,17 +29,18 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Community" component={Community} initialParams={{ name: 'Home', id: 0 }}/>
       <HomeStack.Screen name="Details" component={Details} />
       <HomeStack.Screen name="Overview" component={Overview} />
+      <HomeStack.Screen name="Account" component={Account} />
     </HomeStack.Navigator>
   );
 }
 
-const SearchStack = createStackNavigator<StackParams>();
+const CommunitiesStack = createStackNavigator<StackParams>();
 
 function SearchStackScreen() {
   const { colorScheme } = useColorScheme();
 
   return (
-    <SearchStack.Navigator
+    <CommunitiesStack.Navigator
       screenOptions={{
       headerShadowVisible: false,
       headerStyle: {
@@ -48,11 +48,12 @@ function SearchStackScreen() {
       },
       headerTintColor: colorScheme === 'dark' ? '#ffffff' : '#000000',
       }}>
-      <SearchStack.Screen name="Communities" component={Communities} />
-      <SearchStack.Screen name="Details" component={Details} />
-      <SearchStack.Screen name="Overview" component={Overview} />
-      <SearchStack.Screen name="Community" component={Community} />
-    </SearchStack.Navigator>
+      <CommunitiesStack.Screen name="Communities" component={Communities} />
+      <CommunitiesStack.Screen name="Details" component={Details} />
+      <CommunitiesStack.Screen name="Overview" component={Overview} />
+      <CommunitiesStack.Screen name="Community" component={Community} />
+      <CommunitiesStack.Screen name="Account" component={Account} />
+    </CommunitiesStack.Navigator>
   );
 }
 
@@ -62,7 +63,7 @@ function AccountStackScreen() {
   const { colorScheme } = useColorScheme();
 
   return (
-    <SearchStack.Navigator
+    <AccountStack.Navigator
       screenOptions={{
       headerShadowVisible: false,
       headerStyle: {
@@ -70,10 +71,9 @@ function AccountStackScreen() {
       },
       headerTintColor: colorScheme === 'dark' ? '#ffffff' : '#000000',
       }}>
-      <AccountStack.Screen name="AccountHome" component={Account} />
-      <SearchStack.Screen name="Settings" component={Settings} />
-      <SearchStack.Screen name="Register" component={RegisterScreen} />
-    </SearchStack.Navigator>
+      <AccountStack.Screen name="AccountHome" component={Account} initialParams={{ showRegister: false, showSettings: true }} />
+      <AccountStack.Screen name="Settings" component={Settings} />
+    </AccountStack.Navigator>
   );
 }
 
