@@ -23,7 +23,7 @@ export default function Media(props: MediaProps) {
 
     return (
         <TouchableOpacity activeOpacity={1} onPress={() => setVisible(true)}>
-            <Image source={{ uri: backendUrl + 'md-' +  props.media_url }} className='h-96 bg-gray-400 mb-2' />
+            <Image source={{ uri: backendUrl + 'md-' +  props.media_url }} className='h-96 bg-gray-400' />
         </TouchableOpacity>
     )
 }

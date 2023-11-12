@@ -10,6 +10,7 @@ export default function AuthContextProvider(props: any) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [username, setUsername] = useState(null);
 
+  // Retrive user info on load
   useEffect(() => {
     AuthServices.getUserInfo()
     .then((res: any) => {

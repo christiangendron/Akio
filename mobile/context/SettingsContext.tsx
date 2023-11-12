@@ -1,62 +1,74 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
+import { useColorScheme } from 'nativewind';
 
 export const SettingsContext = createContext<any | null>(null);
 
+async function save(key: string, value: string) {
+  await SecureStore.setItemAsync(key, value);
+}
+
+async function getValueFor(key: string) {
+  let result = await SecureStore.getItemAsync(key);
+  return result;
+}
+
 export default function SettingContextProvider(props: any) {
-  const [skipPinned, setSkipPinned] = useState(true);
-  const [showUsername, setShowUsername] = useState(true);
-  const [showCommunity, setShowCommunity] = useState(true);
-  const [showVotes, setShowVotes] = useState(true);
-  const [showOptions, setShowOptions] = useState(true);
+  const { toggleColorScheme, setColorScheme } = useColorScheme();
+
   const [minimalBrowsing, setMinimalBrowsing] = useState(false);
-  const [searchBar, setSearchBar] = useState(true);
+  const [hideSearchBar, setHideSearchBar] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  
+  // Retrive settings on load
+  useEffect(() => {
+    SecureStore.getItemAsync('settings')
+    .then((res: any) => {
+      const parsed = JSON.parse(res);
+
+      setMinimalBrowsing(parsed.minimalBrowsing);
+      setHideSearchBar(parsed.hideSearchBar);
+      setDarkMode(parsed.darkMode);
+      setColorScheme(parsed.darkMode ? 'dark' : 'light')
+    })
+    .catch((err: any) => {
+      console.log(err);
+    });
+  }, []);
 
   useEffect(() => {
     saveSettings();
-  }, [skipPinned, showUsername, showCommunity, showVotes, minimalBrowsing, searchBar])
+  }, [minimalBrowsing, hideSearchBar, darkMode]);
 
-  const saveSettings = async () => {    
+  const toggleDarkMode = () => {
+    toggleColorScheme();
+    setDarkMode(!darkMode);
+  }
+
+  const toggleSearchBar = () => {
+    setHideSearchBar(!hideSearchBar);
+  }
+
+  const toggleMinimalBrowsing = () => {
+    setMinimalBrowsing(!minimalBrowsing);
+  }
+
+  const saveSettings = async () => {
     await SecureStore.setItemAsync('settings', JSON.stringify({
-      skipPinned,
-      showUsername,
-      showCommunity,
-      showVotes,
+      darkMode,
+      hideSearchBar,
       minimalBrowsing,
-      searchBar
     }));
   }
 
-  const loadSettings = async () => {
-    const settings = await SecureStore.getItemAsync('settings');
-
-    if (settings) {
-      const parsedSettings = JSON.parse(settings);
-      setSkipPinned(parsedSettings.skipPinned);
-      setShowUsername(parsedSettings.showUsername);
-      setShowCommunity(parsedSettings.showCommunity);
-      setShowVotes(parsedSettings.showVotes);
-      setMinimalBrowsing(parsedSettings.minimalBrowsing);
-      setSearchBar(parsedSettings.searchBar);
-    }
-  }
-
   const allowedContent: any = {
-    skipPinned,
-    setSkipPinned,
     minimalBrowsing,
-    setMinimalBrowsing,
-    showUsername,
-    setShowUsername,
-    showCommunity,
-    setShowCommunity,
-    showVotes,
-    setShowVotes,
-    searchBar,
-    setSearchBar,
-    showOptions,
-    setShowOptions,
-    loadSettings,
+    hideSearchBar,
+    darkMode,
+    setDarkMode,
+    toggleDarkMode,
+    toggleSearchBar,
+    toggleMinimalBrowsing,
   };
 
   return (
