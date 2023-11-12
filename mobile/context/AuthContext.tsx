@@ -28,7 +28,7 @@ export default function AuthContextProvider(props: any) {
   }, []);
 
   const canDelete = (id: number) => {
-    return userId === id || isAdmin === 1;
+    return userId === id || isAdmin;
   }
 
   const allowedContent: any = {
