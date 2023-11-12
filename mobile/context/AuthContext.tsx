@@ -7,7 +7,7 @@ export default function AuthContextProvider(props: any) {
   const [isAuth, setIsAuth] = useState(false);
   const [userId, setUserId] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(0);
   const [username, setUsername] = useState(null);
 
   // Retrive user info on load
@@ -28,7 +28,7 @@ export default function AuthContextProvider(props: any) {
   }, []);
 
   const canDelete = (id: number) => {
-    return isAdmin || userId === id;
+    return userId === id || isAdmin === 1;
   }
 
   const allowedContent: any = {
