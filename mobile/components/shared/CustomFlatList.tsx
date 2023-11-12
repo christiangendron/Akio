@@ -13,13 +13,13 @@ type CustomFlatListProps = {
     reFetch : () => void;
     isError : boolean;
     keyToInvalidate: string;
-    searchComponent?: JSX.Element;
+    headerComponent?: JSX.Element | null;
     currentPost? : any;
 };
 
 export default function CustomFlatList(props : CustomFlatListProps) { 
   const renderItem = ({ item }: { item: any }): JSX.Element => {
-    if (props.type === 'post') {
+    if (props.type === 'post' || props.type === 'user-posts') {
         return <SwipeableDelete id={item.id} user_id={item.user_id} type='post' keyToInvalidate={props.keyToInvalidate} component={<SmallPost key={item.id} {...item} keyToInvalidate={props.keyToInvalidate} />}/> ;
     } else if (props.type === 'comment') {
         return <SwipeableDelete id={item.id} user_id={item.user_id} type='comment' keyToInvalidate={props.keyToInvalidate} component={<Comment key={item.id} {...item} />}/> ;
@@ -27,8 +27,6 @@ export default function CustomFlatList(props : CustomFlatListProps) {
         return <SwipeableDelete id={item.id} user_id={item.user_id} type='community' keyToInvalidate={props.keyToInvalidate} component={<Community key={item.id} {...item } />} />;
     }
   };
-
-  const headerComponent = props.type === 'post' ? props.searchComponent : props.type === 'comment' ? <Post {...props.currentPost} /> : null;
 
   return (
     <FlatList
@@ -39,10 +37,10 @@ export default function CustomFlatList(props : CustomFlatListProps) {
         onRefresh={props.reFetch}
         onEndReachedThreshold={2}
         ListFooterComponent={<View className='h-3'/>}
-        ListHeaderComponent={headerComponent}
+        ListHeaderComponent={props.headerComponent}
         ListEmptyComponent={props.isError ? 
           <MessagePost message={`Error while retriving items ↺`} action={props.reFetch} /> : 
-          <MessagePost message={`No ${props.type} found`} />}
+          <MessagePost message={`No ${props.type === 'post' || props.type === 'user-posts' ? 'post' : props.type} found`} />}
       />
   );
 }

@@ -1,4 +1,4 @@
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 
 interface OptionProps {
     label: string,
@@ -9,16 +9,8 @@ interface OptionProps {
 }
 
 export default function Option(props: OptionProps) {
-    const style = 'w-full p-5 bg-black rounded-lg items-center m-1';
-
-    if (props.isLoading) return (
-        <View className={style}>
-            <ActivityIndicator />
-        </View>
-    )
-
     return (
-        <TouchableOpacity onPress={props.handler} className={style}>
+        <TouchableOpacity onPress={props.handler} className='w-full p-5 bg-black rounded-lg items-center m-1' disabled={props.isLoading}>
             <Text className='text-center text-white'>{props.label}</Text>
         </TouchableOpacity>
     );

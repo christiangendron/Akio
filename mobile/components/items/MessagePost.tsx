@@ -6,17 +6,11 @@ interface MessagePostProps {
 }
 
 export default function MessagePost(props: MessagePostProps) {
-    const content = <View className='rounded-lg m-2 bg-secondary dark:bg-secondaryDark'>
-        <Text className='text-center p-5 dark:text-white'>
-            {props.message}
-        </Text>
-    </View>
-
-    if (props.action) return (
-        <TouchableOpacity onPress={props.action}>
-            {content}
+    return (
+        <TouchableOpacity onPress={props.action} className='rounded-lg m-2 bg-secondary dark:bg-secondaryDark' disabled={!props.action}>
+            <Text className='text-center p-5 dark:text-white'>
+                {props.message}
+            </Text>
         </TouchableOpacity>
     )
-
-    return (content);
 }

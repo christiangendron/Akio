@@ -31,7 +31,7 @@ export default function Account(props: AccountScreenProps) {
     navigation.setOptions({
       title: authContext.isAuth ? 'Account' : showRegister ? 'Register' : 'Login',
       headerRight: () => (
-        props.route.params.showSettings ? <Icon icon={<Ionicons name="ios-settings-outline" size={25} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />} handler={() => navigation.navigate('Settings')} extraStyles='mr-3'/> : null
+        props.route.params.showSettings ? <Icon icon={<Ionicons name="ios-settings-outline" size={25} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />} handler={() => navigation.push('Settings')} extraStyles='mr-3'/> : null
       ),
     });
   }, [navigation, authContext.isAuth, colorScheme, showRegister]);

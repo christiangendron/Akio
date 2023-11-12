@@ -17,6 +17,13 @@ type CustomModalProps = {
     keyToInvalidate: string;
 }
 
+export type GenerateVariables = {
+    id: number;
+    type: string;
+    inspiration: string;
+    with_image: boolean;
+}
+
 export default function GenerateModal(props: CustomModalProps) {
     const mutation = useGenerateMutation(props.keyToInvalidate);
     const [modalVisible, setModalVisible] = useState(false);
@@ -61,7 +68,7 @@ export default function GenerateModal(props: CustomModalProps) {
                 extraStyles="rounded-lg bg-secondary dark:bg-secondaryDark dark:text-white"
                 disabled={mutation.isLoading}
             />
-            {props.type !== 'comment' ? <MenuItem withSwitch={true} label='With image' current={withImage} handler={() => setWithImage(!withImage)} disabled={mutation.isLoading} extraStyles="mt-1"/> : null}
+            {props.type !== 'comment' ? <MenuItem withSwitch={true} label='With image' subLabel="Takes much longer..." current={withImage} handler={() => setWithImage(!withImage)} disabled={mutation.isLoading} extraStyles="mt-1"/> : null}
         </View>
         <CustomButton label={buttonLabel} handler={() => mutation.mutate(variables)} isLoading={mutation.isLoading} extraStyles=" mt-2" />
     </View>

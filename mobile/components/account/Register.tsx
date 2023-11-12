@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Keyboard, Text, View } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 import useRegisterMutation from '../../hooks/useRegisterMutation';

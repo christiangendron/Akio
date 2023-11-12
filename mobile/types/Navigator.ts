@@ -1,4 +1,5 @@
 import { PostProps } from "../components/items/Post";
+import { ListProps } from "../screens/List";
 
 export type TabParams = {
     Home: any;
@@ -11,14 +12,10 @@ export type TabParams = {
   }
   
   export type StackParams = {
-    Home: {
-      data: string;
-    };
+    Home: ListProps;
+    Overview: ListProps;
+    Communities: ListProps;
     Details: PostProps;
-    Overview: {
-      name: string;
-      id: number;
-    };
     AccountHome: {
       showRegister: boolean;
       showSettings: boolean;
@@ -27,14 +24,6 @@ export type TabParams = {
       showRegister: boolean;
       showSettings: boolean;
     };
-    Register: any;
-    Community: {
-      name: string;
-      id: number;
-    };
+    Community: ListProps;
     Settings: any;
-    SettingHome: {
-      data: string;
-    };
-    Communities: any;
   }

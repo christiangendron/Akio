@@ -3,14 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from '../screens/Settings';
-import Details from '../screens/Details';
-import Community from '../screens/Community';
-import Overview from '../screens/Overview';
-import Communities from '../screens/Communities';
 import { StackParams, TabParams } from '../types/Navigator';
 import Account from '../screens/Account';
 import { useColorScheme } from 'nativewind';
 import { Ionicons } from '@expo/vector-icons'; 
+import List from '../screens/List';
+import Details from '../screens/Details';
 
 const HomeStack = createStackNavigator<StackParams>();
 
@@ -26,9 +24,9 @@ function HomeStackScreen() {
       },
       headerTintColor: colorScheme === 'dark' ? '#ffffff' : '#000000',
       }}>
-      <HomeStack.Screen name="Community" component={Community} initialParams={{ name: 'Home', id: 0 }}/>
+      <HomeStack.Screen name="Community" component={List} initialParams={{ name: 'Home', id: 0, type: 'post', withSearch: true }}/>
       <HomeStack.Screen name="Details" component={Details} />
-      <HomeStack.Screen name="Overview" component={Overview} />
+      <HomeStack.Screen name="Overview" component={List} />
       <HomeStack.Screen name="Account" component={Account} />
     </HomeStack.Navigator>
   );
@@ -48,10 +46,10 @@ function SearchStackScreen() {
       },
       headerTintColor: colorScheme === 'dark' ? '#ffffff' : '#000000',
       }}>
-      <CommunitiesStack.Screen name="Communities" component={Communities} />
+      <CommunitiesStack.Screen name="Communities" component={List} initialParams={{ name: 'Communities', id: 0, type: 'community', withGeneration: true }}/>
       <CommunitiesStack.Screen name="Details" component={Details} />
-      <CommunitiesStack.Screen name="Overview" component={Overview} />
-      <CommunitiesStack.Screen name="Community" component={Community} />
+      <CommunitiesStack.Screen name="Overview" component={List} />
+      <CommunitiesStack.Screen name="Community" component={List} />
       <CommunitiesStack.Screen name="Account" component={Account} />
     </CommunitiesStack.Navigator>
   );
@@ -73,6 +71,9 @@ function AccountStackScreen() {
       }}>
       <AccountStack.Screen name="AccountHome" component={Account} initialParams={{ showRegister: false, showSettings: true }} />
       <AccountStack.Screen name="Settings" component={Settings} />
+      <AccountStack.Screen name="Details" component={Details} />
+      <AccountStack.Screen name="Overview" component={List} />
+      <CommunitiesStack.Screen name="Community" component={List} />
     </AccountStack.Navigator>
   );
 }

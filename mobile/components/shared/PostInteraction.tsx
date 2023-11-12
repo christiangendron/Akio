@@ -12,8 +12,8 @@ export default function PostInteraction(props: PostProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
   const settings = useContext(SettingsContext);
 
-  const community = <Pill text={props.community_name} handler={() => navigation.push('Community', { name: props.community_name, id: props.community_id })}/>;
-  const username = <Pill text={props.username} handler={() => navigation.navigate('Overview', { name: props.username, id: props.user_id })}/>;
+  const community = <Pill text={props.community_name} handler={() => navigation.push('Community', { name: props.community_name, id: props.community_id, type: 'post', withSearch: true, withGeneration: true })}/>;
+  const username = <Pill text={props.username} handler={() => navigation.push('Overview', { name: props.username, id: props.user_id, type: 'user-posts', withSearch: true })}/>;
   const options =  <PostOptions id={props.id} username={props.username} user_id={props.user_id} community={props.community_name} community_id={props.community_id} keyToInvalidate={props.keyToInvalidate} />;
 
   return (

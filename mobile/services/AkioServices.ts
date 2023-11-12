@@ -2,7 +2,17 @@ import { PostProps } from '../components/items/Post';
 import { CommentItemProps } from '../components/items/Comment';
 import { CommunityProps } from '../components/items/Community';
 import AxiosClient from './AxiosClient';
-import { GenerateItemVariables } from '../components/shared/GenerateButton';
+import { GenerateVariables } from '../components/modal/GenerateModal';
+
+async function getRessource(type: string, id: number, keyword: string): Promise<any> {
+  if (type === 'post') {
+    return await getPosts(id, keyword);
+  } else if (type === 'community') {
+    return await getCommunities();
+  } else {
+    return await getUserPosts(id, keyword);
+  }
+}
 
 async function getPosts(community_id:number, keyword: string): Promise<PostProps[]> { 
   let res = null;
@@ -31,7 +41,7 @@ async function getCommunities(): Promise<CommunityProps[]> {
   return res.data.data;
 }
 
-async function generateItem(variables: GenerateItemVariables): Promise<any> { 
+async function generateItem(variables: GenerateVariables): Promise<any> { 
   if (variables.type === 'post') {
     return await AxiosClient.post(`post/community/${variables.id}/generate/`, {
       inspiration: variables.inspiration,
@@ -65,7 +75,8 @@ const AkioServices = {
   getComments, 
   getUserPosts, 
   generateItem,
-  deleteItem
+  deleteItem,
+  getRessource
 };
 
 export default AkioServices;
