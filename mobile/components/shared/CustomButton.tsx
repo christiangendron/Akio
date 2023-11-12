@@ -9,20 +9,11 @@ type CustomButtonProps = {
 }
 
 function CustomButton(props: CustomButtonProps) {
-    
-    const content = <View className={'w-full bg-black h-14 flex justify-center my-1 rounded-lg items-center' + props.extraStyles}>
-        <Text className='text-center text-white'>
-            {props.isLoading ? <ActivityIndicator /> : props.label}
-        </Text>
-    </View>
-
-    if (!props.isLoading) return (
-        <TouchableOpacity onPress={props.handler} className='w-full'>
-            {content}
+    return (
+        <TouchableOpacity onPress={props.handler} className={'w-full bg-black h-14 flex justify-center my-1 rounded-lg items-center' + props.extraStyles} disabled={props.isLoading}>
+            {props.isLoading ? <ActivityIndicator /> : <Text className='text-center text-white'>{props.label}</Text>}
         </TouchableOpacity>
     )
-
-    return (content)
 }
 
 export default CustomButton

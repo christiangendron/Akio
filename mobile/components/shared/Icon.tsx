@@ -1,4 +1,4 @@
-import {ActivityIndicator, Text, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import CustomActivityIndicator from './CustomActivityIndicator';
 
 type IconProps = {
@@ -9,18 +9,9 @@ type IconProps = {
 }
 
 export default function Icon(props: IconProps) {
-
-    if (props.isLoading) {
-        return (
-            <View className={'' + props.extraStyles}>
-                <CustomActivityIndicator />
-            </View>
-        );
-    }
-
     return (
         <TouchableOpacity onPress={props.handler} className={'' + props.extraStyles}>
-            {props.icon}
+            {props.isLoading ? <CustomActivityIndicator /> : props.icon}
         </TouchableOpacity>
     );
 }
