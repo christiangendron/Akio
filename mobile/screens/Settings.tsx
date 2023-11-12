@@ -27,11 +27,11 @@ export default function Settings() {
   return (
     <View className='flex flex-1 justify-center items-center bg-background dark:bg-backgroundDark'>
       <ScrollView className='flex w-full mt-1'>      
-        <MenuItem withSwitch={true} label='Show author' current={settings.showUsername} handler={() => settings?.setShowUsername(!settings.showUsername)}/>
-        <MenuItem withSwitch={true} label='Show community' current={settings.showCommunity} handler={() => settings?.setShowCommunity(!settings.showCommunity)}/>
-        <MenuItem withSwitch={true} label='Show options' current={settings.showOptions} handler={() => settings?.setShowOptions(!settings.showOptions)}/>
-        <MenuItem withSwitch={true} label='Show search' current={settings.searchBar} handler={() => settings?.setSearchBar(!settings.searchBar)}/>
-        <MenuItem withSwitch={true} label='Dark mode' current={colorScheme === 'dark'} handler={toggleColorScheme}/>
+        <MenuItem withSwitch={true} label='Show author' current={settings.showUsername} handler={() => settings?.setShowUsername(!settings.showUsername)} extraStyles=' mt-1 mx-2'/>
+        <MenuItem withSwitch={true} label='Show community' current={settings.showCommunity} handler={() => settings?.setShowCommunity(!settings.showCommunity)} extraStyles=' mt-2 mx-2'/>
+        <MenuItem withSwitch={true} label='Show options' current={settings.showOptions} handler={() => settings?.setShowOptions(!settings.showOptions)} extraStyles=' mt-2 mx-2'/>
+        <MenuItem withSwitch={true} label='Show search' current={settings.searchBar} handler={() => settings?.setSearchBar(!settings.searchBar)} extraStyles=' mt-2 mx-2' />
+        <MenuItem withSwitch={true} label='Dark mode' current={colorScheme === 'dark'} handler={toggleColorScheme} extraStyles=' mt-2 mx-2'/>
       </ScrollView>
     </View>
   );

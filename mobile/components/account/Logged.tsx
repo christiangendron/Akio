@@ -8,13 +8,13 @@ function Logged() {
     const logoutMutation = useLogoutMutation();
 
     return (
-        <View className='w-full'>
+        <>
             <UserCard />
-            <MenuItem label='Saved posts' handler={() => console.log('Saved posts')}/>
-            <MenuItem label='My posts' handler={() => console.log('My posts')}/>
-            <MenuItem label='Delete my account' handler={() => console.log('Delete my account')}/>
-            <MenuItem label='Log out' handler={() => logoutMutation.mutate()}/>
-        </View>
+            <MenuItem label='Saved posts' handler={() => console.log('Saved posts')} extraStyles=' mx-2'/>
+            <MenuItem label='My posts' handler={() => console.log('My posts')} extraStyles=' mx-2 mt-2'/>
+            <MenuItem label='Delete my account' handler={() => console.log('Delete my account')} extraStyles=' mx-2 mt-2'/>
+            <MenuItem label='Log out' handler={() => logoutMutation.mutate()} extraStyles=' mx-2 mt-2'/>
+        </>
     )
 }
 

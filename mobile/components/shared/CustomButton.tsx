@@ -1,6 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
-import CustomActivityIndicator from './CustomActivityIndicator'
+import { TouchableOpacity, Text, ActivityIndicator, View } from 'react-native'
 
 type CustomButtonProps = {
     label: string,
@@ -10,13 +9,20 @@ type CustomButtonProps = {
 }
 
 function CustomButton(props: CustomButtonProps) {
-    return (
-        <TouchableOpacity onPress={props.handler} className='w-full bg-black h-14 flex justify-center my-1 rounded-lg items-center'>
-            <Text className='text-center text-white'>
-                {props.isLoading ? <CustomActivityIndicator /> : props.label}
-            </Text>
+    
+    const content = <View className={'w-full bg-black h-14 flex justify-center my-1 rounded-lg items-center' + props.extraStyles}>
+        <Text className='text-center text-white'>
+            {props.isLoading ? <ActivityIndicator /> : props.label}
+        </Text>
+    </View>
+
+    if (!props.isLoading) return (
+        <TouchableOpacity onPress={props.handler} className='w-full'>
+            {content}
         </TouchableOpacity>
     )
+
+    return (content)
 }
 
 export default CustomButton

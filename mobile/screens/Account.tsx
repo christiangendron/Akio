@@ -27,35 +27,28 @@ export default function Account(props: AccountScreenProps) {
   const [showRegister, setShowRegister] = useState(props.route.params.showRegister);
   const { colorScheme } = useColorScheme();
 
-  const settings = <Icon icon={<Ionicons name="ios-settings-outline" size={25} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />} handler={() => navigation.navigate('Settings')} extraStyles='mr-3'/>
-
   useEffect(() => {
     navigation.setOptions({
       title: authContext.isAuth ? 'Account' : showRegister ? 'Register' : 'Login',
       headerRight: () => (
-        props.route.params.showSettings ? settings : null
+        props.route.params.showSettings ? <Icon icon={<Ionicons name="ios-settings-outline" size={25} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />} handler={() => navigation.navigate('Settings')} extraStyles='mr-3'/> : null
       ),
     });
   }, [navigation, authContext.isAuth, colorScheme, showRegister]);
 
   if (authContext.isAuth) return (
-    <View className='flex flex-1 justify-center items-center bg-background dark:bg-backgroundDark'>
-      <ScrollView className='flex w-full'>
-        <Logged />
-      </ScrollView>
-    </View>
+    <ScrollView className='bg-background dark:bg-backgroundDark'>
+      <Logged />
+    </ScrollView>
   )
-
-  const view = showRegister ? <Register /> : <Login />
-  const text = showRegister ? 'You have an account ? Login' : 'No account ? Register'
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }} className='bg-background dark:bg-backgroundDark'>
       <KeyboardAvoidingView className='flex flex-1 justify-center items-center' behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <MaterialCommunityIcons name="account" size={100} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />
-        {view}
+        {showRegister ? <Register /> : <Login />}
         <TouchableOpacity onPress={() => setShowRegister(!showRegister)} className='mt-5'>
-          <Text className='text-center dark:text-white'>{text}</Text>
+          <Text className='text-center dark:text-white'>{showRegister ? 'You have an account ? Login' : 'No account ? Register'}</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     </ScrollView>
