@@ -19,6 +19,7 @@ export default function useLoginMutation() {
             authContext.setIsAuth(true);
             authContext.setIsAdmin(res.data.data.user.is_admin);
             authContext.setUserEmail(res.data.data.user.email);
+            authContext.setUsername(res.data.data.user.username);
             authContext.setUserId(res.data.data.user.id);
         },
     })

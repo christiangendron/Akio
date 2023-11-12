@@ -14,6 +14,7 @@ export default function useLogoutMutation() {
             authContext.setIsAuth(false);
             authContext.setIsAdmin('');
             authContext.setUserEmail('');
+            authContext.setUsername('');
             authContext.setUserId('');
         },
     })
