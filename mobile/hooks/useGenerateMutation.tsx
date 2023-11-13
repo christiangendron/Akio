@@ -4,6 +4,8 @@ import AkioServices from '../services/AkioServices';
 interface GenerateItemVariables {
     id: number;
     type: string;
+    inspiration: string;
+    with_image: boolean;
 }
 
 export default function useGenerateMutation(queryKeyToInvalidate: string) {

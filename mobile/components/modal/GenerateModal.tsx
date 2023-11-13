@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Switch, ActivityIndicator } from "react-native";
+import { View, Text } from "react-native";
 import Modal from "react-native-modal";
 import CustomInput from "../shared/CustomInput";
 import { AuthContext } from "../../context/AuthContext";

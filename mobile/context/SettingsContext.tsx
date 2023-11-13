@@ -4,15 +4,6 @@ import { useColorScheme } from 'nativewind';
 
 export const SettingsContext = createContext<any | null>(null);
 
-async function save(key: string, value: string) {
-  await SecureStore.setItemAsync(key, value);
-}
-
-async function getValueFor(key: string) {
-  let result = await SecureStore.getItemAsync(key);
-  return result;
-}
-
 export default function SettingContextProvider(props: any) {
   const { toggleColorScheme, setColorScheme } = useColorScheme();
 
@@ -26,10 +17,12 @@ export default function SettingContextProvider(props: any) {
     .then((res: any) => {
       const parsed = JSON.parse(res);
 
-      setMinimalBrowsing(parsed.minimalBrowsing);
-      setHideSearchBar(parsed.hideSearchBar);
-      setDarkMode(parsed.darkMode);
-      setColorScheme(parsed.darkMode ? 'dark' : 'light')
+      if (parsed) {
+        setMinimalBrowsing(parsed.minimalBrowsing);
+        setHideSearchBar(parsed.hideSearchBar);
+        setDarkMode(parsed.darkMode);
+        setColorScheme(parsed.darkMode ? 'dark' : 'light')
+      }
     })
     .catch((err: any) => {
       console.log(err);

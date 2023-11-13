@@ -10,10 +10,10 @@ function UserCard() {
             <Image source={require('../../assets/images/default-community.png')} className='h-16 w-16 rounded-full overflow-hidden m-2 border border-1' />
             <View className='flex justify-center'>
                 <Text className='dark:text-white'>
-                    {authContext.username}
+                    {authContext.userInfo.username} #{authContext.userInfo.id} {authContext.userInfo.is_admin ? '(admin)' : ''}
                 </Text>
                 <Text className='dark:text-white'>
-                    {authContext.userEmail}
+                    {authContext.userInfo.email}
                 </Text>
                 <Text className='dark:text-white'>
                     Joined in 2023

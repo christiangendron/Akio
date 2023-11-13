@@ -1,48 +1,62 @@
 import { createContext, useEffect, useState } from 'react';
-import AuthServices from '../services/AuthServices';
+import * as SecureStore from 'expo-secure-store';
 
 export const AuthContext = createContext<any | null>(null);
 
+export type UserInfo = {
+  id: number;
+  username: string;
+  email: string;
+  is_admin: number;
+  avatar: string;
+}
+
 export default function AuthContextProvider(props: any) {
   const [isAuth, setIsAuth] = useState(false);
-  const [userId, setUserId] = useState(null);
-  const [userEmail, setUserEmail] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(0);
-  const [username, setUsername] = useState(null);
+  const [userInfo, setUserInfo] = useState<UserInfo>({id: 0, username: '', email: '', is_admin: 0, avatar: ''})
 
   // Retrive user info on load
   useEffect(() => {
-    AuthServices.getUserInfo()
+    SecureStore.getItemAsync('user_info')
     .then((res: any) => {
-        if (res.user_id) {
-          setIsAuth(true);
-          setUserId(res.user_id);
-          setUserEmail(res.email);
-          setIsAdmin(res.is_admin);
-          setUsername(res.username);
-        } 
+      const parsed = JSON.parse(res);
+      
+      if (parsed) {
+        setIsAuth(true);
+        setUserInfo(parsed);
+      } 
     })
     .catch((err: any) => {
       console.log(err);
     });
   }, []);
 
-  const canDelete = (id: number) => {
-    return userId === id || isAdmin;
+  const onLogging = (data: UserInfo) => {
+    setIsAuth(true);
+    setUserInfo(data);
+  }
+
+  const onLogout = () => {
+    setIsAuth(false);
+    setUserInfo({id: 0, username: '', email: '', is_admin: 0, avatar: ''});
+  }
+
+  const canDelete = (item_id: number) => {
+    return userInfo.id === item_id || userInfo.is_admin === 1;
+  }
+
+  const isAdmin = () => {
+    return userInfo.is_admin === 1;
   }
 
   const allowedContent: any = {
-    userId,
-    setUserId,
     isAuth,
     setIsAuth,
-    userEmail,
-    setUserEmail,
-    isAdmin,
-    setIsAdmin,
+    userInfo,
+    onLogging,
+    onLogout,
     canDelete,
-    username,
-    setUsername,
+    isAdmin,
   };
 
   return (

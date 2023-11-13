@@ -2,8 +2,9 @@ import { useMutation } from "react-query";
 import AuthServices from "../services/AuthServices";
 import { useContext } from "react";
 import { AuthContext } from '../context/AuthContext';
+import * as SecureStore from 'expo-secure-store';
 
-interface LoginMutation {
+interface RegisterMutation {
     username: string;
     email: string;
     password: string;
@@ -13,15 +14,13 @@ export default function useRegisterMutation() {
     const authContext = useContext(AuthContext);
 
     const registerMutation = useMutation({
-        mutationFn: (data : LoginMutation) => {
+        mutationFn: (data : RegisterMutation) => {
             return AuthServices.register(data.username, data.email, data.password);
         },
-        onSuccess: (res) => {
-            authContext.setIsAuth(true);
-            authContext.setIsAdmin(res.data.data.user.is_admin);
-            authContext.setUserEmail(res.data.data.user.email);
-            authContext.setUsername(res.data.data.user.username);
-            authContext.setUserId(res.data.data.user.id);
+        onSuccess: async (res) => {
+            authContext.onLogging(res.data.data.user);
+            await SecureStore.setItemAsync('user_info', JSON.stringify(res.data.data.user));
+            await SecureStore.setItemAsync('secret_token', res.data.data.token);
         },
     })
 
