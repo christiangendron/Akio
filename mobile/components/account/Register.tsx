@@ -18,8 +18,8 @@ function Register() {
     const error = (registerMutation.error as AxiosError<{message: string}>)?.response?.data?.message;
 
     return (
-        <View className='w-3/4'>
-          <Controller
+      <View className='mx-2 mt-1'>
+        <Controller
             control={control}
             rules={{
              required: true,
@@ -30,7 +30,6 @@ function Register() {
                 onChangeText={onChange}
                 value={value}
                 isError={!!errors.username}
-                extraStyles='bg-secondary'
               />
             )}
             name="username"
@@ -47,7 +46,6 @@ function Register() {
                 onChangeText={onChange}
                 value={value}
                 isError={!!errors.email}
-                extraStyles='bg-secondary'
               />
             )}
             name="email"
@@ -65,7 +63,6 @@ function Register() {
                 value={value}
                 secureTextEntry={true}
                 isError={!!errors.password}
-                extraStyles='bg-secondary'
               />
             )}
             name="password"

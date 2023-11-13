@@ -1,4 +1,4 @@
-import { View, Platform, KeyboardAvoidingView, ScrollView, TouchableOpacity, Text} from 'react-native';
+import { View, TouchableOpacity, Text} from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Login from '../components/account/Login';
@@ -8,9 +8,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../types/Navigator';
 import { Ionicons } from '@expo/vector-icons'; 
 import { useColorScheme } from 'nativewind';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import Register from '../components/account/Register';
 import Icon from '../components/shared/Icon';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type AccountScreenProps = {
   route: {
@@ -35,7 +35,7 @@ export default function Account(props: AccountScreenProps) {
       ),
     });
   }, [navigation, authContext.isAuth, colorScheme, showRegister]);
-
+  
   if (authContext.isAuth) return (
     <ScrollView className='bg-background dark:bg-backgroundDark'>
       <Logged />
@@ -43,14 +43,13 @@ export default function Account(props: AccountScreenProps) {
   )
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }} className='bg-background dark:bg-backgroundDark'>
-      <KeyboardAvoidingView className='flex flex-1 justify-center items-center' behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <MaterialCommunityIcons name="account" size={100} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />
+    <View className='flex flex-1 bg-background dark:bg-backgroundDark'>
+      <ScrollView>
         {showRegister ? <Register /> : <Login />}
         <TouchableOpacity onPress={() => setShowRegister(!showRegister)} className='mt-5'>
           <Text className='text-center dark:text-white'>{showRegister ? 'You have an account ? Login' : 'No account ? Register'}</Text>
         </TouchableOpacity>
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }

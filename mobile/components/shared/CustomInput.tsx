@@ -13,7 +13,7 @@ type CustomInputProps = {
 }
 
 function CustomInput(props: CustomInputProps) {
-    const tailwindClass = props.isError ? 'dark:bg-secondaryDark h-14 border-2 px-2 border-red-500 my-1 w-full rounded-lg' : 'dark:bg-secondaryDark px-2 h-14 my-1 w-full rounded-lg';
+    const isError = props.isError ? 'border-2 border-red-500 ' : '';
     
     return (
         <TextInput
@@ -23,7 +23,7 @@ function CustomInput(props: CustomInputProps) {
         onChangeText={props.onChangeText}
         value={props.value}
         secureTextEntry={props.secureTextEntry}
-        className={tailwindClass + ' ' + props.extraStyles}
+        className={isError + 'bg-secondary dark:bg-secondaryDark dark:text-white px-2 h-14 my-1 w-full rounded-lg ' + props.extraStyles}
         editable={!props.disabled}
         />
     )

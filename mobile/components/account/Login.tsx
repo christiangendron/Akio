@@ -18,50 +18,48 @@ function Login() {
     const error = (loginMutation.error as AxiosError<{message: string}>)?.response?.data?.message;
     
     return (
-        <View className='w-3/4'>
-          <Controller
-            control={control}
-            rules={{
-             required: true,
-            }}
-            render={({ field: { onChange, value } }) => (
-              <CustomInput 
-                placeholder="Email"
-                onChangeText={onChange}
-                value={value}
-                isError={!!errors.email}
-                extraStyles='bg-secondary'
-              />
-            )}
-            name="email"
-          />
-          
-          <Controller
-            control={control}
-            rules={{
-                required: true,
-            }}
-            render={({ field: { onChange, value } }) => (
-              <CustomInput 
-                placeholder="Password"
-                onChangeText={onChange}
-                value={value}
-                isError={!!errors.password}
-                secureTextEntry={true}
-                extraStyles='bg-secondary'
-              />
-            )}
-            name="password"
-          />
+    <View className='mx-2 mt-1'>
+    <Controller
+      control={control}
+      rules={{
+      required: true,
+      }}
+      render={({ field: { onChange, value } }) => (
+      <CustomInput 
+      placeholder="Email"
+      onChangeText={onChange}
+      value={value}
+      isError={!!errors.email}
+      />
+      )}
+      name="email"
+      />
 
-          {error && <Text className='text-center text-red-500'>{error}</Text>}
+      <Controller
+      control={control}
+      rules={{
+      required: true,
+      }}
+      render={({ field: { onChange, value } }) => (
+      <CustomInput 
+      placeholder="Password"
+      onChangeText={onChange}
+      value={value}
+      isError={!!errors.password}
+      secureTextEntry={true}
+      />
+      )}
+      name="password"
+      />
 
-          <CustomButton
-            handler={handleSubmit(onSubmit)}
-            label='Submit'
-            isLoading={loginMutation.isLoading}
-          />
-        </View>
+      {error && <Text className='text-center text-red-500'>{error}</Text>}
+
+      <CustomButton
+      handler={handleSubmit(onSubmit)}
+      label='Submit'
+      isLoading={loginMutation.isLoading}
+      />
+    </View>
       );
 }
 
