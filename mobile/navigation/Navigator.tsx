@@ -7,8 +7,9 @@ import { StackParams, TabParams } from '../types/Navigator';
 import Account from '../screens/Account';
 import { useColorScheme } from 'nativewind';
 import { Ionicons } from '@expo/vector-icons'; 
-import List from '../screens/List';
-import Details from '../screens/Details';
+import List from '../screens/PostsList';
+import Details from '../screens/CommentList';
+import CommunityList from '../screens/CommunityList';
 
 const HomeStack = createStackNavigator<StackParams>();
 
@@ -46,7 +47,7 @@ function SearchStackScreen() {
       },
       headerTintColor: colorScheme === 'dark' ? '#ffffff' : '#000000',
       }}>
-      <CommunitiesStack.Screen name="Communities" component={List} initialParams={{ name: 'Communities', id: 0, type: 'community', withGeneration: true }}/>
+      <CommunitiesStack.Screen name="Communities" component={CommunityList} initialParams={{ name: 'Communities', id: 0, type: 'community' }}/>
       <CommunitiesStack.Screen name="Details" component={Details} />
       <CommunitiesStack.Screen name="Overview" component={List} />
       <CommunitiesStack.Screen name="Community" component={List} />

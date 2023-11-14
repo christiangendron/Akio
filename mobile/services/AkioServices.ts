@@ -4,30 +4,33 @@ import { CommunityProps } from '../components/items/Community';
 import AxiosClient from './AxiosClient';
 import { GenerateVariables } from '../components/modal/GenerateModal';
 
-async function getRessource(type: string, id: number, keyword: string): Promise<any> {
-  if (type === 'post') {
-    return await getPosts(id, keyword);
-  } else if (type === 'community') {
-    return await getCommunities();
+async function getPosts(type: string, id: number, orderBy: string, keyword: string): Promise<any> {  
+  const order_by = 'created_at';
+  const direction = orderBy === 'new' ? 'desc' : 'asc';
+
+  if (id === 0) {
+    return await getAllPosts(order_by, direction, keyword);
+  }
+
+  if (type.includes('community')) {
+    return await getCommunityPosts(id, order_by, direction, keyword);
   } else {
-    return await getUserPosts(id, keyword);
+    return await getUserPosts(id, order_by, direction, keyword);
   }
 }
 
-async function getPosts(community_id:number, keyword: string): Promise<PostProps[]> { 
-  let res = null;
-  
-  if (community_id) {
-    res = await AxiosClient.get('post/community/' + community_id + '/' + keyword);
-  } else {
-    res = await AxiosClient.get('post' + '/' + keyword);
-  }
-
+async function getAllPosts(order_by: string, direction: string, keyword: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.get('post', {params: { order_by, direction, keyword }});
   return res.data.data;
 }
 
-async function getUserPosts(user_id:number, keyword: string): Promise<PostProps[]> { 
-  const res = await AxiosClient.get('post/user/' + user_id + '/' + keyword);
+async function getUserPosts(user_id:number, order_by: string, direction: string, keyword: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.get('post/user/' + user_id, {params: { order_by, direction, keyword }});
+  return res.data.data;
+}
+
+async function getCommunityPosts(community_id:number, order_by: string, direction: string, keyword: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.get('post/community/' + community_id, {params: { order_by, direction, keyword }});
   return res.data.data;
 }
 
@@ -42,12 +45,12 @@ async function getCommunities(): Promise<CommunityProps[]> {
 }
 
 async function generateItem(variables: GenerateVariables): Promise<any> { 
-  if (variables.type === 'post') {
+  if (variables.type.includes('post')) {
     return await AxiosClient.post(`post/community/${variables.id}/generate/`, {
       inspiration: variables.inspiration,
       with_image: variables.with_image,
     });
-  } else if (variables.type === 'community') {
+  } else if (variables.type.includes('community')) {
     return await AxiosClient.post('community/generate/', {
       inspiration: variables.inspiration,
       with_image: variables.with_image,
@@ -70,13 +73,12 @@ async function deleteItem(variables: any): Promise<any> {
 }
 
 const AkioServices = {
-  getPosts, 
   getCommunities, 
   getComments, 
   getUserPosts, 
   generateItem,
   deleteItem,
-  getRessource
+  getPosts
 };
 
 export default AkioServices;

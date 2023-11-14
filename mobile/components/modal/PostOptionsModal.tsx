@@ -36,14 +36,13 @@ export default function PostOptionsModal(props: PostOptionsProps) {
     const modalContent = <View className="bg-secondary dark:bg-secondaryDark rounded-lg flex items-center p-2">
         <Option label={`In ${props.community}`} handler={() => {
         toggleModal();
-        navigation.push('Community', { id: props.community_id, name: props.community, type: 'post', withSearch: true, withGeneration: true })
+        navigation.push('Community', { id: props.community_id, name: props.community, type: 'community-posts', withSearch: true, withGeneration: true })
         }} />
         <Option label={`By ${props.username}`} handler={() => {
         toggleModal();
         navigation.push('Overview', { id: props.user_id, name: props.username, type: 'user-posts', withSearch: true })
         }} />
         {authContext.canDelete(props.user_id) ? deleteOption : null}
-        <Option label="Close" handler={toggleModal} />
     </View>
 
     return (

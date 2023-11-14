@@ -81,14 +81,14 @@ class PostsIndexTest extends TestCase
     public function testGetAllPostsWithKeyword()
     {
         // Get all posts with keyword dogs
-        $response = $this->json('get', '/api/post/dogs');
+        $response = $this->json('get', '/api/post/?keyword=dog');
 
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);
         $response->assertJsonCount(1, 'data');
 
         // Get all posts with keyword cats
-        $response = $this->json('get', '/api/post/cats');
+        $response = $this->json('get', '/api/post/?keyword=cats');
 
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);
@@ -122,21 +122,21 @@ class PostsIndexTest extends TestCase
     public function testGetPostsFromCommunityWithKeyword()
     {
         // Get all posts from community 1
-        $response = $this->json('get', '/api/post/community/1/dogs');
+        $response = $this->json('get', '/api/post/community/1/?keyword=dog');
 
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);
         $response->assertJsonCount(0, 'data');
 
         // Get all posts from community 2
-        $response = $this->json('get', '/api/post/community/2/dogs');
+        $response = $this->json('get', '/api/post/community/2/?keyword=dog');
 
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);
         $response->assertJsonCount(1, 'data');
 
         // Get all posts from community 3
-        $response = $this->json('get', '/api/post/community/3/dogs');
+        $response = $this->json('get', '/api/post/community/3/?keyword=dog');
 
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);
@@ -156,14 +156,14 @@ class PostsIndexTest extends TestCase
     public function testGetPostsFromUserWithKeyword()
     {
         // Get all posts from user
-        $response = $this->json('get', '/api/post/user/' . $this->user->id . '/dogs');
+        $response = $this->json('get', '/api/post/user/' . $this->user->id . '/?keyword=dog');
 
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);
         $response->assertJsonCount(1, 'data');
 
         // Get all posts from user
-        $response = $this->json('get', '/api/post/user/' . $this->user->id . '/cats');
+        $response = $this->json('get', '/api/post/user/' . $this->user->id . '/?keyword=cats');
 
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);

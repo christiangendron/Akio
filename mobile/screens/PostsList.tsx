@@ -11,8 +11,11 @@ import { useColorScheme } from "nativewind";
 import CustomFlatList from '../components/shared/CustomFlatList';
 import SearchBarComp from '../components/shared/SearchBarComp';
 import { SettingsContext } from '../context/SettingsContext';
+import OrderByModal from '../components/modal/OrderByModal';
+import SwipeableDelete from '../components/shared/SwipeableDelete';
+import SmallPost from '../components/items/SmallPost';
 
-type ListNavigationProps = {
+type PostsListNavigationProps = {
   route: {
     params: ListProps;
   }
@@ -26,7 +29,7 @@ export type ListProps = {
   withSearch?: boolean;
 }
 
-export default function List(props: ListNavigationProps) {
+export default function PostsList(props: PostsListNavigationProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
     const { colorScheme } = useColorScheme();
     const authContext = useContext(AuthContext);
@@ -39,24 +42,33 @@ export default function List(props: ListNavigationProps) {
     const withSearch = props.route.params.withSearch && !settingContext?.hideSearchBar;
 
     const [keyword, setKeyword] = useState('');
+    const [orderBy, setOrderBy] = useState('new');
 
-    const queryKey = `${type}-${id}-${name}-${keyword}`;
-    const query = useQuery({queryKey: [queryKey],queryFn: () => AkioServices.getRessource(type, id, keyword) });
+    const queryKey = `${type}-${id}-${name}-${keyword}-${orderBy}`;
+    const query = useQuery({queryKey: [queryKey],queryFn: () => AkioServices.getPosts(type, id, orderBy, keyword) });
 
     useEffect(() => {
       navigation.setOptions({
       title: name,
       headerRight: () => (
-          withGeneration ? <GenerateModal type={type} id={id} keyToInvalidate={queryKey} /> : null
+        <View className='flex flex-row'>
+          <OrderByModal current={orderBy} setOrderBy={(value) => setOrderBy(value)} />
+          {withGeneration ? <GenerateModal type={type} id={id} keyToInvalidate={queryKey} /> : null}
+        </View>
       ),
       });
     }, [navigation, authContext.isAuth, colorScheme]);
+
+    const renderItem = ({ item }: { item: any }): JSX.Element => {
+      return <SwipeableDelete id={item.id} user_id={item.user_id} type='post' keyToInvalidate={queryKey} component={<SmallPost key={item.id} {...item} keyToInvalidate={queryKey} />}/>
+    };
 
     return (
         <View className='flex flex-1 justify-center items-center bg-background dark:bg-backgroundDark'>
         <CustomFlatList 
             type={type} 
             data={query.data ? query.data : []} 
+            renderItem={renderItem}
             isLoading={query.isLoading} 
             reFetch={query.refetch} 
             isError={query.isError} 

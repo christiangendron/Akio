@@ -1,5 +1,6 @@
 import { PostProps } from "../components/items/Post";
-import { ListProps } from "../screens/List";
+import { CommunityProps } from "../screens/CommunityList";
+import { ListProps } from "../screens/PostsList";
 
 export type TabParams = {
     Home: any;
@@ -14,7 +15,7 @@ export type TabParams = {
   export type StackParams = {
     Home: ListProps;
     Overview: ListProps;
-    Communities: ListProps;
+    Communities: CommunityProps;
     Details: PostProps;
     AccountHome: {
       showRegister: boolean;

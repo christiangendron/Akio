@@ -10,18 +10,45 @@ use App\Models\Community;
 use App\Http\Controllers\OpenAIController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 
 class PostController extends Controller
 {
-    public function index(string $keyword = null)
-    {   
+    public function index(Request $request, Community $community = null, User $user = null)
+    {     
+        // Get the keyword from the request
+        $keyword = $request->get('keyword');
+
+        // Get the order_by and direction from the request or set default values
+        $order_by = $request->get('order_by') ?? 'created_at';
+        $direction = $request->get('direction') ?? 'asc';
+
+        // Create a query
+        $query = Post::query();
+
+        // If there is a keyword, add a where clause
         if ($keyword) {
-            $post = Post::where('title', 'like', "%{$keyword}%")->orWhere('text_content', 'like', "%{$keyword}%")->get();
-            return PostResource::collection($post);
+            $query->where('title', 'like', "%{$keyword}%")->orWhere('text_content', 'like', "%{$keyword}%");
         }
 
-        $post = Post::all();
-        return PostResource::collection($post);
+        // Add order by clause with provided values or default values
+        $query->orderBy($order_by, $direction);
+
+        // If there is a community_id, add a where clause
+        if ($community) {
+            $query->where('community_id', $community['id']);
+        }
+
+        // If there is a user_id, add a where clause
+        if ($user) {
+            $query->where('user_id', $user['id']);
+        }
+        
+        // Execute the query
+        $posts = $query->get();
+
+        // Create the collection and return it
+        return PostResource::collection($posts);
     }
 
     public function store(PostRequest $postRequest, Community $community)
@@ -37,28 +64,6 @@ class PostController extends Controller
         $post->save();
 
         return response()->json(["message" => 'Post created', "data" => PostResource::make($post)], 201);
-    }
-
-    public function getPostFromCommunity($community_id, string $keyword = null)
-    {
-        if ($keyword) {
-            $post = Post::where('title', 'like', "%{$keyword}%")->orWhere('text_content', 'like', "%{$keyword}%")->where('community_id', $community_id)->get();
-            return PostResource::collection($post);
-        }
-
-        $posts = Post::where('community_id', $community_id)->get();
-        return PostResource::collection($posts);
-    }
-
-    public function getPostFromUser($user_id, string $keyword = null)
-    {
-        if ($keyword) {
-            $post = Post::where('title', 'like', "%{$keyword}%")->orWhere('text_content', 'like', "%{$keyword}%")->where('user_id', $user_id)->get();
-            return PostResource::collection($post);
-        }
-
-        $posts = Post::where('user_id', $user_id)->get();
-        return PostResource::collection($posts);
     }
 
     public function destroy(Post $post)
