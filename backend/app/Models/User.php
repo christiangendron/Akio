@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Hash;
+use App\Models\Post;
 
 class User extends Authenticatable
 {
@@ -46,5 +48,10 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->is_admin == 1;
+    }
+
+    public function savedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'saved', 'user_id', 'post_id');
     }
 }
