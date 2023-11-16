@@ -14,12 +14,10 @@ function AxiosClient() {
   client.interceptors.request.use(
           async (req) => {
               const token = await SecureStore.getItemAsync('secret_token');
-              if (token) {
-                      req.headers = req.headers ?? {};
-                      if (req.url !== 'auth/login' && req.url !== 'auth/register') {
-                        req.headers['Authorization'] = !!token ? `Bearer ${token}` : undefined;
-                      }
-              }
+
+              req.headers = req.headers ?? {};
+              req.headers['Authorization'] = !!token ? `Bearer ${token}` : undefined;
+
               return req;
           },
           (err) => Promise.reject(err)

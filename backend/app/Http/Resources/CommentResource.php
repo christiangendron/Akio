@@ -18,7 +18,7 @@ class CommentResource extends JsonResource
         return [
             'id' => $this->id,
             'text_content' => $this->text_content,
-            'username' => User::find($this->user_id)->username,
+            'username' => $this->relationLoaded('user') ? $this->user->username : null,
             'user_id' => $this->user_id,
         ];
     }

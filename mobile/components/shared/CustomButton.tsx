@@ -1,26 +1,17 @@
 import React from 'react'
-import { ActivityIndicator, TouchableOpacity, View, Text } from 'react-native'
+import { TouchableOpacity, Text, ActivityIndicator, View } from 'react-native'
 
 type CustomButtonProps = {
-    text: string,
-    onPress: () => void,
-    isLoading: boolean,
+    label: string,
+    handler: () => void,
+    isLoading?: boolean,
+    extraStyles?: string,
 }
 
 function CustomButton(props: CustomButtonProps) {
-    if (props.isLoading) {
-        return (
-            <View className='bg-black h-14 flex justify-center my-1 rounded-lg'>
-                <ActivityIndicator />
-            </View>
-        )
-    }
-
     return (
-        <TouchableOpacity onPress={props.onPress} className='bg-black h-14 flex justify-center my-1 rounded-lg'>
-            <Text className='text-center text-white'>
-                {props.text}
-            </Text>
+        <TouchableOpacity onPress={props.handler} className={'w-full bg-black h-14 flex justify-center my-1 rounded-lg items-center' + props.extraStyles} disabled={props.isLoading}>
+            {props.isLoading ? <ActivityIndicator /> : <Text className='text-center text-white'>{props.label}</Text>}
         </TouchableOpacity>
     )
 }

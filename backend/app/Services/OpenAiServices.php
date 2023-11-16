@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use App\Services\ImageServices;
 use GuzzleHttp\Client;
-use App\Http\Controllers\ImageController;
 use Config;
 
-class OpenAIController extends Controller
+class OpenAiServices
 {
     public static function ask($prompt)
     {
@@ -20,7 +20,7 @@ class OpenAIController extends Controller
             ]
         ];
 
-        $functions = OpenAIController::getFunctions();
+        $functions = OpenAiServices::getFunctions();
     
         $response = Http::accept('application/json')
             ->withToken(config('env.OPENAI_API_KEY'))
@@ -57,7 +57,7 @@ class OpenAIController extends Controller
         
         $parsedData = json_decode($response);
 
-        return ImageController::downloadImage($parsedData->data[0]->url);
+        return ImageServices::downloadImage($parsedData->data[0]->url);
     }
 
     private static function getFunctions()

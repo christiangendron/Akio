@@ -43,8 +43,15 @@ class CommentStoreTest extends TestCase
 
         // Expect a 201 (Created) response and validate the response JSON data
         $response->assertStatus(201);
-        $response->assertJsonPath('data.text_content', 'This is a comment');
-        $response->assertJsonPath('data.username', $this->user->username);
+        
+        // Get the comments for post
+        $response = $this->actingAs($this->user)->json('get', '/api/comment/post/1');
+
+        // Expect a 200 (OK) response
+        $response->assertStatus(200);
+
+        // Assert the username
+        $response->assertJsonPath('data.0.username', $this->user->username);
     }
 
     // Test comment creation with authentication and missing text_content

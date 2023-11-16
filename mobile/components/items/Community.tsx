@@ -24,7 +24,7 @@ export default function Community(props: CommunityProps) {
 
     return (
         <TouchableOpacity 
-        onPress={() => navigation.push('Community', { name: props.name, id: props.id })} 
+        onPress={() => navigation.push('Community', { name: props.name, id: props.id, type: 'community-posts', withGeneration: true, withSearch: true })} 
         className='flex flex-row bg-secondary dark:bg-secondaryDark rounded-lg mx-2 mt-2 items-center'>
             {image}
             <View className='flex flex-col w-4/5 pr-3 pb-1'>

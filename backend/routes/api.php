@@ -6,6 +6,7 @@ use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SavedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,19 +45,26 @@ Route::prefix('post')
     ->controller(PostController::class)
     ->group(function() {
         Route::get('/', 'index');
-        Route::get('/{keyword?}', 'index');
+        Route::get('/community/{community}/', 'index');
+        Route::get('/user/{user}/', 'index');
         Route::post('community/{community}', 'store')->middleware('auth:sanctum');
         Route::post('community/{community}/generate/', 'generate')->middleware('auth:sanctum');
         Route::delete('/{post}', 'destroy')->middleware('auth:sanctum');
-        Route::get('/community/{community}/{keyword?}', 'getPostFromCommunity');
-        Route::get('/user/{user}/{keyword?}', 'getPostFromUser');
+});
+
+Route::prefix('saved')
+    ->controller(SavedController::class)
+    ->middleware('auth:sanctum')
+    ->group(function() {
+        Route::get('/post', 'index');
+        Route::post('/post/{post}', 'store');
+        Route::delete('/post/{post}', 'destroy');
 });
 
 Route::prefix('comment')
     ->controller(CommentController::class)
     ->group(function() {
-        Route::get('{comment}', 'getCommentById');
-        Route::get('/post/{post}', 'getCommentByPostId');
+        Route::get('/post/{post}', 'getCommentsByPostId');
         Route::post('/post/{post}', 'store')->middleware('auth:sanctum');
         Route::post('/post/{post}/generate/', 'generate')->middleware('auth:sanctum');
         Route::delete('/{comment}', 'destroy')->middleware('auth:sanctum');

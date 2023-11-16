@@ -2,22 +2,37 @@ import { PostProps } from '../components/items/Post';
 import { CommentItemProps } from '../components/items/Comment';
 import { CommunityProps } from '../components/items/Community';
 import AxiosClient from './AxiosClient';
-import { GenerateItemVariables } from '../components/shared/GenerateButton';
+import { GenerateVariables } from '../components/modal/GenerateModal';
 
-async function getPosts(community_id:number, keyword: string): Promise<PostProps[]> { 
-  let res = null;
-  
-  if (community_id) {
-    res = await AxiosClient.get('post/community/' + community_id + '/' + keyword);
-  } else {
-    res = await AxiosClient.get('post' + '/' + keyword);
+async function getPosts(type: string, id: number, orderBy: string, keyword: string): Promise<any> {  
+  const order_by = 'created_at';
+  const direction = orderBy === 'new' ? 'desc' : 'asc';
+
+  if (id === 0) {
+    return await getAllPosts(order_by, direction, keyword);
   }
 
+  if (type.includes('community')) {
+    return await getCommunityPosts(id, order_by, direction, keyword);
+  } else if (type.includes('saved')) {
+    return await getSavedPosts(order_by, direction, keyword);
+  } else {
+    return await getUserPosts(id, order_by, direction, keyword);
+  }
+}
+
+async function getAllPosts(order_by: string, direction: string, keyword: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.get('post', {params: { order_by, direction, keyword }});
   return res.data.data;
 }
 
-async function getUserPosts(user_id:number, keyword: string): Promise<PostProps[]> { 
-  const res = await AxiosClient.get('post/user/' + user_id + '/' + keyword);
+async function getUserPosts(user_id:number, order_by: string, direction: string, keyword: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.get('post/user/' + user_id, {params: { order_by, direction, keyword }});
+  return res.data.data;
+}
+
+async function getCommunityPosts(community_id:number, order_by: string, direction: string, keyword: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.get('post/community/' + community_id, {params: { order_by, direction, keyword }});
   return res.data.data;
 }
 
@@ -31,13 +46,13 @@ async function getCommunities(): Promise<CommunityProps[]> {
   return res.data.data;
 }
 
-async function generateItem(variables: GenerateItemVariables): Promise<any> { 
-  if (variables.type === 'post') {
+async function generateItem(variables: GenerateVariables): Promise<any> { 
+  if (variables.type.includes('post')) {
     return await AxiosClient.post(`post/community/${variables.id}/generate/`, {
       inspiration: variables.inspiration,
       with_image: variables.with_image,
     });
-  } else if (variables.type === 'community') {
+  } else if (variables.type.includes('community')) {
     return await AxiosClient.post('community/generate/', {
       inspiration: variables.inspiration,
       with_image: variables.with_image,
@@ -59,13 +74,31 @@ async function deleteItem(variables: any): Promise<any> {
   }
 }
 
+async function getSavedPosts(order_by: string, direction: string, keyword: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.get('saved/post', {params: { order_by, direction, keyword }});
+  return res.data.data;
+}
+
+async function savePost(id: number): Promise<any> { 
+  const res = await AxiosClient.post('saved/post/' + id);
+  return res.data.data;
+}
+
+async function unSavePost(id: number): Promise<any> { 
+  const res = await AxiosClient.delete('saved/post/' + id);
+  return res.data.data;
+}
+
 const AkioServices = {
-  getPosts, 
   getCommunities, 
   getComments, 
   getUserPosts, 
   generateItem,
-  deleteItem
+  deleteItem,
+  getPosts,
+  getSavedPosts,
+  savePost,
+  unSavePost
 };
 
 export default AkioServices;

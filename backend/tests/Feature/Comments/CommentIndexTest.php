@@ -34,21 +34,6 @@ class CommentIndexTest extends TestCase
         $this->post2 = Post::factory()->create(['id' => 2, 'user_id' => $this->user->id, 'community_id' => 1]);
     }
 
-    // Test getting comments by
-    public function testGetCommentsById()
-    {
-        // Get that comment by ID
-        $response = $this->json('get', '/api/comment/' . $this->comment->id);
-
-        // Expect a 200 (Created) response and validate the response JSON data
-        $response->assertStatus(200);
-        $response->assertJsonPath('data.text_content', 'This is a comment');
-        $response->assertJsonPath('data.username', $this->user->username);
-        $response->assertJsonPath('data.user_id', $this->user->id);
-        $this->comment->forceDelete();
-    }
-    
-
     // Test getting comments by post ID when no comments exist
     public function testGetCommentsByPostIdNoComments()
     {

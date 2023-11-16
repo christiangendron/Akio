@@ -21,13 +21,13 @@ function NotAuth(props: NotAuthProps) {
             <View className='flex flex-row'>
                 <TouchableOpacity onPress={() => {
                     props.closeModal();
-                    navigation.navigate('Account')
+                    navigation.push('Account', { showRegister: false, showSettings: false })
                 }} className='mt-1 rounded-l-lg bg-secondaryDark'>
                     <Text className='text-center p-5 text-white'>I have an account</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                     props.closeModal();
-                    navigation.navigate('Register')
+                    navigation.push('Account', { showRegister: true, showSettings: false })
                 }} className='mt-1 rounded-r-lg bg-black'>
                     <Text className='text-center  p-5 text-white'>Create one</Text>
                 </TouchableOpacity>

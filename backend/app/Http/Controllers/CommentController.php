@@ -8,14 +8,10 @@ use App\Http\Resources\CommentResource;
 use App\Http\Requests\CommentRequest;
 use App\Models\Post;
 use Illuminate\Support\Facades\Validator;
+use App\Services\OpenAiServices;
 
 class CommentController extends Controller
 {
-    public function getCommentById(Comment $comment)
-    {
-        return new CommentResource($comment);
-    }
-
     public function store(CommentRequest $commentRequest, Post $post)
     {
         $request = $commentRequest->validated();
@@ -29,9 +25,17 @@ class CommentController extends Controller
         return response()->json(["message" => 'Comment created', "data" => CommentResource::make($comment)], 201);
     }
     
-    public function getCommentByPostId($id)
+    public function getCommentsByPostId(Post $post)
     {
-        $comments = Comment::where('post_id', $id)->get();
+        // Create the query
+        $query = $post->comments();
+
+        // Load user for the relation to be loaded
+        $query->with('user');
+
+        // Execute the query
+        $comments = $query->get();
+
         return CommentResource::collection($comments);
     }
 
@@ -51,7 +55,7 @@ class CommentController extends Controller
             $prompt = $prompt . 'With an emphasis on : ' . $request->inspiration;
         }
 
-        $res = OpenAIController::ask($prompt);
+        $res = OpenAiServices::ask($prompt);
 
         $validator = Validator::make($res, [
             'text_content' => 'required',

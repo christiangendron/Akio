@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Client;
 use Intervention\Image\Facades\Image;
 
-class ImageController extends Controller
+class ImageServices
 {
     public static function downloadImage($imageUrl)
     {

@@ -50,7 +50,15 @@ class CommentGenerateTest extends TestCase
 
         // Expect a 201 (Created) response
         $response->assertStatus(201);
-        $response->assertJsonPath('data.username', $this->user->username);
+
+        // Get the comments for post 
+        $response = $this->actingAs($this->user)->json('get', '/api/comment/post/1');
+
+        // Expect a 200 (OK) response
+        $response->assertStatus(200);
+
+        // Assert the username
+        $response->assertJsonPath('data.0.username', $this->user->username);
     }
 
     // Test comment generation with authentication and a keyword
@@ -65,7 +73,15 @@ class CommentGenerateTest extends TestCase
 
         // Expect a 201 (Created) response
         $response->assertStatus(201);
-        $response->assertJsonPath('data.username', $this->user->username);
+
+        // Get the comments for post
+        $response = $this->actingAs($this->user)->json('get', '/api/comment/post/1');
+
+        // Expect a 200 (OK) response
+        $response->assertStatus(200);
+
+        // Assert the username
+        $response->assertJsonPath('data.0.username', $this->user->username);
     }
 
     public function tearDown(): void

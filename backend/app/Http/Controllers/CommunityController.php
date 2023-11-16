@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Community;
 use App\Http\Resources\CommunityResource;
 use App\Http\Requests\CommunityRequest;
-use App\Http\Controllers\OpenAIController;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
+use App\Services\OpenAiServices;
 
 class CommunityController extends Controller
 {
@@ -73,7 +73,7 @@ class CommunityController extends Controller
             $prompt = $prompt . 'On the topic of : ' . $request->inspiration;
         }
 
-        $res = OpenAIController::ask($prompt);
+        $res = OpenAiServices::ask($prompt);
 
         $validator = Validator::make($res, [
             'name' => 'required',

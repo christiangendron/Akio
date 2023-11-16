@@ -7,21 +7,28 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Community;
-use App\Http\Controllers\OpenAIController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use App\Helpers\QueryBuilder;
+use App\Services\OpenAiServices;
 
 class PostController extends Controller
 {
-    public function index(string $keyword = null)
-    {   
-        if ($keyword) {
-            $post = Post::where('title', 'like', "%{$keyword}%")->orWhere('text_content', 'like', "%{$keyword}%")->get();
-            return PostResource::collection($post);
-        }
+    public function index(Request $request, Community $community = null, User $user = null)
+    {     
+        // Create a query
+        $query = Post::query();
 
-        $post = Post::all();
-        return PostResource::collection($post);
+        // Send it to the QueryBuilder
+        QueryBuilder::post($query, $request, $community, $user);
+    
+        // Execute the query
+        $posts = $query->get();
+
+        // Create the collection and return it
+        return PostResource::collection($posts);
     }
 
     public function store(PostRequest $postRequest, Community $community)
@@ -37,28 +44,6 @@ class PostController extends Controller
         $post->save();
 
         return response()->json(["message" => 'Post created', "data" => PostResource::make($post)], 201);
-    }
-
-    public function getPostFromCommunity($community_id, string $keyword = null)
-    {
-        if ($keyword) {
-            $post = Post::where('title', 'like', "%{$keyword}%")->orWhere('text_content', 'like', "%{$keyword}%")->where('community_id', $community_id)->get();
-            return PostResource::collection($post);
-        }
-
-        $posts = Post::where('community_id', $community_id)->get();
-        return PostResource::collection($posts);
-    }
-
-    public function getPostFromUser($user_id, string $keyword = null)
-    {
-        if ($keyword) {
-            $post = Post::where('title', 'like', "%{$keyword}%")->orWhere('text_content', 'like', "%{$keyword}%")->where('user_id', $user_id)->get();
-            return PostResource::collection($post);
-        }
-
-        $posts = Post::where('user_id', $user_id)->get();
-        return PostResource::collection($posts);
     }
 
     public function destroy(Post $post)
@@ -89,7 +74,7 @@ class PostController extends Controller
             $prompt = $prompt . 'This post will not contain an image.';
         }
 
-        $res = OpenAIController::ask($prompt);
+        $res = OpenAiServices::ask($prompt);
 
         $validator = Validator::make($res, [
             'title' => 'required',
