@@ -69,7 +69,7 @@ export default function PostsList(props: PostsListNavigationProps) {
             type={type} 
             data={query.data ? query.data : []} 
             renderItem={renderItem}
-            isLoading={query.isLoading} 
+            isLoading={query.isLoading || query.isFetching} 
             reFetch={query.refetch} 
             isError={query.isError} 
             keyToInvalidate={queryKey}

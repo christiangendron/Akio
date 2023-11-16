@@ -14,6 +14,8 @@ async function getPosts(type: string, id: number, orderBy: string, keyword: stri
 
   if (type.includes('community')) {
     return await getCommunityPosts(id, order_by, direction, keyword);
+  } else if (type.includes('saved')) {
+    return await getSavedPosts(order_by, direction, keyword);
   } else {
     return await getUserPosts(id, order_by, direction, keyword);
   }
@@ -72,13 +74,31 @@ async function deleteItem(variables: any): Promise<any> {
   }
 }
 
+async function getSavedPosts(order_by: string, direction: string, keyword: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.get('saved/post', {params: { order_by, direction, keyword }});
+  return res.data.data;
+}
+
+async function savePost(id: number): Promise<any> { 
+  const res = await AxiosClient.post('saved/post/' + id);
+  return res.data.data;
+}
+
+async function unSavePost(id: number): Promise<any> { 
+  const res = await AxiosClient.delete('saved/post/' + id);
+  return res.data.data;
+}
+
 const AkioServices = {
   getCommunities, 
   getComments, 
   getUserPosts, 
   generateItem,
   deleteItem,
-  getPosts
+  getPosts,
+  getSavedPosts,
+  savePost,
+  unSavePost
 };
 
 export default AkioServices;

@@ -74,7 +74,8 @@ function AccountStackScreen() {
       <AccountStack.Screen name="Settings" component={Settings} />
       <AccountStack.Screen name="Details" component={Details} />
       <AccountStack.Screen name="Overview" component={List} />
-      <CommunitiesStack.Screen name="Community" component={List} />
+      <AccountStack.Screen name="Saved" component={List} />
+      <AccountStack.Screen name="Community" component={List} />
     </AccountStack.Navigator>
   );
 }

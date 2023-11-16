@@ -17,6 +17,7 @@ export type TabParams = {
     Overview: ListProps;
     Communities: CommunityProps;
     Details: PostProps;
+    Saved: ListProps;
     AccountHome: {
       showRegister: boolean;
       showSettings: boolean;

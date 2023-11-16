@@ -11,6 +11,7 @@ export interface PostProps {
     community_id: number;
     user_id: number;
     community_name: string;
+    saved: boolean;
     username: string;
     keyToInvalidate: string;
 }
