@@ -48,7 +48,8 @@ class PostsIndexTest extends TestCase
             'user_id' => $this->user->id, 
             'title' => 'Test Post', 
             'text_content' => 'This is a test post',
-            'community_id' => 1
+            'community_id' => 1,
+            'created_at' => '2021-01-01 00:00:00',
         ]);
 
         Post::factory()->create([
@@ -56,7 +57,8 @@ class PostsIndexTest extends TestCase
             'user_id' => $this->user->id, 
             'title' => 'Test Post', 
             'text_content' => 'I love dogs',
-            'community_id' => 2
+            'community_id' => 2,
+            'created_at' => '2022-01-01 00:00:00',
         ]);
 
         Post::factory()->create([
@@ -64,7 +66,8 @@ class PostsIndexTest extends TestCase
             'user_id' => $this->user->id, 
             'title' => 'Test Post', 
             'text_content' => 'I love cats',
-            'community_id' => 3
+            'community_id' => 3,
+            'created_at' => '2023-01-01 00:00:00',
         ]);
     }
 
@@ -168,6 +171,29 @@ class PostsIndexTest extends TestCase
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);
         $response->assertJsonCount(1, 'data');
+    }
+
+    public function testGetPostsOrderBy()
+    {
+        // Get all posts from user
+        $response = $this->json('get', '/api/post/?order_by=created_at&direction=asc');
+
+        // Expect a 200 response and validate the response JSON data
+        $response->assertStatus(200);
+        $response->assertJsonCount(3, 'data');
+        $response->assertJsonPath('data.0.id', 1);
+        $response->assertJsonPath('data.1.id', 2);
+        $response->assertJsonPath('data.2.id', 3);
+
+        // Get all posts from user
+        $response = $this->json('get', '/api/post/?order_by=created_at&direction=desc');
+
+        // Expect a 200 response and validate the response JSON data
+        $response->assertStatus(200);
+        $response->assertJsonCount(3, 'data');
+        $response->assertJsonPath('data.0.id', 3);
+        $response->assertJsonPath('data.1.id', 2);
+        $response->assertJsonPath('data.2.id', 1);
     }
 
     public function tearDown(): void

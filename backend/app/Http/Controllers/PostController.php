@@ -11,39 +11,19 @@ use App\Http\Controllers\OpenAIController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use App\Helpers\QueryBuilder;
 
 class PostController extends Controller
 {
     public function index(Request $request, Community $community = null, User $user = null)
     {     
-        // Get the keyword from the request
-        $keyword = $request->get('keyword');
-
-        // Get the order_by and direction from the request or set default values
-        $order_by = $request->get('order_by') ?? 'created_at';
-        $direction = $request->get('direction') ?? 'asc';
-
         // Create a query
         $query = Post::query();
 
-        // If there is a keyword, add a where clause
-        if ($keyword) {
-            $query->where('title', 'like', "%{$keyword}%")->orWhere('text_content', 'like', "%{$keyword}%");
-        }
-
-        // Add order by clause with provided values or default values
-        $query->orderBy($order_by, $direction);
-
-        // If there is a community_id, add a where clause
-        if ($community) {
-            $query->where('community_id', $community['id']);
-        }
-
-        // If there is a user_id, add a where clause
-        if ($user) {
-            $query->where('user_id', $user['id']);
-        }
-        
+        // Send it to the QueryBuilder
+        QueryBuilder::post($query, $request, $community, $user);
+    
         // Execute the query
         $posts = $query->get();
 
