@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Community;
-use App\Http\Controllers\OpenAIController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\QueryBuilder;
+use App\Services\OpenAiServices;
 
 class PostController extends Controller
 {
@@ -74,7 +74,7 @@ class PostController extends Controller
             $prompt = $prompt . 'This post will not contain an image.';
         }
 
-        $res = OpenAIController::ask($prompt);
+        $res = OpenAiServices::ask($prompt);
 
         $validator = Validator::make($res, [
             'title' => 'required',

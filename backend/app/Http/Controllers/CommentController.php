@@ -8,6 +8,7 @@ use App\Http\Resources\CommentResource;
 use App\Http\Requests\CommentRequest;
 use App\Models\Post;
 use Illuminate\Support\Facades\Validator;
+use App\Services\OpenAiServices;
 
 class CommentController extends Controller
 {
@@ -54,7 +55,7 @@ class CommentController extends Controller
             $prompt = $prompt . 'With an emphasis on : ' . $request->inspiration;
         }
 
-        $res = OpenAIController::ask($prompt);
+        $res = OpenAiServices::ask($prompt);
 
         $validator = Validator::make($res, [
             'text_content' => 'required',

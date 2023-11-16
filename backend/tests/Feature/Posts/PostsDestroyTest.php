@@ -8,7 +8,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Community;
-use App\Http\Controllers\ImageController;
+use App\Services\ImageServices;
 
 class PostsDestroyTest extends TestCase
 {
@@ -79,7 +79,7 @@ class PostsDestroyTest extends TestCase
 
     public function testDestroyWithImage()
     {
-        $imageName = ImageController::downloadImage('https://en.wikipedia.org/static/images/project-logos/enwiki.png');
+        $imageName = ImageServices::downloadImage('https://en.wikipedia.org/static/images/project-logos/enwiki.png');
 
         // Create a post with an image
         Post::factory()->create(['id' => 5, 'user_id' => $this->user1->id, 'community_id' => 1, 'media_url' => $imageName]);
