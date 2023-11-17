@@ -20,6 +20,7 @@ class AuthResource extends JsonResource
                 'username' => $this->username,
                 'email' => $this->email,
                 'is_admin' => $this->is_admin,
+                'created_at' => $this->created_at,
             ],
             'token' => $this->createToken($this->id.auth()->id())->plainTextToken
         ];

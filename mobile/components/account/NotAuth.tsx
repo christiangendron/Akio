@@ -19,16 +19,24 @@ function NotAuth(props: NotAuthProps) {
             <MaterialCommunityIcons name="account-alert" size={75} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />
             <Text className='text-center mb-3 dark:text-white'>You need an account to generate content</Text>
             <View className='flex flex-row'>
-                <TouchableOpacity onPress={() => {
-                    props.closeModal();
-                    navigation.push('Account', { showRegister: false, showSettings: false })
-                }} className='mt-1 rounded-l-lg bg-secondaryDark'>
+                <TouchableOpacity 
+                    onPress={() => {
+                        props.closeModal();
+                        navigation.push('Account', { 
+                            showRegister: false, 
+                            showSettings: false })
+                    }} 
+                    className='mt-1 rounded-l-lg bg-secondaryDark'>
                     <Text className='text-center p-5 text-white'>I have an account</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    props.closeModal();
-                    navigation.push('Account', { showRegister: true, showSettings: false })
-                }} className='mt-1 rounded-r-lg bg-black'>
+                <TouchableOpacity 
+                    onPress={() => {
+                        props.closeModal();
+                        navigation.push('Account', { 
+                            showRegister: true, 
+                            showSettings: false })
+                    }} 
+                    className='mt-1 rounded-r-lg bg-black'>
                     <Text className='text-center  p-5 text-white'>Create one</Text>
                 </TouchableOpacity>
             </View>

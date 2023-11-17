@@ -22,7 +22,10 @@ export default function MenuItem(props: MenuItemProps) {
     );
 
     return (
-        <TouchableOpacity className={'flex flex-row bg-secondary dark:bg-secondaryDark p-3 justify-between rounded-lg' + props.extraStyles} onPress={() => props.handler()}>
+        <TouchableOpacity 
+            className={'bg-secondary dark:bg-secondaryDark p-3 rounded-lg' + props.extraStyles} 
+            onPress={() => props.handler()} 
+            disabled={props.disabled}>
             <Text className='dark:text-white'>{props.label}</Text>
         </TouchableOpacity>
     );

@@ -11,11 +11,8 @@ export default function Media(props: MediaProps) {
     const backendUrl = process.env.BACKEND_IMAGE_URL;
     const [visible, setVisible] = React.useState(false);
 
-    const images = [
-        {
-          uri: backendUrl + props.media_url,
-        }
-    ];
+    // Could handle more than one image
+    const images = [{uri: backendUrl + props.media_url}];
 
     if (visible) return (
         <ImageView images={images} imageIndex={0} visible={visible} onRequestClose={() => setVisible(false)}/>

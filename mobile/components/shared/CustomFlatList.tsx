@@ -1,4 +1,4 @@
-import { View, FlatList, ActivityIndicator } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { CommunityProps } from '../items/Community';
 import { PostProps } from '../items/Post';
 import { CommentItemProps } from '../items/Comment';

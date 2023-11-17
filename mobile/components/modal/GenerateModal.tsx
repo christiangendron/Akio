@@ -57,8 +57,20 @@ export default function GenerateModal(props: CustomModalProps) {
         buttonLabel = (mutation.error as any).response?.data?.message + ' ↺';
     }
 
+    const imageSwitch = <MenuItem 
+        withSwitch={true} 
+        label='With image' 
+        subLabel="Takes much longer..." 
+        current={withImage} 
+        handler={() => setWithImage(!withImage)} 
+        disabled={mutation.isLoading} 
+        extraStyles="mt-1"
+    />
+
     const modalContent = <View className="w-full bg-background dark:bg-backgroundDark rounded-lg flex items-center p-2">
-        <Text className='text-lg my-3 font-semibold dark:text-white'>Generate a {props.type.includes('post') ? 'post' : props.type}</Text>
+        <Text className='text-lg my-3 font-semibold dark:text-white'>
+            Generate a {props.type.includes('post') ? 'post' : props.type}
+        </Text>
         <View className="w-full">
             <CustomInput 
                 placeholder='Optional inspiration for the generation...' 
@@ -66,11 +78,14 @@ export default function GenerateModal(props: CustomModalProps) {
                 value={inspiration} 
                 isError={false}
                 extraStyles="rounded-lg bg-secondary dark:bg-secondaryDark dark:text-white"
-                disabled={mutation.isLoading}
-            />
-            {props.type !== 'comment' ? <MenuItem withSwitch={true} label='With image' subLabel="Takes much longer..." current={withImage} handler={() => setWithImage(!withImage)} disabled={mutation.isLoading} extraStyles="mt-1"/> : null}
+                disabled={mutation.isLoading} />
+            {props.type !== 'comment' ? imageSwitch : null}
         </View>
-        <CustomButton label={buttonLabel} handler={() => mutation.mutate(variables)} isLoading={mutation.isLoading} extraStyles=" mt-2" />
+        <CustomButton 
+            label={buttonLabel} 
+            handler={() => mutation.mutate(variables)} 
+            isLoading={mutation.isLoading} 
+            extraStyles=" mt-2" />
     </View>
 
     return (
@@ -81,8 +96,7 @@ export default function GenerateModal(props: CustomModalProps) {
                     <Ionicons name="create-outline" size={24} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />} 
                 handler={toggleModal} 
                 isLoading={mutation.isLoading}
-                extraStyles='mr-3'
-            />
+                extraStyles='mr-3' />
             <Modal
                 isVisible={modalVisible}
                 animationIn="slideInUp"
@@ -90,8 +104,7 @@ export default function GenerateModal(props: CustomModalProps) {
                 onBackdropPress={toggleModal}
                 avoidKeyboard={true}
                 useNativeDriver={true}
-                hideModalContentWhileAnimating={true}
-            >
+                hideModalContentWhileAnimating={true} >
                 {authContext.isAuth ? modalContent: <NotAuth closeModal={toggleModal}/>}
             </Modal>
         </>
