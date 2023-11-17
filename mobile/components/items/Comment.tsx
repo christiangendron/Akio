@@ -17,8 +17,14 @@ export default function Comment(props: CommentItemProps) {
     return (
         <View className="bg-secondary dark:bg-secondaryDark p-2 rounded-lg mt-2 mx-2">
             <Text className='dark:text-white'>{props.text_content}</Text>
-            <TouchableOpacity onPress={() => navigation.push('Overview', { name: props.username, id: props.user_id, type: 'user-posts', withSearch: true })}>
-                <Text className='text-sm dark:text-white dark:font-bold'>
+            <TouchableOpacity 
+                onPress={() => navigation.push('Overview', { 
+                    name: props.username, 
+                    id: props.user_id, 
+                    type: 'user-posts', 
+                    withSearch: true }
+                 )}>
+                <Text className='text-sm font-bold dark:text-white'>
                     by {props.username}
                 </Text>
             </TouchableOpacity> 

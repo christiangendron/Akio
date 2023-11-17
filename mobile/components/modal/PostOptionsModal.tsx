@@ -35,22 +35,42 @@ export default function PostOptionsModal(props: PostOptionsProps) {
         setShowContent(!showContent);
     }
 
-    const deleteOption = <Option label="Delete" handler={() => {deleteMutation.mutate({ id: props.id, type: "post" });setModalVisible(!modalVisible);}} />
+    const deleteOption = <Option 
+        label="Delete" 
+        handler={() => {
+            deleteMutation.mutate({ id: props.id, type: "post" });setModalVisible(!modalVisible);
+        }} />
 
-    const saveOption = <Option label={`Save`} selected={props.saved} handler={() => { 
-        toggleModal();
-        props.saved ? unSaveMutation.mutate({id: props.id}) : saveMutation.mutate({id: props.id});
-    }} />
+    const saveOption = <Option 
+        label={`Save`} 
+        selected={props.saved} 
+        handler={() => { 
+            toggleModal();
+            props.saved ? unSaveMutation.mutate({id: props.id}) : saveMutation.mutate({id: props.id}); 
+        }} />
 
     const modalContent = <View className="bg-secondary dark:bg-secondaryDark rounded-lg flex items-center p-2">
-        <Option label={`In ${props.community}`} handler={() => {
+        <Option 
+            label={`In ${props.community}`} 
+            handler={() => {
             toggleModal();
-            navigation.push('Community', { id: props.community_id, name: props.community, type: 'community-posts', withSearch: true, withGeneration: true })
-        }} />
-        <Option label={`By ${props.username}`} handler={() => {
-            toggleModal();
-            navigation.push('Overview', { id: props.user_id, name: props.username, type: 'user-posts', withSearch: true })
-        }} />
+            navigation.push('Community', { 
+                id: props.community_id, 
+                name: props.community, 
+                type: 'community-posts', 
+                withSearch: true, 
+                withGeneration: true })
+            }} />
+        <Option 
+            label={`By ${props.username}`} 
+            handler={() => {
+                toggleModal();
+                navigation.push('Overview', { 
+                    id: props.user_id, 
+                    name: props.username, 
+                    type: 'user-posts', 
+                    withSearch: true })
+            }} />
         {authContext.isAuth ? saveOption : null}
         {authContext.canDelete(props.user_id) ? deleteOption : null}
     </View>
@@ -65,8 +85,7 @@ export default function PostOptionsModal(props: PostOptionsProps) {
                  onBackdropPress={toggleModal}
                  avoidKeyboard={true}
                  useNativeDriver={true}
-                 hideModalContentWhileAnimating={true}
-             >
+                 hideModalContentWhileAnimating={true} >
                 {modalContent}
              </Modal>
          </>

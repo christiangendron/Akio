@@ -40,8 +40,7 @@ export default function OrderByModal(props: OrderByModalProps) {
              <Icon 
                 icon={<Ionicons name="list" size={24} color={colorScheme === 'dark' ? '#ffffff' : '#000000'} />} 
                 handler={toggleModal} 
-                extraStyles='mr-3'
-            />
+                extraStyles='mr-3' />
              <Modal
                  isVisible={modalVisible}
                  animationIn="slideInUp"
@@ -49,8 +48,7 @@ export default function OrderByModal(props: OrderByModalProps) {
                  onBackdropPress={toggleModal}
                  avoidKeyboard={true}
                  useNativeDriver={true}
-                 hideModalContentWhileAnimating={true}
-             >
+                 hideModalContentWhileAnimating={true}>
                 {modalContent}
              </Modal>
          </>

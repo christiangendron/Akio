@@ -16,7 +16,7 @@ function UserCard() {
                     {authContext.userInfo.email}
                 </Text>
                 <Text className='dark:text-white'>
-                    Joined in 2023
+                    Member since {authContext.userInfo.created_at.split('T')[0]}
                 </Text>
             </View>
         </View>

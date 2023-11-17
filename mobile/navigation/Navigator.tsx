@@ -28,6 +28,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Community" component={List} initialParams={{ name: 'Home', id: 0, type: 'post', withSearch: true }}/>
       <HomeStack.Screen name="Details" component={Details} />
       <HomeStack.Screen name="Overview" component={List} />
+      <HomeStack.Screen name="Saved" component={List} />
       <HomeStack.Screen name="Account" component={Account} />
     </HomeStack.Navigator>
   );
@@ -50,6 +51,7 @@ function SearchStackScreen() {
       <CommunitiesStack.Screen name="Communities" component={CommunityList} initialParams={{ name: 'Communities', id: 0, type: 'community' }}/>
       <CommunitiesStack.Screen name="Details" component={Details} />
       <CommunitiesStack.Screen name="Overview" component={List} />
+      <CommunitiesStack.Screen name="Saved" component={List} />
       <CommunitiesStack.Screen name="Community" component={List} />
       <CommunitiesStack.Screen name="Account" component={Account} />
     </CommunitiesStack.Navigator>

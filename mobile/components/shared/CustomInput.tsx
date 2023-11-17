@@ -17,14 +17,14 @@ function CustomInput(props: CustomInputProps) {
     
     return (
         <TextInput
-        placeholder={props.placeholder}
-        placeholderTextColor={'#9CA3AF'}
-        onBlur={props.onBlur}
-        onChangeText={props.onChangeText}
-        value={props.value}
-        secureTextEntry={props.secureTextEntry}
-        className={isError + 'bg-secondary dark:bg-secondaryDark dark:text-white px-2 h-14 my-1 w-full rounded-lg ' + props.extraStyles}
-        editable={!props.disabled}
+            placeholder={props.placeholder}
+            placeholderTextColor={'#9CA3AF'}
+            onBlur={props.onBlur}
+            onChangeText={props.onChangeText}
+            value={props.value}
+            secureTextEntry={props.secureTextEntry}
+            className={isError + 'bg-secondary dark:bg-secondaryDark dark:text-white px-2 h-14 my-1 w-full rounded-lg ' + props.extraStyles}
+            editable={!props.disabled}
         />
     )
 }

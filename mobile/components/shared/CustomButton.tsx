@@ -9,9 +9,14 @@ type CustomButtonProps = {
 }
 
 function CustomButton(props: CustomButtonProps) {
+    const content = <Text className='text-center text-white'>{props.label}</Text>;
+    
     return (
-        <TouchableOpacity onPress={props.handler} className={'w-full bg-black h-14 flex justify-center my-1 rounded-lg items-center' + props.extraStyles} disabled={props.isLoading}>
-            {props.isLoading ? <ActivityIndicator /> : <Text className='text-center text-white'>{props.label}</Text>}
+        <TouchableOpacity 
+            className={'w-full bg-black h-14 flex justify-center my-1 rounded-lg items-center' + props.extraStyles} 
+            onPress={props.handler} 
+            disabled={props.isLoading}>
+            {props.isLoading ? <ActivityIndicator /> : content}
         </TouchableOpacity>
     )
 }

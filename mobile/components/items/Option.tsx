@@ -20,7 +20,10 @@ export default function Option(props: OptionProps) {
     };
 
     return (
-        <TouchableOpacity onPress={onPress} className={'w-full p-5 rounded-lg items-center m-1' + style} disabled={props.isLoading}>
+        <TouchableOpacity 
+            className={'w-full p-5 rounded-lg items-center m-1' + style}
+            onPress={onPress} 
+            disabled={props.isLoading}>
             <Text className='text-center text-white'>{props.label}</Text>
         </TouchableOpacity>
     );

@@ -12,51 +12,43 @@ import CustomFlatList from '../components/shared/CustomFlatList';
 import Community from '../components/items/Community';
 import SwipeableDelete from '../components/shared/SwipeableDelete';
 
-type CommunityListProps = {
-  route: {
-    params: CommunityProps;
-  }
-}
+export default function CommunityList() {
+	const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
+	const { colorScheme } = useColorScheme();
+	const authContext = useContext(AuthContext);
 
-export type CommunityProps = {
-  id: number;
-  name: string;
-  type: string;
-}
+	const queryKey = `community-list`;
+	const query = useQuery({queryKey: [queryKey],queryFn: () => AkioServices.getCommunities() });
 
-export default function CommunityList(props: CommunityListProps) {
-    const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
-    const { colorScheme } = useColorScheme();
-    const authContext = useContext(AuthContext);
+	useEffect(() => {
+		navigation.setOptions({
+			title: 'Communities',
+			headerRight: () => (<GenerateModal type={'community'} id={0} keyToInvalidate={queryKey} />),
+		});
+	}, [navigation, authContext.isAuth, colorScheme]);
 
-    const queryKey = `community-list`;
-    const query = useQuery({queryKey: [queryKey],queryFn: () => AkioServices.getCommunities() });
+	const renderItem = ({ item }: { item: any }): JSX.Element => {
+		return <SwipeableDelete 
+			id={item.id} 
+			user_id={item.user_id} 
+			type='community' 
+			keyToInvalidate={queryKey} 
+			component={<Community key={item.id} {...item } />} 
+		/>
+	};
 
-    useEffect(() => {
-      navigation.setOptions({
-      title: 'Communities',
-      headerRight: () => (
-        <GenerateModal type={'community'} id={0} keyToInvalidate={queryKey} />
-      ),
-      });
-    }, [navigation, authContext.isAuth, colorScheme]);
-
-    const renderItem = ({ item }: { item: any }): JSX.Element => {
-      return <SwipeableDelete id={item.id} user_id={item.user_id} type='community' keyToInvalidate={queryKey} component={<Community key={item.id} {...item } />} />
-    };
-  
-    return (
-        <View className='flex flex-1 justify-center items-center bg-background dark:bg-backgroundDark'>
-          <CustomFlatList 
-              type={'community'} 
-              data={query.data ? query.data : []} 
-              renderItem={renderItem}
-              isLoading={query.isLoading || query.isFetching} 
-              reFetch={query.refetch} 
-              isError={query.isError} 
-              keyToInvalidate={queryKey}
-              headerComponent={null}
-          />
-        </View>
-    );
+	return (
+		<View className='flex flex-1 justify-center items-center bg-background dark:bg-backgroundDark'>
+			<CustomFlatList 
+				type={'community'} 
+				data={query.data ? query.data : []} 
+				renderItem={renderItem}
+				isLoading={query.isLoading || query.isFetching} 
+				reFetch={query.refetch} 
+				isError={query.isError} 
+				keyToInvalidate={queryKey}
+				headerComponent={null}
+			/>
+		</View>
+	);
 }

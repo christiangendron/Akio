@@ -9,11 +9,12 @@ export type UserInfo = {
   email: string;
   is_admin: number;
   avatar: string;
+  created_at: string;
 }
 
 export default function AuthContextProvider(props: any) {
   const [isAuth, setIsAuth] = useState(false);
-  const [userInfo, setUserInfo] = useState<UserInfo>({id: 0, username: '', email: '', is_admin: 0, avatar: ''})
+  const [userInfo, setUserInfo] = useState<UserInfo>({id: 0, username: '', email: '', is_admin: 0, avatar: '', created_at: ''})
 
   // Retrive user info on load
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function AuthContextProvider(props: any) {
 
   const onLogout = () => {
     setIsAuth(false);
-    setUserInfo({id: 0, username: '', email: '', is_admin: 0, avatar: ''});
+    setUserInfo({id: 0, username: '', email: '', is_admin: 0, avatar: '', created_at: ''});
   }
 
   const canDelete = (item_id: number) => {
