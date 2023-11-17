@@ -1,4 +1,4 @@
-import { View, FlatList } from 'react-native';
+import { View, FlatList, ActivityIndicator } from 'react-native';
 import { CommunityProps } from '../items/Community';
 import { PostProps } from '../items/Post';
 import { CommentItemProps } from '../items/Comment';
@@ -23,6 +23,16 @@ export default function CustomFlatList(props : CustomFlatListProps) {
     formatedType = 'posts';
   }
 
+  const emptyComp = () => {
+    if (props.isError) {
+      return <MessagePost message={`Error while retriving items ↺`} action={props.reFetch} />
+    } else if (props.isLoading) {
+      return <MessagePost message={`Loading`} />
+    } else {
+      return <MessagePost message={`No ${formatedType} found`} />
+    }
+  }
+  
   return (
     <FlatList
         className='w-screen'
@@ -33,9 +43,7 @@ export default function CustomFlatList(props : CustomFlatListProps) {
         onEndReachedThreshold={2}
         ListFooterComponent={<View className='h-3'/>}
         ListHeaderComponent={props.headerComponent}
-        ListEmptyComponent={props.isError ? 
-          <MessagePost message={`Error while retriving items ↺`} action={props.reFetch} /> : 
-          <MessagePost message={`No ${formatedType} found`} />}
+        ListEmptyComponent={emptyComp}
       />
   );
 }

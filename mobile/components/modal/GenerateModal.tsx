@@ -58,7 +58,7 @@ export default function GenerateModal(props: CustomModalProps) {
     }
 
     const modalContent = <View className="w-full bg-background dark:bg-backgroundDark rounded-lg flex items-center p-2">
-        <Text className='text-lg my-3 font-semibold dark:text-white'>Generate a {props.type}</Text>
+        <Text className='text-lg my-3 font-semibold dark:text-white'>Generate a {props.type.includes('post') ? 'post' : props.type}</Text>
         <View className="w-full">
             <CustomInput 
                 placeholder='Optional inspiration for the generation...' 
