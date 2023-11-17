@@ -5,34 +5,31 @@ import AxiosClient from './AxiosClient';
 import { GenerateVariables } from '../components/modal/GenerateModal';
 
 async function getPosts(type: string, id: number, orderBy: string, keyword: string): Promise<any> {  
-  const order_by = 'created_at';
-  const direction = orderBy === 'new' ? 'desc' : 'asc';
-
   if (id === 0) {
-    return await getAllPosts(order_by, direction, keyword);
+    return await getAllPosts(orderBy, keyword);
   }
 
   if (type.includes('community')) {
-    return await getCommunityPosts(id, order_by, direction, keyword);
+    return await getCommunityPosts(id, orderBy, keyword);
   } else if (type.includes('saved')) {
-    return await getSavedPosts(order_by, direction, keyword);
+    return await getSavedPosts(orderBy, keyword);
   } else {
-    return await getUserPosts(id, order_by, direction, keyword);
+    return await getUserPosts(id, orderBy, keyword);
   }
 }
 
-async function getAllPosts(order_by: string, direction: string, keyword: string): Promise<PostProps[]> { 
-  const res = await AxiosClient.get('post', {params: { order_by, direction, keyword }});
+async function getAllPosts(order_by: string, keyword: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.get('post', {params: { order_by, keyword }});
   return res.data.data;
 }
 
-async function getUserPosts(user_id:number, order_by: string, direction: string, keyword: string): Promise<PostProps[]> { 
-  const res = await AxiosClient.get('post/user/' + user_id, {params: { order_by, direction, keyword }});
+async function getUserPosts(user_id:number, order_by: string, keyword: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.get('post/user/' + user_id, {params: { order_by, keyword }});
   return res.data.data;
 }
 
-async function getCommunityPosts(community_id:number, order_by: string, direction: string, keyword: string): Promise<PostProps[]> { 
-  const res = await AxiosClient.get('post/community/' + community_id, {params: { order_by, direction, keyword }});
+async function getCommunityPosts(community_id:number, order_by: string, keyword: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.get('post/community/' + community_id, {params: { order_by, keyword }});
   return res.data.data;
 }
 
@@ -74,8 +71,8 @@ async function deleteItem(variables: any): Promise<any> {
   }
 }
 
-async function getSavedPosts(order_by: string, direction: string, keyword: string): Promise<PostProps[]> { 
-  const res = await AxiosClient.get('saved/post', {params: { order_by, direction, keyword }});
+async function getSavedPosts(order_by: String, keyword: string): Promise<PostProps[]> { 
+  const res = await AxiosClient.get('saved/post', {params: { order_by, keyword }});
   return res.data.data;
 }
 
