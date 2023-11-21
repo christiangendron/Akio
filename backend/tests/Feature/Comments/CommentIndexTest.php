@@ -34,17 +34,16 @@ class CommentIndexTest extends TestCase
         $this->post2 = Post::factory()->create(['id' => 2, 'user_id' => $this->user->id, 'community_id' => 1]);
     }
 
-    // Test getting comments by post ID when no comments exist
     public function testGetCommentsByPostIdNoComments()
     {
+        // Get comments by post ID
         $response = $this->json('get', '/api/comment/post/' . $this->post2->id);
 
-        // Expect a 200 (OK) response and no comments in the 'data' JSON path
+        // Expect a 200 (OK) response and a JSON path with 0 comments in 'data'
         $response->assertStatus(200);
         $response->assertJsonCount(0, 'data');
     }
 
-    // Test getting comments by post ID when comments exist
     public function testGetCommentsByPostIdWithComments()
     {
         // Get comments by post ID
@@ -53,6 +52,27 @@ class CommentIndexTest extends TestCase
         // Expect a 200 (OK) response and a JSON path with 2 comments in 'data'
         $response->assertStatus(200);
         $response->assertJsonCount(2, 'data');
+
+        // Assert the response structure
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'text_content',
+                    'username',
+                    'user_id',
+                ],
+            ],
+        ]);
+    }
+
+    public function testGetcommentsForPostThatDoesNotExist()
+    {
+        // Get comments by post ID
+        $response = $this->json('get', '/api/comment/post/999');
+
+        // Expect a 404 (Not Found) response
+        $response->assertStatus(404);
     }
 
     public function tearDown(): void

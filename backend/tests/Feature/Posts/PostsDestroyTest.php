@@ -48,10 +48,14 @@ class PostsDestroyTest extends TestCase
     {
         // Attempt to delete a post that does not belong to the authenticated user
         $response = $this->actingAs($this->user1)->json('delete', '/api/post/2');
+
+        // Expect a 403 Forbidden response
         $response->assertStatus(403);
 
         // Attempt to delete a post that does not belong to the authenticated user
         $response = $this->actingAs($this->user2)->json('delete', '/api/post/1');
+
+        // Expect a 403 Forbidden response
         $response->assertStatus(403);
     }
 
@@ -59,10 +63,14 @@ class PostsDestroyTest extends TestCase
     {
         // Attempt to delete a post that belongs to the authenticated user
         $response = $this->actingAs($this->user1)->json('delete', '/api/post/1');
+
+        // Expect a 200 OK response
         $response->assertStatus(200);
 
         // Attempt to delete a post that belongs to the authenticated user
         $response = $this->actingAs($this->user2)->json('delete', '/api/post/2');
+
+        // Expect a 200 OK response
         $response->assertStatus(200);
     }
 
@@ -70,10 +78,14 @@ class PostsDestroyTest extends TestCase
     {
         // Attempt to delete a post as an admin user
         $response = $this->actingAs($this->user3)->json('delete', '/api/post/3');
+
+        // Expect a 200 OK response
         $response->assertStatus(200);
 
         // Attempt to delete a post as an admin user
         $response = $this->actingAs($this->user3)->json('delete', '/api/post/4');
+
+        // Expect a 200 OK response
         $response->assertStatus(200);
     }
 
@@ -86,6 +98,8 @@ class PostsDestroyTest extends TestCase
 
         // Attempt to delete the post with an image
         $response = $this->actingAs($this->user1)->json('delete', '/api/post/5');
+
+        // Expect a 200 OK response
         $response->assertStatus(200);
 
         // Ensure that the image file is removed

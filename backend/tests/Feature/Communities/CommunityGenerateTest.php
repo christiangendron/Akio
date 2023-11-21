@@ -21,13 +21,11 @@ class CommunityGenerateTest extends TestCase
 
     public function testGenerateWithoutAuth()
     {
-        $data = [
+        // Generate a community without auth
+        $response = $this->json('post', '/api/community/generate', $data = [
             'inspiration' => '',
             'has_image' => false,
-        ];
-
-        // Generate a community
-        $response = $this->json('post', '/api/community/generate', $data);
+        ]);
 
         // Expect a 401 (Unauthorized) response
         $response->assertStatus(401);
@@ -35,32 +33,71 @@ class CommunityGenerateTest extends TestCase
 
     public function testGenerateWithAuth()
     {
-        $data = [
+        // Generate a community with auth
+        $response = $this->actingAs($this->user)->json('post', '/api/community/generate', [
             'inspiration' => '',
             'has_image' => false,
-        ];
-
-        // Generate a community
-        $response = $this->actingAs($this->user)->json('post', '/api/community/generate', $data);
+        ]);
 
         // Expect a 201 (Created) response and validate the response JSON data
         $response->assertStatus(201);
-        $response->assertJsonPath('data.user_id', $this->user->id);
+
+        // Assert the response structure
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'name',
+                'description',
+                'media_url',
+                'user_id',
+            ],
+        ]);
     }
 
     public function testGenerateWithAuthAndKeyword()
     {
-        $data = [
-            'inspiration' => '',
+        // Generate a community with auth and a keyword
+        $response = $this->actingAs($this->user)->json('post', '/api/community/generate', [
+            'inspiration' => 'cats',
             'has_image' => false,
-        ];
-
-        // Generate a community
-        $response = $this->actingAs($this->user)->json('post', '/api/community/generate', $data);
+        ]);
 
         // Expect a 201 (Created) response and validate the response JSON data
         $response->assertStatus(201);
-        $response->assertJsonPath('data.user_id', $this->user->id);
+        
+        // Assert the response structure
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'name',
+                'description',
+                'media_url',
+                'user_id',
+            ],
+        ]);
+    }
+
+    public function testGenerateWithAuthAndKeywordAndImage()
+    {
+        // Generate a community with auth, a keyword and an image
+        $response = $this->actingAs($this->user)->json('post', '/api/community/generate', [
+            'inspiration' => 'cats',
+            'has_image' => true,
+        ]);
+
+        // Expect a 201 (Created) response and validate the response JSON data
+        $response->assertStatus(201);
+        
+        // Assert the response structure
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'name',
+                'description',
+                'media_url',
+                'user_id',
+            ],
+        ]);
     }
 
     public function tearDown(): void

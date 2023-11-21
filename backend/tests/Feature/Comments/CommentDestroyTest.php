@@ -36,7 +36,6 @@ class CommentDestroyTest extends TestCase
         Comment::factory()->create(['id' => 104, 'user_id' => $this->user1->id, 'post_id' => $post->id]);
     }
 
-    // Test unauthorized comment destruction
     public function testCommentDestroyedNotAuth(): void
     {
         // Try to delete comment 101 without being authenticated
@@ -46,35 +45,42 @@ class CommentDestroyTest extends TestCase
         $response->assertStatus(401);
     }
 
-    // Test comment destruction by non-owners
     public function testCommentDestroyedNotHis(): void
     {
-        // Try to delete comment 102 as user1 (not the owner) and expect a 403 (Forbidden) response
+        // Try to delete comment 102 as user1 (not the owner)
         $response = $this->actingAs($this->user1)->json('delete', '/api/comment/102');
+
+        // Expect a 403 (Forbidden) response
         $response->assertStatus(403);
 
-        // Try to delete comment 101 as user2 (not the owner) and expect a 403 (Forbidden) response
+        // Try to delete comment 101 as user2 (not the owner)
         $response = $this->actingAs($this->user2)->json('delete', '/api/comment/101');
+
+        // Expect a 403 (Forbidden) response
         $response->assertStatus(403);
     }
 
-    // Test successful comment destruction by owners
     public function testCommentDestroyedHis(): void
     {
-        // Delete comment 102 as user2 (the owner) and expect a 200 (OK) response
+        // Delete comment 102 as user2 (the owner)
         $response = $this->actingAs($this->user2)->json('delete', '/api/comment/102');
+
+        // Expect a 200 (OK) response
         $response->assertStatus(200);
 
-        // Delete comment 101 as user1 (the owner) and expect a 200 (OK) response
+        // Delete comment 101 as user1 (the owner)
         $response = $this->actingAs($this->user1)->json('delete', '/api/comment/101');
+
+        // Expect a 200 (OK) response
         $response->assertStatus(200);
     }
 
-    // Test comment destruction by an admin
     public function testCommentDestroyedAsAdmin(): void
     {
-        // Delete comment 104 as an admin (user3) and expect a 200 (OK) response
+        // Delete comment 104 as an admin (user3)
         $response = $this->actingAs($this->user3)->json('delete', '/api/comment/104');
+
+        // Expect a 200 (OK) response
         $response->assertStatus(200);
     }
 

@@ -11,6 +11,7 @@ class OpenAiAskTest extends TestCase
 {
     public function testAskGeneratePost()
     {
+        // Make a ask request to openAI
         $response = OpenAiServices::ask("Generate a post on the topic of dogs");
 
         // Assert that the response has the correct properties
@@ -21,6 +22,7 @@ class OpenAiAskTest extends TestCase
 
     public function testAskGenerateCommunity()
     {
+        // Make a ask request to openAI
         $response = OpenAiServices::ask("Generate a community on the topic of dogs");
 
         // Assert that the response has the correct properties
@@ -31,6 +33,7 @@ class OpenAiAskTest extends TestCase
 
     public function testAskGenerateComment()
     {
+        // Make a ask request to openAI
         $response = OpenAiServices::ask("Generate a comment on the topic of dogs");
 
         // Assert that the response has the correct properties
