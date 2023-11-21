@@ -29,6 +29,11 @@ export type ListProps = {
 	withSearch?: boolean;
 }
 
+/**
+ * PostsList screen: used to show a posts for a community or a user.
+ * @param props PostsListNavigationProps
+ * @returns JSX.Element
+ */
 export default function PostsList(props: PostsListNavigationProps) {
 	const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 	const { colorScheme } = useColorScheme();

@@ -4,6 +4,10 @@ import { useContext } from "react";
 import { AuthContext } from '../context/AuthContext';
 import * as SecureStore from 'expo-secure-store';
 
+/**
+ * useLogoutMutation : used to logout a user.
+ * @returns logoutMutation
+ */
 export default function useLogoutMutation() {
     const authContext = useContext(AuthContext);
 

@@ -16,6 +16,11 @@ type CustomFlatListProps = {
     currentPost? : any;
 };
 
+/**
+ * CustomFlatList : Used by all pages to show a list of items.
+ * @param props CustomFlatListProps
+ * @returns JSX.Element
+ */
 export default function CustomFlatList(props : CustomFlatListProps) { 
   let formatedType = props.type;
 

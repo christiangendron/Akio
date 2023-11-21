@@ -10,6 +10,10 @@ interface RegisterMutation {
     password: string;
 }
 
+/**
+ * useRegisterMutation : used to register a user.
+ * @returns registerMutation
+ */
 export default function useRegisterMutation() {
     const authContext = useContext(AuthContext);
 

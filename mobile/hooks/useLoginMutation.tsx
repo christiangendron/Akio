@@ -9,6 +9,10 @@ interface LoginMutation {
     password: string;
 }
 
+/**
+ * useLoginMutation : used to login a user.
+ * @returns loginMutation
+ */
 export default function useLoginMutation() {
     const authContext = useContext(AuthContext);
 

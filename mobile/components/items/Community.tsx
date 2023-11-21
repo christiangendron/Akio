@@ -12,6 +12,11 @@ export interface CommunityProps {
     user_id: number;
 }
 
+/**
+ * Community item component.
+ * @param props CommunityProps
+ * @returns JSX.Element
+ */
 export default function Community(props: CommunityProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
     const backendUrl = process.env.BACKEND_IMAGE_URL;

@@ -6,6 +6,11 @@ interface DeleteItemMutation {
     type: string;
 }
 
+/**
+ * useDeleteItemMutation : used to delete an item.
+ * @param queryKeyToInvalidate string
+ * @returns deleteItemMutation
+ */
 export default function useDeleteItemMutation(queryKeyToInvalidate: string) {
     const queryClient = useQueryClient()
 

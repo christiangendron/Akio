@@ -5,6 +5,11 @@ interface MessagePostProps {
     action?: () => void;
 }
 
+/**
+ * Message post component.
+ * @param props MessagePostProps
+ * @returns JSX.Element
+ */
 export default function MessagePost(props: MessagePostProps) {
     return (
         <TouchableOpacity 

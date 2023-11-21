@@ -5,6 +5,11 @@ interface PillProps {
     handler: () => void;
 }
 
+/**
+ * Pill component : Used to show community tag, username, etc.
+ * @param props PillProps
+ * @returns JSX.Element
+ */
 export default function Pill(props: PillProps) {
     return (
         <TouchableOpacity className='bg-black p-2 rounded-lg mr-1' onPress={props.handler}>

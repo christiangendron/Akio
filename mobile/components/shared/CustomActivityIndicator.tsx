@@ -2,6 +2,10 @@ import { useColorScheme } from 'nativewind';
 import React from 'react'
 import { ActivityIndicator } from 'react-native'
 
+/**
+ * CustomActivityIndicator : used to display a custom activity indicator (color depends on the color scheme).
+ * @returns JSX.Element
+ */
 function CustomActivityIndicator() {
   const { colorScheme } = useColorScheme();
 

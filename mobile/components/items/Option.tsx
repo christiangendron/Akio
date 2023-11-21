@@ -9,6 +9,11 @@ interface OptionProps {
     isLoading?: boolean,
 }
 
+/**
+ * Option item component : Used by modal components to show different options.
+ * @param props OptionProps
+ * @returns JSX.Element
+ */
 export default function Option(props: OptionProps) {
     const [selected, setSelected] = useState<boolean>(props.selected || false);
 

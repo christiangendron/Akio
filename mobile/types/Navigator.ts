@@ -25,5 +25,6 @@ export type StackParams = {
 		showSettings: boolean;
 	};
 	Community: ListProps;
+	Communities: any;
 	Settings: any;
 }

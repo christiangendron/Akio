@@ -12,6 +12,11 @@ export type UserInfo = {
   created_at: string;
 }
 
+/**
+ * AuthContextProvider : used to save any user information used everywhere in the app.
+ * @param props UserInfo
+ * @returns JSX.Element
+ */
 export default function AuthContextProvider(props: any) {
   const [isAuth, setIsAuth] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfo>({id: 0, username: '', email: '', is_admin: 0, avatar: '', created_at: ''})

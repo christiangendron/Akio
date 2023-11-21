@@ -2,6 +2,10 @@ import React, { useContext } from 'react'
 import { View, Text, Image } from 'react-native'
 import { AuthContext } from '../../context/AuthContext'
 
+/**
+ * UserCard : Basic user info card for the logged view.
+ * @returns JSX.Element
+ */
 function UserCard() {
     const authContext = useContext(AuthContext);
 

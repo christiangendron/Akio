@@ -10,6 +10,11 @@ type NotAuthProps = {
     closeModal: () => void;
 }
 
+/**
+ * NotAuth : This component is the view that is shown when the user is not logged in.
+ * @param props NotAuthProps
+ * @returns JSX.Element
+ */
 function NotAuth(props: NotAuthProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
     const { colorScheme } = useColorScheme();

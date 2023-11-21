@@ -13,6 +13,11 @@ type SwipeableDeleteProps = {
     component: JSX.Element;
 }
 
+/**
+ * SwipeableDelete : used to delete a post/comment/community.
+ * @param props SwipeableDeleteProps
+ * @returns JSX.Element
+ */
 export default function SwipeableDelete(props: SwipeableDeleteProps) {
     const authContext = useContext(AuthContext);
     const deleteMutation = useDeleteItemMutation(props.keyToInvalidate);

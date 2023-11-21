@@ -8,6 +8,11 @@ interface GenerateItemVariables {
     with_image: boolean;
 }
 
+/**
+ * useGenerateMutation : used to generate an item.
+ * @param queryKeyToInvalidate string
+ * @returns generateMutation
+ */
 export default function useGenerateMutation(queryKeyToInvalidate: string) {
     const queryClient = useQueryClient()
 

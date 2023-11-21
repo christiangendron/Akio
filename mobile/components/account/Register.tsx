@@ -6,6 +6,10 @@ import CustomInput from '../shared/CustomInput';
 import { AxiosError } from 'axios';
 import CustomButton from '../shared/CustomButton';
 
+/**
+ * Register: Simple register form.
+ * @returns JSX.Element
+ */
 function Register() {
 	const { control, handleSubmit, formState: { errors } } = useForm({defaultValues: {username: '', email: '', password: ''}});
 	const registerMutation = useRegisterMutation();

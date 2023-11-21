@@ -7,6 +7,11 @@ type MediaProps = {
     media_url: string;
 }
 
+/**
+ * Media : Used to show an image in a lightbox.
+ * @param props MediaProps
+ * @returns JSX.Element
+ */
 export default function Media(props: MediaProps) {
     const backendUrl = process.env.BACKEND_IMAGE_URL;
     const [visible, setVisible] = React.useState(false);

@@ -21,6 +21,11 @@ interface PostOptionsProps {
     keyToInvalidate: string;
 }
 
+/**
+ * PostOptionsModal : used to show the options of a post.
+ * @param props PostOptionsProps
+ * @returns JSX.Element
+ */
 export default function PostOptionsModal(props: PostOptionsProps) {
     const [modalVisible, setModalVisible] = useState(false);
     const [showContent, setShowContent] = useState(false);

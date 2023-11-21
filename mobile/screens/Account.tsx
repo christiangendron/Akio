@@ -21,6 +21,11 @@ type AccountScreenProps = {
 	}
 };
 
+/**
+ * Account screen: used to show user info or login/register.
+ * @param props AccountScreenProps
+ * @returns JSX.Element
+ */
 export default function Account(props: AccountScreenProps) {
 	const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 	const authContext = useContext(AuthContext);

@@ -8,6 +8,11 @@ type IconProps = {
     extraStyles?: string,
 }
 
+/**
+ * Icon : Custom icon component.
+ * @param props IconProps
+ * @returns JSX.Element
+ */
 export default function Icon(props: IconProps) {
     return (
         <TouchableOpacity onPress={props.handler} className={'' + props.extraStyles}>

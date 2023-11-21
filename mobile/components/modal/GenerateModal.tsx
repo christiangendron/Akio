@@ -24,6 +24,11 @@ export type GenerateVariables = {
     with_image: boolean;
 }
 
+/**
+ * Generate modal : used to generate a post/comment/community.
+ * @param props CustomModalProps
+ * @returns JSX.Element
+ */
 export default function GenerateModal(props: CustomModalProps) {
     const mutation = useGenerateMutation(props.keyToInvalidate);
     const [modalVisible, setModalVisible] = useState(false);

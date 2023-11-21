@@ -7,6 +7,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParams } from '../../types/Navigator';
 import { AuthContext } from '../../context/AuthContext';
 
+/**
+ * Logged : This component is the view that is shown when the user is logged in.
+ * @returns JSX.Element
+ */
 function Logged() {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
     const authContext = useContext(AuthContext);
