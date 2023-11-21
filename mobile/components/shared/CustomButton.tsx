@@ -8,6 +8,11 @@ type CustomButtonProps = {
     extraStyles?: string,
 }
 
+/**
+ * CustomButton : Custom button component.
+ * @param props CustomButtonProps
+ * @returns JSX.Element
+ */
 function CustomButton(props: CustomButtonProps) {
     const content = <Text className='text-center text-white'>{props.label}</Text>;
     

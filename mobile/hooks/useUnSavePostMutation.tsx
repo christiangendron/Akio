@@ -5,6 +5,11 @@ interface UnSavePostMutation {
     id: number;
 }
 
+/**
+ * useUnSavePostMutation : used to unsave a post.
+ * @param keyToInvalidate string
+ * @returns generateMutation
+ */
 export default function useUnSavePostMutation(keyToInvalidate: string) {
     const queryClient = useQueryClient()
 
@@ -14,7 +19,7 @@ export default function useUnSavePostMutation(keyToInvalidate: string) {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: [keyToInvalidate] })
-            queryClient.invalidateQueries({ queryKey: ['saved-post'] })
+            queryClient.invalidateQueries({ queryKey: ['saved-post'] }) // also invalidate saved-post query
         },
     })
 

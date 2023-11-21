@@ -6,6 +6,10 @@ import CustomInput from '../shared/CustomInput';
 import { AxiosError } from 'axios';
 import CustomButton from '../shared/CustomButton';
 
+/**
+ * Login : Simple login form.
+ * @returns JSX.Element
+ */
 function Login() {
 	const { control, handleSubmit, formState: { errors } } = useForm({ defaultValues: { email: '', password: '' } });
 	const loginMutation = useLoginMutation();

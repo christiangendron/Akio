@@ -79,6 +79,22 @@ class PostsIndexTest extends TestCase
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);
         $response->assertJsonCount(3, 'data');
+
+        // Assert the json structure
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'title',
+                    'text_content',
+                    'media_url',
+                    'user_id',
+                    'username',
+                    'community_id',
+                    'community_name',
+                ]
+            ]
+        ]);
     }
 
     public function testGetAllPostsWithKeyword()
@@ -96,6 +112,13 @@ class PostsIndexTest extends TestCase
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);
         $response->assertJsonCount(1, 'data');
+
+        // Get all posts with keyword giraffe
+        $response = $this->json('get', '/api/post/?keyword=giraffe');
+
+        // Expect a 200 response and validate the response JSON data
+        $response->assertStatus(200);
+        $response->assertJsonCount(0, 'data');
     }
 
     public function testGetPostsFromCommunity()
@@ -146,14 +169,55 @@ class PostsIndexTest extends TestCase
         $response->assertJsonCount(0, 'data');
     }
 
+    public function testGetPostsWithOrderBy()
+    {
+        // Get all posts by old
+        $response = $this->json('get', '/api/post/?order_by=old');
+
+        // Expect a 200 response and validate the response JSON data
+        $response->assertStatus(200);
+        $response->assertJsonCount(3, 'data');
+        $response->assertJsonPath('data.0.id', 1);
+        $response->assertJsonPath('data.1.id', 2);
+        $response->assertJsonPath('data.2.id', 3);
+
+        // Get all posts by new
+        $response = $this->json('get', '/api/post/?order_by=created_at&direction=desc');
+
+        // Expect a 200 response and validate the response JSON data
+        $response->assertStatus(200);
+        $response->assertJsonCount(3, 'data');
+        $response->assertJsonPath('data.0.id', 3);
+        $response->assertJsonPath('data.1.id', 2);
+        $response->assertJsonPath('data.2.id', 1);
+    }
+
     public function testGetPostsFromUser()
     {
         // Get all posts from user
         $response = $this->json('get', '/api/post/user/' . $this->user->id);
 
-        // Expect a 200 response and validate the response JSON data
+        // Expect a 200 response
         $response->assertStatus(200);
+
+        // Expect 3 posts
         $response->assertJsonCount(3, 'data');
+
+        // Assert the json structure
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'title',
+                    'text_content',
+                    'media_url',
+                    'user_id',
+                    'username',
+                    'community_id',
+                    'community_name',
+                ]
+            ]
+        ]);
     }
 
     public function testGetPostsFromUserWithKeyword()
@@ -176,7 +240,7 @@ class PostsIndexTest extends TestCase
     public function testGetPostsOrderBy()
     {
         // Get all posts from user
-        $response = $this->json('get', '/api/post/?order_by=created_at&direction=asc');
+        $response = $this->json('get', '/api/post/?order_by=old');
 
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);
@@ -186,7 +250,7 @@ class PostsIndexTest extends TestCase
         $response->assertJsonPath('data.2.id', 3);
 
         // Get all posts from user
-        $response = $this->json('get', '/api/post/?order_by=created_at&direction=desc');
+        $response = $this->json('get', '/api/post/?order_by=new');
 
         // Expect a 200 response and validate the response JSON data
         $response->assertStatus(200);

@@ -18,6 +18,7 @@ class CommunityIndexTest extends TestCase
 
         // Create a user and 2 community
         $this->user = User::factory()->create();
+
         Community::factory()->create([
             'id' => 1, 'user_id' => $this->user->id, 
             'name' => 'Test Community', 
@@ -41,6 +42,17 @@ class CommunityIndexTest extends TestCase
         $response->assertJsonPath('data.name', 'Test Community');
         $response->assertJsonPath('data.description', 'This is a test community');
         $response->assertJsonPath('data.user_id', $this->user->id);
+
+        // Assert the response structure
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'name',
+                'description',
+                'media_url',
+                'user_id',
+            ],
+        ]);
     }
 
     public function testGetAllCommunities()
@@ -48,9 +60,33 @@ class CommunityIndexTest extends TestCase
         // Get all communities
         $response = $this->json('get', '/api/community');
 
-        // Expect a 200 (Created) response and validate the response JSON data
+        // Expect a 200 (Created) response
         $response->assertStatus(200);
+
+        // Should have 2 communities
         $response->assertJsonCount(2, 'data');
+
+        // Assert the response structure
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'name',
+                    'description',
+                    'media_url',
+                    'user_id',
+                ]
+            ],
+        ]);
+    }
+
+    public function testGetCommunityByIdNotFound()
+    {
+        // Get a community that doesn't exist
+        $response = $this->json('get', '/api/community/3');
+
+        // Expect a 404 (Not Found) response
+        $response->assertStatus(404);
     }
 
     public function tearDown(): void

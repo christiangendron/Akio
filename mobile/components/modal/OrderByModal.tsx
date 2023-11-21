@@ -11,6 +11,11 @@ interface OrderByModalProps {
     setOrderBy: (value:string) => void;
 }
 
+/**
+ * OrderByModal : used to order posts/comments.
+ * @param props OrderByModalProps
+ * @returns JSX.Element
+ */
 export default function OrderByModal(props: OrderByModalProps) {
     const [modalVisible, setModalVisible] = useState(false);
     const [showContent, setShowContent] = useState(false);

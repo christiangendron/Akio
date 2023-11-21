@@ -5,6 +5,11 @@ interface SavePostMutation {
     id: number;
 }
 
+/**
+ * useSavePostMutation : used to save a post.
+ * @param keyToInvalidate string
+ * @returns generateMutation
+ */
 export default function useSavePostMutation(keyToInvalidate: string) {
     const queryClient = useQueryClient()
 
@@ -14,7 +19,7 @@ export default function useSavePostMutation(keyToInvalidate: string) {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: [keyToInvalidate] })
-            queryClient.invalidateQueries({ queryKey: ['saved-post'] })
+            queryClient.invalidateQueries({ queryKey: ['saved-post'] }) // also invalidate saved-post query
         },
     })
 

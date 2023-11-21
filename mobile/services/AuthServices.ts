@@ -11,16 +11,38 @@ export type UserInfo = {
     }
 }
 
-async function login(email: string, password: string) {
+export type AuthResponce = {
+    user: UserInfo;
+    token: string;
+}
+
+/**
+ * Route to login.
+ * @param email email of the user
+ * @param password password of the user
+ * @returns AuthResponce
+ */
+async function login(email: string, password: string): Promise<AuthResponce> {
     const res = await AxiosClient.post('auth/login', {'email': email, 'password': password});
-    return res;
+    return res.data.data;
 }
 
-async function register(username: string, email: string, password: string) {
+/**
+ * Route to register.
+ * @param username username of the user
+ * @param email email of the user
+ * @param password password of the user
+ * @returns AuthResponce
+ */
+async function register(username: string, email: string, password: string): Promise<AuthResponce> {
     const res = await AxiosClient.post('auth/register', {'email': email, 'username': username, 'password': password});
-    return res;
+    return res.data.data;
 }
 
+/**
+ * Route to logout.
+ * @returns _
+*/
 async function logout() {
     await AxiosClient.post('auth/logout');
 }

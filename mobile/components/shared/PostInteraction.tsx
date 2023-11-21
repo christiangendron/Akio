@@ -6,6 +6,11 @@ import PostOptions from '../modal/PostOptionsModal';
 import { PostProps } from '../items/Post';
 import Pill from '../items/Pill';
 
+/**
+ * PostInteraction : used to show the community and the user that posted a post.
+ * @param props PostProps
+ * @returns JSX.Element
+ */
 export default function PostInteraction(props: PostProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 

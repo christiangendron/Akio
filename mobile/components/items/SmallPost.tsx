@@ -21,6 +21,11 @@ export interface SmallPostProps {
     keyToInvalidate: string;
 }
 
+/**
+ * SmallPost item : used to show a smaller version of a post.
+ * @param props SmallPostProps
+ * @returns JSX.Element
+ */
 export default function SmallPost(props: SmallPostProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
     const settingContext = useContext(SettingsContext);

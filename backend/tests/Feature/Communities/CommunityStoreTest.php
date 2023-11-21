@@ -39,8 +39,10 @@ class CommunityStoreTest extends TestCase
             'description' => 'This is a test community'
         ]);
 
-        // Expect a 200 (Created) response and validate the response JSON data
+        // Expect a 200 (Created) response
         $response->assertStatus(201);
+
+        // Validate the response JSON data
         $response->assertJsonPath('data.name', 'Test Community');
         $response->assertJsonPath('data.description', 'This is a test community');
         $response->assertJsonPath('data.user_id', $this->user->id);
@@ -54,6 +56,7 @@ class CommunityStoreTest extends TestCase
             'description' => 'This is a test community'
         ]);
 
+        // Expect a 201 (Created) response
         $response->assertStatus(201);
 
         // Create another community with the same name

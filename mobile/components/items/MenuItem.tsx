@@ -10,6 +10,11 @@ interface MenuItemProps {
     extraStyles?: string;
 }
 
+/**
+ * MenuItem : Simple menu item component (with or without switch).
+ * @param props MenuItemProps
+ * @returns JSX.Element
+ */
 export default function MenuItem(props: MenuItemProps) {
     if (props.withSwitch) return (
         <View className={'flex flex-row bg-secondary dark:bg-secondaryDark p-3 items-center justify-between rounded-lg ' + props.extraStyles}>

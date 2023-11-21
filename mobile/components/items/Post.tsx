@@ -16,6 +16,11 @@ export interface PostProps {
     keyToInvalidate: string;
 }
 
+/**
+ * Post item : used to show a full post in detail page.
+ * @param props PostProps
+ * @returns JSX.Element
+ */
 export default function Post(props: PostProps) {
     const image = props.media_url ? <Media media_url={props.media_url} /> : null;
     

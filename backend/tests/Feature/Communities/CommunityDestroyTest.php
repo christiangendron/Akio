@@ -41,34 +41,46 @@ class CommunityDestroyTest extends TestCase
 
     public function testCommunityDestroyedNotHis(): void
     {
-        // Try to delete community 2 as user1 (not the owner) and expect a 403 (Forbidden) response
+        // Try to delete community 2 as user1 (not the owner)
         $response = $this->actingAs($this->user1)->json('delete', '/api/community/2');
+
+        // Expect a 403 (Forbidden) response
         $response->assertStatus(403);
 
-        // Try to delete community 1 as user2 (not the owner) and expect a 403 (Forbidden) response
+        // Try to delete community 1 as user2 (not the owner)
         $response = $this->actingAs($this->user2)->json('delete', '/api/community/1');
+
+        // Expect a 403 (Forbidden) response
         $response->assertStatus(403);
     }
 
     public function testCommunityDestroyedHis(): void
     {
-        // Try to delete community 1 as user1 (the owner) and expect a 200 (OK) response
+        // Try to delete community 1 as user1 (the owner)
         $response = $this->actingAs($this->user1)->json('delete', '/api/community/1');
+
+        // Expect a 200 (OK) response
         $response->assertStatus(200);
 
-        // Try to delete community 2 as user2 (the owner) and expect a 200 (OK) response
+        // Try to delete community 2 as user2 (the owner)
         $response = $this->actingAs($this->user2)->json('delete', '/api/community/2');
+
+        // Expect a 200 (OK) response
         $response->assertStatus(200);
     }
 
     public function testCommunityDestroyedAdmin(): void
     {
-        // Try to delete community 1 as user3 (the admin) and expect a 200 (OK) response
+        // Try to delete community 1 as user3 (the admin)
         $response = $this->actingAs($this->user3)->json('delete', '/api/community/3');
+
+        // Expect a 200 (OK) response
         $response->assertStatus(200);
 
-        // Try to delete community 2 as user3 (the admin) and expect a 200 (OK) response
+        // Try to delete community 2 as user3 (the admin)
         $response = $this->actingAs($this->user3)->json('delete', '/api/community/4');
+
+        // Expect a 200 (OK) response
         $response->assertStatus(200);
     }
 

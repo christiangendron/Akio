@@ -2,6 +2,10 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import {BACKEND_URL} from '@env';
 
+/**
+ * Axios client used by the application to make requests to the backend.
+ * @returns axios instance
+ */
 function AxiosClient() {
 	const client = axios.create({
 		baseURL: BACKEND_URL,
@@ -11,6 +15,7 @@ function AxiosClient() {
 		},
 	});
 
+	// When making a request, intercept the request and the token to it
 	client.interceptors.request.use(
 		async (req) => {
 			const token = await SecureStore.getItemAsync('secret_token');

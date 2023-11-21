@@ -19,6 +19,11 @@ type CommentListNavigationProps = {
 	}
 };
 
+/**
+ * CommentList screen: used to show the comments of a post.
+ * @param props CommentListNavigationProps
+ * @returns JSX.Element
+ */
 export default function CommentList(props: CommentListNavigationProps) {
 	const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 	const authContext = useContext(AuthContext);

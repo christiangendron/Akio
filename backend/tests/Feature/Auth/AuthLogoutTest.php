@@ -18,7 +18,12 @@ class AuthLogoutTest extends TestCase
         parent::setUp();
 
         // Create a user
-        $this->user = User::factory()->create(['id' => 1, 'username' => 'testuser', 'email' => 'test@test.test', 'password' => Hash::make('testpassword')]);
+        $this->user = User::factory()->create([
+            'id' => 1, 
+            'username' => 'testuser', 
+            'email' => 'test@test.test', 
+            'password' => Hash::make('testpassword')
+        ]);
     }
 
     public function testLogoutWithoutAuth()
@@ -26,6 +31,7 @@ class AuthLogoutTest extends TestCase
         // Log out without auth
         $response = $this->postJson('/api/auth/logout');
 
+        // Expect a 401 (Unauthorized) response
         $response->assertStatus(401);
     }
 
@@ -47,6 +53,7 @@ class AuthLogoutTest extends TestCase
             "Authorization" => 'Bearer ' . $loginResponse['data']['token']
         ]);
 
+        // Expect a 200 response success
         $response->assertStatus(200);
 
         // Check if the token was deleted

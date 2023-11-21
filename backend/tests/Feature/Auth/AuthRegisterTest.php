@@ -31,6 +31,21 @@ class AuthRegisterTest extends TestCase
         $response->assertStatus(201);
         $response->assertJsonPath('data.user.username', 'testuser');
         $response->assertJsonPath('data.user.email', 'test@test.test');
+        $response->assertJsonPath('data.user.is_admin', 0);
+
+        // Check the structure of the response
+        $response->assertJsonStructure([
+            'data' => [
+                'user' => [
+                    'id',
+                    'username',
+                    'email',
+                    'is_admin',
+                    'created_at',
+                ],
+                'token',
+            ],
+        ]);
     }
 
     public function testSimpleRegisterWithoutEmail(): void
@@ -41,7 +56,7 @@ class AuthRegisterTest extends TestCase
             'password' => 'testpassword',
         ]);
 
-        // Expect a 422
+        // Expect a 422 (Unprocessable Entity) response
         $response->assertStatus(422);
     }
 
@@ -53,7 +68,7 @@ class AuthRegisterTest extends TestCase
             'password' => 'testpassword',
         ]);
 
-        // Expect a 422
+        // Expect a 422 (Unprocessable Entity) response
         $response->assertStatus(422);
     }
 
@@ -65,7 +80,7 @@ class AuthRegisterTest extends TestCase
             'email' => 'test@test.test',
         ]);
 
-        // Expect a 422
+        // Expect a 422 (Unprocessable Entity) response
         $response->assertStatus(422);
     }
 
@@ -104,7 +119,7 @@ class AuthRegisterTest extends TestCase
         // Expect a 201 (Created) response
         $response->assertStatus(201);
 
-        // Register a user with same email
+        // Register a user with same username
         $response = $this->json('post', '/api/auth/register', [
             'username' => 'testuser',
             'email' => 'test2@test2.test2',

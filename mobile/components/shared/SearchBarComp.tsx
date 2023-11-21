@@ -11,6 +11,11 @@ type SearchBarProps = {
     placeholder: string;
 }
 
+/**
+ * SearchBarComp : Custom search bar component.
+ * @param props SearchBarProps
+ * @returns JSX.Element
+ */
 export default function SearchBarComp(props: SearchBarProps) {
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const [text, setText] = useState<string>(props.keyword);

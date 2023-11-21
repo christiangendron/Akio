@@ -12,6 +12,10 @@ import CustomFlatList from '../components/shared/CustomFlatList';
 import Community from '../components/items/Community';
 import SwipeableDelete from '../components/shared/SwipeableDelete';
 
+/**
+ * CommunityList screen: used to show a list of communities.
+ * @returns JSX.Element
+ */
 export default function CommunityList() {
 	const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 	const { colorScheme } = useColorScheme();

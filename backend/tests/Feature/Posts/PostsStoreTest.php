@@ -39,7 +39,7 @@ class PostsStoreTest extends TestCase
 
     public function testSimpleStore()
     {
-        // Create a post
+        // Create a post with auth
         $response = $this->actingAs($this->user)->json('post', '/api/post/community/' . $this->community->id , [
             'title' => 'Test Post',
             'text_content' => 'This is a test post',
@@ -53,6 +53,20 @@ class PostsStoreTest extends TestCase
         $response->assertJsonPath('data.media_url', null);
         $response->assertJsonPath('data.user_id', $this->user->id);
         $response->assertJsonPath('data.community_id', $this->community->id);
+
+        // Assert the json structure
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'title',
+                'text_content',
+                'media_url',
+                'user_id',
+                'username',
+                'community_id',
+                'community_name',
+            ]
+        ]);
     }
 
     public function tearDown(): void

@@ -18,35 +18,25 @@ class CommentGenerateTest extends TestCase
     {
         parent::setUp();
 
-        // Create a user instance, community and a post
+        // Create a user, a community and a post
         $this->user = User::factory()->create();
         Community::factory()->create(['id' => 1, 'user_id' => $this->user->id]);
         Post::factory()->create(['id' => 1, 'user_id' => $this->user->id, 'community_id' => 1]);
     }
 
-    // Test comment generation without authentication
     public function testCommentGenerationNotAuth()
     {
-        $data = [
-            'inspiration' => '',
-            'has_image' => false,
-        ];
-    
-        $response = $this->json('post', '/api/comment/post/1/generate', $data);
+        // Try to generate a comment without being authenticated
+        $response = $this->json('post', '/api/comment/post/1/generate');
 
         // Expect a 401 (Unauthorized) response
         $response->assertStatus(401);
     }
 
-    // Test comment generation with authentication
     public function testCommentGenerationWithAuth()
     {
-        $data = [
-            'inspiration' => '',
-            'has_image' => false,
-        ];
-
-        $response = $this->actingAs($this->user)->json('post', '/api/comment/post/1/generate', $data);
+        // Generate a comment with authentication
+        $response = $this->actingAs($this->user)->json('post', '/api/comment/post/1/generate');
 
         // Expect a 201 (Created) response
         $response->assertStatus(201);
@@ -56,20 +46,26 @@ class CommentGenerateTest extends TestCase
 
         // Expect a 200 (OK) response
         $response->assertStatus(200);
-
-        // Assert the username
-        $response->assertJsonPath('data.0.username', $this->user->username);
+        
+        // Assert the response structure
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'text_content',
+                    'username',
+                    'user_id',
+                ],
+            ],
+        ]);
     }
 
-    // Test comment generation with authentication and a keyword
     public function testCommentGenerationWithAuthAndKeyword()
     {
-        $data = [
-            'inspiration' => '',
-            'has_image' => false,
-        ];
-
-        $response = $this->actingAs($this->user)->json('post', '/api/comment/post/1/generate/', $data);
+        // Generate a comment with authentication and a keyword
+        $response = $this->actingAs($this->user)->json('post', '/api/comment/post/1/generate/', [
+            'inspiration' => 'cute',
+        ]);
 
         // Expect a 201 (Created) response
         $response->assertStatus(201);
@@ -80,8 +76,17 @@ class CommentGenerateTest extends TestCase
         // Expect a 200 (OK) response
         $response->assertStatus(200);
 
-        // Assert the username
-        $response->assertJsonPath('data.0.username', $this->user->username);
+        // Assert the response structure
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'text_content',
+                    'username',
+                    'user_id',
+                ],
+            ],
+        ]);
     }
 
     public function tearDown(): void

@@ -48,7 +48,7 @@ function SearchStackScreen() {
       },
       headerTintColor: colorScheme === 'dark' ? '#ffffff' : '#000000',
       }}>
-      <CommunitiesStack.Screen name="Communities" component={CommunityList} initialParams={{ name: 'Communities', id: 0, type: 'community' }}/>
+      <CommunitiesStack.Screen name="Communities" component={CommunityList} />
       <CommunitiesStack.Screen name="Details" component={Details} />
       <CommunitiesStack.Screen name="Overview" component={List} />
       <CommunitiesStack.Screen name="Saved" component={List} />

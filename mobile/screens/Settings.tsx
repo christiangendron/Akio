@@ -4,6 +4,10 @@ import { SettingsContext } from '../context/SettingsContext';
 import { useNavigation } from '@react-navigation/native';
 import MenuItem from '../components/items/MenuItem';
 
+/**
+ * Settings screen: used to show the settings.
+ * @returns JSX.Element
+ */
 export default function Settings() {
 	const settings = useContext(SettingsContext);
 	const navigation = useNavigation();

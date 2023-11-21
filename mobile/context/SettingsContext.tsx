@@ -4,6 +4,11 @@ import { useColorScheme } from 'nativewind';
 
 export const SettingsContext = createContext<any | null>(null);
 
+/**
+ * SettingsContextProvider : used to save any user settings used everywhere in the app.
+ * @param props UserInfo
+ * @returns JSX.Element
+ */
 export default function SettingContextProvider(props: any) {
   const { toggleColorScheme, setColorScheme } = useColorScheme();
 

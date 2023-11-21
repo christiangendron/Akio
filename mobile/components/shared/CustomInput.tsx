@@ -12,6 +12,11 @@ type CustomInputProps = {
     extraStyles?: string,
 }
 
+/**
+ * CustomInput : Custom input component.
+ * @param props CustomInputProps
+ * @returns JSX.Element
+ */
 function CustomInput(props: CustomInputProps) {
     const isError = props.isError ? 'border-2 border-red-500 ' : '';
     

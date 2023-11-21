@@ -11,6 +11,11 @@ export interface CommentItemProps {
     username: string;
 }
 
+/**
+ * Comment item component.
+ * @param props CommentItemProps
+ * @returns JSX.Element
+ */
 export default function Comment(props: CommentItemProps) {
     const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
 
