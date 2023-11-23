@@ -9,6 +9,7 @@ import {BACKEND_URL} from '@env';
 function AxiosClient() {
 	const client = axios.create({
 		baseURL: BACKEND_URL,
+		timeout: 3500,
 		headers: {
 			'X-Requested-With': 'XMLHttpRequest',
 			'Accept': 'application/json',

@@ -94,16 +94,16 @@ async function generateItem(variables: GenerateVariables): Promise<MessageRespon
 		return await AxiosClient.post(`post/community/${variables.id}/generate/`, {
 			inspiration: variables.inspiration,
 			with_image: variables.with_image,
-		});
+		}, {timeout: 25000});
 	} else if (variables.type.includes('community')) {
 		return await AxiosClient.post('community/generate/', {
 			inspiration: variables.inspiration,
 			with_image: variables.with_image,
-		});
+		}, {timeout: 25000});
 	} else {
 		return await AxiosClient.post(`comment/post/${variables.id}/generate/`, {
 			inspiration: variables.inspiration,
-		});
+		}, {timeout: 25000});
 	}
 }
 

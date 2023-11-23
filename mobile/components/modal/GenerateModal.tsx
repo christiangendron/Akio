@@ -10,6 +10,7 @@ import useGenerateMutation from "../../hooks/useGenerateMutation";
 import CustomButton from "../shared/CustomButton";
 import Icon from "../shared/Icon";
 import MenuItem from "../items/MenuItem";
+import { AxiosError } from "axios";
 
 type CustomModalProps = {
     type: string;
@@ -58,8 +59,10 @@ export default function GenerateModal(props: CustomModalProps) {
 
     let buttonLabel = 'Generate';
 
-    if (mutation.error instanceof Error) {
-        buttonLabel = (mutation.error as any).response?.data?.message + ' ↺';
+	const error = (mutation.error as AxiosError<{ message: string }>)?.response?.data?.message;
+
+    if (mutation.error) {
+        buttonLabel = error ?? 'Server is not responding';
     }
 
     const imageSwitch = <MenuItem 

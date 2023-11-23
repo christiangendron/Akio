@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import useDeleteItemMutation from '../../hooks/useDeleteItem';
 import { FontAwesome5 } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons'; 
 
 type SwipeableDeleteProps = {
     id: number;
@@ -33,9 +34,13 @@ export default function SwipeableDelete(props: SwipeableDeleteProps) {
         } 
     }, [deleteMutation.isSuccess]);
 
+    const icon = deleteMutation.isError ? 
+        <Ionicons name="warning-outline" size={24} color="white" /> : 
+        <FontAwesome5 name="trash" size={24} color="white" />
+
     const renderRightActions = () => {
     return (<TouchableOpacity onPress={deletePost} className='bg-red-500 justify-center rounded-l-lg mt-2 p-5' disabled={deleteMutation.isLoading}>
-            {deleteMutation.isLoading ? <ActivityIndicator color='#ffffff' /> : <FontAwesome5 name="trash" size={24} color="white" />}
+            {deleteMutation.isLoading ? <ActivityIndicator color='#ffffff' /> : icon}
     </TouchableOpacity>);};
 
     if (authContext.canDelete(props.user_id)) return (
