@@ -19,7 +19,8 @@ class CommunityResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'media_url' => $this->media_url,
-            'user_id' => $this->user_id
+            'user_id' => $this->user_id,
+            'status' => $this->status,
         ];
     }
 }

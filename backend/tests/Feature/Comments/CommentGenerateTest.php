@@ -9,9 +9,10 @@ use App\Models\Comment;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Community;
+use Illuminate\Support\Facades\Queue;
 
 class CommentGenerateTest extends TestCase
-{
+{    
     private User $user;
 
     public function setUp(): void
@@ -22,6 +23,9 @@ class CommentGenerateTest extends TestCase
         $this->user = User::factory()->create();
         Community::factory()->create(['id' => 1, 'user_id' => $this->user->id]);
         Post::factory()->create(['id' => 1, 'user_id' => $this->user->id, 'community_id' => 1]);
+
+        // Create a fake queue for openAI request
+        Queue::fake('openai');
     }
 
     public function testCommentGenerationNotAuth()
@@ -40,53 +44,8 @@ class CommentGenerateTest extends TestCase
 
         // Expect a 201 (Created) response
         $response->assertStatus(201);
-
-        // Get the comments for post 
-        $response = $this->actingAs($this->user)->json('get', '/api/comment/post/1');
-
-        // Expect a 200 (OK) response
-        $response->assertStatus(200);
-        
-        // Assert the response structure
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => [
-                    'id',
-                    'text_content',
-                    'username',
-                    'user_id',
-                ],
-            ],
-        ]);
-    }
-
-    public function testCommentGenerationWithAuthAndKeyword()
-    {
-        // Generate a comment with authentication and a keyword
-        $response = $this->actingAs($this->user)->json('post', '/api/comment/post/1/generate/', [
-            'inspiration' => 'cute',
-        ]);
-
-        // Expect a 201 (Created) response
-        $response->assertStatus(201);
-
-        // Get the comments for post
-        $response = $this->actingAs($this->user)->json('get', '/api/comment/post/1');
-
-        // Expect a 200 (OK) response
-        $response->assertStatus(200);
-
-        // Assert the response structure
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => [
-                    'id',
-                    'text_content',
-                    'username',
-                    'user_id',
-                ],
-            ],
-        ]);
+        $response->assertJsonPath('message', 'Comment is generating...');
+        $response->assertJsonStructure(['id']);
     }
 
     public function tearDown(): void

@@ -20,6 +20,7 @@ class CommunityFactory extends Factory
             'name' => fake()->text(7),
             'description' => fake()->text(50),
             'user_id' => $this->faker->numberBetween(1, 3),
+            'status' => 'new',
         ];
     }
 }

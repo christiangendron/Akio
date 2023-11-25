@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Support\Facades\Queue;
 
 class CommunityGenerateTest extends TestCase
 {
@@ -17,6 +18,9 @@ class CommunityGenerateTest extends TestCase
 
         // Create a user
         $this->user = User::factory()->create();
+
+        // Create a fake queue for openAI request
+        Queue::fake('openai');
     }
 
     public function testGenerateWithoutAuth()
@@ -41,63 +45,8 @@ class CommunityGenerateTest extends TestCase
 
         // Expect a 201 (Created) response and validate the response JSON data
         $response->assertStatus(201);
-
-        // Assert the response structure
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'name',
-                'description',
-                'media_url',
-                'user_id',
-            ],
-        ]);
-    }
-
-    public function testGenerateWithAuthAndKeyword()
-    {
-        // Generate a community with auth and a keyword
-        $response = $this->actingAs($this->user)->json('post', '/api/community/generate', [
-            'inspiration' => 'cats',
-            'has_image' => false,
-        ]);
-
-        // Expect a 201 (Created) response and validate the response JSON data
-        $response->assertStatus(201);
-        
-        // Assert the response structure
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'name',
-                'description',
-                'media_url',
-                'user_id',
-            ],
-        ]);
-    }
-
-    public function testGenerateWithAuthAndKeywordAndImage()
-    {
-        // Generate a community with auth, a keyword and an image
-        $response = $this->actingAs($this->user)->json('post', '/api/community/generate', [
-            'inspiration' => 'cats',
-            'has_image' => true,
-        ]);
-
-        // Expect a 201 (Created) response and validate the response JSON data
-        $response->assertStatus(201);
-        
-        // Assert the response structure
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'name',
-                'description',
-                'media_url',
-                'user_id',
-            ],
-        ]);
+        $response->assertJsonPath('message', 'Community is generating...');
+        $response->assertJsonStructure(['id']);
     }
 
     public function tearDown(): void

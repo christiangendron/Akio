@@ -9,7 +9,7 @@ use App\Http\Requests\CommunityRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
-use App\Services\OpenAiServices;
+use App\Jobs\OpenAiCommunityJob;
 
 class CommunityController extends Controller
 {
@@ -36,6 +36,7 @@ class CommunityController extends Controller
         $community->name = $request['name'];
         $community->description = $request['description'];
         $community->user_id = auth()->id();
+        $community->status = 'active';
         $community->save();
 
         return response()->json(["message" => 'Community created', "data" => CommunityResource::make($community)], 201);
@@ -73,33 +74,16 @@ class CommunityController extends Controller
             $prompt = $prompt . 'On the topic of : ' . $request->inspiration;
         }
 
-        $res = OpenAiServices::ask($prompt);
-
-        $validator = Validator::make($res, [
-            'name' => 'required',
-            'description' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(["message" => 'OpenAi did not return the appropriate field'], 422);
-        }
-
-        $validated = $validator->validated();
-
-        $image = null;
-
-        if ($request->with_image) {
-            $imagePrompt = 'Create a clean, simple and logo for this community with a strong focus to the center of the image on the following topic :' . $validated['description'];
-            $image = OpenAiServices::imagine($imagePrompt, "dall-e-3", "1024x1024");
-        }
-
         $community = new Community;
-        $community->name = $validated['name'];
-        $community->description = $validated['description'];
-        $community->media_url = $image;
+        $community->name = 'Name pending';
+        $community->description = 'This community is being generated';
+        $community->media_url = '';
         $community->user_id = auth()->id();
+        $community->status = 'generating';
         $community->save();
+
+        OpenAiCommunityJob::dispatch($community->id, $request->with_image, $prompt)->onQueue('openai');
         
-        return response()->json(["message" => 'Community generated', "data" => CommunityResource::make($community)], 201);
+        return response()->json(["message" => 'Community is generating...', "id" => $community->id], 201);
     }
 }
