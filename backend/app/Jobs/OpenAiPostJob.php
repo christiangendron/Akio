@@ -49,7 +49,7 @@ class OpenAiPostJob implements ShouldQueue
 
             if ($this->with_image) {
                 $imagePrompt = 'Create an fictional image inspired by this message' . $validated['text_content'];
-                $image = OpenAiServices::imagine($imagePrompt, "dall-e-3", "512x512");
+                $image = OpenAiServices::imagine($imagePrompt, "dall-e-3", "1024x1024");
             }
 
             $post = Post::find($this->post_id);
