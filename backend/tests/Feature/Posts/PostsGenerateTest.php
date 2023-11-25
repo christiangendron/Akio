@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Community;
+use Illuminate\Support\Facades\Queue;
 
 class PostsGenerateTest extends TestCase
 {
@@ -22,6 +23,9 @@ class PostsGenerateTest extends TestCase
 
         // Create a community
         $this->community = Community::factory()->create(['id' => 1, 'name' => 'dogs', 'user_id' => $this->user->id]);
+
+        // Create a fake queue for openAI request
+        Queue::fake('openai');
     }
 
     public function testGeneratePostWithoutAuth()
@@ -46,81 +50,8 @@ class PostsGenerateTest extends TestCase
 
         // Expect a 201 (Created) response and validate the response JSON data
         $response->assertStatus(201);
-        $response->assertJsonPath('data.user_id', $this->user->id);
-        $response->assertJsonPath('data.community_id', $this->community->id);
-
-        // Assert json structure
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'title',
-                'text_content',
-                'media_url',
-                'user_id',
-                'username',
-                'saved',
-                'community_id',
-                'community_name',
-            ]
-        ]);
-    }
-
-    public function testGeneratePostWithKeyword()
-    {
-        // Create a post with long timeout (open ai request with images takes a long time)
-        $response = $this->actingAs($this->user)->withHeaders(['timeout' => 60])->json('post', '/api/post/community/' . $this->community->id . '/generate', [
-            'inspiration' => 'dogs',
-            'has_image' => false,
-        ]);
-
-        // Expect a 201 (Created) response and validate the response JSON data
-        $response->assertStatus(201);
-        $response->assertJsonPath('data.user_id', $this->user->id);
-        $response->assertJsonPath('data.community_id', $this->community->id);
-
-        // Assert json structure
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'title',
-                'text_content',
-                'media_url',
-                'user_id',
-                'username',
-                'saved',
-                'community_id',
-                'community_name',
-            ]
-        ]);
-    }
-
-    public function testPostGenerationWithImage()
-    {
-        // Create a post with long timeout (open ai request with images takes a long time)
-        $response = $this->actingAs($this->user)->withHeaders(['timeout' => 60])->json('post', '/api/post/community/' . $this->community->id . '/generate', [
-            'inspiration' => 'dogs',
-            'has_image' => true,
-        ]);
-
-        // Expect a 201 (Created) response and validate the response JSON data
-        $response->assertStatus(201);
-        $response->assertJsonPath('data.user_id', $this->user->id);
-        $response->assertJsonPath('data.community_id', $this->community->id);
-
-        // Assert json structure
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'title',
-                'text_content',
-                'media_url',
-                'user_id',
-                'username',
-                'saved',
-                'community_id',
-                'community_name',
-            ]
-        ]);
+        $response->assertJsonPath('message', 'Post is generating...');
+        $response->assertJsonStructure(['id']);
     }
 
     public function tearDown(): void

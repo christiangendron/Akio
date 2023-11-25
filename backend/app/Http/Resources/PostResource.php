@@ -30,6 +30,7 @@ class PostResource extends JsonResource
             'saved' => $currentUser && $this->relationLoaded('savedByUsers') ? $this->savedByUsers->contains($currentUser) : null,
             'community_id' => $this->community_id,
             'community_name' => $this->relationLoaded('community') ? $this->community->name : null,
+            'status' => $this->status,
         ];
     }
 }

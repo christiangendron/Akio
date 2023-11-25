@@ -21,6 +21,7 @@ class PostFactory extends Factory
             'text_content' => fake()->text(),
             'community_id' => $this->faker->numberBetween(1, 3),
             'user_id' =>  $this->faker->numberBetween(1, 3),
+            'status' => 'new',
         ];
     }
 }

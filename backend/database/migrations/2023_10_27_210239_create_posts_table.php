@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('text_content');
             $table->string('media_url', 512)->nullable();
+            $table->string('status');
             $table->foreignIdFor(User::class)->references('id')->on('users')->onDelete('cascade');
             $table->foreignIdFor(Community::class)->references('id')->on('communities')->onDelete('cascade');
             $table->timestamps();
