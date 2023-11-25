@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\CommentResource;
 use App\Http\Requests\CommentRequest;
 use App\Models\Post;
-use Illuminate\Support\Facades\Validator;
-use App\Services\OpenAiServices;
+use App\Jobs\OpenAiCommentJob;
 
 class CommentController extends Controller
 {
@@ -20,6 +19,7 @@ class CommentController extends Controller
         $comment->text_content = $request['text_content'];
         $comment->user_id = auth()->user()->id;
         $comment->post_id = $post['id'];
+        $comment->status = 'active';
         $comment->save();
 
         return response()->json(["message" => 'Comment created', "data" => CommentResource::make($comment)], 201);
@@ -55,24 +55,15 @@ class CommentController extends Controller
             $prompt = $prompt . 'With an emphasis on : ' . $request->inspiration;
         }
 
-        $res = OpenAiServices::ask($prompt);
-
-        $validator = Validator::make($res, [
-            'text_content' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(["message" => 'OpenAi did not return the appropriate field'], 422);
-        }
-
-        $validated = $validator->validated();
-
         $comment = new Comment;
-        $comment->text_content = $validated['text_content'];
+        $comment->text_content = 'Content of this comment is being generated...';
         $comment->user_id = auth()->user()->id;
         $comment->post_id = $post['id'];
+        $comment->status = 'generating';
         $comment->save();
-        
-        return response()->json(["message" => 'Comment generated', "data" => CommentResource::make($comment)], 201);
+
+        OpenAiCommentJob::dispatch($comment->id, $prompt)->onQueue('openai');
+
+        return response()->json(["message" => 'Comment is generating...', "id" => $comment->id], 201);
     }
 }

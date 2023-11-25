@@ -50,6 +50,12 @@ docker run --rm \
 ./vendor/bin/sail artisan migrate:fresh
 ```
 
+7. Start the OpenAi queue (the queue will process OpenAi request in the background)
+
+```bash
+./vendor/bin/sail artisan queue:work --queue=openai
+```
+
 7. Terminate the backend
 
 ```bash

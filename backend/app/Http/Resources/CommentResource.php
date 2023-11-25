@@ -20,6 +20,7 @@ class CommentResource extends JsonResource
             'text_content' => $this->text_content,
             'username' => $this->relationLoaded('user') ? $this->user->username : null,
             'user_id' => $this->user_id,
+            'status' => $this->status,
         ];
     }
 }
