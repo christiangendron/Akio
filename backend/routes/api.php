@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SavedController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,4 +69,14 @@ Route::prefix('comment')
         Route::post('/post/{post}', 'store')->middleware('auth:sanctum');
         Route::post('/post/{post}/generate/', 'generate')->middleware('auth:sanctum');
         Route::delete('/{comment}', 'destroy')->middleware('auth:sanctum');
+});
+
+Route::prefix('task')
+    ->controller(TaskController::class)
+    ->middleware('auth:sanctum')
+    ->group(function() {
+        Route::get('/', 'index');
+        Route::get('/{task}', 'show');
+        Route::post('/', 'store');
+        Route::delete('/{task}', 'destroy');
 });
