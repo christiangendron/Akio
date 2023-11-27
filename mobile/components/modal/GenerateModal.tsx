@@ -19,10 +19,11 @@ type CustomModalProps = {
 }
 
 export type GenerateVariables = {
-    id: number;
     type: string;
+    parent_id?: number;
     inspiration: string;
     with_image: boolean;
+    model?: string;
 }
 
 /**
@@ -39,10 +40,11 @@ export default function GenerateModal(props: CustomModalProps) {
     const { colorScheme } = useColorScheme();
 
     const variables = {
-        id: props.id,
-        type: props.type,
+        type: props.type.includes('post') ? 'post' : props.type,
+        parent_id: props.id,
         inspiration: inspiration,
         with_image: withImage,
+        model: 'dall-e-3'
     };
 
     const toggleModal = () => {

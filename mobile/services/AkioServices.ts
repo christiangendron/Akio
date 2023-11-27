@@ -3,6 +3,7 @@ import { CommentItemProps } from '../components/items/Comment';
 import { CommunityProps } from '../components/items/Community';
 import AxiosClient from './AxiosClient';
 import { GenerateVariables } from '../components/modal/GenerateModal';
+import { TaskProps } from '../components/items/TaskItem';
 
 type MessageResponse = {
 	message: string,
@@ -90,21 +91,14 @@ async function getCommunities(): Promise<CommunityProps[]> {
  * @returns MessageResponse
  */
 async function generateItem(variables: GenerateVariables): Promise<MessageResponse> { 
-	if (variables.type.includes('post')) {
-		return await AxiosClient.post(`post/community/${variables.id}/generate/`, {
-			inspiration: variables.inspiration,
-			with_image: variables.with_image,
-		}, {timeout: 25000});
-	} else if (variables.type.includes('community')) {
-		return await AxiosClient.post('community/generate/', {
-			inspiration: variables.inspiration,
-			with_image: variables.with_image,
-		}, {timeout: 25000});
-	} else {
-		return await AxiosClient.post(`comment/post/${variables.id}/generate/`, {
-			inspiration: variables.inspiration,
-		}, {timeout: 25000});
-	}
+	const res = await AxiosClient.post('task', {
+		type: variables.type,
+		parent_id: variables.parent_id,
+		inspiration: variables.inspiration,
+		with_image: variables.with_image,
+		model: variables.model,
+	});
+	return res.data.data;
 }
 
 /**
@@ -153,6 +147,25 @@ async function unSavePost(id: number): Promise<MessageResponse> {
 	return res.data.data;
 }
 
+/**
+ * Get tasks route.
+ * @returns any
+ */
+async function getTasks(): Promise<TaskProps[]> {
+	const res = await AxiosClient.get('task');
+	return res.data.data;
+}
+
+/**
+ * Get a single task/
+ * @param id id of the task to get
+ * @returns a task
+ */
+async function getTask(id: number): Promise<TaskProps> {
+	const res = await AxiosClient.get('task/' + id);
+	return res.data.data;
+}
+
 const AkioServices = {
 	getCommunities, 
 	getComments, 
@@ -162,7 +175,9 @@ const AkioServices = {
 	getPosts,
 	getSavedPosts,
 	savePost,
-	unSavePost
+	unSavePost,
+	getTasks,
+	getTask,
 };
 
 export default AkioServices;

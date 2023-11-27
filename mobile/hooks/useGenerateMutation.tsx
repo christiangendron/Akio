@@ -1,12 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import AkioServices from '../services/AkioServices';
-
-interface GenerateItemVariables {
-    id: number;
-    type: string;
-    inspiration: string;
-    with_image: boolean;
-}
+import { GenerateVariables } from "../components/modal/GenerateModal";
 
 /**
  * useGenerateMutation : used to generate an item.
@@ -17,11 +11,12 @@ export default function useGenerateMutation(queryKeyToInvalidate: string) {
     const queryClient = useQueryClient()
 
     const generateMutation = useMutation({
-        mutationFn: (variables : GenerateItemVariables) => {
+        mutationFn: (variables : GenerateVariables) => {
             return AkioServices.generateItem(variables);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [queryKeyToInvalidate] })
+            queryClient.invalidateQueries({ queryKey: 'my-tasks' })
+            //queryClient.invalidateQueries({ queryKey: [queryKeyToInvalidate] })
         },
     })
 

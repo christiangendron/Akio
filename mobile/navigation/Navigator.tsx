@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import List from '../screens/PostsList';
 import Details from '../screens/CommentList';
 import CommunityList from '../screens/CommunityList';
+import Tasks from '../screens/Tasks';
 
 const HomeStack = createStackNavigator<StackParams>();
 
@@ -78,6 +79,7 @@ function AccountStackScreen() {
       <AccountStack.Screen name="Overview" component={List} />
       <AccountStack.Screen name="Saved" component={List} />
       <AccountStack.Screen name="Community" component={List} />
+      <AccountStack.Screen name="Tasks" component={Tasks} />
     </AccountStack.Navigator>
   );
 }
