@@ -27,13 +27,10 @@ class CommentController extends Controller
     
     public function getCommentsByPostId(Post $post)
     {
-        // Create the query
         $query = $post->comments();
 
-        // Load user for the relation to be loaded
         $query->with('user');
 
-        // Execute the query
         $comments = $query->get();
 
         return CommentResource::collection($comments);
@@ -45,25 +42,5 @@ class CommentController extends Controller
 
         $comment->delete();
         return response()->json(["message" => 'Comment deleted'], 200);
-    }
-
-    public function generate(Request $request, Post $post)
-    {
-        $prompt = 'Generate a unique (catchy, relevant) and creative comment for this post' . $post['text_content'];
-
-        if ($request->inspiration) {
-            $prompt = $prompt . 'With an emphasis on : ' . $request->inspiration;
-        }
-
-        $comment = new Comment;
-        $comment->text_content = 'Content of this comment is being generated...';
-        $comment->user_id = auth()->user()->id;
-        $comment->post_id = $post['id'];
-        $comment->status = 'generating';
-        $comment->save();
-
-        OpenAiCommentJob::dispatch($comment->id, $prompt)->onQueue('openai');
-
-        return response()->json(["message" => 'Comment is generating...', "id" => $comment->id], 201);
     }
 }

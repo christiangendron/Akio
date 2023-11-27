@@ -9,10 +9,12 @@ use App\Jobs\OpenAiPostJob;
 use App\Models\User;
 use App\Models\Community;
 use App\Models\Post;
+use App\Models\Task;
 
 class OpenAiPostJobTest extends TestCase
 {
     private User $user;
+    private Community $community;
     
     public function setUp(): void
     {
@@ -22,46 +24,49 @@ class OpenAiPostJobTest extends TestCase
         $this->user = User::factory()->create();
 
         // Create a community
-        Community::factory()->create(['id' => 1, 'name' => 'Initial title', 'user_id' => $this->user->id, 'description' => 'Initial description']);
-
-        // Create a post
-        Post::factory()->create(['id' => 1, 'title' => 'Initial title', 'text_content' => 'Initial text content',  'user_id' => $this->user->id, 'community_id' => 1]);
+        $this->community = Community::factory()->create(['id' => 1, 'name' => 'Initial title', 'user_id' => $this->user->id, 'description' => 'Initial description']);
     }
 
     public function testPostJob(): void
     {
-        $prompt = "Generate a post about dogs";
-        $comment_id = 1;
-        $with_image = true;
+        $task = Task::factory()->create([
+            'id' => 3, 
+            'type' => 'post', 
+            'user_id' => $this->user->id, 
+            'parent_id' => $this->community->id, 
+            'prompt' => 'Create a post about dogs', 
+            'with_image' => false
+        ]);
 
-        OpenAiPostJob::dispatchSync($comment_id, $with_image, $prompt);
+        OpenAiPostJob::dispatchSync($task);
+
+        $updatedTask = Task::find($task->id);
         
-        $post = Post::find($comment_id);
+        $post = Post::find($updatedTask->created_id);
 
-        // Assert that the community was updated
-        $this->assertNotEquals('Initial title', $post->title, 'Post title was not updated as expected');
-        $this->assertNotEquals('Initial text content', $post->text_content, 'Post text content was not updated as expected');
-
-        // Assert that it has not failed
-        $this->assertNotEquals('Generation failed', $post->name, 'Post failed to generate');
+        // Assert that the post is not null
+        $this->assertNotNull($post, 'Post was not created');
     }
 
     public function testPostJobFail(): void
     {
-        $prompt = "return me an error please";
-        $comment_id = 1;
-        $with_image = false;
+        $task = Task::factory()->create([
+            'id' => 3, 
+            'type' => 'post', 
+            'user_id' => $this->user->id, 
+            'parent_id' => $this->community->id, 
+            'prompt' => 'return me an error please', 
+            'with_image' => false
+        ]);
 
-        OpenAiPostJob::dispatchSync($comment_id, $with_image, $prompt);
+        OpenAiPostJob::dispatchSync($task);
+
+        $updatedTask = Task::find($task->id);
         
-        $post = Post::find($comment_id);
+        $post = Post::find($updatedTask->created_id);
 
-        // Assert that the community was updated
-        $this->assertNotEquals('Initial title', $post->title, 'Post title was not updated as expected');
-        $this->assertNotEquals('Initial text content', $post->text_content, 'Post text content was not updated as expected');
-
-        // Assert that it has not failed
-        $this->assertStringStartsWith('Generation failed', $post->title, 'Post title generation failed as expected');
+        // Assert that the post is null
+        $this->assertNull($post, 'Post was created');
     }
 
     public function tearDown(): void

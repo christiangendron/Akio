@@ -10,10 +10,12 @@ use App\Models\User;
 use App\Models\Community;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Task;
 
 class OpenAiCommentJobTest extends TestCase
 {
     private User $user;
+    private Post $post;
     
     public function setUp(): void
     {
@@ -26,42 +28,49 @@ class OpenAiCommentJobTest extends TestCase
         Community::factory()->create(['id' => 1, 'name' => 'Initial title', 'user_id' => $this->user->id, 'description' => 'Initial description']);
 
         // Create a post
-        Post::factory()->create(['id' => 1, 'title' => 'Initial title', 'user_id' => $this->user->id, 'community_id' => 1]);
-
-        // Create a comment
-        Comment::factory()->create(['id' => 1, 'text_content' => 'Initial text content', 'user_id' => $this->user->id, 'post_id' => 1]);
+        $this->post = Post::factory()->create(['id' => 1, 'title' => 'Initial title', 'user_id' => $this->user->id, 'community_id' => 1]);
     }
 
     public function testCommentJob(): void
     {
-        $prompt = "Generate a comment about dogs";
-        $comment_id = 1;
+        $task = Task::factory()->create([
+            'id' => 3, 
+            'type' => 'comment', 
+            'user_id' => $this->user->id, 
+            'parent_id' => $this->post->id, 
+            'prompt' => 'create a simple comment about dogs', 
+            'with_image' => false
+        ]);
 
-        OpenAiCommentJob::dispatchSync($comment_id, $prompt);
+        OpenAiCommentJob::dispatchSync($task);
         
-        $comment = Comment::find($comment_id);
+        $updatedTask = Task::find($task->id);
 
-        // Assert that the Comment was updated
-        $this->assertNotEquals('Initial text content', $comment->text_content, 'Comment text content was not updated as expected');
+        $comment = Comment::find($updatedTask->created_id);
 
-        // Assert that it has not failed
-        $this->assertNotEquals('Generation failed', $comment->name, 'Comment failed to generate');
+        // Assert comment is not null
+        $this->assertNotNull($comment, 'Comment was not created');
     }
 
     public function testCommentJobFail(): void
     {
-        $prompt = "return me an error please";
-        $comment_id = 1;
+        $task = Task::factory()->create([
+            'id' => 3, 
+            'type' => 'comment', 
+            'user_id' => $this->user->id, 
+            'parent_id' => $this->post->id, 
+            'prompt' => 'return an error please', 
+            'with_image' => false
+        ]);
 
-        OpenAiCommentJob::dispatchSync($comment_id, $prompt);
+        OpenAiCommentJob::dispatchSync($task);
         
-        $comment = Comment::find($comment_id);
+        $updatedTask = Task::find($task->id);
 
-        // Assert that the comment was updated
-        $this->assertNotEquals('Initial text content', $comment->text_content, 'Comment text content was not updated as expected');
+        $comment = Comment::find($updatedTask->created_id);
 
-        // Assert that it has not failed
-        $this->assertStringStartsWith('Generation failed', $comment->text_content, 'Comment generation failed as expected');
+        // Assert that the job failed
+        $this->assertNull($comment, 'Comment was created');
     }
 
     public function tearDown(): void

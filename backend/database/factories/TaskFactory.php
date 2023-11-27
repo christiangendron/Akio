@@ -17,13 +17,8 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => $this->faker->randomElement(['post', 'comment', 'community']),
-            'parent_id' => $this->faker->numberBetween(1, 100),
-            'inspiration' => $this->faker->text(),
             'with_image' => $this->faker->boolean(),
-            'user_id' => $this->faker->numberBetween(1, 100),
-            'model' => $this->faker->randomElement(['davinci', 'curie', 'babbage']),
-            'status' => $this->faker->randomElement(['pending', 'completed']),
+            'status' => $this->faker->randomElement(['pending']),
         ];
     }
 }

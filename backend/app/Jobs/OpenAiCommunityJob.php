@@ -12,27 +12,24 @@ use App\Services\OpenAiServices;
 use App\Models\Community;
 use Illuminate\Support\Facades\Validator;
 use App\Services\ImageServices;
+use App\Models\Task;
 
 class OpenAiCommunityJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $prompt;
-    protected $community_id;
-    protected $with_image;
+    protected $task;
     
-    public function __construct($id, $with_image, $prompt)
+    public function __construct(Task $task)
     {
-        $this->community_id = $id;
-        $this->prompt = $prompt;
-        $this->with_image = $with_image;
+        $this->task = $task;
     }
 
     public function handle(): void
     {
         try 
         {
-            $res = OpenAiServices::ask($this->prompt);
+            $res = OpenAiServices::ask($this->task->prompt);
 
             $validator = Validator::make($res, [
                 'name' => 'required',
@@ -47,26 +44,31 @@ class OpenAiCommunityJob implements ShouldQueue
 
             $image = null;
 
-            if ($this->with_image) {
+            if ($this->task->with_image) {
                 $imagePrompt = 'Create a clean, simple and logo for this community with a strong focus to the center of the image on the following topic :' . $validated['description'];
                 $image = OpenAiServices::imagine($imagePrompt, "dall-e-3", "1024x1024");
             }
-            
-            $community = Community::find($this->community_id);
+
+            $community = new Community;
             $community->name = $validated['name'];
             $community->description = $validated['description'];
             $community->media_url = $image;
             $community->status = 'active';
+            $community->user_id = $this->task->user_id;
             $community->save();
+
+            $task = Task::find($this->task->id);
+            $task->status = 'success';
+            $task->created_id = $community->id;
+            $task->error_message = null;
+            $task->save();
         } 
         catch (\Exception $e) 
-        { 
-            $community = Community::find($this->community_id);
-            $community->name = 'Generation failed';
-            $community->description = 'With the following error : ' . $e->getMessage();
-            $community->media_url = null;
-            $community->status = 'failed';
-            $community->save();
+        {
+            $task = Task::find($this->task->id);
+            $task->status = 'failed';
+            $task->error_message = $e->getMessage();
+            $task->save();
         }
     }
 }

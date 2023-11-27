@@ -18,10 +18,12 @@ class TaskResource extends JsonResource
             'id' => $this->id,
             'type' => $this->type,
             'parent_id' => $this->parent_id,
-            'inspiration' => $this->inspiration,
+            'prompt' => $this->prompt,
             'with_image' => $this->with_image,
             'model' => $this->model,
             'user_id' => $this->user_id,
+            'error_message' => $this->error_message,
+            'created_id' => $this->created_id,
             'status' => $this->status,
         ];
     }

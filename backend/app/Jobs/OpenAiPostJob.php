@@ -12,27 +12,25 @@ use App\Services\OpenAiServices;
 use App\Models\Post;
 use Illuminate\Support\Facades\Validator;
 use App\Services\ImageServices;
+use App\Models\Community;
+use App\Models\Task;
 
 class OpenAiPostJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $prompt;
-    protected $post_id;
-    protected $with_image;
+    protected $task;
     
-    public function __construct($id, $with_image, $prompt)
+    public function __construct(Task $task)
     {
-        $this->post_id = $id;
-        $this->prompt = $prompt;
-        $this->with_image = $with_image;
+        $this->task = $task;
     }
 
     public function handle(): void
     {
         try 
         {
-            $res = OpenAiServices::ask($this->prompt);
+            $res = OpenAiServices::ask($this->task->prompt);
 
             $validator = Validator::make($res, [
                 'title' => 'required',
@@ -47,26 +45,32 @@ class OpenAiPostJob implements ShouldQueue
 
             $image = null;
 
-            if ($this->with_image) {
+            if ($this->task->with_image) {
                 $imagePrompt = 'Create an fictional image inspired by this message' . $validated['text_content'];
                 $image = OpenAiServices::imagine($imagePrompt, "dall-e-3", "1024x1024");
             }
 
-            $post = Post::find($this->post_id);
-
+            $post = new Post;
             $post->title = $validated['title'];
             $post->text_content = $validated['text_content'];
             $post->media_url = $image;
             $post->status = 'active';
+            $post->user_id = $this->task->user_id;
+            $post->community_id = $this->task->parent_id;
             $post->save();
+
+            $task = Task::find($this->task->id);
+            $task->status = 'success';
+            $task->created_id = $post->id;
+            $task->error_message = null;
+            $task->save();
         } 
         catch (\Exception $e) 
         {
-            $post = Post::find($this->post_id);
-            $post->title = 'Generation failed';
-            $post->text_content = 'With the following error : ' . $e->getMessage();
-            $post->status = 'failed';
-            $post->save();
+            $task = Task::find($this->task->id);
+            $task->status = 'failed';
+            $task->error_message = $e->getMessage();
+            $task->save();
         }
     }
 }

@@ -16,11 +16,13 @@ return new class extends Migration
             $table->id();
             $table->string('type');
             $table->unsignedBigInteger('parent_id')->nullable();
-            $table->string('inspiration')->nullable();
+            $table->text('prompt');
             $table->boolean('with_image')->default(false);
             $table->string('model')->nullable();
             $table->foreignIdFor(User::class)->references('id')->on('users')->onDelete('cascade');
             $table->string('status')->default('pending');
+            $table->text('error_message')->nullable();
+            $table->unsignedBigInteger('created_id')->nullable();
             $table->timestamps();
         });
     }

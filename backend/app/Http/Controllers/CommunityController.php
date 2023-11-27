@@ -50,7 +50,6 @@ class CommunityController extends Controller
         $posts = $community->posts;
 
         foreach ($posts as $post) {
-            error_log($post->media_url);
             Storage::disk('public')->delete($post->media_url);
             Storage::disk('public')->delete('sm-' . $post->media_url);
             Storage::disk('public')->delete('md-' . $post->media_url);
@@ -64,26 +63,5 @@ class CommunityController extends Controller
 
         $community->delete();
         return response()->json(["message" => 'Community deleted'], 200);
-    }
-
-    public function generate(Request $request)
-    {   
-        $prompt = 'Generate a community with a unique and creative name and description. The name should be catchy, relevant, and appealing to potential users.';
-
-        if ($request->inspiration) {
-            $prompt = $prompt . 'On the topic of : ' . $request->inspiration;
-        }
-
-        $community = new Community;
-        $community->name = 'Name pending';
-        $community->description = 'This community is being generated';
-        $community->media_url = '';
-        $community->user_id = auth()->id();
-        $community->status = 'generating';
-        $community->save();
-
-        OpenAiCommunityJob::dispatch($community->id, $request->with_image, $prompt)->onQueue('openai');
-        
-        return response()->json(["message" => 'Community is generating...', "id" => $community->id], 201);
     }
 }

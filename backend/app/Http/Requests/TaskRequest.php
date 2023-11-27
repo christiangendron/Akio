@@ -23,10 +23,10 @@ class TaskRequest extends FormRequest
     {
         return [
             'type' => ['required', 'string'],
-            'parent_id' => ['nullable', 'integer'],
+            'parent_id' => ['nullable', 'integer', 'required_if:type,post,comment'],
             'inspiration' => ['nullable', 'string'],
             'with_image' => ['nullable', 'boolean'],
-            'model' => ['nullable', 'string'],
+            'model' => ['nullable', 'string', 'required_if:with_image,true'],
         ];
     }
 }

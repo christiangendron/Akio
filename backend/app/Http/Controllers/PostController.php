@@ -60,32 +60,4 @@ class PostController extends Controller
         $post->delete();
         return response()->json(["message" => 'Post deleted'], 200);
     }
-
-    public function generate(Request $request, Community $community)
-    {      
-        $prompt = 'Generate a post in the style of a Reddit post for this community' . $community['name'];
-
-        if ($request->inspiration) {
-            $prompt = $prompt . 'With an emphasis on : ' . $request->inspiration;
-        }
-
-        if ($request->with_image) {
-            $prompt = $prompt . 'This post will be coupled with an image.';
-        } else {
-            $prompt = $prompt . 'This post will not contain an image.';
-        }
-
-        $post = new Post;
-        $post->title = 'Title pending';
-        $post->text_content = 'This post is being generated';
-        $post->media_url = null;
-        $post->user_id = auth()->user()->id;
-        $post->community_id = $community['id'];
-        $post->status = 'generating';
-        $post->save();
-
-        OpenAiPostJob::dispatch($post->id, $request->with_image, $prompt)->onQueue('openai');
-        
-        return response()->json(["message" => 'Post is generating...', "id" => $post->id], 201);
-    }
 }

@@ -20,8 +20,8 @@ class TaskDestroyTest extends TestCase
         $this->user = User::factory()->create();
         $this->user2 = User::factory()->create();
 
-        $task1 = Task::factory()->create(['id' => 1, 'user_id' => $this->user->id, 'type' => 'post', 'status' => 'pending']);
-        $task2 = Task::factory()->create(['id' => 2, 'user_id' => $this->user->id, 'type' => 'comment', 'status' => 'pending']);
+        $task1 = Task::factory()->create(['id' => 1, 'user_id' => $this->user->id, 'prompt' => 'some text prompt', 'type' => 'community', 'status' => 'pending']);
+        $task2 = Task::factory()->create(['id' => 2, 'user_id' => $this->user->id, 'prompt' => 'some text prompt', 'type' => 'community', 'status' => 'pending']);
     }
 
     public function testDeleteTaskNotauth(): void
