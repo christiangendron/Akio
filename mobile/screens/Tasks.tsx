@@ -25,7 +25,7 @@ export default function Tasks() {
 	const renderItem = ({ item }: { item: TaskProps }): JSX.Element => {
 		return <TaskItem 
 			{...item}
-			handler={() => console.log('clicked on task')}
+			handler={() => console.log('Clicked on task')}
 			extraStyles=' mt-1 mx-2'
 			 />
 	};

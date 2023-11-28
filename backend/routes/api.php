@@ -76,4 +76,5 @@ Route::prefix('task')
         Route::get('/{task}', 'show');
         Route::post('/', 'store');
         Route::delete('/{task}', 'destroy');
+        Route::post('/{task}/retry', 'retry');
 });

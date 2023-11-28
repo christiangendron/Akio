@@ -19,7 +19,7 @@ class TaskController extends Controller
     {   
         $user = auth()->user();
 
-        $tasks = $user->tasks()->get();
+        $tasks = $user->tasks()->orderby('created_at', 'desc')->get();
 
         return TaskResource::collection($tasks);
     }
@@ -56,6 +56,24 @@ class TaskController extends Controller
         $this->authorize('view', $task);
 
         return TaskResource::make($task);
+    }
+
+    public function retry(Task $task)
+    {
+        $this->authorize('retry', $task);
+
+        $task->status = 'pending';
+        $task->save();
+
+        if ($task->type === 'post') {
+            OpenAiPostJob::dispatch($task)->onQueue('openai');
+        } else if ($task->type === 'comment') {
+            OpenAiCommentJob::dispatch($task)->onQueue('openai');
+        } else {
+            OpenAiCommunityJob::dispatch($task)->onQueue('openai');
+        }
+
+        return response()->json(['message' => 'Task retried', 'data' => TaskResource::make($task)])->setStatusCode(200);
     }
 
     public function destroy(Task $task)

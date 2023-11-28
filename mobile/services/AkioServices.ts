@@ -86,11 +86,11 @@ async function getCommunities(): Promise<CommunityProps[]> {
 }
 
 /**
- * Generate a new item.
+ * Create a task : task will generate a post, a comment or a community.
  * @param variables variables to generate a new item
- * @returns MessageResponse
+ * @returns TaskResponse
  */
-async function generateItem(variables: GenerateVariables): Promise<MessageResponse> { 
+async function newTask(variables: GenerateVariables): Promise<TaskProps> { 
 	const res = await AxiosClient.post('task', {
 		type: variables.type,
 		parent_id: variables.parent_id,
@@ -170,7 +170,7 @@ const AkioServices = {
 	getCommunities, 
 	getComments, 
 	getUserPosts, 
-	generateItem,
+	newTask,
 	deleteItem,
 	getPosts,
 	getSavedPosts,
