@@ -29,6 +29,8 @@ class OpenAiCommunityJob implements ShouldQueue
     {
         try 
         {
+            $task = Task::find($this->task->id);
+
             $res = OpenAiServices::ask($this->task->prompt);
 
             $validator = Validator::make($res, [
@@ -45,6 +47,9 @@ class OpenAiCommunityJob implements ShouldQueue
             $image = null;
 
             if ($this->task->with_image) {
+                $task->message = 'Generating the image...';
+                $task->save();
+                
                 $imagePrompt = 'Create a clean, simple and logo for this community with a strong focus to the center of the image on the following topic :' . $validated['description'];
                 $image = OpenAiServices::imagine($imagePrompt, "dall-e-3", "1024x1024");
             }
@@ -57,17 +62,16 @@ class OpenAiCommunityJob implements ShouldQueue
             $community->user_id = $this->task->user_id;
             $community->save();
 
-            $task = Task::find($this->task->id);
             $task->status = 'success';
             $task->created_id = $community->id;
-            $task->error_message = null;
+            $task->message = 'Job was completed successfully.';
             $task->save();
         } 
         catch (\Exception $e) 
         {
             $task = Task::find($this->task->id);
             $task->status = 'failed';
-            $task->error_message = $e->getMessage();
+            $task->message = 'Job failed with error message : ' . $e->getMessage();
             $task->save();
         }
     }

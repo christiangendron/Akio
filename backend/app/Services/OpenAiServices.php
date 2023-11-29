@@ -51,7 +51,7 @@ class OpenAiServices
         ]);
 
         if ($response->status() != 200) {
-            throw new \Exception('The OpenAi request (imagine) failed with status ' . $response->status() . $response->body());
+            throw new \Exception('The OpenAi request (imagine) failed with status ' . $response->status());
         }
         
         $parsedData = json_decode($response);

@@ -38,6 +38,7 @@ class TaskController extends Controller
         $task->user_id = auth()->user()->id;
         $task->model = $request->model;
         $task->status = 'pending';
+        $task->message = 'Awaiting job to be processed...';
         $task->save();
 
         if ($request->type === 'post') {
@@ -62,7 +63,12 @@ class TaskController extends Controller
     {
         $this->authorize('retry', $task);
 
+        if ($task->status === 'success') {
+            return response()->json(['message' => 'Task is already a success, can only retry failed task', 'data' => TaskResource::make($task)])->setStatusCode(400);
+        }
+
         $task->status = 'pending';
+        $task->message = 'Trying to complete task again.';
         $task->save();
 
         if ($task->type === 'post') {

@@ -31,6 +31,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Overview" component={List} />
       <HomeStack.Screen name="Saved" component={List} />
       <HomeStack.Screen name="Account" component={Account} />
+      <AccountStack.Screen name="Tasks" component={Tasks} />
     </HomeStack.Navigator>
   );
 }
@@ -55,6 +56,7 @@ function SearchStackScreen() {
       <CommunitiesStack.Screen name="Saved" component={List} />
       <CommunitiesStack.Screen name="Community" component={List} />
       <CommunitiesStack.Screen name="Account" component={Account} />
+      <AccountStack.Screen name="Tasks" component={Tasks} />
     </CommunitiesStack.Navigator>
   );
 }

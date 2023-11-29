@@ -102,6 +102,16 @@ async function newTask(variables: GenerateVariables): Promise<TaskProps> {
 }
 
 /**
+ * Retry a failed task
+ * @param id: id of the task to retry
+ * @returns TaskResponse
+ */
+async function retryTask(id: Number): Promise<TaskProps> { 
+	const res = await AxiosClient.post(`task/${id}/retry`);
+	return res.data.data;
+}
+
+/**
  * Delete an item.
  * @param variables id of the resource to delete
  * @returns MessageResponse
@@ -178,6 +188,7 @@ const AkioServices = {
 	unSavePost,
 	getTasks,
 	getTask,
+	retryTask,
 };
 
 export default AkioServices;

@@ -22,7 +22,7 @@ class TaskResource extends JsonResource
             'with_image' => $this->with_image,
             'model' => $this->model,
             'user_id' => $this->user_id,
-            'error_message' => $this->error_message,
+            'message' => $this->message,
             'created_id' => $this->created_id,
             'status' => $this->status,
         ];

@@ -51,14 +51,14 @@ class OpenAiCommentJob implements ShouldQueue
             $task = Task::find($this->task->id);
             $task->status = 'success';
             $task->created_id = $comment->id;
-            $task->error_message = null;
+            $task->message = 'Job was completed successfully.';
             $task->save();
         } 
         catch (\Exception $e) 
         {
             $task = Task::find($this->task->id);
             $task->status = 'failed';
-            $task->error_message = $e->getMessage();
+            $task->message = 'Job failed with error message : ' . $e->getMessage();
             $task->save();
         }
     }

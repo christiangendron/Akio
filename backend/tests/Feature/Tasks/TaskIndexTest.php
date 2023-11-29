@@ -46,7 +46,7 @@ class TaskIndexTest extends TestCase
                     'prompt',
                     'with_image',
                     'user_id',
-                    'error_message',
+                    'message',
                     'model',
                     'created_id',
                     'status',

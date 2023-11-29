@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('model')->nullable();
             $table->foreignIdFor(User::class)->references('id')->on('users')->onDelete('cascade');
             $table->string('status')->default('pending');
-            $table->text('error_message')->nullable();
+            $table->text('message')->nullable();
             $table->unsignedBigInteger('created_id')->nullable();
             $table->timestamps();
         });
