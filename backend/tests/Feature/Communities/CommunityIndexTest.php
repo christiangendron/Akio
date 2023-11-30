@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Community;
+use Illuminate\Support\Facades\DB;
 
 class CommunityIndexTest extends TestCase
 {
@@ -51,6 +52,7 @@ class CommunityIndexTest extends TestCase
                 'description',
                 'media_url',
                 'user_id',
+                'status',
             ],
         ]);
     }
@@ -75,6 +77,7 @@ class CommunityIndexTest extends TestCase
                     'description',
                     'media_url',
                     'user_id',
+                    'status',
                 ]
             ],
         ]);

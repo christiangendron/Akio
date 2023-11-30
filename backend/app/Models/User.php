@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Hash;
 use App\Models\Post;
+use App\Models\Task;
 
 class User extends Authenticatable
 {
@@ -53,5 +54,10 @@ class User extends Authenticatable
     public function savedPosts()
     {
         return $this->belongsToMany(Post::class, 'saved', 'user_id', 'post_id');
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }

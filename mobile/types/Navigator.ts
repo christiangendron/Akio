@@ -16,6 +16,7 @@ export type StackParams = {
 	Overview: ListProps;
 	Details: PostProps;
 	Saved: ListProps;
+	Tasks: any;
 	AccountHome: {
 		showRegister: boolean;
 		showSettings: boolean;

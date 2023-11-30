@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import List from '../screens/PostsList';
 import Details from '../screens/CommentList';
 import CommunityList from '../screens/CommunityList';
+import Tasks from '../screens/Tasks';
 
 const HomeStack = createStackNavigator<StackParams>();
 
@@ -30,6 +31,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Overview" component={List} />
       <HomeStack.Screen name="Saved" component={List} />
       <HomeStack.Screen name="Account" component={Account} />
+      <AccountStack.Screen name="Tasks" component={Tasks} />
     </HomeStack.Navigator>
   );
 }
@@ -54,6 +56,7 @@ function SearchStackScreen() {
       <CommunitiesStack.Screen name="Saved" component={List} />
       <CommunitiesStack.Screen name="Community" component={List} />
       <CommunitiesStack.Screen name="Account" component={Account} />
+      <AccountStack.Screen name="Tasks" component={Tasks} />
     </CommunitiesStack.Navigator>
   );
 }
@@ -78,6 +81,7 @@ function AccountStackScreen() {
       <AccountStack.Screen name="Overview" component={List} />
       <AccountStack.Screen name="Saved" component={List} />
       <AccountStack.Screen name="Community" component={List} />
+      <AccountStack.Screen name="Tasks" component={Tasks} />
     </AccountStack.Navigator>
   );
 }

@@ -20,6 +20,7 @@ class CommentFactory extends Factory
             'text_content' => fake()->text(),
             'post_id' => $this->faker->numberBetween(1, 3),
             'user_id' =>  $this->faker->numberBetween(1, 3),
+            'status' => 'new',
         ];
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SavedController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,6 @@ Route::prefix('community')
         Route::get('/{community}', 'getCommunityById');
         Route::post('/', 'store')->middleware('auth:sanctum');
         Route::delete('/{community}', 'destroy')->middleware('auth:sanctum');
-        Route::post('/generate/','generate')->middleware('auth:sanctum');
 });
 
 Route::prefix('post')
@@ -48,7 +48,6 @@ Route::prefix('post')
         Route::get('/community/{community}/', 'index');
         Route::get('/user/{user}/', 'index');
         Route::post('community/{community}', 'store')->middleware('auth:sanctum');
-        Route::post('community/{community}/generate/', 'generate')->middleware('auth:sanctum');
         Route::delete('/{post}', 'destroy')->middleware('auth:sanctum');
 });
 
@@ -66,6 +65,16 @@ Route::prefix('comment')
     ->group(function() {
         Route::get('/post/{post}', 'getCommentsByPostId');
         Route::post('/post/{post}', 'store')->middleware('auth:sanctum');
-        Route::post('/post/{post}/generate/', 'generate')->middleware('auth:sanctum');
         Route::delete('/{comment}', 'destroy')->middleware('auth:sanctum');
+});
+
+Route::prefix('task')
+    ->controller(TaskController::class)
+    ->middleware('auth:sanctum')
+    ->group(function() {
+        Route::get('/', 'index');
+        Route::get('/{task}', 'show');
+        Route::post('/', 'store');
+        Route::delete('/{task}', 'destroy');
+        Route::post('/{task}/retry', 'retry');
 });

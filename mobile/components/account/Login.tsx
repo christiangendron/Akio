@@ -35,7 +35,7 @@ function Login() {
 				rules={{ required: true }}
 				render={({ field: { onChange, value } }) => (<CustomInput placeholder="Password" onChangeText={onChange} value={value} isError={!!errors.password} secureTextEntry={true} />)}
 			/>
-			{error && <Text className='text-center text-red-500'>{error}</Text>}
+			{loginMutation.isError && <Text className='text-center text-red-500'>{error ?? 'Authentications servers are down'}</Text>}
 			<CustomButton
 				handler={handleSubmit(onSubmit)}
 				label='Submit'

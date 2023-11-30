@@ -3,6 +3,7 @@ import { CommentItemProps } from '../components/items/Comment';
 import { CommunityProps } from '../components/items/Community';
 import AxiosClient from './AxiosClient';
 import { GenerateVariables } from '../components/modal/GenerateModal';
+import { TaskProps } from '../components/items/TaskItem';
 
 type MessageResponse = {
 	message: string,
@@ -85,26 +86,29 @@ async function getCommunities(): Promise<CommunityProps[]> {
 }
 
 /**
- * Generate a new item.
+ * Create a task : task will generate a post, a comment or a community.
  * @param variables variables to generate a new item
- * @returns MessageResponse
+ * @returns TaskResponse
  */
-async function generateItem(variables: GenerateVariables): Promise<MessageResponse> { 
-	if (variables.type.includes('post')) {
-		return await AxiosClient.post(`post/community/${variables.id}/generate/`, {
-			inspiration: variables.inspiration,
-			with_image: variables.with_image,
-		});
-	} else if (variables.type.includes('community')) {
-		return await AxiosClient.post('community/generate/', {
-			inspiration: variables.inspiration,
-			with_image: variables.with_image,
-		});
-	} else {
-		return await AxiosClient.post(`comment/post/${variables.id}/generate/`, {
-			inspiration: variables.inspiration,
-		});
-	}
+async function newTask(variables: GenerateVariables): Promise<TaskProps> { 
+	const res = await AxiosClient.post('task', {
+		type: variables.type,
+		parent_id: variables.parent_id,
+		inspiration: variables.inspiration,
+		with_image: variables.with_image,
+		model: variables.model,
+	});
+	return res.data.data;
+}
+
+/**
+ * Retry a failed task
+ * @param id: id of the task to retry
+ * @returns TaskResponse
+ */
+async function retryTask(id: Number): Promise<TaskProps> { 
+	const res = await AxiosClient.post(`task/${id}/retry`);
+	return res.data.data;
 }
 
 /**
@@ -153,16 +157,38 @@ async function unSavePost(id: number): Promise<MessageResponse> {
 	return res.data.data;
 }
 
+/**
+ * Get tasks route.
+ * @returns any
+ */
+async function getTasks(): Promise<TaskProps[]> {
+	const res = await AxiosClient.get('task');
+	return res.data.data;
+}
+
+/**
+ * Get a single task/
+ * @param id id of the task to get
+ * @returns a task
+ */
+async function getTask(id: number): Promise<TaskProps> {
+	const res = await AxiosClient.get('task/' + id);
+	return res.data.data;
+}
+
 const AkioServices = {
 	getCommunities, 
 	getComments, 
 	getUserPosts, 
-	generateItem,
+	newTask,
 	deleteItem,
 	getPosts,
 	getSavedPosts,
 	savePost,
-	unSavePost
+	unSavePost,
+	getTasks,
+	getTask,
+	retryTask,
 };
 
 export default AkioServices;

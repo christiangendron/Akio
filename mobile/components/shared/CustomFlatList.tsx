@@ -3,10 +3,11 @@ import { CommunityProps } from '../items/Community';
 import { PostProps } from '../items/Post';
 import { CommentItemProps } from '../items/Comment';
 import MessagePost from '../items/MessagePost';
+import { TaskProps } from '../items/TaskItem';
 
 type CustomFlatListProps = {
     type: string;
-    data : CommunityProps[] | PostProps[] | CommentItemProps[];
+    data : CommunityProps[] | PostProps[] | CommentItemProps[] | TaskProps[];
     isLoading : boolean;
     reFetch : () => void;
     isError : boolean;

@@ -51,7 +51,7 @@ export default function CommentList(props: CommentListNavigationProps) {
 		<View className='flex flex-1 justify-center items-center bg-background dark:bg-backgroundDark'>
 			<CustomFlatList 
 				type='comment' 
-				data={query.data ? query.data : []} 
+				data={query.data && !query.isError ? query.data : []} 
 				renderItem={renderItem}
 				isLoading={query.isLoading || query.isFetching}
 				reFetch={query.refetch} 

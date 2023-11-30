@@ -41,7 +41,7 @@ function Register() {
 				rules={{required: true}}
 				render={({ field: { onChange, value } }) => (<CustomInput placeholder="Password" onChangeText={onChange} value={value} secureTextEntry={true} isError={!!errors.password} />)}
 			/>
-			{error && <Text className='text-center text-red-500'>{error}</Text>}
+			{registerMutation.isError && <Text className='text-center text-red-500'>{error ?? 'Authentications servers are down'}</Text>}
 			<CustomButton
 				handler={handleSubmit(onSubmit)}
 				label='Submit'

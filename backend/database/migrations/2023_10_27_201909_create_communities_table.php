@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description', 512);
             $table->string('media_url', 512)->nullable();
+            $table->string('status');
             $table->foreignIdFor(User::class)->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

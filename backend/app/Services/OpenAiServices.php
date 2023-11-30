@@ -21,7 +21,7 @@ class OpenAiServices
         ];
 
         $functions = OpenAiServices::getFunctions();
-    
+        
         $response = Http::accept('application/json')
             ->withToken(config('env.OPENAI_API_KEY'))
             ->post('https://api.openai.com/v1/chat/completions', [
@@ -51,8 +51,7 @@ class OpenAiServices
         ]);
 
         if ($response->status() != 200) {
-            error_log($response->body());
-            throw new \Exception('The OpenAi request (imagine) failed with status ' . $response->status() . $response->status()->message);
+            throw new \Exception('The OpenAi request (imagine) failed with status ' . $response->status());
         }
         
         $parsedData = json_decode($response);

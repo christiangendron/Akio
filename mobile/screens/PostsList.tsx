@@ -78,7 +78,7 @@ export default function PostsList(props: PostsListNavigationProps) {
 		<View className='flex flex-1 justify-center items-center bg-background dark:bg-backgroundDark'>
 			<CustomFlatList 
 				type={type} 
-				data={query.data ? query.data : []} 
+				data={query.data && !query.isError ? query.data : []} 
 				renderItem={renderItem}
 				isLoading={query.isLoading || query.isFetching} 
 				reFetch={query.refetch} 

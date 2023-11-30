@@ -37,6 +37,11 @@ function Logged() {
                     withSearch: true })} 
                 extraStyles=' mx-2 mt-2'
             />
+             <MenuItem 
+                label='My tasks' 
+                handler={() => navigation.push('Tasks')} 
+                extraStyles=' mx-2 mt-2'
+            />
             <MenuItem 
                 label='Log out' 
                 handler={() => logoutMutation.mutate()} 
