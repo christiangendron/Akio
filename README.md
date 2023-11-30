@@ -14,4 +14,5 @@ The following link will provide information on all routes for the backend : [lin
     <img src="screenshots/register.PNG" alt="Register Screen" width="250" style="margin: 5px"/>
     <img src="screenshots/pending.PNG" alt="Pending Job" width="250" style="margin: 5px"/>
     <img src="screenshots/account.PNG" alt="Account Screen" width="250" style="margin: 5px"/>
+    <img src="screenshots/settings.PNG" alt="Settings Screen" width="250" style="margin: 5px"/>
 </div>
