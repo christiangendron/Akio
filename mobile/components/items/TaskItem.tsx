@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity } from 'react-native';
 import useRetryGenerateMutation from '../../hooks/useRetryGenerationMutation';
 
 export interface TaskProps {
@@ -24,18 +24,30 @@ export interface TaskProps {
 export default function TaskItem(props: TaskProps) {
     const mutation = useRetryGenerateMutation();
 
-    // TODO : add a button to retry the task
     const retry = () => {
         mutation.mutate(props.id);
-        props.handler();
     }
 
+    const error =  props.status === 'failed' ? ' border border-red-500 dark:border-red-700' : '';
+    const pending =  props.status === 'pending' ? ' border border-yellow-500 dark:border-yellow-700' : '';
+
+    if (mutation.isLoading) return (
+        <TouchableOpacity 
+            className={'bg-secondary dark:bg-secondaryDark rounded-lg mx-2 mt-2 overflow-hidden p-2' + error}
+            disabled={true}>
+                        <ActivityIndicator />
+        </TouchableOpacity>
+    )
+
     return (
-        <View className='bg-secondary dark:bg-secondaryDark rounded-lg mx-2 mt-2 overflow-hidden p-2'>
+        <TouchableOpacity 
+            className={'bg-secondary dark:bg-secondaryDark rounded-lg mx-2 mt-2 overflow-hidden p-2' + error + pending}
+            onPress={retry}
+            disabled={props.status !== 'failed'}>
             <Text className='dark:text-white'>id: {props.id}</Text>
             <Text className='dark:text-white'>type: {props.type}</Text>
             <Text className='dark:text-white'>message: {props.message}</Text>
             <Text className='dark:text-white'>status: {props.status}</Text>
-        </View>
+        </TouchableOpacity>
     );
 }
