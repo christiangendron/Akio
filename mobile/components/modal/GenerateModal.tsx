@@ -64,7 +64,12 @@ export default function GenerateModal(props: CustomModalProps) {
     const clearTask = () => {
         setTaskId(null);
         mutation.reset();
-        toggleModal();
+
+        // wait 300ms for before closing the modal
+        // makes the animation smoother
+        setTimeout(() => {
+            toggleModal();
+        }, 300);
     };
 
     let buttonLabel = 'Generate';
